@@ -30,7 +30,7 @@ namespace boxinator
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "boxinator", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Boxinator", Version = "v1" });
             });
         }
 
