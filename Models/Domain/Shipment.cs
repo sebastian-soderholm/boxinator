@@ -17,12 +17,16 @@ namespace boxinator.Models.Domain
         // Fields
         [Required]
         [MaxLength(100)]
-        public string RecieverName { get; set; }
+        public string ReceiverName { get; set; }
 
         [Required]
-        [MaxLength(100)]
-        public string DestinationCountry { get; set; }
+        public int CountryId { get; set; }
+        public Country Country { get; set; }
 
+        public double Cost { get; set; }
+
+        public int? UserId { get; set; }
+        public User User { get; set; }
         // Relationships
         //public ICollection<Movie> Movies { get; set; }
     }
