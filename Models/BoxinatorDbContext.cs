@@ -94,6 +94,7 @@ namespace boxinator.Models
                     ShipmentId = 1
                 }
             );
+
             modelBuilder.Entity<ShipmentStatus>().HasData(
                 new ShipmentStatus()
                 {
@@ -104,6 +105,7 @@ namespace boxinator.Models
 
                 }
             );
+                
         }
     }
 }
