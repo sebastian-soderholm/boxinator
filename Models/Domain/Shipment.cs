@@ -18,16 +18,16 @@ namespace boxinator.Models.Domain
         [Required]
         [MaxLength(100)]
         public string ReceiverName { get; set; }
-
-        [Required]
-        public int CountryId { get; set; }
-        public Country Country { get; set; }
-
         public double Cost { get; set; }
 
+        // Relationships
+        [Required]
+        public Box Box { get; set; }
         public int? UserId { get; set; }
         public User User { get; set; }
         // Relationships
-        public ICollection<ShipmentStatus> ShipmentStatusList { get; set; }
+        public int CountryId { get; set; }
+        public Country Country { get; set; }
+        public List<ShipmentStatusLog> ShipmentStatusLogs { get; set; }
     }
 }

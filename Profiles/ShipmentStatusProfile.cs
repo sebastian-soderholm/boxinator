@@ -8,7 +8,7 @@ namespace boxinator.Profiles
     {
         public ShipmentStatusProfile()
         {
-            CreateMap<ShipmentStatus, ShipmentStatusReadDTO>();
+            CreateMap<ShipmentStatusLog, ShipmentStatusLogReadDTO>();
         }
     }
 }

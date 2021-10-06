@@ -17,5 +17,7 @@ namespace boxinator.Models.Domain
         public string Name { get; set; }
         [Required]
         public int CountryMultiplier { get; set; }
+        public List<Country> Countries { get; set; }
+
     }
 }
