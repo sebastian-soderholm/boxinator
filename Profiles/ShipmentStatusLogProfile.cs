@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using boxinator.Models;
-using boxinator.Models.DTO.ShipmentStatus;
+using boxinator.Models.DTO.ShipmentStatusLog;
 
 namespace boxinator.Profiles
 {
-    public class ShipmentStatusProfile : Profile
+    public class ShipmentStatusLogProfile : Profile
     {
-        public ShipmentStatusProfile()
+        public ShipmentStatusLogProfile()
         {
             CreateMap<ShipmentStatusLog, ShipmentStatusLogReadDTO>();
         }

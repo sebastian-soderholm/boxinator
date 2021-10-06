@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using boxinator.Models.Domain;
 using boxinator.Models.DTO.Shipment;
+using boxinator.Models.DTO.ShipmentStatusLog;
 using boxinator.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,28 +26,28 @@ namespace boxinator.Controllers
 
         // GET: /shipments
         [HttpGet]
-        public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllCurrent()
+        public async Task<ActionResult<List<ShipmentStatusLogReadDTO>>> GetAllCurrent()
         {
             var currentShipments = await _service.GetAllCurrent();
-            return _mapper.Map<List<ShipmentReadDTO>>(currentShipments);
+            return _mapper.Map<List<ShipmentStatusLogReadDTO>>(currentShipments);
         }
 
         // GET: /shipments/complete
         [HttpGet]
         [Route("~/complete")]
-        public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllComplete()
+        public async Task<ActionResult<List<ShipmentStatusLogReadDTO>>> GetAllComplete()
         {
             var completedShipments = await _service.GetAllComplete();
-            return _mapper.Map<List<ShipmentReadDTO>>(completedShipments);
+            return _mapper.Map<List<ShipmentStatusLogReadDTO>>(completedShipments);
         }
 
         // GET: /shipments/cancelled
         [HttpGet]
         [Route("~/cancelled")]
-        public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllCancelled()
+        public async Task<ActionResult<List<ShipmentStatusLogReadDTO>>> GetAllCancelled()
         {
             var cancelledShipments = await _service.GetAllCancelled();
-            return _mapper.Map<List<ShipmentReadDTO>>(cancelledShipments);
+            return _mapper.Map<List<ShipmentStatusLogReadDTO>>(cancelledShipments);
         }
 
         // POST: /shipments

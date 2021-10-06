@@ -16,7 +16,7 @@ namespace boxinator.Models
         public DbSet<BoxType> BoxTypes { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
-        public DbSet<ShipmentStatusLog> ShipmentStatuses { get; set; }
+        public DbSet<ShipmentStatusLog> ShipmentStatusLogs { get; set; }
         public DbSet<Zone> Zones { get; set; }
         public DbSet<User> Users { get; set; }
 

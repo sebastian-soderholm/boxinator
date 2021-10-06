@@ -9,7 +9,7 @@ namespace boxinator.Models.DTO.Shipment
     {
         public string ReceiverName { get; set; }
         public double Cost { get; set; }
-        public ICollection<ShipmentReadDTO> ShipmentStatusList { get; set; }
+        public ICollection<ShipmentReadDTO> ShipmentStatusLogList { get; set; }
 
     }
 }
