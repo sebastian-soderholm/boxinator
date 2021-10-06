@@ -9,6 +9,7 @@ namespace boxinator.Profiles
         public ShipmentProfile()
         {
             CreateMap<Shipment, ShipmentReadDTO>();
+            CreateMap<ShipmentReadDTO, Shipment>();
         }
     }
 }

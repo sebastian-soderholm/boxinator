@@ -28,6 +28,6 @@ namespace boxinator.Models.Domain
         public int? UserId { get; set; }
         public User User { get; set; }
         // Relationships
-        public ICollection<ShipmentStatus> ShipmentStatusList { get; set; }
+        public List<ShipmentStatus> ShipmentStatusList { get; set; }
     }
 }

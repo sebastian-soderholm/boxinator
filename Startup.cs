@@ -1,4 +1,6 @@
 using boxinator.Models;
+using boxinator.Services;
+using boxinator.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,10 +31,14 @@ namespace boxinator
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<BoxinatorDbContext>(options =>
                 options.UseSqlServer(Configuration.GetSection("ConnectionStrings").GetSection("localSQLBoxinatorDB").Value));
+            
+            services.AddScoped<IShipmentService, ShipmentService>();
+            //services.AddScoped<IUserService, UserService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Boxinator", Version = "v1" });
@@ -42,6 +48,9 @@ namespace boxinator
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,6 +85,8 @@ namespace boxinator
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+
         }
     }
 }
