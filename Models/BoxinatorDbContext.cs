@@ -16,7 +16,7 @@ namespace boxinator.Models
         public DbSet<BoxType> BoxTypes { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
-        public DbSet<ShipmentStatus> ShipmentStatuses { get; set; }
+        public DbSet<ShipmentStatusLog> ShipmentStatuses { get; set; }
         public DbSet<Zone> Zones { get; set; }
         public DbSet<User> Users { get; set; }
 
@@ -33,6 +33,31 @@ namespace boxinator.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ShipmentStatusLog>()
+                .HasOne(m => m.Shipment)
+                .WithMany(f => f.ShipmentStatusLogs)
+                .HasForeignKey(m => m.ShipmentId);
+
+            modelBuilder.Entity<Country>()
+                .HasOne(m => m.Zone)
+                .WithMany(c => c.Countries)
+                .HasForeignKey(m => m.ZoneId);
+
+            modelBuilder.Entity<Box>()
+                .HasOne(m => m.BoxType)
+                .WithMany(c => c.Boxes)
+                .HasForeignKey(m => m.BoxTypeId);
+
+            modelBuilder.Entity<Shipment>()
+                .HasOne(m => m.Box)
+                .WithOne(c => c.Shipment)
+                .HasForeignKey<Box>(s => s.ShipmentId);
+
+            modelBuilder.Entity<User>()
+                .HasOne(m => m.Country)
+                .WithMany(c => c.Users)
+                .HasForeignKey(m => m.CountryId);
+
             modelBuilder.Entity<Zone>().HasData(
                 new Zone()
                 {
@@ -95,8 +120,8 @@ namespace boxinator.Models
                 }
             );
 
-            modelBuilder.Entity<ShipmentStatus>().HasData(
-                new ShipmentStatus()
+            modelBuilder.Entity<ShipmentStatusLog>().HasData(
+                new ShipmentStatusLog()
                 {
                     Id = 1,
                     ShipmentId = 1,

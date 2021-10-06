@@ -68,14 +68,14 @@ namespace boxinator.Services
         {
             return await _context.Shipments.Where(x => x.UserId == userId).ToListAsync();
         }
-        public async Task<List<ShipmentStatus>> GetAllCurrent()
+        public async Task<List<ShipmentStatusLog>> GetAllCurrent()
         {
             return await _context.ShipmentStatuses
                 .Include(s => s.Shipment)
                 .ThenInclude(u => u.User)
-                .Where(s => s.Status == "CURRENT" /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
+                .Where(s => s.Status != "COMPLETE" && s.Status != "CANCELLED" /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
         }
-        public async Task<List<ShipmentStatus>> GetAllComplete()
+        public async Task<List<ShipmentStatusLog>> GetAllComplete()
         {
             return await _context.ShipmentStatuses
                 .Include(s => s.Shipment)
@@ -83,7 +83,7 @@ namespace boxinator.Services
                 .Where(s => s.Status == "COMPLETE" /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
         }
 
-        public async Task<List<ShipmentStatus>> GetAllCancelled()
+        public async Task<List<ShipmentStatusLog>> GetAllCancelled()
         {
             return await _context.ShipmentStatuses
                 .Include(s => s.Shipment)

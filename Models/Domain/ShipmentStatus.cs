@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace boxinator.Models
 {
-    [Table("ShipmentStatus")]
-    public class ShipmentStatus
+    [Table("ShipmentStatusLog")]
+    public class ShipmentStatusLog
     {
         [Key]
         public int Id { get; set; }
@@ -20,5 +20,6 @@ namespace boxinator.Models
         [MaxLength(20)]
         public string Status { get; set; }
         public DateTime Date { get; set; }
+
     }
 }
