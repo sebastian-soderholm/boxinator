@@ -48,10 +48,10 @@ namespace boxinator.Models
                 .WithMany(c => c.Boxes)
                 .HasForeignKey(m => m.BoxTypeId);
 
-            modelBuilder.Entity<Shipment>()
-                .HasOne(m => m.Box)
-                .WithOne(c => c.Shipment)
-                .HasForeignKey<Box>(s => s.ShipmentId);
+            modelBuilder.Entity<Box>()
+                .HasOne(m => m.Shipment)
+                .WithMany(c => c.Boxes)
+                .HasForeignKey(s => s.ShipmentId);
 
             modelBuilder.Entity<User>()
                 .HasOne(m => m.Country)

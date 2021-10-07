@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using boxinator.Models;
 
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    partial class BoxinatorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211007062901_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,14 +93,16 @@ namespace boxinator.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("ShipmentId")
+                    b.Property<int?>("ShipmentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BoxTypeId");
 
-                    b.HasIndex("ShipmentId");
+                    b.HasIndex("ShipmentId")
+                        .IsUnique()
+                        .HasFilter("[ShipmentId] IS NOT NULL");
 
                     b.ToTable("Box");
 
@@ -267,7 +271,7 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 7, 9, 54, 9, 921, DateTimeKind.Local).AddTicks(5204),
+                            Date = new DateTime(2021, 10, 7, 9, 29, 1, 231, DateTimeKind.Local).AddTicks(5588),
                             ShipmentId = 1,
                             Status = "CREATED"
                         });
@@ -293,10 +297,8 @@ namespace boxinator.Migrations
                         .IsRequired();
 
                     b.HasOne("boxinator.Models.Domain.Shipment", "Shipment")
-                        .WithMany("Boxes")
-                        .HasForeignKey("ShipmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Box")
+                        .HasForeignKey("boxinator.Models.Domain.Box", "ShipmentId");
 
                     b.Navigation("BoxType");
 
@@ -354,7 +356,8 @@ namespace boxinator.Migrations
 
             modelBuilder.Entity("boxinator.Models.Domain.Shipment", b =>
                 {
-                    b.Navigation("Boxes");
+                    b.Navigation("Box")
+                        .IsRequired();
 
                     b.Navigation("ShipmentStatusLogs");
                 });

@@ -18,7 +18,7 @@ namespace boxinator.Models.Domain
         [Required]
         public int BoxTypeId { get; set; }
         public BoxType BoxType { get; set; }
-        public int? ShipmentId { get; set; }
+        public int ShipmentId { get; set; }
         public Shipment Shipment { get; set; }
 
 

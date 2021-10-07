@@ -21,13 +21,11 @@ namespace boxinator.Models.Domain
         public double Cost { get; set; }
 
         // Relationships
-        [Required]
-        public Box Box { get; set; }
         public int? UserId { get; set; }
         public User User { get; set; }
-        // Relationships
         public int CountryId { get; set; }
         public Country Country { get; set; }
+        public  List<Box> Boxes { get; set; }
         public List<ShipmentStatusLog> ShipmentStatusLogs { get; set; }
     }
 }
