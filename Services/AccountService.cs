@@ -1,5 +1,7 @@
-﻿using boxinator.Models.Domain;
+﻿using boxinator.Models;
+using boxinator.Models.Domain;
 using boxinator.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,24 +11,75 @@ namespace boxinator.Services
 {
     public class AccountService : IAccountService
     {
-        public Task<User> Add(User user)
+        private readonly BoxinatorDbContext _context;
+
+        public AccountService(BoxinatorDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<bool> Delete(int id)
+        /// <summary>
+        /// Add new user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>Createed user</returns>
+        public async Task<User> Add(User user)
         {
-            throw new NotImplementedException();
+            var resultUser = await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+            return resultUser.Entity;
         }
 
-        public Task<User> Get(int id)
+        /// <summary>
+        /// Delete user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>True / False</returns>
+        public async Task<bool> Delete(int id)
         {
-            throw new NotImplementedException();
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null /*|| user.UserId != currentUSer*/)
+                return false;
+
+            _context.Users.Remove(user);
+            var rows = await _context.SaveChangesAsync();
+
+            if (rows > 0)
+                return true;
+
+            return false;
         }
 
-        public Task<User> Update(int id, User user)
+        /// <summary>
+        /// Get user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Retrieved user</returns>
+        public async Task<User> Get(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Users
+                .Where(x => x.Id == id /*&& x.UserId == currentUser*/).FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Update user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="user"></param>
+        /// <returns>Updated user</returns>
+        public async Task<User> Update(int id, User user)
+        {
+            var resultUser = await _context.Users
+                .Where(x => x.Id == id /*&& x.UserId == currentUser*/).FirstOrDefaultAsync();
+
+            if (resultUser != null)
+            {
+                resultUser = user;
+                await _context.SaveChangesAsync();
+            }
+
+            return resultUser;
         }
     }
 }

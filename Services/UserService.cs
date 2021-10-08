@@ -20,9 +20,9 @@ namespace boxinator.Services.Interfaces
         /// </summary>
         /// <param name="user"></param>
         /// <returns>User</returns>
-        public Task<User> Login(User user)
+        public async Task<User> Login(User user)
         {
-            // retrieve user, if not found, register new
+            // retrieve user by user email and password, if not found, register new
             throw new NotImplementedException();
         }
     }

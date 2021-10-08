@@ -26,7 +26,7 @@ namespace boxinator.Services
         public async Task<Shipment> Add(Shipment shipment)
         {
             var resultShipment = await _context.Shipments.AddAsync(shipment);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return resultShipment.Entity;
         }
@@ -46,7 +46,7 @@ namespace boxinator.Services
             if (resultShipment != null)
             {
                 resultShipment = shipment;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             return resultShipment;

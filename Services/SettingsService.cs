@@ -8,17 +8,17 @@ namespace boxinator.Services.Interfaces
 {
     public class SettingsService : ISettingsService
     {
-        public Task<Country> Add(Country country)
+        public async Task<Country> Add(Country country)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Country> Get(int id)
+        public async Task<Country> Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Country> Update(int id, Country country)
+        public async Task<Country> Update(int id, Country country)
         {
             throw new NotImplementedException();
         }
