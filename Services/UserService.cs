@@ -22,7 +22,6 @@ namespace boxinator.Services.Interfaces
         /// <returns>User</returns>
         public async Task<User> Login(User user)
         {
-            // retrieve user by user email and password, if not found, register new
             throw new NotImplementedException();
         }
     }
