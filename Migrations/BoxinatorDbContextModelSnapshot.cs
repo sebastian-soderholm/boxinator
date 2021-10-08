@@ -199,12 +199,10 @@ namespace boxinator.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -291,7 +289,7 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 8, 13, 31, 28, 299, DateTimeKind.Local).AddTicks(1016),
+                            Date = new DateTime(2021, 10, 8, 14, 44, 42, 684, DateTimeKind.Local).AddTicks(3646),
                             ShipmentId = 1,
                             StatusId = 1
                         });

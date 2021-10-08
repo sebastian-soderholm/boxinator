@@ -18,6 +18,11 @@ namespace boxinator.Services
             _context = context;
         }
 
+        /// <summary>
+        /// Add new shipment
+        /// </summary>
+        /// <param name="shipment"></param>
+        /// <returns>Created shipment</returns>
         public async Task<Shipment> Add(Shipment shipment)
         {
             var resultShipment = await _context.Shipments.AddAsync(shipment);
@@ -26,6 +31,12 @@ namespace boxinator.Services
             return resultShipment.Entity;
         }
 
+        /// <summary>
+        /// Update existing shipment by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="shipment"></param>
+        /// <returns>Updated shipment</returns>
         public async Task<Shipment> Update(int id, Shipment shipment)
         {
             var resultShipment = await _context.Shipments
@@ -41,6 +52,11 @@ namespace boxinator.Services
             return resultShipment;
         }
 
+        /// <summary>
+        /// Delete shipment by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>True / false</returns>
         public async Task<bool> Delete(int id)
         {
             var shipment = await _context.Shipments.FindAsync(id);
@@ -57,6 +73,11 @@ namespace boxinator.Services
             return false;
         }
 
+        /// <summary>
+        /// Get shipment by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Retrieved shipment</returns>
         public async Task<Shipment> Get(int id)
         {
             return await _context.Shipments
@@ -64,10 +85,20 @@ namespace boxinator.Services
                 .Where(x => x.Id == id /*&& x.UserId == currentUser*/).FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Get shipment by user id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>List of shipments</returns>
         public async Task<List<Shipment>> GetByUser(int userId)
         {
             return await _context.Shipments.Where(x => x.UserId == userId).ToListAsync();
         }
+
+        /// <summary>
+        /// Get all current shipments
+        /// </summary>
+        /// <returns>List of shipments</returns>
         public async Task<List<ShipmentStatusLog>> GetAllCurrent()
         {
             return await _context.ShipmentStatusLogs
@@ -75,6 +106,11 @@ namespace boxinator.Services
                 .ThenInclude(u => u.User)
                 .Where(s => s.StatusId != 1 && s.StatusId != 2 /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
         }
+
+        /// <summary>
+        /// Get all complete shipments
+        /// </summary>
+        /// <returns>List of shipments</returns>
         public async Task<List<ShipmentStatusLog>> GetAllComplete()
         {
             return await _context.ShipmentStatusLogs
@@ -83,6 +119,10 @@ namespace boxinator.Services
                 .Where(s => s.StatusId == 1 /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
         }
 
+        /// <summary>
+        /// Get all cancelled shipments
+        /// </summary>
+        /// <returns>List of shipments</returns>
         public async Task<List<ShipmentStatusLog>> GetAllCancelled()
         {
             return await _context.ShipmentStatusLogs
@@ -90,9 +130,6 @@ namespace boxinator.Services
                 .ThenInclude(u => u.User)
                 .Where(s => s.StatusId == 1 /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
         }
-
-
-
 
 
     }

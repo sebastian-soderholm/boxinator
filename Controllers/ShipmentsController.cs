@@ -24,6 +24,10 @@ namespace boxinator.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Get all current shipments
+        /// </summary>
+        /// <returns>List of shipments</returns>
         // GET: /shipments
         [HttpGet]
         public async Task<ActionResult<List<ShipmentStatusLogReadDTO>>> GetAllCurrent()
@@ -32,6 +36,10 @@ namespace boxinator.Controllers
             return _mapper.Map<List<ShipmentStatusLogReadDTO>>(currentShipments);
         }
 
+        /// <summary>
+        /// Get all complete shipments
+        /// </summary>
+        /// <returns>List of shipments</returns>
         // GET: /shipments/complete
         [HttpGet]
         [Route("~/complete")]
@@ -41,6 +49,10 @@ namespace boxinator.Controllers
             return _mapper.Map<List<ShipmentStatusLogReadDTO>>(completedShipments);
         }
 
+        /// <summary>
+        /// Get all cancelled shipments
+        /// </summary>
+        /// <returns>List of shipments</returns>
         // GET: /shipments/cancelled
         [HttpGet]
         [Route("~/cancelled")]
@@ -50,6 +62,11 @@ namespace boxinator.Controllers
             return _mapper.Map<List<ShipmentStatusLogReadDTO>>(cancelledShipments);
         }
 
+        /// <summary>
+        /// Add new shipment
+        /// </summary>
+        /// <param name="shipmentDTO"></param>
+        /// <returns>Created shipment</returns>
         // POST: /shipments
         [HttpPost]
         public async Task<ActionResult<ShipmentReadDTO>> Add(ShipmentCreateDTO shipmentDTO)
@@ -59,6 +76,11 @@ namespace boxinator.Controllers
             return _mapper.Map<ShipmentReadDTO>(resultShipment);
         }
 
+        /// <summary>
+        /// Get shipment by id
+        /// </summary>
+        /// <param name="shipmentId"></param>
+        /// <returns>Found shipment</returns>
         // GET: /shipments/:shipment_id
         [HttpGet("{shipmentId}")]
         public async Task<ActionResult<ShipmentReadDTO>> Get(int shipmentId)
@@ -67,6 +89,11 @@ namespace boxinator.Controllers
             return _mapper.Map<ShipmentReadDTO>(shipment);
         }
 
+        /// <summary>
+        /// Get shipments by user id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>List of shipments</returns>
         // GET: /shipments/customer/:customer_id
         [HttpGet("~/customer/{userId}")]
         public async Task<ActionResult<List<ShipmentReadDTO>>> GetByUser(int userId)
@@ -75,6 +102,12 @@ namespace boxinator.Controllers
             return _mapper.Map<List<ShipmentReadDTO>>(shipments);
         }
 
+        /// <summary>
+        /// Update shipment by id
+        /// </summary>
+        /// <param name="shipmentId"></param>
+        /// <param name="shipmentDto"></param>
+        /// <returns>Updated shipment</returns>
         //PUT: /shipments/:shipment_id
         [HttpPut("{shipmentId}")]
         public async Task<ActionResult<ShipmentReadDTO>> Update(int shipmentId, ShipmentEditDTO shipmentDto)
@@ -84,6 +117,11 @@ namespace boxinator.Controllers
             return _mapper.Map<ShipmentReadDTO>(resultShipment);
         }
 
+        /// <summary>
+        /// Delete shipment by id
+        /// </summary>
+        /// <param name="shipmentId"></param>
+        /// <returns>True or false</returns>
         // DELETE /shipments/:shipment_id
         [HttpDelete("{shipmentId}")]
         public async Task<ActionResult<bool>> Delete(int shipmentId)
