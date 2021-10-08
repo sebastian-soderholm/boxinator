@@ -30,19 +30,21 @@ namespace boxinator.Services.Interfaces
         }
 
         /// <summary>
-        /// Get country by id
+        /// Get country with multiplier by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Retrieved country</returns>
         public async Task<Country> Get(int id) =>
-            await _context.Countries.Where(x => x.Id == id).FirstOrDefaultAsync();
+            await _context.Countries.Where(x => x.Id == id)
+            .Include(x => x.Zone)
+            .FirstOrDefaultAsync();
 
         /// <summary>
-        /// Get all countries
+        /// Get all countries and multipliers
         /// </summary>
         /// <returns>List of countries</returns>
         public async Task<List<Country>> GetAll() =>
-            await _context.Countries.ToListAsync();
+            await _context.Countries.Include(x => x.Zone).ToListAsync();
 
         /// <summary>
         /// Update country by id

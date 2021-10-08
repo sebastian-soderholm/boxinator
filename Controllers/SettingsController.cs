@@ -24,7 +24,7 @@ namespace boxinator.Controllers
         }
 
         /// <summary>
-        /// Get country multipliers
+        /// Get countries with multipliers
         /// </summary>
         /// <returns>List of countries with multipliers</returns>
         // GET: /settings/countries
