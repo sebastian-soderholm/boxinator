@@ -10,8 +10,8 @@ using boxinator.Models;
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    [Migration("20211007065410_testasdf")]
-    partial class testasdf
+    [Migration("20211008103129_testestasdf")]
+    partial class testestasdf
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -154,6 +154,30 @@ namespace boxinator.Migrations
                         });
                 });
 
+            modelBuilder.Entity("boxinator.Models.Domain.Status", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Status");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "CREATED"
+                        });
+                });
+
             modelBuilder.Entity("boxinator.Models.Domain.User", b =>
                 {
                     b.Property<int>("Id")
@@ -254,14 +278,14 @@ namespace boxinator.Migrations
                     b.Property<int>("ShipmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ShipmentId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("ShipmentStatusLog");
 
@@ -269,9 +293,9 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 7, 9, 54, 9, 921, DateTimeKind.Local).AddTicks(5204),
+                            Date = new DateTime(2021, 10, 8, 13, 31, 28, 299, DateTimeKind.Local).AddTicks(1016),
                             ShipmentId = 1,
-                            Status = "CREATED"
+                            StatusId = 1
                         });
                 });
 
@@ -341,7 +365,15 @@ namespace boxinator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("boxinator.Models.Domain.Status", "Status")
+                        .WithMany("ShipmentStatusLogs")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Shipment");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("boxinator.Models.BoxType", b =>
@@ -358,6 +390,11 @@ namespace boxinator.Migrations
                 {
                     b.Navigation("Boxes");
 
+                    b.Navigation("ShipmentStatusLogs");
+                });
+
+            modelBuilder.Entity("boxinator.Models.Domain.Status", b =>
+                {
                     b.Navigation("ShipmentStatusLogs");
                 });
 

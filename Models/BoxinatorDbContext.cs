@@ -17,8 +17,10 @@ namespace boxinator.Models
         public DbSet<Country> Countries { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<ShipmentStatusLog> ShipmentStatusLogs { get; set; }
+        public DbSet<Status> Statuses { get; set; }
         public DbSet<Zone> Zones { get; set; }
         public DbSet<User> Users { get; set; }
+
 
         public BoxinatorDbContext(IConfiguration config)
         {
@@ -37,6 +39,12 @@ namespace boxinator.Models
                 .HasOne(m => m.Shipment)
                 .WithMany(f => f.ShipmentStatusLogs)
                 .HasForeignKey(m => m.ShipmentId);
+
+            modelBuilder.Entity<ShipmentStatusLog>()
+                .HasOne(m => m.Status)
+                .WithMany(m => m.ShipmentStatusLogs)
+                .HasForeignKey(m => m.StatusId);
+            
 
             modelBuilder.Entity<Country>()
                 .HasOne(m => m.Zone)
@@ -120,12 +128,20 @@ namespace boxinator.Models
                 }
             );
 
+            modelBuilder.Entity<Status>().HasData(
+                new Status()
+                {
+                    Id = 1,
+                    Name = "CREATED"
+                }
+            );
+
             modelBuilder.Entity<ShipmentStatusLog>().HasData(
                 new ShipmentStatusLog()
                 {
                     Id = 1,
                     ShipmentId = 1,
-                    Status = "CREATED",
+                    StatusId = 1,
                     Date = DateTime.Now
 
                 }

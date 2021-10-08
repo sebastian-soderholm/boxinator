@@ -15,10 +15,10 @@ namespace boxinator.Models
         public int Id { get; set; }
         [Required]
         public int ShipmentId { get; set; }
-        public Shipment Shipment { get; set; }
         [Required]
-        [MaxLength(20)]
-        public string Status { get; set; }
+        public int StatusId { get; set; }
+        public Status Status { get; set; }
+        public Shipment Shipment { get; set; }
         public DateTime Date { get; set; }
 
     }
