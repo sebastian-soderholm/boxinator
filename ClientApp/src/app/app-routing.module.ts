@@ -8,6 +8,7 @@ import { MyShipmentsPage } from './shipment/pages/my-shipments/my-shipments.page
 import { NewShipmentPage } from './shipment/pages/new-shipment/new-shipment.page';
 import { MyAccountPage } from './account/pages/my-account/my-account.page';
 import { EditAccountPage } from './account/pages/edit-account/edit-account.page';
+import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipment.page';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterPage,
+  },
+  {
+    path: 'guest',
+    component: GuestShipmentPage,
   },
   {
     path: 'dashboard',
