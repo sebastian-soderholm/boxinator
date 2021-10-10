@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//Pages
 import { LoginPage } from './login/pages/login/login.page';
 import { RegisterPage } from './login/pages/register/register.page';
 import { DashboardPage } from './shipment/pages/dashboard/dashboard.page';
@@ -14,7 +15,6 @@ import { EditAccountPage } from './account/pages/edit-account/edit-account.page'
 import { MenuPage } from './navigation/pages/menu/menu.page';
 import { CountrySettingsPage } from './admin/pages/country-settings/country-settings.page';
 import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipment.page';
-
 
 @NgModule({
   declarations: [
@@ -33,7 +33,8 @@ import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipmen
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
