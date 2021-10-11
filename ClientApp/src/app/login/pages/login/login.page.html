@@ -1,7 +1,17 @@
 <h1>Login</h1>
-<form #loginUser="" (ngSubmit)="onLoginClick(loginUser.value.username)" class="input-group-append">
-  <input class="form-control" type="text" id="first_name" name="firstName" placeholder="First Name" #firstName=""> <br>
+<div class="form" [formGroup]="loginForm">
+  <input class="form-control" formControlName="email" type="email" placeholder="Email" required>
 
-  <input class="form-control" type="email" id="email" name="email" placeholder="Email" ngModel #email=""> <br>
-  <button type="submit" class="">Login</button>
-</form>
+  <div *ngIf="email.dirty || email.touched" class="alert">
+    <div *ngIf="email.errors?.required">
+      <p>Email is required</p>
+    </div>
+    <div *ngIf="email.errors?.pattern">
+      <p>Email format is invalid</p>
+    </div>
+  </div>
+
+  <input class="form-control" formControlName="email" type="text"  placeholder="Password">
+
+  <button (click)="login()">Login</button>
+</div>
