@@ -3,7 +3,7 @@ using Xunit;
 
 namespace BoxinatorAPITests
 {
-    public class UnitTest1
+    public class AccountTest
     {
         [Fact]
         public void Test1()

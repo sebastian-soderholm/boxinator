@@ -9064,38 +9064,34 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sebastian.soderholm\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\jani.vihervuori\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sebastian.soderholm\\source\\repos\\boxinator\\BoxinatorAPITests\\BoxinatorAPITests.csproj",
+      "projectUniqueName": "C:\\Users\\jani.vihervuori\\source\\repos\\boxinator\\BoxinatorAPITests\\BoxinatorAPITests.csproj",
       "projectName": "BoxinatorAPITests",
-      "projectPath": "C:\\Users\\sebastian.soderholm\\source\\repos\\boxinator\\BoxinatorAPITests\\BoxinatorAPITests.csproj",
-      "packagesPath": "C:\\Users\\sebastian.soderholm\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sebastian.soderholm\\source\\repos\\boxinator\\BoxinatorAPITests\\obj\\",
+      "projectPath": "C:\\Users\\jani.vihervuori\\source\\repos\\boxinator\\BoxinatorAPITests\\BoxinatorAPITests.csproj",
+      "packagesPath": "C:\\Users\\jani.vihervuori\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jani.vihervuori\\source\\repos\\boxinator\\BoxinatorAPITests\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\sebastian.soderholm\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\jani.vihervuori\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\sebastian.soderholm\\source\\repos\\boxinator\\API\\boxinator.csproj": {
-              "projectPath": "C:\\Users\\sebastian.soderholm\\source\\repos\\boxinator\\API\\boxinator.csproj"
+            "C:\\Users\\jani.vihervuori\\source\\repos\\boxinator\\API\\boxinator.csproj": {
+              "projectPath": "C:\\Users\\jani.vihervuori\\source\\repos\\boxinator\\API\\boxinator.csproj"
             }
           }
         }
