@@ -42,7 +42,7 @@ namespace boxinator.Controllers
         /// <returns>List of shipments</returns>
         // GET: /shipments/complete
         [HttpGet]
-        [Route("~/complete")]
+        [Route("/shipments/complete")]
         public async Task<ActionResult<List<ShipmentStatusLogReadDTO>>> GetAllComplete()
         {
             var completedShipments = await _service.GetAllComplete();
@@ -55,7 +55,7 @@ namespace boxinator.Controllers
         /// <returns>List of shipments</returns>
         // GET: /shipments/cancelled
         [HttpGet]
-        [Route("~/cancelled")]
+        [Route("/shipments/cancelled")]
         public async Task<ActionResult<List<ShipmentStatusLogReadDTO>>> GetAllCancelled()
         {
             var cancelledShipments = await _service.GetAllCancelled();
@@ -82,7 +82,7 @@ namespace boxinator.Controllers
         /// <param name="shipmentId"></param>
         /// <returns>Found shipment</returns>
         // GET: /shipments/:shipment_id
-        [HttpGet("{shipmentId}")]
+        [HttpGet("/shipments/{shipmentId}")]
         public async Task<ActionResult<ShipmentReadDTO>> Get(int shipmentId)
         {
             var shipment = await _service.Get(shipmentId);
@@ -95,7 +95,7 @@ namespace boxinator.Controllers
         /// <param name="userId"></param>
         /// <returns>List of shipments</returns>
         // GET: /shipments/customer/:customer_id
-        [HttpGet("~/customer/{userId}")]
+        [HttpGet("/shipments/customer/{userId}")]
         public async Task<ActionResult<List<ShipmentReadDTO>>> GetByUser(int userId)
         {
             var shipments = await _service.GetByUser(userId);
@@ -109,7 +109,7 @@ namespace boxinator.Controllers
         /// <param name="shipmentDto"></param>
         /// <returns>Updated shipment</returns>
         //PUT: /shipments/:shipment_id
-        [HttpPut("{shipmentId}")]
+        [HttpPut("/shipments/{shipmentId}")]
         public async Task<ActionResult<ShipmentReadDTO>> Update(int shipmentId, ShipmentEditDTO shipmentDto)
         {
             Shipment updatedShipment = _mapper.Map<Shipment>(shipmentDto);
@@ -122,8 +122,8 @@ namespace boxinator.Controllers
         /// </summary>
         /// <param name="shipmentId"></param>
         /// <returns>True or false</returns>
-        // DELETE /shipments/:shipment_id
-        [HttpDelete("{shipmentId}")]
+        // DELETE: /shipments/:shipment_id
+        [HttpDelete("/shipments/{shipmentId}")]
         public async Task<ActionResult<bool>> Delete(int shipmentId)
         {
             return await _service.Delete(shipmentId);

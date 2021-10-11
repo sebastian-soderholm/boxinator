@@ -22,48 +22,119 @@ namespace BoxinatorAPITests
 {
     public class ShipmentsControllerTests
     {
+        private readonly ShipmentsController _shipmentController;
         private readonly Mock<IShipmentService> _serviceMock = new Mock<IShipmentService>();
         private readonly ITestOutputHelper _testOutputHelper;
+        private readonly TestData _testData = new TestData();
+        private Mapper _mapper;
 
         public ShipmentsControllerTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
+            _mapper = (Mapper)new MapperConfiguration(cfg => {
+                cfg.CreateMap<ShipmentStatusLog, ShipmentStatusLogReadDTO>();
+                cfg.CreateMap<ShipmentStatusLogReadDTO, ShipmentStatusLog>();
+                cfg.CreateMap<Shipment, ShipmentReadDTO>();
+                cfg.CreateMap<ShipmentReadDTO, Shipment>();
+                cfg.CreateMap<Shipment, ShipmentCreateDTO>();
+                cfg.CreateMap<ShipmentCreateDTO, Shipment>();
+            }).CreateMapper();
+            _shipmentController = new ShipmentsController(_serviceMock.Object, _mapper);
         }
 
         [Fact]
-        public async Task Get_Get_ReturnsShipmentAsync()
+        public async Task Get_Get_ReturnsShipmentById()
         {
             // Arrange
-            //Mapper configuration
-            var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<Shipment, ShipmentReadDTO>();
-                cfg.CreateMap<ShipmentReadDTO, Shipment>();
-            });
-            var mapper = config.CreateMapper();
-
-            ShipmentsController controller = new ShipmentsController(_serviceMock.Object, mapper);
-
-            var shipment = new Shipment
-            {
-                Id = 1,
-                ReceiverName = "Petteri Smith",
-                Cost = 19.99,
-                User = new User() { Id = 1 },
-                UserId = 1,
-                Country = new Country() { Id = 1 },
-                CountryId = 1,
-                Boxes = new List<Box>(),
-                ShipmentStatusLogs = new List<ShipmentStatusLog>()
-            };
-
-            _serviceMock.Setup(p => p.Get(1)).ReturnsAsync(shipment);
+            int shipmentId = 1;
+            ShipmentsController controller = new ShipmentsController(_serviceMock.Object, _mapper);
+            _serviceMock.Setup(p => p.Get(shipmentId)).ReturnsAsync(_testData.Shipment);
 
             // Act
-            var result = await controller.Get(1);
-            _testOutputHelper.WriteLine(result.Value.ReceiverName);
+            var actual = await controller.Get(shipmentId);
+            _testOutputHelper.WriteLine(actual.Value.ReceiverName);
 
             // Assert
-            Assert.True("Petteri Smith".Equals(result.Value.ReceiverName));
+            Assert.True(_testData.Shipment.ReceiverName.Equals(actual.Value.ReceiverName));
+        }
+
+        [Fact]
+        public async Task Get_GetByUser_ReturnsShipmentsByUserId()
+        {
+            // Arrange
+            _serviceMock.Setup(p => p.GetByUser(1)).ReturnsAsync(_testData.ShipmentList);
+
+            var expected = _mapper.Map<List<ShipmentReadDTO>>(_testData.ShipmentList);
+
+            // Act
+            var actual = await _shipmentController.GetByUser(1);
+            _testOutputHelper.WriteLine(actual.Value[0].ReceiverName.ToString());
+
+            // Assert
+            Assert.Equal(expected.Count, actual.Value.Count);
+
+        }
+
+        [Fact]
+        public async Task Get_GetAllCurrent_ReturnsCurrentShipments()
+        {
+            // Arrange
+            _serviceMock.Setup(p => p.GetAllCurrent()).ReturnsAsync(_testData.StatusLogList);
+            var expected = _mapper.Map<List<ShipmentStatusLogReadDTO>>(_testData.StatusLogList);
+
+            // Act
+            var actual = await _shipmentController.GetAllCurrent();
+
+            // Assert
+            Assert.Equal(expected.Count, actual.Value.Count);
+
+        }
+
+        [Fact]
+        public async Task Get_GetAllComplete_ReturnsCompletedShipments()
+        {
+            // Arrange
+            _serviceMock.Setup(p => p.GetAllComplete()).ReturnsAsync(_testData.StatusLogList);
+            var expected = _mapper.Map<List<ShipmentStatusLogReadDTO>>(_testData.StatusLogList);
+
+            // Act
+            var actual = await _shipmentController.GetAllComplete();
+
+            // Assert
+            Assert.Equal(expected.Count, actual.Value.Count);
+
+        }
+
+        [Fact]
+        public async Task Get_GetAllCancelled_ReturnsCancelledShipments()
+        {
+            // Arrange
+            _serviceMock.Setup(p => p.GetAllCancelled()).ReturnsAsync(_testData.StatusLogList);
+            var expected = _mapper.Map<List<ShipmentStatusLogReadDTO>>(_testData.StatusLogList);
+
+            // Act
+            var actual = await _shipmentController.GetAllCancelled();
+
+            // Assert
+            Assert.Equal(expected.Count, actual.Value.Count);
+
+        }
+
+        [Fact]
+        public async Task Get_Add_ReturnsAddedShipment()
+        {
+            // Arrange
+            var newShipment = _mapper.Map<ShipmentCreateDTO>(_testData.NewShipment);
+            var expected = _mapper.Map<ShipmentReadDTO>(_testData.NewShipment);
+            _serviceMock.Setup(p => p.Add(_testData.NewShipment)).ReturnsAsync(_testData.NewShipment);
+
+            // Act
+            var actual = await _shipmentController.Add(newShipment);
+
+            // Assert
+            Assert.Equal(newShipment.ReceiverName, actual.Value.ReceiverName);
+
         }
     }
+
 }
