@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -47,11 +48,10 @@ namespace BoxinatorAPITests
         {
             // Arrange
             int shipmentId = 1;
-            ShipmentsController controller = new ShipmentsController(_serviceMock.Object, _mapper);
             _serviceMock.Setup(p => p.Get(shipmentId)).ReturnsAsync(_testData.Shipment);
 
             // Act
-            var actual = await controller.Get(shipmentId);
+            var actual = await _shipmentController.Get(shipmentId);
             _testOutputHelper.WriteLine(actual.Value.ReceiverName);
 
             // Assert
@@ -121,20 +121,48 @@ namespace BoxinatorAPITests
         }
 
         [Fact]
-        public async Task Get_Add_ReturnsAddedShipment()
+        public async Task Delete_Delete_ReturnsTrue()
         {
             // Arrange
+            int shipmentId = 4;
+            _serviceMock.Setup(x => x.Delete(shipmentId)).ReturnsAsync(true);
+
+            // Act
+            var actual = await _shipmentController.Delete(shipmentId);
+
+            // Assert
+            Assert.True(true.Equals(actual.Value));
+
+        }
+
+        [Fact]
+        public async Task Post_Add_ReturnsAddedShipment()
+        {
+            //Arrange
             var newShipment = _mapper.Map<ShipmentCreateDTO>(_testData.NewShipment);
-            var expected = _mapper.Map<ShipmentReadDTO>(_testData.NewShipment);
-            _serviceMock.Setup(p => p.Add(_testData.NewShipment)).ReturnsAsync(_testData.NewShipment);
 
             // Act
             var actual = await _shipmentController.Add(newShipment);
 
-            // Assert
-            Assert.Equal(newShipment.ReceiverName, actual.Value.ReceiverName);
-
+            //Assert
+            Assert.True(_testData.NewShipment.ReceiverName.Equals(actual.Value.ReceiverName));
         }
+
+        [Fact]
+        public async Task Put_Update_ReturnsUpdatedShipment()
+        {
+            //Arrange
+            var newShipment = _mapper.Map<ShipmentCreateDTO>(_testData.NewShipment);
+            newShipment.ReceiverName = "New Jukka";
+
+            // Act
+            var actual = await _shipmentController.Add(newShipment);
+
+            //Assert
+            Assert.True(_testData.NewShipment.ReceiverName.Equals(actual.Value.ReceiverName));
+        }
+
+
     }
 
 }

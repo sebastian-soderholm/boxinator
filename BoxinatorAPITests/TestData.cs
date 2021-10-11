@@ -14,9 +14,29 @@ namespace BoxinatorAPITests
         private List<Shipment> _shipmentList;
         private Shipment _shipment;
         private Shipment _newShipment;
+        private User _user;
+        private User _newUser;
 
         public TestData()
         {
+            _user = new User
+            {
+                Id = 1,
+                Country = new Country() { Id = 1 },
+                CountryId = 1,
+                Email = "test@mail.com",
+                AccountType = "test"
+            };
+
+            _newUser = new User
+            {
+                Id = 2,
+                Country = new Country() { Id = 2 },
+                CountryId = 2,
+                Email = "test2@mail.com",
+                AccountType = "test2"
+            };
+
             _shipment = new Shipment
             {
                 Id = 1,
@@ -33,7 +53,7 @@ namespace BoxinatorAPITests
             _newShipment = new Shipment
             {
                 Id = 2,
-                ReceiverName = "Testi Jukka",
+                ReceiverName = "New Pekka",
                 Cost = 1.52,
                 User = new User() { Id = 2 },
                 UserId = 2,
@@ -98,6 +118,17 @@ namespace BoxinatorAPITests
                     ShipmentStatusLogs = new List<ShipmentStatusLog>()
                 }
             };
+        }
+
+
+        public User User
+        {
+            get { return _user; }
+        }
+
+        public User NewUser
+        {
+            get { return _user; }
         }
 
         public Shipment Shipment
