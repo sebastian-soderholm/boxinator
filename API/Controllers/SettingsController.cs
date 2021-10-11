@@ -29,6 +29,7 @@ namespace boxinator.Controllers
         /// <returns>List of countries with multipliers</returns>
         // GET: /settings/countries
         [HttpGet]
+        [Route("/settings/countries")]
         public async Task<ActionResult<List<CountryReadDTO>>> GetAll()
         {
             var countries = await _service.GetAll();
@@ -42,6 +43,7 @@ namespace boxinator.Controllers
         /// <returns>Added country</returns>
         // POST: /settings/countries
         [HttpPost]
+        [Route("/settings/countries")]
         public async Task<ActionResult<CountryReadDTO>> Add(CountryCreateDTO countryDTO)
         {
             Country newCountry = _mapper.Map<Country>(countryDTO);
@@ -56,7 +58,8 @@ namespace boxinator.Controllers
         /// <param name="countryDTO"></param>
         /// <returns>Updated country</returns>
         //PUT: /settings/countries:country_id
-        [HttpPut("{countryId}")]
+        [HttpPut]
+        [Route("/settings/countries/{countryId}")]
         public async Task<ActionResult<CountryReadDTO>> Update(int countryId, CountryEditDTO countryDTO)
         {
             Country updatedCountry = _mapper.Map<Country>(countryDTO);
