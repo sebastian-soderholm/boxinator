@@ -31,8 +31,8 @@ namespace boxinator.Controllers
         [HttpGet]
         public async Task<ActionResult<List<CountryReadDTO>>> GetAll()
         {
-            var currentShipments = await _service.GetAll();
-            return _mapper.Map<List<CountryReadDTO>>(currentShipments);
+            var countries = await _service.GetAll();
+            return _mapper.Map<List<CountryReadDTO>>(countries);
         }
 
         /// <summary>

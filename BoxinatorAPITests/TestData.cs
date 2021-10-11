@@ -12,10 +12,12 @@ namespace BoxinatorAPITests
     {
         private List<ShipmentStatusLog> _shipmentStatusLogList;
         private List<Shipment> _shipmentList;
+        private List<Country> _countryList;
         private Shipment _shipment;
         private Shipment _newShipment;
         private User _user;
         private User _newUser;
+        private Country _country;
 
         public TestData()
         {
@@ -118,6 +120,25 @@ namespace BoxinatorAPITests
                     ShipmentStatusLogs = new List<ShipmentStatusLog>()
                 }
             };
+
+            _countryList = new List<Country>()
+            {
+                new Country
+                {
+                    Id = 1,
+                    Name = "Finland",
+                    Zone = new Zone(){ Id = 1},
+                    ZoneId = 1
+                }
+            };
+
+            _country = new Country
+            {
+                Id = 2,
+                Name = "Sweden",
+                Zone = new Zone() { Id = 1 },
+                ZoneId = 1
+            };
         }
 
 
@@ -151,5 +172,14 @@ namespace BoxinatorAPITests
             get { return _shipmentList; }
         }
 
+        public List<Country> CountryList
+        {
+            get { return _countryList; }
+        }
+
+        public Country Country
+        {
+            get { return _country; }
+        }
     }
 }

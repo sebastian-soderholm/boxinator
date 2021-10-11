@@ -36,11 +36,10 @@ namespace BoxinatorAPITests
         {
             // Arrange
             int accountId = 1;
-            AccountController controller = new AccountController(_serviceMock.Object, _mapper);
             _serviceMock.Setup(p => p.Get(accountId)).ReturnsAsync(_testData.User);
 
             // Act
-            var actual = await controller.Get(accountId);
+            var actual = await _accountController.Get(accountId);
             _testOutputHelper.WriteLine(actual.Value.Email);
 
             // Assert

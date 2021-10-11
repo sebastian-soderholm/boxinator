@@ -39,6 +39,8 @@ namespace BoxinatorAPITests
                 cfg.CreateMap<ShipmentReadDTO, Shipment>();
                 cfg.CreateMap<Shipment, ShipmentCreateDTO>();
                 cfg.CreateMap<ShipmentCreateDTO, Shipment>();
+                cfg.CreateMap<ShipmentEditDTO, Shipment>();
+                cfg.CreateMap<Shipment, ShipmentEditDTO>();
             }).CreateMapper();
             _shipmentController = new ShipmentsController(_serviceMock.Object, _mapper);
         }
@@ -152,11 +154,12 @@ namespace BoxinatorAPITests
         public async Task Put_Update_ReturnsUpdatedShipment()
         {
             //Arrange
-            var newShipment = _mapper.Map<ShipmentCreateDTO>(_testData.NewShipment);
+            int shipmentId = 1;
+            var newShipment = _mapper.Map<ShipmentEditDTO>(_testData.NewShipment);
             newShipment.ReceiverName = "New Jukka";
 
             // Act
-            var actual = await _shipmentController.Add(newShipment);
+            var actual = await _shipmentController.Update(shipmentId, newShipment);
 
             //Assert
             Assert.True(_testData.NewShipment.ReceiverName.Equals(actual.Value.ReceiverName));
