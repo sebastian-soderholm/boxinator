@@ -131,6 +131,5 @@ namespace boxinator.Services
                 .Where(s => s.StatusId == 1 /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
         }
 
-
     }
 }
