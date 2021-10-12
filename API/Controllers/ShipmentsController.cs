@@ -3,6 +3,7 @@ using boxinator.Models.Domain;
 using boxinator.Models.DTO.Shipment;
 using boxinator.Models.DTO.ShipmentStatusLog;
 using boxinator.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace boxinator.Controllers
 {
     [ApiController]
     [Route("shipments")]
+    [Authorize]
     public class ShipmentsController : ControllerBase
     {
         private readonly IShipmentService _service;
