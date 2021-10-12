@@ -35,8 +35,12 @@ namespace boxinator
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<BoxinatorDbContext>(options =>
                 options.UseSqlServer(Configuration.GetSection("ConnectionStrings").GetSection("localSQLBoxinatorDB").Value));
+
             services.AddScoped<IShipmentService, ShipmentService>();
-            //services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ISettingsService, SettingsService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Boxinator", Version = "v1" });

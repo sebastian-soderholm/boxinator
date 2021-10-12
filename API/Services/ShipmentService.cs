@@ -26,7 +26,10 @@ namespace boxinator.Services
         public async Task<Shipment> Add(Shipment shipment)
         {
             var resultShipment = await _context.Shipments.AddAsync(shipment);
-            await _context.SaveChangesAsync();
+            if(resultShipment.Entity != null)
+            {
+                await _context.SaveChangesAsync();
+            }
 
             return resultShipment.Entity;
         }
@@ -130,7 +133,6 @@ namespace boxinator.Services
                 .ThenInclude(u => u.User)
                 .Where(s => s.StatusId == 1 /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
         }
-
 
     }
 }

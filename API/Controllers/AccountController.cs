@@ -26,7 +26,7 @@ namespace boxinator.Controllers
         /// <param name="accountId"></param>
         /// <returns>Retrieved user</returns>
         // GET: /account/:account_id
-        [HttpGet("{accountId}")]
+        [HttpGet("/account/{accountId}")]
         public async Task<ActionResult<UserReadDTO>> Get(int accountId)
         {
             var resultUser = await _service.Get(accountId);
@@ -40,7 +40,7 @@ namespace boxinator.Controllers
         /// <param name="userDTO"></param>
         /// <returns>Updated user</returns>
         // PUT: /account/:account_id
-        [HttpPut("{accountId}")]
+        [HttpPut("/account/{accountId}")]
         public async Task<ActionResult<UserReadDTO>> Update(int accountId, UserEditDTO userDTO)
         {
             User updatedUser = _mapper.Map<User>(userDTO);
@@ -68,7 +68,7 @@ namespace boxinator.Controllers
         /// <param name="accountId"></param>
         /// <returns></returns>
         // DELETE: /account/:account_id
-        [HttpDelete("{accountId}")]
+        [HttpDelete("/account/{accountId}")]
         public async Task<ActionResult<bool>> Delete(int accountId)
         {
             // RESTRICT TO ADMIN ONLY!
