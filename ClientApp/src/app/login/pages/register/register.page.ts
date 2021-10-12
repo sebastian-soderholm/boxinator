@@ -53,14 +53,13 @@ export class RegisterPage implements OnInit {
         Validators.required,
         Validators.minLength(5),
         //At least one lowercase letter, one uppercase letter, one number, one special character
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/)
+        // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/)
       ]),
       confirmPassword: new FormControl(this._confirmPassword, [
         Validators.required,
         Validators.minLength(5),
         //At least one lowercase letter, one uppercase letter, one number, one special character
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/),
-
+        // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/),
       ]),
       dateOfBirth: new FormControl(this._registerUser.dateOfBirth, [
         // Validators.pattern(/a-zA-Z/)
@@ -77,13 +76,22 @@ export class RegisterPage implements OnInit {
       ]),
       contactNumber: new FormControl(this._registerUser.contactNumber, [
         //Must be a valid phone number format
-        Validators.pattern(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/)
+        // Validators.pattern(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/)
       ]),
     });
   }
 
   register(): void {
-    console.log(this._registerForm)
+    this._registerUser.firstName = this._registerForm.get('firstName').value
+    this._registerUser.lastName = this._registerForm.get('lastName').value
+    this._registerUser.email = this._registerForm.get('email').value
+    this._registerUser.password = this._registerForm.get('password').value
+    this._registerUser.dateOfBirth = this._registerForm.get('dateOfBirth').value
+    this._registerUser.dateOfBirth = this._registerForm.get('country').value
+    this._registerUser.dateOfBirth = this._registerForm.get('zip').value
+    this._registerUser.dateOfBirth = this._registerForm.get('contactNumber').value
+
+    console.log("Register user: " + JSON.stringify(this._registerUser))
   }
   get registerForm() {
     return this._registerForm
