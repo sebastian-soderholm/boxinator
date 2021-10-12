@@ -49,4 +49,10 @@ export class LoginPage implements OnInit {
   get loginForm() {
     return this._loginForm
   }
+
+  googleLogin() {
+    console.log("toimii")
+    this.loginService.googleLogin()
+    this.router.navigate(['dashboard']);
+  }
 }
