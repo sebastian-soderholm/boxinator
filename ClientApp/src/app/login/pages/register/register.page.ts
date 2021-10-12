@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterUser } from '../../models/register-user.model';
 import { LoginService } from '../../services/login.service';
-import { FieldsMatch } from './fields-match'
+import { passwordsMatch } from './fields-match'
 
 @Component({
   selector: 'app-register',
@@ -57,10 +57,9 @@ export class RegisterPage implements OnInit {
       ]),
       confirmPassword: new FormControl(this._confirmPassword, [
         Validators.required,
-        Validators.minLength(5),
         //At least one lowercase letter, one uppercase letter, one number, one special character
         // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/),
-        // FieldsMatch("password", "confirmPassword")
+
       ]),
       dateOfBirth: new FormControl(this._registerUser.dateOfBirth, [
         // Validators.pattern(/a-zA-Z/)
@@ -79,7 +78,7 @@ export class RegisterPage implements OnInit {
         //Must be a valid phone number format
         // Validators.pattern(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/)
       ]),
-    });
+    },{ validators: passwordsMatch });
   }
 
   register(): void {
@@ -111,7 +110,7 @@ export class RegisterPage implements OnInit {
     return this._registerForm.get('password')
   }
   get confirmPassword() {
-    return this._confirmPassword
+    return this._registerForm.get('confirmPassword')
   }
   get dateOfBirth() {
     return this._registerForm.get('dateOfBirth')
