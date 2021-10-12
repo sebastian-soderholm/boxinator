@@ -1,7 +1,7 @@
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
 
 /* Check if given field names have same content */
-export function PassworsdMatch(controlName: string, matchingControlName: string) {
+export function FieldsMatch(controlName: string, matchingControlName: string) {
   return (formGroup: FormGroup) => {
     const control = formGroup.controls[controlName];
     const matchingControl = formGroup.controls[matchingControlName];

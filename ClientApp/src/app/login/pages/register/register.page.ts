@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterUser } from '../../models/register-user.model';
 import { LoginService } from '../../services/login.service';
-// import { PassworsdMatch} from './passwords-match'
+import { FieldsMatch } from './fields-match'
 
 @Component({
   selector: 'app-register',
@@ -60,6 +60,7 @@ export class RegisterPage implements OnInit {
         Validators.minLength(5),
         //At least one lowercase letter, one uppercase letter, one number, one special character
         // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/),
+        // FieldsMatch("password", "confirmPassword")
       ]),
       dateOfBirth: new FormControl(this._registerUser.dateOfBirth, [
         // Validators.pattern(/a-zA-Z/)
