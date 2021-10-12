@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterUser } from '../../models/register-user.model';
 import { LoginService } from '../../services/login.service';
+import { RegisterService } from '../../services/register.service';
 import { passwordsMatch } from './fields-match'
 
 @Component({
@@ -26,6 +27,7 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private readonly loginService: LoginService,
+    private readonly registerService: RegisterService,
     private readonly router: Router,
   ) { }
 
@@ -86,12 +88,16 @@ export class RegisterPage implements OnInit {
     this._registerUser.lastName = this._registerForm.get('lastName').value
     this._registerUser.email = this._registerForm.get('email').value
     this._registerUser.password = this._registerForm.get('password').value
-    this._registerUser.dateOfBirth = this._registerForm.get('dateOfBirth').value
+    // this._registerUser.dateOfBirth = this._registerForm.get('dateOfBirth').value
+    // this._registerUser.dateOfBirth = "2021-10-12T18:00:15.956Z"
     this._registerUser.country = this._registerForm.get('country').value
     this._registerUser.zip = this._registerForm.get('zip').value
     this._registerUser.contactNumber = this._registerForm.get('contactNumber').value
 
-    console.log("Register user: " + JSON.stringify(this._registerUser))
+    // console.log("Register user: " + JSON.stringify(this._registerUser))
+    this.registerService.registerUser(this._registerUser, function(){
+      console.log("User registered successfully!")
+    })
   }
   get registerForm() {
     return this._registerForm

@@ -1,9 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../models/user.model';
+import { environment } from 'src/environments/environment';
+import { LoginUser } from '../models/login-user.model';
+import { User } from '../../account/models/user.model';
 
-const apiURL = "";
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,7 @@ export class LoginService {
   private _user: User | undefined;
   private _jwt: string = "";
   private _loggedIn: boolean = false;
+  private _apiUrl = environment.baseURL;
 
   constructor(
     private readonly http: HttpClient,
@@ -29,7 +32,7 @@ export class LoginService {
 
   private async userLoggedIn(token: string) {
     await this.http
-      .get<User[]>(`${apiURL}/loggedin?token=${token}`)
+      .get<User[]>(`${this._apiUrl}/loggedin?token=${token}`)
       .subscribe((user) => {
         if (user) {
           this._loggedIn = true;
@@ -56,5 +59,21 @@ export class LoginService {
   }
   get loggedIn(): boolean {
     return this._loggedIn;
+  }
+
+  public loginUserTEST(loginInfo: LoginUser, onSuccess: () => void): void {
+    const httpOptions = {
+      headers: new HttpHeaders({
+			  'Content-Type': 'application/json'
+			  //'X-API-Key': API_KEY,
+      }),
+    };
+
+    const body = JSON.stringify(loginInfo);
+    this.http.post<User>(this._apiUrl+'/login', body, httpOptions)
+    .subscribe((user: User) => {
+      //this.sessionService.setUser(user);
+      onSuccess();
+    });
   }
 }

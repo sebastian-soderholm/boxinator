@@ -36,7 +36,10 @@ export class LoginPage implements OnInit {
   login(): void {
     this._loginUser.email = this._loginForm.get('email').value
     this._loginUser.password = this._loginForm.get('password').value
-    console.log(this._loginUser);
+    // console.log(this._loginUser);
+    this.loginService.loginUserTEST(this._loginUser, function(){
+      console.log("User logged in!")
+    })
   }
 
   get email() {
