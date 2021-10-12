@@ -21,7 +21,6 @@ import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from "@angu
 export const passwordsMatch: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   const password = control.get('password');
   const confirmPassword = control.get('confirmPassword');
-  console.log(password?.value + " VS " + confirmPassword?.value)
   return password && confirmPassword && password.value === confirmPassword.value ? { passwordsMatch: true } : null;
 };
 
