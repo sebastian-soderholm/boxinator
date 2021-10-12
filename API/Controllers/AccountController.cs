@@ -3,6 +3,7 @@ using boxinator.Models.Domain;
 using boxinator.Models.DTO.User;
 using boxinator.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,7 +11,8 @@ namespace boxinator.Controllers
 {
     [ApiController]
     [Route("account")]
-    [Authorize]
+    //[Authorize]
+    [EnableCors("_myAllowSpecificOrigins")]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _service;

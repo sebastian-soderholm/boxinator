@@ -3,6 +3,7 @@ using boxinator.Models.Domain;
 using boxinator.Models.DTO.User;
 using boxinator.Services.Interfaces;
 using FirebaseAdmin;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace boxinator.Controllers
 {
     [ApiController]
     [Route("login")]
+    [EnableCors("_myAllowSpecificOrigins")]
     public class LoginController : ControllerBase
     {
         private readonly IUserService _service;

@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+
 //Pages
 import { LoginPage } from './login/pages/login/login.page';
 import { RegisterPage } from './login/pages/register/register.page';
@@ -34,7 +36,8 @@ import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipmen
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
