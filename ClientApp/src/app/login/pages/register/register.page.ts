@@ -87,9 +87,9 @@ export class RegisterPage implements OnInit {
     this._registerUser.email = this._registerForm.get('email').value
     this._registerUser.password = this._registerForm.get('password').value
     this._registerUser.dateOfBirth = this._registerForm.get('dateOfBirth').value
-    this._registerUser.dateOfBirth = this._registerForm.get('country').value
-    this._registerUser.dateOfBirth = this._registerForm.get('zip').value
-    this._registerUser.dateOfBirth = this._registerForm.get('contactNumber').value
+    this._registerUser.country = this._registerForm.get('country').value
+    this._registerUser.zip = this._registerForm.get('zip').value
+    this._registerUser.contactNumber = this._registerForm.get('contactNumber').value
 
     console.log("Register user: " + JSON.stringify(this._registerUser))
   }

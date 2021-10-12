@@ -87,7 +87,8 @@
   </div>
 
   <!-- <button (click)="register()">Register</button> -->
-  <button type="submit" [disabled]="registerForm.controls['firstName'].invalid ||
+  <button type="submit" (click)="register()" [disabled]="
+  registerForm.controls['firstName'].invalid ||
   registerForm.controls['lastName'].invalid  ||
   registerForm.controls['email'].invalid  ||
   registerForm.controls['password'].invalid  ||
