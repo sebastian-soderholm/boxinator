@@ -30,13 +30,12 @@ export class LoginPage implements OnInit {
       ]),
       password: new FormControl(this._loginUser.password, [
         Validators.required,
-        Validators.minLength(5),
       ]),
     });
   }
   login(): void {
-    // this._loginUser.email = this.emailControl.value
-    // this._loginUser.password = this.passwordControl.value
+    this._loginUser.email = this._loginForm.get('email').value
+    this._loginUser.password = this._loginForm.get('password').value
     console.log(this._loginUser);
   }
 
