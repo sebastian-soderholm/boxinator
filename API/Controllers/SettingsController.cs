@@ -2,6 +2,8 @@
 using boxinator.Models;
 using boxinator.Models.DTO.Country;
 using boxinator.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,8 @@ namespace boxinator.Controllers
 {
     [ApiController]
     [Route("settings")]
+    //[Authorize]
+    [EnableCors("_myAllowSpecificOrigins")]
     public class SettingsController : ControllerBase
     {
         private readonly ISettingsService _service;

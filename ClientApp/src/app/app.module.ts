@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
 
 //Pages
 import { LoginPage } from './login/pages/login/login.page';
@@ -39,6 +40,7 @@ import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipmen
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

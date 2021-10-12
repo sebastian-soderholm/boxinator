@@ -140,13 +140,15 @@ namespace BoxinatorAPITests
         [Fact]
         public async Task Post_Add_ReturnsAddedShipment()
         {
-            //Arrange
+            // Arrange
+            _serviceMock.Setup(p => p.Add(_testData.NewShipment)).ReturnsAsync(_testData.NewShipment);
             var newShipment = _mapper.Map<ShipmentCreateDTO>(_testData.NewShipment);
 
             // Act
             var actual = await _shipmentController.Add(newShipment);
+            _testOutputHelper.WriteLine(actual.Value.ReceiverName);
 
-            //Assert
+            // Assert
             Assert.True(_testData.NewShipment.ReceiverName.Equals(actual.Value.ReceiverName));
         }
 
@@ -155,11 +157,14 @@ namespace BoxinatorAPITests
         {
             //Arrange
             int shipmentId = 1;
-            var newShipment = _mapper.Map<ShipmentEditDTO>(_testData.NewShipment);
-            newShipment.ReceiverName = "New Jukka";
+            var updatedShipment = _mapper.Map<ShipmentEditDTO>(_testData.NewShipment);
+            updatedShipment.ReceiverName = "New Jukka";
+            var mappedShipment = _mapper.Map<Shipment>(updatedShipment);
+
+            _serviceMock.Setup(p => p.Update(shipmentId, mappedShipment)).ReturnsAsync(mappedShipment);
 
             // Act
-            var actual = await _shipmentController.Update(shipmentId, newShipment);
+            var actual = await _shipmentController.Update(shipmentId, updatedShipment);
 
             //Assert
             Assert.True(_testData.NewShipment.ReceiverName.Equals(actual.Value.ReceiverName));
