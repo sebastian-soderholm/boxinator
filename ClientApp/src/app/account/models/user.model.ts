@@ -5,7 +5,7 @@ export interface User {
   email: string;
   password: string;
   dateOfBirth: Date;
-  country: string;
+  countryId: number;
   zip: string;
-  contactNumber: number;
+  contactNumber: string;
 }

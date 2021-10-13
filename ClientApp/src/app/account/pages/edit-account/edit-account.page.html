@@ -1,1 +1,103 @@
-<p>edit-account works!</p>
+<h1>Edit account</h1>
+<form class="form" [formGroup]="editUserForm">
+  <!-- First name -->
+  <input class="form-control" formControlName="firstName" type="text" placeholder="First name" required>
+  <div *ngIf="firstName.dirty || firstName.touched" class="alert">
+    <div *ngIf="firstName.errors?.required">
+      <p>First name is required</p>
+    </div>
+    <div *ngIf="firstName.errors?.pattern">
+      <p>First name can only contain letters</p>
+    </div>
+  </div>
+  <!-- Last name -->
+  <input class="form-control" formControlName="lastName" type="text" placeholder="Last name" required>
+  <div *ngIf="lastName.dirty || lastName.touched" class="alert">
+    <div *ngIf="lastName.errors?.required">
+      <p>Last name is required</p>
+    </div>
+    <div *ngIf="lastName.errors?.pattern">
+      <p>Last name can only contain letters</p>
+    </div>
+  </div>
+  <!-- Email -->
+  <input class="form-control" formControlName="email" type="email" placeholder="Email" required>
+  <div *ngIf="email.dirty || email.touched" class="alert">
+    <div *ngIf="email.errors?.required">
+      <p>Email is required</p>
+    </div>
+    <div *ngIf="email.errors?.minlength">
+      <p>Email is too short</p>
+    </div>
+    <div *ngIf="email.errors?.pattern">
+      <p>Email format is invalid</p>
+    </div>
+  </div>
+
+  <!-- Password -->
+  <input class="form-control" formControlName="password" type="password" placeholder="Password" required>
+  <div *ngIf="password.dirty || password.touched" class="alert">
+    <div *ngIf="password.errors?.required">
+      <p>Password is required</p>
+    </div>
+    <div *ngIf="password.errors?.minlength">
+      <p>Password is too short</p>
+    </div>
+    <div *ngIf="password.errors?.pattern">
+      <p>Password must contain at least one lowercase and uppercase character, number and special character</p>
+    </div>
+  </div>
+  <!-- Password confirmation -->
+  <input class="form-control" formControlName="confirmPassword" type="password" placeholder="Confirm password" required>
+  <div *ngIf="confirmPassword.dirty || confirmPassword.touched" class="alert">
+    <div *ngIf="confirmPassword.errors?.required">
+      <p>Password is required</p>
+    </div>
+    <div *ngIf="!editUserForm.errors?.passwordsMatch">
+      <p>Passwords are not equal</p>
+    </div>
+  </div>
+
+  <!-- Date -->
+  <input  formControlName="dateOfBirth" type="date" placeholder="Date of birth" max="2021-10-11">
+
+  <!-- Country -->
+  <input  formControlName="countryId" type="number" placeholder="1">
+  <div *ngIf="countryId.dirty || countryId.touched" class="alert">
+    <!-- <div *ngIf="countryId.errors?.pattern">
+      <p>Country name can only contain letters</p>
+    </div> -->
+  </div>
+  <!-- Postal code -->
+  <input formControlName="zip" type="text" placeholder="Postal code">
+  <div *ngIf="zip.dirty || zip.touched" class="alert">
+    <div *ngIf="zip.errors?.minlength">
+      <p>Postal code is too short</p>
+    </div>
+    <div *ngIf="zip.errors?.pattern">
+      <p>Postal code can only contain numbers</p>
+    </div>
+  </div>
+  <!-- Contact Number -->
+  <input formControlName="contactNumber" type="text" placeholder="Contact number">
+  <div *ngIf="contactNumber.dirty || contactNumber.touched" class="alert">
+    <div *ngIf="contactNumber.errors?.pattern">
+      <p>Format invalid</p>
+    </div>
+  </div>
+
+  <!-- <button (click)="register()">Register</button> -->
+  <button type="submit" (click)="updateUser()" [disabled]="
+  editUserForm.controls['firstName'].invalid ||
+  editUserForm.controls['lastName'].invalid  ||
+  editUserForm.controls['email'].invalid  ||
+  editUserForm.controls['password'].invalid  ||
+  editUserForm.controls['confirmPassword'].invalid ||
+  editUserForm.controls['dateOfBirth'].invalid ||
+  editUserForm.controls['countryId'].invalid ||
+  editUserForm.controls['zip'].invalid ||
+  editUserForm.controls['contactNumber'].invalid
+  ">
+    Submit
+  </button>
+</form>

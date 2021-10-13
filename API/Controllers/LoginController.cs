@@ -3,6 +3,7 @@ using boxinator.Models.Domain;
 using boxinator.Models.DTO.User;
 using boxinator.Services.Interfaces;
 using FirebaseAdmin;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;

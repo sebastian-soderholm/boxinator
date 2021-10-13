@@ -1,5 +1,4 @@
-export interface Customer {
-  id: number;
+export interface RegisterUser {
   firstName: string;
   lastName: string;
   email: string;
@@ -7,6 +6,6 @@ export interface Customer {
   dateOfBirth: Date;
   country: string;
   zip: string;
-  contactNumber: number;
+  contactNumber: string;
 
 }

@@ -393,3 +393,11 @@ FodyWeavers.xsd
 
 # Properties folder of the project
 appsettings.json
+
+# Debug files
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages

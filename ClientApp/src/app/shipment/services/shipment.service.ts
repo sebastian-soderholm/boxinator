@@ -4,7 +4,7 @@ import {
 	HttpResponse,
 	HttpHeaders
 } from '@angular/common/http';
-  
+
 import { Injectable } from '@angular/core';
 import { ShipmentTableData } from '../models/shipment-table.model';
 import { environment } from 'src/environments/environment';
@@ -20,9 +20,9 @@ const apiUrl = environment.baseURL;
 export class ShipmentService {
   private _error: string = '';
 
-  constructor(private readonly http: HttpClient, private readonly sessionService: SessionService) { 
+  constructor(private readonly http: HttpClient, private readonly sessionService: SessionService) {
   }
-  
+
   public getShipments(onSuccess: () => void): void {
     this.http.get<ShipmentTableData[]>(apiUrl + '/shipments')
     .subscribe((shipments: ShipmentTableData[]) => { 
