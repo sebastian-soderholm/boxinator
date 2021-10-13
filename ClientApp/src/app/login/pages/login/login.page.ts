@@ -37,9 +37,9 @@ export class LoginPage implements OnInit {
     this._loginUser.email = this._loginForm.get('email').value
     this._loginUser.password = this._loginForm.get('password').value
     // console.log(this._loginUser);
-    this.loginService.loginUserTEST(this._loginUser, function(){
+/*     this.loginService.loginUserTEST(this._loginUser, function(){
       console.log("User logged in!")
-    })
+    }) */
   }
 
   get email() {
@@ -52,7 +52,20 @@ export class LoginPage implements OnInit {
     return this._loginForm
   }
 
-  googleLogin() {
-    this.loginService.googleLogin()
+/*   googleLogin() {
+    this.loginService.googleLogin(function() {
+      console.log("Jee")
+    })
+
+    this.loginService.loginUserTEST(token, this._loginUser);
+  } */
+
+  public googleLogin(): void {
+    this.loginService.googleLogin( async () => {
+      const token = localStorage.getItem('token')
+      let user = localStorage.getItem('user')
+      let newUser = JSON.parse(user!) as LoginUser
+      await this.loginService.loginUserTEST(token, newUser);
+    });
   }
 }

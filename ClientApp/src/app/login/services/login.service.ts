@@ -17,6 +17,7 @@ import { User } from '../../account/models/user.model';
 export class LoginService {
   user$: Observable<User | null | undefined>
   private _user: User | undefined;
+  private _loginUser: LoginUser | undefined;
   private _jwt: string = "";
   private _loggedIn: boolean = false;
   private _apiUrl = environment.baseURL;
@@ -63,6 +64,7 @@ export class LoginService {
   get user(): User | undefined {
     return this._user;
   }
+
   setUser(user: User): void {
     this._user = user;
     localStorage.setItem('user', JSON.stringify(user));
@@ -76,26 +78,47 @@ export class LoginService {
     this._loggedIn = false;
     this.router.navigate(['']);
   }
+  
   get loggedIn(): boolean {
     return this._loggedIn;
   }
 
-  public loginUserTEST(loginInfo: LoginUser, onSuccess: () => void): void {
+  public loginUserTEST(token: any, loginInfo: LoginUser | undefined): void {
     const httpOptions = {
       headers: new HttpHeaders({
-			  'Content-Type': 'application/json'
+			  'Content-Type': 'application/json',
 			  //'X-API-Key': API_KEY,
+        'Authorization': `Bearer ${token}`
       }),
     };
-
     const body = JSON.stringify(loginInfo);
-    this.http.post<User>(this._apiUrl+'/login', body, httpOptions)
-    .subscribe((user: User) => {
+    this.http.post<LoginUser>(this._apiUrl+'/login', body, httpOptions)
+    .subscribe((user: LoginUser) => {
       //this.sessionService.setUser(user);
-      onSuccess();
+      console.log("Toimii :D")
     });
   }
 
+  async googleLogin(onSuccess: () => void) {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await this.afAuth.signInWithPopup(provider).then(function(result: any) {
+      var token = result.credential.accessToken;
+      var user = result.user;
+      alert("login OK" + token);
+      const data = {
+        email: user.email,
+        password: 'x',
+      }
+      let newUser: LoginUser = data
+      localStorage.setItem("token", JSON.stringify(token));
+      localStorage.setItem("user", JSON.stringify(newUser));
+      onSuccess();
+    })
+    
+  }
+}
+
+/* 
   async googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     const credential = await this.afAuth.signInWithPopup(provider);
@@ -123,7 +146,7 @@ export class LoginService {
   }
 } 
 
-/*     const provider = new firebase.auth.GoogleAuthProvider();
+const provider = new firebase.auth.GoogleAuthProvider();
     await this.afAuth.signInWithPopup(provider).then(function(result: any) {
       var token = result.credential.accessToken;
       var user = result.user;
