@@ -3,3 +3,4 @@ BoxinatorAPITests/obj/Debug/net5.0/BoxinatorAPITests.GeneratedMSBuildEditorConfi
 BoxinatorAPITests/obj/Debug/net5.0/BoxinatorAPITests.csproj.AssemblyReference.cache
 BoxinatorAPITests/obj/project.assets.json
 BoxinatorAPITests/obj/project.nuget.cache
+API/appsettings.Development.json
