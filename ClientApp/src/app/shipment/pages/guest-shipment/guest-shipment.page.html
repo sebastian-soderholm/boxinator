@@ -33,7 +33,7 @@
     </div>
   </div>
   <!-- Destination country -->
-  <select formControlName="countries">
+  <select formControlName="destinationCountryId">
     <option value="" selected>Choose your country</option>
     <option [ngValue]="country.id" *ngFor="let country of countries">{{country.name}}</option>
   </select>
@@ -49,28 +49,34 @@
     </div>
   </div>
 
-  <!-- <button (click)="register()">Register</button> -->
-  <button type="submit" (click)="createGuestShipment()" [disabled]="
-  guestShipmentForm.controls['senderEmail'].invalid  ||
-  guestShipmentForm.controls['receiverFirstName'].invalid ||
-  guestShipmentForm.controls['receiverLastName'].invalid  ||
-  guestShipmentForm.controls['destinationCountryId'].invalid  ||
-  guestShipmentForm.controls['destinationZipCode'].invalid
-  ">
-    Submit
-  </button>
+  <p>Shipment cost {{cost}}</p>
 </form>
 
 <form class="form" [formGroup]="boxForm">
-  <div *ngFor="let control of boxesForm.controls">
-    <p>Select box properties</p>
+  <div *ngFor="let control of boxesForm.controls; index as i">
+    <p>Select box type</p>
     <!-- Box type select -->
-    <select formControlName="boxType" required>
-      <!-- <option *ngFor="box.name" value="Basic" selected>{{box.name}}</option> -->
-      <!-- <option value="Humble">Humble</option>
-      <option value="Deluxe">Deluxe</option> -->
+    <select class="form-control" formControlName="boxWeight" required>
+      <option value="1" selected>Basic 1 kg</option>
+      <option value="2">Humble 2 kg</option>
+      <option value="5">Deluxe 5 kg</option>
+      <option value="8">Premium 8 kg</option>
     </select>
+
+    <button (click)="removeBox(i)">-</button>
   </div>
+
+
   <button (click)="addBox()">+</button>
 </form>
+
+<!-- <button (click)="register()">Register</button> -->
+<button type="submit" (click)="createGuestShipment()" [disabled]="
+guestShipmentForm.controls['senderEmail'].invalid ||
+guestShipmentForm.controls['receiverFirstName'].invalid ||
+guestShipmentForm.controls['receiverLastName'].invalid ||
+guestShipmentForm.controls['destinationCountryId'].invalid ||
+guestShipmentForm.controls['destinationZipCode'].invalid
+">Ship
+</button>
 

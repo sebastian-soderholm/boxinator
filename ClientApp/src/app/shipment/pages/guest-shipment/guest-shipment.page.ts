@@ -29,12 +29,12 @@ export class GuestShipmentPage implements OnInit {
     colorG: 0,
     colorB: 0
   }
-  // private _boxType: BasicBox | HumbleBox | DeluxeBox | PremiumBox;
   private _countries: Country[] = []
   private _guestShipmentForm: any;
   private _boxesForShipment: Box[] = [];
   private _boxesForm = new FormArray([]);
   private _boxForm: any;
+  private _cost: number = 0;
 
   constructor(
     private readonly router: Router,
@@ -48,6 +48,11 @@ export class GuestShipmentPage implements OnInit {
     });
 
     this._guestShipmentForm = new FormGroup({
+      senderEmail: new FormControl(this._guestShipment.senderEmail, [
+        Validators.required,
+        //Must be in email format
+        Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
+      ]),
       receiverFirstName: new FormControl(this._guestShipment.receiverFirstName, [
         Validators.required,
         //Must contain letters
@@ -58,37 +63,35 @@ export class GuestShipmentPage implements OnInit {
         //Must contain letters
         Validators.pattern(/[a-z]/gi)
       ]),
-      senderEmail: new FormControl(this._guestShipment.senderEmail, [
-        Validators.required,
-        //Must be in email format
-        Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
-      ]),
-      countries: new FormControl(this._guestShipment.destinationCountryId, [
-        //Must contain only letters
-        // Validators.pattern(/[a-z]/gi)
+      destinationCountryId: new FormControl(this._guestShipment.destinationCountryId, [
       ]),
       destinationZipCode: new FormControl(this._guestShipment.destinationZipCode, [
+        Validators.required,
         //Must be a minimum length
         Validators.minLength(5),
         //Must contain only numbers
         Validators.pattern(/^[0-9]*$/)
       ]),
     });
+
     //Form for adding a single box to shipment
     this._boxForm = new FormGroup({
-      boxType: new FormControl(this._box.name, [
-
-      ]),
-      boxWeight: new FormControl(this._box.weight, [
-
-      ])
+      boxWeight: new FormControl(this._box.weight, [])
     });
+  }
 
+  calculateCost() {
+    // this._cost = this._boxesForShipment.reduce((cost: number, box: Box) => {
+    //   cost = box.weight * this._guestShipmentForm.get('destinationCountryId').value
+    // });
   }
 
   addBox() {
     console.log("Adding new boxform...")
     this._boxesForm.push(new FormControl(this._boxForm))
+  }
+  removeBox(index: number) {
+    this._boxesForm.removeAt(index)
   }
 
   createGuestShipment(): void {
@@ -102,9 +105,6 @@ export class GuestShipmentPage implements OnInit {
     this._guestShipment.destinationZipCode = this._guestShipmentForm.get('destinationZipCode').value
 
     console.log("Shipment info: " + JSON.stringify(this._guestShipment))
-
-
-
     // this.registerService.registerUser(this._registerUser, function(){
     //   console.log("User registered successfully!")
     // })
@@ -129,6 +129,9 @@ export class GuestShipmentPage implements OnInit {
   get destinationZipCode() {
     return this._guestShipmentForm.get('destinationZipCode')
   }
+  get cost() {
+    return this._cost
+  }
   //Box form
   get boxForm() {
     return this._boxForm
@@ -138,9 +141,6 @@ export class GuestShipmentPage implements OnInit {
   }
   get boxesForShipment() {
     return this._boxesForShipment;
-  }
-  get boxType() {
-    return this._boxForm.get('boxType')
   }
   //All available countries
   get countries() {
