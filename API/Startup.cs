@@ -58,13 +58,13 @@ namespace boxinator
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 
                 {
-                    options.Authority = "https://securetoken.google.com/FIREBASE-APP-ID";
+                    options.Authority = "https://securetoken.google.com/boxinator";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = "https://securetoken.google.com/FIREBASE-APP-ID",
+                        ValidIssuer = "https://securetoken.google.com/boxinator",
                         ValidateAudience = true,
-                        ValidAudience = "FIREBASE-APP-ID",
+                        ValidAudience = "boxinator",
                         ValidateLifetime = true
                     };
                 });

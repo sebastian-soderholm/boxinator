@@ -17,6 +17,7 @@
       <p>Password is required</p>
     </div>
   </div>
-
   <button type="submit" [disabled]="loginForm.controls['email'].invalid || loginForm.controls['password'].invalid" (click)="login()">Login</button>
 </form>
+
+<button (click)="googleLogin()">Google Login</button>
