@@ -14,13 +14,17 @@ export interface Country {
 	name: string;
 }
 
+export interface Box {
+	color: string;
+}
+
 export interface Shipment {
 	id: number;
 	receiverName: string;
 	cost: string;
 	country: Country;
-	//boxes: [] // needs interface
-	//statusLogs: [] // needs interface
+	boxes: Box[]
+	//shipmentStatusLogList: []
 
 }
 
@@ -33,3 +37,4 @@ export interface MappedData {
 	date: string;
 }
 
+  
