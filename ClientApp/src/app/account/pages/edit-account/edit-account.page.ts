@@ -34,6 +34,7 @@ export class EditAccountPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     this._editUserForm = new FormGroup(
       {
         firstName: new FormControl(this._editUser.firstName, [
