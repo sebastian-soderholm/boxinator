@@ -3,7 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig : {
+    apiKey: "AIzaSyDmiXP0l04AtH2WqqP9m0DAq8Pxo-_rJPA",
+    authDomain: "boxinator.firebaseapp.com",
+    projectId: "boxinator",
+    storageBucket: "boxinator.appspot.com",
+    messagingSenderId: "789898616661",
+    appId: "1:789898616661:web:1b7959121446003ec9d9dc",
+    measurementId: "G-LCX1WECRNE"
+  },
+  API_URL: "https://localhost:44375/"
 };
 
 /*

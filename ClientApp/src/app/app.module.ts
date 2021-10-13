@@ -21,17 +21,7 @@ import { EditAccountPage } from './account/pages/edit-account/edit-account.page'
 import { MenuPage } from './navigation/pages/menu/menu.page';
 import { CountrySettingsPage } from './admin/pages/country-settings/country-settings.page';
 import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipment.page';
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDmiXP0l04AtH2WqqP9m0DAq8Pxo-_rJPA",
-  authDomain: "boxinator.firebaseapp.com",
-  projectId: "boxinator",
-  storageBucket: "boxinator.appspot.com",
-  messagingSenderId: "789898616661",
-  appId: "1:789898616661:web:1b7959121446003ec9d9dc",
-  measurementId: "G-LCX1WECRNE"
-};
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -54,7 +44,7 @@ const firebaseConfig = {
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule // storage

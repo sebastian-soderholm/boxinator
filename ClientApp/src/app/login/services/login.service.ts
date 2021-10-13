@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
@@ -7,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 const apiURL = "";
 
@@ -26,9 +27,12 @@ export class LoginService {
     private afs: AngularFirestore
   ) {
     this.user$ = this.afAuth.authState.pipe(
+      // Get the auth state, then fetch the Firestore user document or return null
       switchMap(user => {
+        // Logged in
         if(user) {
           return this.afs.doc<User>('users/${user.uid}').valueChanges();
+        // Logged out
         } else {
           return of(null)
         }
@@ -65,7 +69,7 @@ export class LoginService {
   }
 
   async logout() {
-    await this.afAuth.signOut();
+    await this.afAuth.signOut(); // Sign out from Firebase
     this._user = undefined;
     localStorage.removeItem('user');
     this._loggedIn = false;
@@ -81,8 +85,10 @@ export class LoginService {
     return this.updateUserData(credential.user);
   }
 
+  // Updates userdata in Firestore
   private updateUserData(user: any) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc('users/${user.uid')
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`)
+    console.log(user.email)
     const data = {
       id: user.uid,
       firstName: user.displayName,
@@ -94,7 +100,39 @@ export class LoginService {
       zip: '',
       contactNumber: ''
     }
+    const newUser: User = data
+    this.setUser(newUser)
     return userRef.set(data, { merge: true })
   }
+} 
 
-}
+/*     const provider = new firebase.auth.GoogleAuthProvider();
+    await this.afAuth.signInWithPopup(provider).then(function(result: any) {
+      var token = result.credential.accessToken;
+      var user = result.user;
+      alert("login OK" + user.email);
+      user.getToken().then(function (t: any) {
+          token = t;
+          this.addUser(user.email, token);
+      }); 
+        }).catch(function (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert(errorCode + " - " + errorMessage);
+        });
+  }
+
+  public addUser(email: string, token: string) : Observable<User> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    const body = JSON.stringify({
+      email: email,
+      token: token,
+    });
+    return this.http.post<User>(environment.API_URL + '/login', body, httpOptions);
+  }
+
+}  */
