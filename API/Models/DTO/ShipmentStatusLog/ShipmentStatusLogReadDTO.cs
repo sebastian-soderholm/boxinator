@@ -1,4 +1,5 @@
 ﻿using boxinator.Models.DTO.Shipment;
+using boxinator.Models.DTO.Status;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,8 @@ namespace boxinator.Models.DTO.ShipmentStatusLog
 {
     public class ShipmentStatusLogReadDTO
     {
-        public string Status { get; set; }
-        public int StatusId { get; set; }
+        public StatusReadDTO StatusReadDTO { get; set; }
+        public ShipmentReadDTO ShipmentReadDTO { get; set; }
         public DateTime Date { get; set; }
     }
 }
