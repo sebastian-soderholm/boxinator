@@ -1,7 +1,7 @@
 <h1>Login</h1>
-<div class="form" [formGroup]="loginForm">
+<form class="form" [formGroup]="loginForm">
+  <!-- Email -->
   <input class="form-control" formControlName="email" type="email" placeholder="Email" required>
-
   <div *ngIf="email.dirty || email.touched" class="alert">
     <div *ngIf="email.errors?.required">
       <p>Email is required</p>
@@ -10,11 +10,14 @@
       <p>Email format is invalid</p>
     </div>
   </div>
-
-  <input class="form-control" formControlName="email" type="text"  placeholder="Password">
-
-  <button (click)="login()">Login</button>
-</div>
-
+  <!-- Password -->
+  <input class="form-control" formControlName="password" type="password"  placeholder="Password" required>
+  <div *ngIf="password.dirty || password.touched" class="alert">
+    <div *ngIf="password.errors?.required">
+      <p>Password is required</p>
+    </div>
+  </div>
+  <button type="submit" [disabled]="loginForm.controls['email'].invalid || loginForm.controls['password'].invalid" (click)="login()">Login</button>
+</form>
 
 <button (click)="googleLogin()">Google Login</button>

@@ -4,8 +4,8 @@ export interface User {
   lastName: string;
   email: string;
   password: string;
-  dateOfBirth: Date | null;
-  country: string | null;
-  zip: string | null;
-  contactNumber: string | null;
+  dateOfBirth: Date;
+  countryId: number;
+  zip: string;
+  contactNumber: string;
 }

@@ -2,6 +2,8 @@
 using boxinator.Models.Domain;
 using boxinator.Models.DTO.User;
 using boxinator.Services.Interfaces;
+using FirebaseAdmin;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ namespace boxinator.Controllers
 {
     [ApiController]
     [Route("login")]
+    [EnableCors("_myAllowSpecificOrigins")]
     public class LoginController : ControllerBase
     {
         private readonly IUserService _service;
@@ -32,9 +35,10 @@ namespace boxinator.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserCreateDTO userDTO)
         {
+            var test = HttpContext.User.Claims;
             // NOTE! Rate limiting policy must be added
 
-            if(userDTO == null)
+            if (userDTO == null)
                 return BadRequest();
 
             User userinfo = _mapper.Map<User>(userDTO);
@@ -45,6 +49,27 @@ namespace boxinator.Controllers
 
             return StatusCode(201);
         }
+
+        /*
+        [HttpPost("verify")]
+        public async Task<IActionResult> VerifyToken(TokenVerifyRequest request)
+        {
+            var auth = FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance;
+
+            try
+            {
+                var response = await auth.VerifyIdTokenAsync(request.Token);
+                if (response != null)
+                    return Accepted();
+            }
+            catch (FirebaseException ex)
+            {
+                return BadRequest();
+            }
+
+            return BadRequest();
+        }
+        */
 
     }
 }

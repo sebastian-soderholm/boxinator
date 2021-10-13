@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../models/user.model';
 import firebase from 'firebase/compat/app'
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { LoginUser } from '../models/login-user.model';
+import { User } from '../../account/models/user.model';
 
-const apiURL = "";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,7 @@ export class LoginService {
   private _user: User | undefined;
   private _jwt: string = "";
   private _loggedIn: boolean = false;
+  private _apiUrl = environment.baseURL;
 
   constructor(
     private readonly http: HttpClient,
@@ -49,7 +50,7 @@ export class LoginService {
 
   private async userLoggedIn(token: string) {
     await this.http
-      .get<User[]>(`${apiURL}/loggedin?token=${token}`)
+      .get<User[]>(`${this._apiUrl}/loggedin?token=${token}`)
       .subscribe((user) => {
         if (user) {
           this._loggedIn = true;
@@ -79,6 +80,22 @@ export class LoginService {
     return this._loggedIn;
   }
 
+  public loginUserTEST(loginInfo: LoginUser, onSuccess: () => void): void {
+    const httpOptions = {
+      headers: new HttpHeaders({
+			  'Content-Type': 'application/json'
+			  //'X-API-Key': API_KEY,
+      }),
+    };
+
+    const body = JSON.stringify(loginInfo);
+    this.http.post<User>(this._apiUrl+'/login', body, httpOptions)
+    .subscribe((user: User) => {
+      //this.sessionService.setUser(user);
+      onSuccess();
+    });
+  }
+
   async googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     const credential = await this.afAuth.signInWithPopup(provider);
@@ -92,13 +109,13 @@ export class LoginService {
     const data = {
       id: user.uid,
       firstName: user.displayName,
-      lastName: '',
+      lastName: 'x',
       email: user.email,
-      password: '',
-      dateOfBirth: null,
-      country: '',
-      zip: '',
-      contactNumber: ''
+      password: 'x',
+      dateOfBirth: new Date(Date.now()),
+      countryId: 1,
+      zip: 'x',
+      contactNumber: 'x'
     }
     const newUser: User = data
     this.setUser(newUser)

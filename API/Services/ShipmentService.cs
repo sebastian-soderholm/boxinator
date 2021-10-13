@@ -107,7 +107,7 @@ namespace boxinator.Services
             return await _context.ShipmentStatusLogs
                 .Include(s => s.Shipment)
                 .ThenInclude(u => u.User)
-                .Where(s => s.StatusId != 1 && s.StatusId != 2 /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
+                .Where(s => s.StatusId != 3 && s.StatusId != 2 /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
         }
 
         /// <summary>
