@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ShipmentService } from '../../services/shipment.service';
-import { SessionService } from 'src/app/login/services/session.service';
-import { Shipment } from 'src/app/login/models/shipment.model';
+import { SessionService } from '../../services/shipment-session.service';
+import { ShipmentTableData } from '../../models/shipment-table.model';
+import { MappedData } from '../../models/shipment-table.model';
 
 @Component({
   selector: 'app-my-shipments',
@@ -10,10 +11,9 @@ import { Shipment } from 'src/app/login/models/shipment.model';
 })
 export class MyShipmentsPage implements OnInit {
 
-  displayedColumns: string[] = ['status', 'date', 'statusId'/*,'receiverName', 'cost'*/];
+  displayedColumns: string[] = ['id', 'cost', 'weight', 'status', 'receiverName', 'statusId', 'date'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
-  data: Shipment[] = [];
-
+  data: MappedData[] = [];
 
   constructor(
     private readonly shipmentService: ShipmentService,
@@ -22,8 +22,8 @@ export class MyShipmentsPage implements OnInit {
 
   ngOnInit() {
     this.shipmentService.getShipments(async () => {
-      console.log(this.sessionService.shipments);
-      this.data = this.sessionService.shipments!;
+      var mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
+      this.data = mappedData;
     });
     console.log(this.shipmentService.getError())
   }
@@ -51,6 +51,18 @@ export class MyShipmentsPage implements OnInit {
       this.columnsToDisplay[randomIndex] = temp;
     }
   }
-
+ 
+  public mapShipments(shipments: ShipmentTableData[]) {
+		return shipments.map((obj) => {
+			return {
+				id: obj.shipmentReadDTO.id,
+        cost: obj.shipmentReadDTO.cost.toString(),
+        weight: 1,
+        status: obj.statusReadDTO.name.toString(),
+        receiverName: obj.shipmentReadDTO.receiverName.toString(),
+        date: obj.date.toString()
+			};    
+		});
+	 }
 
 }
