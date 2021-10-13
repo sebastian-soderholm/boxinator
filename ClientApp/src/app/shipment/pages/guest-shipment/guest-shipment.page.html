@@ -1,1 +1,76 @@
-<p>guest-shipment works!</p>
+<form class="form" [formGroup]="guestShipmentForm">
+  <!-- Email -->
+  <input class="form-control" formControlName="senderEmail" type="email" placeholder="Email" required>
+  <div *ngIf="senderEmail.dirty || senderEmail.touched" class="alert">
+    <div *ngIf="senderEmail.errors?.required">
+      <p>Email is required</p>
+    </div>
+    <div *ngIf="senderEmail.errors?.minlength">
+      <p>Email is too short</p>
+    </div>
+    <div *ngIf="senderEmail.errors?.pattern">
+      <p>Email format is invalid</p>
+    </div>
+  </div>
+  <!-- Reciever first name -->
+  <input class="form-control" formControlName="receiverFirstName" type="text" placeholder="First name" required>
+  <div *ngIf="receiverFirstName.dirty || receiverFirstName.touched" class="alert">
+    <div *ngIf="receiverFirstName.errors?.required">
+      <p>First name is required</p>
+    </div>
+    <div *ngIf="receiverFirstName.errors?.pattern">
+      <p>First name can only contain letters</p>
+    </div>
+  </div>
+  <!-- Reciever last name -->
+  <input class="form-control" formControlName="receiverLastName" type="text" placeholder="Last name" required>
+  <div *ngIf="receiverLastName.dirty || receiverLastName.touched" class="alert">
+    <div *ngIf="receiverLastName.errors?.required">
+      <p>Last name is required</p>
+    </div>
+    <div *ngIf="receiverLastName.errors?.pattern">
+      <p>Last name can only contain letters</p>
+    </div>
+  </div>
+  <!-- Destination country -->
+  <select formControlName="countries">
+    <option value="" selected>Choose your country</option>
+    <option [ngValue]="country.id" *ngFor="let country of countries">{{country.name}}</option>
+  </select>
+
+  <!-- Destination postal code -->
+  <input formControlName="destinationZipCode" type="text" placeholder="Postal code">
+  <div *ngIf="destinationZipCode.dirty || destinationZipCode.touched" class="alert">
+    <div *ngIf="destinationZipCode.errors?.minlength">
+      <p>Postal code is too short</p>
+    </div>
+    <div *ngIf="destinationZipCode.errors?.pattern">
+      <p>Postal code can only contain numbers</p>
+    </div>
+  </div>
+
+  <!-- <button (click)="register()">Register</button> -->
+  <button type="submit" (click)="createGuestShipment()" [disabled]="
+  guestShipmentForm.controls['senderEmail'].invalid  ||
+  guestShipmentForm.controls['receiverFirstName'].invalid ||
+  guestShipmentForm.controls['receiverLastName'].invalid  ||
+  guestShipmentForm.controls['destinationCountryId'].invalid  ||
+  guestShipmentForm.controls['destinationZipCode'].invalid
+  ">
+    Submit
+  </button>
+</form>
+
+<form class="form" [formGroup]="boxForm">
+  <div *ngFor="let control of boxesForm.controls">
+    <p>Select box properties</p>
+    <!-- Box type select -->
+    <select formControlName="boxType" required>
+      <!-- <option *ngFor="box.name" value="Basic" selected>{{box.name}}</option> -->
+      <!-- <option value="Humble">Humble</option>
+      <option value="Deluxe">Deluxe</option> -->
+    </select>
+  </div>
+  <button (click)="addBox()">+</button>
+</form>
+

@@ -26,3 +26,10 @@ export interface PremiumBox {
   colorG: number;
   colorB: number;
 }
+export interface Box {
+  name: "Basic" | "Humble" | "Deluxe" | "Premium";
+  weight: 1|2|5|8;
+  colorR: number;
+  colorG: number;
+  colorB: number;
+}
