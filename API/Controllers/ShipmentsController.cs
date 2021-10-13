@@ -37,7 +37,8 @@ namespace boxinator.Controllers
         public async Task<ActionResult<List<ShipmentStatusLogReadDTO>>> GetAllCurrent()
         {
             var currentShipments = await _service.GetAllCurrent();
-            return _mapper.Map<List<ShipmentStatusLogReadDTO>>(currentShipments);
+            var mappedList = _mapper.Map<List<ShipmentStatusLogReadDTO>>(currentShipments);
+            return mappedList;
         }
 
         /// <summary>

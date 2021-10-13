@@ -105,8 +105,13 @@ namespace boxinator.Services
         public async Task<List<ShipmentStatusLog>> GetAllCurrent()
         {
             return await _context.ShipmentStatusLogs
+                .Include(x => x.Status)
                 .Include(s => s.Shipment)
-                .ThenInclude(u => u.User)
+                    .ThenInclude(x => x.Country)
+                .Include(s => s.Shipment)
+                    .ThenInclude(x => x.Boxes)
+                .Include(s => s.Shipment)
+                    .ThenInclude(u => u.User)
                 .Where(s => s.StatusId != 3 && s.StatusId != 2 /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
         }
 
