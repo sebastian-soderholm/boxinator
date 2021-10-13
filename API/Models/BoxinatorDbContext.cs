@@ -88,7 +88,6 @@ namespace boxinator.Models
                     Name = "Sweden",
                     ZoneId = 1
                 }
-
             );
 
             modelBuilder.Entity<BoxType>().HasData(
