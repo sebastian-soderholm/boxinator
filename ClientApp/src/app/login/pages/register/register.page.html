@@ -62,26 +62,33 @@
   <input  formControlName="dateOfBirth" type="date" placeholder="Date of birth" max="2021-10-11">
 
   <!-- Country -->
-  <input  formControlName="country" type="text" placeholder="Country of residence">
+  <!-- <input  formControlName="country" type="text" placeholder="Country of residence">
   <div *ngIf="country.dirty || country.touched" class="alert">
     <div *ngIf="country.errors?.pattern">
       <p>Country name can only contain letters</p>
     </div>
-  </div>
+  </div> -->
+
+  <!-- Countries -->
+  <select formControlName="countries">
+    <option value="" selected>Choose your country</option>
+    <option [ngValue]="country.id" *ngFor="let country of countries">{{country.name}}</option>
+  </select>
+
   <!-- Postal code -->
-  <input formControlName="zip" type="text" placeholder="Postal code">
-  <div *ngIf="zip.dirty || zip.touched" class="alert">
-    <div *ngIf="zip.errors?.minlength">
+  <input formControlName="zipCode" type="text" placeholder="Postal code">
+  <div *ngIf="zipCode.dirty || zipCode.touched" class="alert">
+    <div *ngIf="zipCode.errors?.minlength">
       <p>Postal code is too short</p>
     </div>
-    <div *ngIf="zip.errors?.pattern">
+    <div *ngIf="zipCode.errors?.pattern">
       <p>Postal code can only contain numbers</p>
     </div>
   </div>
   <!-- Contact Number -->
-  <input formControlName="contactNumber" type="text" placeholder="Contact number">
-  <div *ngIf="contactNumber.dirty || contactNumber.touched" class="alert">
-    <div *ngIf="contactNumber.errors?.pattern">
+  <input formControlName="phoneNumber" type="text" placeholder="Contact number">
+  <div *ngIf="phoneNumber.dirty || phoneNumber.touched" class="alert">
+    <div *ngIf="phoneNumber.errors?.pattern">
       <p>Format invalid</p>
     </div>
   </div>
@@ -94,9 +101,9 @@
   registerForm.controls['password'].invalid  ||
   registerForm.controls['confirmPassword'].invalid ||
   registerForm.controls['dateOfBirth'].invalid ||
-  registerForm.controls['country'].invalid ||
-  registerForm.controls['zip'].invalid ||
-  registerForm.controls['contactNumber'].invalid
+
+  registerForm.controls['zipCode'].invalid ||
+  registerForm.controls['phoneNumber'].invalid
   ">
     Submit
   </button>

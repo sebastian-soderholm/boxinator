@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CountryService } from '../../services/country.service';
+import { Country } from '../../models/country.model';
 import { RegisterUser } from '../../models/register-user.model';
 import { LoginService } from '../../services/login.service';
 import { RegisterService } from '../../services/register.service';
+import { SessionService } from '../../services/session.service';
 import { passwordsMatch } from './fields-match'
 
 @Component({
@@ -17,24 +20,38 @@ export class RegisterPage implements OnInit {
     lastName: "",
     email: "",
     password: "",
-    dateOfBirth: new Date(Date.now()),
-    country: "",
-    zip: "",
-    contactNumber: "",
+    countryId: null,
+    zipCode: null,
+    dateOfBirth: null,
+    phoneNumber: null
   }
+  private _countries: Country[] = []
   private _registerForm: any
   private _confirmPassword: string = ""
+
 
   constructor(
     private readonly loginService: LoginService,
     private readonly registerService: RegisterService,
     private readonly router: Router,
+    private readonly countryService: CountryService,
+    private readonly sessionService: SessionService
   ) { }
 
   ngOnInit(): void {
     if(this.loginService.loggedIn) {
       this.router.navigate(['dashboard'])
     }
+
+    this.countryService.fetchCountriesToSession(async () => {
+      this._countries = this.sessionService.countries!;
+      // console.log(this.sessionService.countries);
+    });
+
+    //Fetch all countries
+    // this.countryService.getCountries(async () => {
+    //   console.log(this.countryService.countries);
+    // })
     this._registerForm = new FormGroup({
       firstName: new FormControl(this._registerUser.firstName, [
         Validators.required,
@@ -66,17 +83,21 @@ export class RegisterPage implements OnInit {
       dateOfBirth: new FormControl(this._registerUser.dateOfBirth, [
         // Validators.pattern(/a-zA-Z/)
       ]),
-      country: new FormControl(this._registerUser.country, [
+      // country: new FormControl(this._registerUser.country, [
+      //   //Must contain only letters
+      //   Validators.pattern(/[a-z]/gi)
+      // ]),
+      countries: new FormControl(this._registerUser.countryId, [
         //Must contain only letters
-        Validators.pattern(/[a-z]/gi)
+        // Validators.pattern(/[a-z]/gi)
       ]),
-      zip: new FormControl(this._registerUser.zip, [
+      zipCode: new FormControl(this._registerUser.zipCode, [
         //Must be a minimum length
         Validators.minLength(5),
         //Must contain only numbers
         Validators.pattern(/^[0-9]*$/)
       ]),
-      contactNumber: new FormControl(this._registerUser.contactNumber, [
+      phoneNumber: new FormControl(this._registerUser.phoneNumber, [
         //Must be a valid phone number format
         // Validators.pattern(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/)
       ]),
@@ -88,16 +109,20 @@ export class RegisterPage implements OnInit {
     this._registerUser.lastName = this._registerForm.get('lastName').value
     this._registerUser.email = this._registerForm.get('email').value
     this._registerUser.password = this._registerForm.get('password').value
-    // this._registerUser.dateOfBirth = this._registerForm.get('dateOfBirth').value
-    // this._registerUser.dateOfBirth = "2021-10-12T18:00:15.956Z"
-    this._registerUser.country = this._registerForm.get('country').value
-    this._registerUser.zip = this._registerForm.get('zip').value
-    this._registerUser.contactNumber = this._registerForm.get('contactNumber').value
 
-    // console.log("Register user: " + JSON.stringify(this._registerUser))
-    this.registerService.registerUser(this._registerUser, function(){
-      console.log("User registered successfully!")
-    })
+    this._registerUser.dateOfBirth = this._registerForm.get('dateOfBirth').value
+    // this._registerUser.dateOfBirth = "2021-10-12T18:00:15.956Z"
+
+    //Apply countryId only if selected
+    this._registerUser.countryId = this._registerForm.get('countries').value
+
+    this._registerUser.zipCode = this._registerForm.get('zipCode').value
+    this._registerUser.phoneNumber = this._registerForm.get('phoneNumber').value
+
+    console.log("Register user: " + JSON.stringify(this._registerUser))
+    // this.registerService.registerUser(this._registerUser, function(){
+    //   console.log("User registered successfully!")
+    // })
   }
   get registerForm() {
     return this._registerForm
@@ -124,10 +149,13 @@ export class RegisterPage implements OnInit {
   get country() {
     return this._registerForm.get('country')
   }
-  get zip() {
-    return this._registerForm.get('zip')
+  get countries() {
+    return this._countries;
   }
-  get contactNumber() {
-    return this._registerForm.get('contactNumber')
+  get zipCode() {
+    return this._registerForm.get('zipCode')
+  }
+  get phoneNumber() {
+    return this._registerForm.get('phoneNumber')
   }
 }

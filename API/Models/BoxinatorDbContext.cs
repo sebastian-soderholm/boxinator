@@ -81,7 +81,14 @@ namespace boxinator.Models
                     Id = 1,
                     Name = "Finland",
                     ZoneId = 1
+                },
+                new Country()
+                {
+                    Id = 2,
+                    Name = "Sweden",
+                    ZoneId = 1
                 }
+
             );
 
             modelBuilder.Entity<BoxType>().HasData(

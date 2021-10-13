@@ -73,6 +73,12 @@ namespace boxinator.Migrations
                             Id = 1,
                             Name = "Finland",
                             ZoneId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Sweden",
+                            ZoneId = 1
                         });
                 });
 
@@ -289,7 +295,7 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 8, 14, 44, 42, 684, DateTimeKind.Local).AddTicks(3646),
+                            Date = new DateTime(2021, 10, 13, 15, 42, 45, 869, DateTimeKind.Local).AddTicks(3828),
                             ShipmentId = 1,
                             StatusId = 1
                         });
