@@ -17,7 +17,18 @@ namespace boxinator.Models.Domain
         // Fields
         [Required]
         [MaxLength(100)]
-        public string ReceiverName { get; set; }
+        //Reciever info
+        public string FirstName { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string LastName { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string Address { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string ZipCode { get; set; }
+        [Required]
         public double Cost { get; set; }
 
         // Relationships

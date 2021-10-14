@@ -87,7 +87,6 @@ export class GuestShipmentPage implements OnInit {
   }
 
   addBox() {
-    console.log("Adding new boxform...")
     this._boxesForm.push(new FormControl(this._boxForm))
   }
   removeBox(index: number) {
@@ -105,6 +104,13 @@ export class GuestShipmentPage implements OnInit {
     this._guestShipment.destinationZipCode = this._guestShipmentForm.get('destinationZipCode').value
 
     console.log("Shipment info: " + JSON.stringify(this._guestShipment))
+
+    const boxesFromForms = this._boxesForm.controls.map(box => {
+      const boxInfo = {
+        // weight: box.get('boxWeight').value
+      }
+    })
+    console.log("Box forms: " + JSON.stringify(this._boxForm))
     // this.registerService.registerUser(this._registerUser, function(){
     //   console.log("User registered successfully!")
     // })

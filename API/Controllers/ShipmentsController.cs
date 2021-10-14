@@ -81,6 +81,21 @@ namespace boxinator.Controllers
         }
 
         /// <summary>
+        /// Add new shipment
+        /// </summary>
+        /// <param name="shipmentDTO"></param>
+        /// <returns>Created shipment</returns>
+        // POST: /shipments
+        [HttpPost]
+        [Route("/shipments/guest")]
+        public async Task<ActionResult<ShipmentReadDTO>> GuestAdd(ShipmentGuestCreateDTO shipmentGuestDTO)
+        {
+            Shipment newShipment = _mapper.Map<Shipment>(shipmentGuestDTO);
+            var resultShipment = await _service.Add(newShipment);
+            return _mapper.Map<ShipmentReadDTO>(resultShipment);
+        }
+
+        /// <summary>
         /// Get shipment by id
         /// </summary>
         /// <param name="shipmentId"></param>

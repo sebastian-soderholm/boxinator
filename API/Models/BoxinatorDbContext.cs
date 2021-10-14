@@ -45,7 +45,6 @@ namespace boxinator.Models
                 .WithMany(m => m.ShipmentStatusLogs)
                 .HasForeignKey(m => m.StatusId);
             
-
             modelBuilder.Entity<Country>()
                 .HasOne(m => m.Zone)
                 .WithMany(c => c.Countries)
@@ -117,9 +116,12 @@ namespace boxinator.Models
                 new Shipment()
                 {
                     Id = 1,
-                    ReceiverName = "Petteri Smith",
-                    CountryId = 1,
+                    FirstName = "Petteri",
+                    LastName = "Smith",
+                    Address = "Keskuskatu 1",
+                    ZipCode = "00100",
                     Cost = 100.00,
+                    CountryId = 1,
                     UserId = 1
                 }
             );
