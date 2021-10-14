@@ -10,8 +10,8 @@ using boxinator.Models;
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    [Migration("20211013124246_boxinator-test")]
-    partial class boxinatortest
+    [Migration("20211014143946_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -127,19 +127,34 @@ namespace boxinator.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<double>("Cost")
                         .HasColumnType("float");
 
                     b.Property<int>("CountryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ReceiverName")
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -153,10 +168,13 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
+                            Address = "Keskuskatu 1",
                             Cost = 100.0,
                             CountryId = 1,
-                            ReceiverName = "Petteri Smith",
-                            UserId = 1
+                            FirstName = "Petteri",
+                            LastName = "Smith",
+                            UserId = 1,
+                            ZipCode = "00100"
                         });
                 });
 
@@ -297,7 +315,7 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 13, 15, 42, 45, 869, DateTimeKind.Local).AddTicks(3828),
+                            Date = new DateTime(2021, 10, 14, 17, 39, 46, 529, DateTimeKind.Local).AddTicks(306),
                             ShipmentId = 1,
                             StatusId = 1
                         });

@@ -6,6 +6,7 @@ using boxinator.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,12 @@ namespace boxinator.Controllers
     {
         private readonly IShipmentService _service;
         private readonly IMapper _mapper;
-
-        public ShipmentsController(IShipmentService service, IMapper mapper)
+        private IConfiguration _configuration;
+        public ShipmentsController(IShipmentService service, IMapper mapper, IConfiguration config)
         {
             _service = service;
             _mapper = mapper;
+            _configuration = config;
         }
 
         /// <summary>

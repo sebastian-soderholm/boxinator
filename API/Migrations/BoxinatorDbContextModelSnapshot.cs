@@ -313,7 +313,7 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 14, 13, 5, 17, 877, DateTimeKind.Local).AddTicks(6010),
+                            Date = new DateTime(2021, 10, 14, 17, 39, 46, 529, DateTimeKind.Local).AddTicks(306),
                             ShipmentId = 1,
                             StatusId = 1
                         });
