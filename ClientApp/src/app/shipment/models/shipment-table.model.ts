@@ -20,11 +20,12 @@ export interface Box {
 
 export interface Shipment {
 	id: number;
-	receiverName: string;
+	address: string;
+	firstName: string;
+	lastName: string;
 	cost: string;
 	country: Country;
 	boxes: Box[]
-	//shipmentStatusLogList: []
 
 }
 
@@ -33,6 +34,7 @@ export interface MappedData {
 	cost: string;
 	weight: number;
 	status: string;
+	address: string;
 	receiverName: string;
 	date: string;
 }

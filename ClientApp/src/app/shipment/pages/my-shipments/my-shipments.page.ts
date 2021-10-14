@@ -21,9 +21,10 @@ import { Data } from '@angular/router';
 })
 export class MyShipmentsPage implements OnInit {
 
-  displayedColumns: string[] = ['id', 'cost', 'weight', 'status', 'receiverName', 'statusId', 'date'];
+  displayedColumns: string[] = ['id', 'cost', 'weight', 'status', 'receiverName', 'date'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource: MappedData[] = [];
+  dateVisibility: boolean = true;
 
   constructor(
     private readonly shipmentService: ShipmentService,
@@ -31,38 +32,36 @@ export class MyShipmentsPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.shipmentService.getShipments(async () => {
-      //console.log(this.sessionService.shipmentTableData)
+    this.shipmentService.getAllCurrent(async () => {
       const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
-      console.log(mappedData)
       this.dataSource = mappedData;
     });
 
     console.log(this.shipmentService.getError())
   }
 
-  
-  addColumn() {
-    const randomColumn = Math.floor(Math.random() * this.displayedColumns.length);
-    this.columnsToDisplay.push(this.displayedColumns[randomColumn]);
-  }
-
-  removeColumn() {
-    if (this.columnsToDisplay.length) {
-      this.columnsToDisplay.pop();
+  onValChange(selection: any, state : any){
+    console.log(state)
+    if(state == true) {
+      this.removeColumn(selection);
+    }
+    else {
+      this.addColumn(selection);
     }
   }
 
-  shuffle() {
-    let currentIndex = this.columnsToDisplay.length;
-    while (0 !== currentIndex) {
-      let randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
+  addColumn(selection: any) {
+    if(!this.columnsToDisplay.includes(selection)) {
+      this.columnsToDisplay.push(selection);
+    }
+  }
 
-      // Swap
-      let temp = this.columnsToDisplay[currentIndex];
-      this.columnsToDisplay[currentIndex] = this.columnsToDisplay[randomIndex];
-      this.columnsToDisplay[randomIndex] = temp;
+  removeColumn(selection: any) {
+    var index = this.columnsToDisplay.indexOf(selection);
+
+    if (index !== -1) {
+      var filteredAry = this.columnsToDisplay.filter(function(e) { return e !== selection })
+      this.columnsToDisplay = filteredAry;
     }
   }
  
@@ -73,20 +72,20 @@ export class MyShipmentsPage implements OnInit {
         cost: obj.shipmentReadDTO.cost.toString(),
         weight: 1,
         status: obj.statusReadDTO.name.toString(),
-        receiverName: obj.shipmentReadDTO.receiverName.toString(),
+        address: obj.shipmentReadDTO.address.toString(),
+        receiverName: obj.shipmentReadDTO.firstName.toString()+" "+obj.shipmentReadDTO.lastName.toString(),
         date: obj.date.toString(),
-        boxes: this.mapArray(obj.shipmentReadDTO.boxes)
+        boxes: this.mapBoxes(obj.shipmentReadDTO.boxes)
 			};    
 		});
 	 }
 
-   public mapArray(boxes: Box[]) {
+   public mapBoxes(boxes: Box[]) {
     return boxes.map((obj) => {
 			return {
         color: obj.color.toString()
 			};    
 		});
    }
-
 
 }

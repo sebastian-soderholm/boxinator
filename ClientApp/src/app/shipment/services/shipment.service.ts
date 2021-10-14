@@ -23,10 +23,11 @@ export class ShipmentService {
   constructor(private readonly http: HttpClient, private readonly sessionService: SessionService) {
   }
 
-  public getShipments(onSuccess: () => void): void {
+  // get all current shipments
+  public getAllCurrent(onSuccess: () => void): void {
     this.http.get<ShipmentTableData[]>(apiUrl + '/shipments')
     .subscribe((shipments: ShipmentTableData[]) => { 
-      //console.log(shipments)
+      console.log(shipments)
       this.sessionService.setShipments(shipments);
       onSuccess();
     },

@@ -12,6 +12,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 //Pages
 import { LoginPage } from './login/pages/login/login.page';
@@ -25,6 +26,7 @@ import { MenuPage } from './navigation/pages/menu/menu.page';
 import { CountrySettingsPage } from './admin/pages/country-settings/country-settings.page';
 import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipment.page';
 import { environment } from '../environments/environment';
+import { MatButton } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,8 @@ import { environment } from '../environments/environment';
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
-    MatTableModule
+    MatTableModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
