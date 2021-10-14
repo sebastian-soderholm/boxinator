@@ -3,9 +3,9 @@ export interface RegisterUser {
   lastName: string;
   email: string;
   password: string;
-  dateOfBirth: Date;
-  country: string;
-  zip: string;
-  contactNumber: string;
+  countryId: number | null;
+  zipCode: string | null;
+  dateOfBirth: string | null;
+  phoneNumber: string | null;
 
 }

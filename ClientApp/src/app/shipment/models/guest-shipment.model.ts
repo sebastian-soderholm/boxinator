@@ -1,9 +1,12 @@
 import { BasicBox, HumbleBox, DeluxeBox, PremiumBox } from "./box.model";
 
-//Guest is anonymous => no personal info
+//Guest is anonymous => no personal info, only email
 export interface GuestShipment {
-  guestEmail: string;
-  receiverName: string;
-  boxes: [BasicBox | HumbleBox | DeluxeBox | PremiumBox];
+  senderEmail: string;
+  receiverFirstName: string;
+  receiverLastName: string;
   destinationCountryId: number;
+  destinationZipCode: string;
+  cost: number;
+
 }
