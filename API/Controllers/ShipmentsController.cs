@@ -37,13 +37,6 @@ namespace boxinator.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ShipmentStatusLogReadDTO>>> GetAllCurrent()
         {
-            var test2 = HttpContext.User.Identity.IsAuthenticated;
-            var test = HttpContext.User.Claims;
-            var testUser = HttpContext.User;
-            string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
-            string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
-            var auth = FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance;
-
             var currentShipments = await _service.GetAllCurrent();
             var mappedList = _mapper.Map<List<ShipmentStatusLogReadDTO>>(currentShipments);
             return mappedList;
