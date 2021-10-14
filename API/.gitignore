@@ -390,3 +390,4 @@ FodyWeavers.xsd
 
 # Properties folder of the project
 appsettings.json
+firebase-secret-file.json
