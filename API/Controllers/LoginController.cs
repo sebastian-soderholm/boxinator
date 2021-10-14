@@ -3,9 +3,11 @@ using boxinator.Models.Domain;
 using boxinator.Models.DTO.User;
 using boxinator.Services.Interfaces;
 using FirebaseAdmin;
+using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,7 @@ namespace boxinator.Controllers
     [ApiController]
     [Route("login")]
     [EnableCors("_myAllowSpecificOrigins")]
+    //[Authorize]
     public class LoginController : ControllerBase
     {
         private readonly IUserService _service;
@@ -34,20 +37,29 @@ namespace boxinator.Controllers
         /// <returns>StatusCodes 400/401/201</returns>
         /// POST: /login
         [HttpPost]
-        public async Task<IActionResult> Login(UserCreateDTO userDTO)
+        public async Task<IActionResult> Login(/*UserCreateDTO userDTO*/)
         {
+            var test2 = HttpContext.User.Identity.IsAuthenticated;
             var test = HttpContext.User.Claims;
-            // NOTE! Rate limiting policy must be added
+            var testUser = HttpContext.User;
+            string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
+            string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
+            var auth = FirebaseAuth.DefaultInstance;
 
+            FirebaseToken decodedToken = await FirebaseAuth.DefaultInstance
+            .VerifyIdTokenAsync(accessTokenWithBearerPrefix);
+                    string uid = decodedToken.Uid;
+            // NOTE! Rate limiting policy must be added
+            /*
             if (userDTO == null)
                 return BadRequest();
-
+           
             User userinfo = _mapper.Map<User>(userDTO);
             User resultUser = await _service.Login(userinfo);
 
             if(resultUser == null)
                 return StatusCode(401);
-
+             */
             return StatusCode(201);
         }
 
