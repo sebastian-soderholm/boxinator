@@ -17,7 +17,7 @@ namespace boxinator.Controllers
     [ApiController]
     [Route("shipments")]
     [EnableCors("_myAllowSpecificOrigins")]
-    [Authorize]
+    //[Authorize]
     public class ShipmentsController : ControllerBase
     {
         private readonly IShipmentService _service;

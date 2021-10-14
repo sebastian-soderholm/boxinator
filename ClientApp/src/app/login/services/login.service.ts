@@ -83,7 +83,8 @@ export class LoginService {
     return this._loggedIn;
   }
 
-  public loginUserTEST(token: any/*, loginInfo: LoginUser | undefined*/): void {
+  public loginUserTEST(token: string/*, loginInfo: LoginUser | undefined*/): void {
+    console.log(token)
     const httpOptions = {
       headers: new HttpHeaders({
 			  'Content-Type': 'application/json',
@@ -104,21 +105,33 @@ export class LoginService {
     const provider = new firebase.auth.GoogleAuthProvider();
     await this.afAuth.signInWithPopup(provider)
     .then(function(result: any) {
-      console.log(result.credential)
+      console.log(result.credential.idToken)
       //var token = result.credential.accessToken;
       var user = result.user;
+      let newUser: LoginUser = {
+        email: user.email,
+        password: 'x',
+      }
+      localStorage.setItem("user", JSON.stringify(newUser));
+      localStorage.setItem("token", result.credential.idToken);
+      //console.log(result.credential.idToken)
+      /*
       var token = user.getIdToken(true).then((idToken: any) => {
         const data = {
           email: user.email,
           password: 'x',
         }
-        let newUser: LoginUser = data
+        let newUser: LoginUser = {
+          email: user.email,
+          password: 'x',
+        }
         localStorage.setItem("user", JSON.stringify(newUser));
-        localStorage.setItem("token", JSON.stringify(idToken));
+        localStorage.setItem("token", JSON.stringify(result.credential.idToken));
         console.log(idToken);
 
       })
-      alert("login OK" + token);
+      */
+      //alert("login OK" + token);
       /*
       const data = {
         email: user.email,
@@ -129,7 +142,11 @@ export class LoginService {
       //localStorage.setItem("token", JSON.stringify(token));
       //localStorage.setItem("user", JSON.stringify(newUser));
       onSuccess();
-    })
+    })/*.then((result: any) => {
+      console.log(result)
+      const userRef: AngularFirestoreDocument<LoginUser> = this.afs.doc(`users/${result.user.uid}`)
+      userRef.set(result.user, { merge: true })
+    })*/;
     
   }
 }

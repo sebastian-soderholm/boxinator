@@ -1,6 +1,8 @@
 using boxinator.Models;
 using boxinator.Services;
 using boxinator.Services.Interfaces;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -55,20 +57,26 @@ namespace boxinator
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ISettingsService, SettingsService>();
 
+            FirebaseApp.Create(new AppOptions
+            {
+                Credential = GoogleCredential.FromFile("firebase-secret-file.json")
+            });
+
+            /*
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 
                 {
-                    options.Authority = "https://securetoken.google.com/boxinator";
+                    options.Authority = "https://securetoken.google.com/789898616661-qmt87irpsomkh8kndspmoponkhe2s1du.apps.googleusercontent.com";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = "https://securetoken.google.com/boxinator",
+                        ValidIssuer = "https://securetoken.google.com/789898616661-qmt87irpsomkh8kndspmoponkhe2s1du.apps.googleusercontent.com",
                         ValidateAudience = true,
-                        ValidAudience = "boxinator",
+                        ValidAudience = "789898616661-qmt87irpsomkh8kndspmoponkhe2s1du.apps.googleusercontent.com",
                         ValidateLifetime = true
                     };
                 });
-
+            */
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Boxinator", Version = "v1" });
@@ -92,10 +100,11 @@ namespace boxinator
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
+
             app.UseRouting();
             app.UseCors(MyAllowSpecificOrigins);
 
-            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

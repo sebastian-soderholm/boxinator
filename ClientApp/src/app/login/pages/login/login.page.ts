@@ -52,20 +52,13 @@ export class LoginPage implements OnInit {
     return this._loginForm
   }
 
-/*   googleLogin() {
-    this.loginService.googleLogin(function() {
-      console.log("Jee")
-    })
-
-    this.loginService.loginUserTEST(token, this._loginUser);
-  } */
-
   public googleLogin(): void {
     this.loginService.googleLogin( async () => {
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem('token') as string
       let user = localStorage.getItem('user')
       let newUser = JSON.parse(user!) as LoginUser
       //await this.loginService.loginUserTEST(token, newUser);
+      //console.log(token)
       await this.loginService.loginUserTEST(token);
     });
   }

@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace boxinator.Controllers
@@ -39,16 +41,28 @@ namespace boxinator.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(/*UserCreateDTO userDTO*/)
         {
-            var test2 = HttpContext.User.Identity.IsAuthenticated;
-            var test = HttpContext.User.Claims;
-            var testUser = HttpContext.User;
             string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
             string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
-            var auth = FirebaseAuth.DefaultInstance;
 
-            FirebaseToken decodedToken = await FirebaseAuth.DefaultInstance
-            .VerifyIdTokenAsync(accessTokenWithBearerPrefix);
-                    string uid = decodedToken.Uid;
+            FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
+
+            FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
+            FirebaseToken decodedToken = await auth.VerifyIdTokenAsync(accessTokenWithoutBearerPrefix);
+            string uid = decodedToken.Uid;
+            /*
+            if (AuthenticationHeaderValue.TryParse(accessTokenWithoutBearerPrefix, out var headerValue))
+            {
+                // we have a valid AuthenticationHeaderValue that has the following details:
+
+                var scheme = headerValue.Scheme;
+                var parameter = headerValue.Parameter;
+
+                FirebaseToken decodedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(parameter);
+                string uid = decodedToken.Uid;
+                // scheme will be "Bearer"
+                // parmameter will be the token itself.
+            }
+
             // NOTE! Rate limiting policy must be added
             /*
             if (userDTO == null)
