@@ -17,16 +17,18 @@ namespace boxinator.Controllers
     [ApiController]
     [Route("shipments")]
     [EnableCors("_myAllowSpecificOrigins")]
-    [Authorize]
+    //[Authorize]
     public class ShipmentsController : ControllerBase
     {
         private readonly IShipmentService _service;
         private readonly IMapper _mapper;
+        private readonly IAccountService _accountService;
 
-        public ShipmentsController(IShipmentService service, IMapper mapper)
+        public ShipmentsController(IShipmentService service, IMapper mapper, IAccountService accountService)
         {
             _service = service;
             _mapper = mapper;
+            _accountService = accountService;
         }
 
         /// <summary>
@@ -90,19 +92,34 @@ namespace boxinator.Controllers
         }
 
         /// <summary>
-        /// Add new shipment
+        /// Add new guest shipment
         /// </summary>
-        /// <param name="shipmentDTO"></param>
+        /// <param name="shipmentGuestDTO"></param>
         /// <returns>Created shipment</returns>
         // POST: /shipments
-        //[HttpPost]
-        //[Route("/shipments/guest")]
-        //public async Task<ActionResult<ShipmentReadDTO>> GuestAdd(ShipmentGuestCreateDTO shipmentGuestDTO)
-        //{
-        //    Shipment newShipment = _mapper.Map<Shipment>(shipmentGuestDTO);
-        //    var resultShipment = await _service.Add(newShipment);
-        //    return _mapper.Map<ShipmentReadDTO>(resultShipment);
-        //}
+        [HttpPost]
+        [Route("/shipments/guest")]
+        public async Task<ActionResult<ShipmentReadDTO>> GuestAdd(ShipmentGuestCreateDTO shipmentGuestDTO)
+        {
+            //Get user by email from DB 
+            User userFromDB = await _accountService.GetUser(shipmentGuestDTO.Email);
+
+            //check if user does not exist in DB
+            if(userFromDB != null)
+            {
+                //Create user in DB with only email field
+                User userToDB = new User();
+                userToDB.Email = shipmentGuestDTO.Email;
+                userFromDB = await _accountService.Add(userToDB);
+            }
+
+            Shipment newShipment = _mapper.Map<Shipment>(shipmentGuestDTO);
+
+            //Link user to shipment and save to DB
+            newShipment.User = userFromDB;
+            var resultShipment = await _service.Add(newShipment);
+            return _mapper.Map<ShipmentReadDTO>(resultShipment);
+        }
 
         /// <summary>
         /// Get shipment by id

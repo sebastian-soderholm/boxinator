@@ -13,9 +13,11 @@ namespace boxinator.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         [MaxLength(30)]
         public string Name { get; set; }
-        public double Weight { get; set; }
+        [Required]
+        public int Weight { get; set; }
         public List<Box> Boxes { get; set; }
 
     }

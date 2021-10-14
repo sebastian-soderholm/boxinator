@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace boxinator.Models.DTO.ShipmentStatusLog
 {
-    public class ShipmentStatusLogReadDTO
+    public class ShipmentStatusLogCreateDTO
     {
         public int ShipmentId { get; set; }
         public string Status { get; set; }

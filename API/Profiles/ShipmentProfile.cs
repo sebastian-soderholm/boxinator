@@ -9,9 +9,10 @@ namespace boxinator.Profiles
     {
         public ShipmentProfile()
         {
-            CreateMap<Shipment, ShipmentReadDTO>()
-                .ForMember(x => x.CountryReadDTO, opt => opt.MapFrom(x => x.Country))
-                .ReverseMap();
+            CreateMap<Shipment, ShipmentReadDTO>().ReverseMap();
+
+            CreateMap<Shipment, ShipmentCreateDTO>().ReverseMap();
+
         }
     }
 }

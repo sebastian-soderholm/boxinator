@@ -8,7 +8,17 @@ namespace boxinator.Profiles
     {
         public BoxProfile()
         {
-            CreateMap<Box, BoxReadDTO>();
+            //Map name value
+            CreateMap<Box, BoxReadDTO>()
+                .ForMember(box => box.Name, opt => opt.MapFrom(x => x.BoxType.Name))
+                .ForMember(box => box.Weight, opt => opt.MapFrom(x => x.BoxType.Weight))
+                .ReverseMap();
+
+            //BoxCreateDTO
+            CreateMap<Box, BoxCreateDTO>()
+                .ForMember(box => box.Name, opt => opt.MapFrom(x => x.BoxType.Name))
+                .ForMember(box => box.Weight, opt => opt.MapFrom(x => x.BoxType.Weight))
+                .ReverseMap();
         }
     }
 }

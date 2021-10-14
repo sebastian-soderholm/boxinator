@@ -24,5 +24,6 @@ namespace boxinator.Services.Interfaces
         {
             throw new NotImplementedException();
         }
+        
     }
 }

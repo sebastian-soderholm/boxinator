@@ -12,9 +12,6 @@ namespace boxinator.Profiles
     {
         public StatusProfile()
         {
-            //CreateMap<Shipment, ShipmentReadDTO>();
-            //CreateMap<ShipmentCreateDTO, Shipment>();
-
             CreateMap<Status, StatusReadDTO>().ReverseMap();
         }
     }

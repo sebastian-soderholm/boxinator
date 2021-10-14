@@ -81,5 +81,17 @@ namespace boxinator.Services
 
             return resultUser;
         }
+        /// <summary>
+        /// Get user by email 
+        /// </summary>
+        /// <param name="email">Email as string</param>
+        /// <returns>User object if found, otherwise returns null</returns>
+        public async Task<User> GetUser(string email)
+        {
+            var resultUser = await _context.Users
+                .Where(user => user.Email.Equals(email)).FirstOrDefaultAsync();
+
+            return resultUser;
+        }
     }
 }

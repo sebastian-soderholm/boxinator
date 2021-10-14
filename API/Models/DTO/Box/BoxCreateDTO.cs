@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace boxinator.Models.DTO.Box
 {
-    public class BoxReadDTO
+    public class BoxCreateDTO
     {
         public int Id { get; set; }
         public string Color { get; set; }
