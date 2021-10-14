@@ -9305,19 +9305,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\peppi.makela\\.nuget\\packages\\": {}
+    "C:\\Users\\jani.vihervuori\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\peppi.makela\\Documents\\Noroff\\Case\\boxinator\\BoxinatorAPITests\\BoxinatorAPITests.csproj",
+      "projectUniqueName": "C:\\Users\\jani.vihervuori\\source\\repos\\boxinator\\BoxinatorAPITests\\BoxinatorAPITests.csproj",
       "projectName": "BoxinatorAPITests",
-      "projectPath": "C:\\Users\\peppi.makela\\Documents\\Noroff\\Case\\boxinator\\BoxinatorAPITests\\BoxinatorAPITests.csproj",
-      "packagesPath": "C:\\Users\\peppi.makela\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\peppi.makela\\Documents\\Noroff\\Case\\boxinator\\BoxinatorAPITests\\obj\\",
+      "projectPath": "C:\\Users\\jani.vihervuori\\source\\repos\\boxinator\\BoxinatorAPITests\\BoxinatorAPITests.csproj",
+      "packagesPath": "C:\\Users\\jani.vihervuori\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jani.vihervuori\\source\\repos\\boxinator\\BoxinatorAPITests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\peppi.makela\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jani.vihervuori\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9331,8 +9331,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\peppi.makela\\Documents\\Noroff\\Case\\boxinator\\API\\boxinator.csproj": {
-              "projectPath": "C:\\Users\\peppi.makela\\Documents\\Noroff\\Case\\boxinator\\API\\boxinator.csproj"
+            "C:\\Users\\jani.vihervuori\\source\\repos\\boxinator\\API\\boxinator.csproj": {
+              "projectPath": "C:\\Users\\jani.vihervuori\\source\\repos\\boxinator\\API\\boxinator.csproj"
             }
           }
         }

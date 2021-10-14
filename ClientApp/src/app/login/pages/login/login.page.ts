@@ -65,7 +65,8 @@ export class LoginPage implements OnInit {
       const token = localStorage.getItem('token')
       let user = localStorage.getItem('user')
       let newUser = JSON.parse(user!) as LoginUser
-      await this.loginService.loginUserTEST(token, newUser);
+      //await this.loginService.loginUserTEST(token, newUser);
+      await this.loginService.loginUserTEST(token);
     });
   }
 }

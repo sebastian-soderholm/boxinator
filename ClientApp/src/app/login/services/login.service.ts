@@ -83,7 +83,7 @@ export class LoginService {
     return this._loggedIn;
   }
 
-  public loginUserTEST(token: any, loginInfo: LoginUser | undefined): void {
+  public loginUserTEST(token: any/*, loginInfo: LoginUser | undefined*/): void {
     const httpOptions = {
       headers: new HttpHeaders({
 			  'Content-Type': 'application/json',
@@ -91,7 +91,8 @@ export class LoginService {
         'Authorization': `Bearer ${token}`
       }),
     };
-    const body = JSON.stringify(loginInfo);
+    //const body = JSON.stringify(loginInfo);
+    const body = JSON.stringify({});
     this.http.post<LoginUser>(this._apiUrl+'/login', body, httpOptions)
     .subscribe((user: LoginUser) => {
       //this.sessionService.setUser(user);
@@ -101,17 +102,32 @@ export class LoginService {
 
   async googleLogin(onSuccess: () => void) {
     const provider = new firebase.auth.GoogleAuthProvider();
-    await this.afAuth.signInWithPopup(provider).then(function(result: any) {
-      var token = result.credential.accessToken;
+    await this.afAuth.signInWithPopup(provider)
+    .then(function(result: any) {
+      console.log(result.credential)
+      //var token = result.credential.accessToken;
       var user = result.user;
+      var token = user.getIdToken(true).then((idToken: any) => {
+        const data = {
+          email: user.email,
+          password: 'x',
+        }
+        let newUser: LoginUser = data
+        localStorage.setItem("user", JSON.stringify(newUser));
+        localStorage.setItem("token", JSON.stringify(idToken));
+        console.log(idToken);
+
+      })
       alert("login OK" + token);
+      /*
       const data = {
         email: user.email,
         password: 'x',
       }
       let newUser: LoginUser = data
-      localStorage.setItem("token", JSON.stringify(token));
-      localStorage.setItem("user", JSON.stringify(newUser));
+      */
+      //localStorage.setItem("token", JSON.stringify(token));
+      //localStorage.setItem("user", JSON.stringify(newUser));
       onSuccess();
     })
     
