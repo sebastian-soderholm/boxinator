@@ -6,9 +6,9 @@ import {
 } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
-import { Shipment } from '../../login/models/shipment.model';
+import { ShipmentTableData } from '../models/shipment-table.model';
 import { environment } from 'src/environments/environment';
-import { SessionService } from 'src/app/login/services/session.service';
+import { SessionService } from './shipment-session.service';
 
 const apiUrl = environment.baseURL;
 
@@ -24,8 +24,9 @@ export class ShipmentService {
   }
 
   public getShipments(onSuccess: () => void): void {
-    this.http.get<Shipment[]>(apiUrl + '/shipments')
-    .subscribe((shipments: Shipment[]) => {
+    this.http.get<ShipmentTableData[]>(apiUrl + '/shipments')
+    .subscribe((shipments: ShipmentTableData[]) => { 
+      //console.log(shipments)
       this.sessionService.setShipments(shipments);
       onSuccess();
     },

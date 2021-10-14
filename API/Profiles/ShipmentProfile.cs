@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using boxinator.Models.Domain;
 using boxinator.Models.DTO.Shipment;
+using boxinator.Models.DTO.Country;
 
 namespace boxinator.Profiles
 {
@@ -8,8 +9,9 @@ namespace boxinator.Profiles
     {
         public ShipmentProfile()
         {
-            CreateMap<Shipment, ShipmentReadDTO>();
-            CreateMap<ShipmentCreateDTO, Shipment>();
+            CreateMap<Shipment, ShipmentReadDTO>()
+                .ForMember(x => x.CountryReadDTO, opt => opt.MapFrom(x => x.Country))
+                .ReverseMap();
         }
     }
 }

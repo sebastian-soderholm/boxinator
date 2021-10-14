@@ -6,6 +6,7 @@ using boxinator.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace boxinator.Controllers
     [ApiController]
     [Route("shipments")]
     [EnableCors("_myAllowSpecificOrigins")]
-    //[Authorize]
+    [Authorize]
     public class ShipmentsController : ControllerBase
     {
         private readonly IShipmentService _service;
@@ -36,8 +37,16 @@ namespace boxinator.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ShipmentStatusLogReadDTO>>> GetAllCurrent()
         {
+            var test2 = HttpContext.User.Identity.IsAuthenticated;
+            var test = HttpContext.User.Claims;
+            var testUser = HttpContext.User;
+            string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
+            string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
+            var auth = FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance;
+
             var currentShipments = await _service.GetAllCurrent();
-            return _mapper.Map<List<ShipmentStatusLogReadDTO>>(currentShipments);
+            var mappedList = _mapper.Map<List<ShipmentStatusLogReadDTO>>(currentShipments);
+            return mappedList;
         }
 
         /// <summary>
