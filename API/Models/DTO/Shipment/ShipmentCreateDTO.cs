@@ -11,6 +11,7 @@ namespace boxinator.Models.DTO.Shipment
 {
     public class ShipmentCreateDTO
     {
+        public UserReadDTO Sender { get; set; }
         //Receiver info
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -18,7 +19,6 @@ namespace boxinator.Models.DTO.Shipment
         public string Address { get; set; }
         public double Cost { get; set; }
         public int CountryId { get; set; }
-        public UserCreateDTO Sender { get; set; }
         public List<BoxCreateDTO> Boxes { get; set; }
         public List<ShipmentStatusLogCreateDTO> ShipmentStatusLogs { get; set; }
 

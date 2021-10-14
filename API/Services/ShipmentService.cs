@@ -1,6 +1,7 @@
 ﻿using boxinator.Models;
 using boxinator.Models.Domain;
 using boxinator.Models.DTO.Shipment;
+using boxinator.Models.DTO.Status;
 using boxinator.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -85,7 +86,9 @@ namespace boxinator.Services
         {
             return await _context.Shipments
                 .Include(s => s.User)
-                .Where(x => x.Id == id /*&& x.UserId == currentUser*/).FirstOrDefaultAsync();
+                .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
+                .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
+                .Where(s => s.Id == id /*&& x.UserId == currentUser*/).FirstOrDefaultAsync();
         }
 
         /// <summary>
@@ -119,12 +122,12 @@ namespace boxinator.Services
         /// Get all complete shipments
         /// </summary>
         /// <returns>List of shipments</returns>
-        public async Task<List<ShipmentStatusLog>> GetAllComplete()
+        public async Task<List<Shipment>> GetAllComplete()
         {
-            return await _context.ShipmentStatusLogs
-                .Include(s => s.Shipment)
-                .ThenInclude(u => u.User)
-                .Where(s => s.StatusId == 1 /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
+            return await _context.Shipments
+                //.Include(s => s.Shipment)
+                //.ThenInclude(u => u.User)
+                .Where(s => s.ShipmentStatusLogs.Last().StatusId == 1 /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
         }
 
         /// <summary>

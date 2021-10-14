@@ -10,8 +10,8 @@ using boxinator.Models;
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    [Migration("20211014171315_fixedBoxesFields")]
-    partial class fixedBoxesFields
+    [Migration("20211014220403_boxtest3")]
+    partial class boxtest3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -118,6 +118,13 @@ namespace boxinator.Migrations
                             BoxTypeId = 1,
                             Color = "(32,178,170)",
                             ShipmentId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BoxTypeId = 1,
+                            Color = "(123,765,3)",
+                            ShipmentId = 1
                         });
                 });
 
@@ -200,6 +207,26 @@ namespace boxinator.Migrations
                         {
                             Id = 1,
                             Name = "CREATED"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "RECIEVED"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "INTRANSIT"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "COMPLETED"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "CANCELLED"
                         });
                 });
 
@@ -316,9 +343,16 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 14, 20, 13, 15, 80, DateTimeKind.Local).AddTicks(5206),
+                            Date = new DateTime(2021, 10, 15, 1, 4, 2, 798, DateTimeKind.Local).AddTicks(6325),
                             ShipmentId = 1,
                             StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Date = new DateTime(2021, 10, 15, 1, 4, 2, 801, DateTimeKind.Local).AddTicks(3959),
+                            ShipmentId = 1,
+                            StatusId = 3
                         });
                 });
 

@@ -10,8 +10,8 @@ using boxinator.Models;
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    [Migration("20211013124246_boxinator-test")]
-    partial class boxinatortest
+    [Migration("20211014220142_boxtest2")]
+    partial class boxtest2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,11 +29,12 @@ namespace boxinator.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<double>("Weight")
-                        .HasColumnType("float");
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -44,7 +45,7 @@ namespace boxinator.Migrations
                         {
                             Id = 1,
                             Name = "Premium",
-                            Weight = 8.0
+                            Weight = 8
                         });
                 });
 
@@ -127,19 +128,34 @@ namespace boxinator.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<double>("Cost")
                         .HasColumnType("float");
 
                     b.Property<int>("CountryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ReceiverName")
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -153,10 +169,13 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
+                            Address = "Keskuskatu 1",
                             Cost = 100.0,
                             CountryId = 1,
-                            ReceiverName = "Petteri Smith",
-                            UserId = 1
+                            FirstName = "Petteri",
+                            LastName = "Smith",
+                            UserId = 1,
+                            ZipCode = "00100"
                         });
                 });
 
@@ -181,6 +200,26 @@ namespace boxinator.Migrations
                         {
                             Id = 1,
                             Name = "CREATED"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "RECIEVED"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "INTRANSIT"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "COMPLETED"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "CANCELLED"
                         });
                 });
 
@@ -297,9 +336,16 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 13, 15, 42, 45, 869, DateTimeKind.Local).AddTicks(3828),
+                            Date = new DateTime(2021, 10, 15, 1, 1, 42, 383, DateTimeKind.Local).AddTicks(5481),
                             ShipmentId = 1,
                             StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Date = new DateTime(2021, 10, 15, 1, 1, 42, 386, DateTimeKind.Local).AddTicks(5343),
+                            ShipmentId = 1,
+                            StatusId = 3
                         });
                 });
 

@@ -133,6 +133,13 @@ namespace boxinator.Models
                     Color = "(32,178,170)",
                     BoxTypeId = 1,
                     ShipmentId = 1
+                },
+                new Box()
+                {
+                    Id = 2,
+                    Color = "(123,765,3)",
+                    BoxTypeId = 1,
+                    ShipmentId = 1
                 }
             );
 
@@ -141,6 +148,26 @@ namespace boxinator.Models
                 {
                     Id = 1,
                     Name = "CREATED"
+                },
+                new Status()
+                {
+                    Id = 2,
+                    Name = "RECIEVED"
+                },
+                new Status()
+                {
+                    Id = 3,
+                    Name = "INTRANSIT"
+                },
+                new Status()
+                {
+                    Id = 4,
+                    Name = "COMPLETED"
+                },
+                new Status()
+                {
+                    Id = 5,
+                    Name = "CANCELLED"
                 }
             );
 
@@ -150,6 +177,14 @@ namespace boxinator.Models
                     Id = 1,
                     ShipmentId = 1,
                     StatusId = 1,
+                    Date = DateTime.Now
+
+                },
+                new ShipmentStatusLog()
+                {
+                    Id = 2,
+                    ShipmentId = 1,
+                    StatusId = 3,
                     Date = DateTime.Now
 
                 }

@@ -58,10 +58,10 @@ namespace boxinator.Controllers
         // GET: /shipments/complete
         [HttpGet]
         [Route("/shipments/complete")]
-        public async Task<ActionResult<List<ShipmentStatusLogReadDTO>>> GetAllComplete()
+        public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllComplete()
         {
             var completedShipments = await _service.GetAllComplete();
-            return _mapper.Map<List<ShipmentStatusLogReadDTO>>(completedShipments);
+            return _mapper.Map<List<ShipmentReadDTO>>(completedShipments);
         }
 
         /// <summary>
@@ -71,10 +71,10 @@ namespace boxinator.Controllers
         // GET: /shipments/cancelled
         [HttpGet]
         [Route("/shipments/cancelled")]
-        public async Task<ActionResult<List<ShipmentStatusLogReadDTO>>> GetAllCancelled()
+        public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllCancelled()
         {
             var cancelledShipments = await _service.GetAllCancelled();
-            return _mapper.Map<List<ShipmentStatusLogReadDTO>>(cancelledShipments);
+            return _mapper.Map<List<ShipmentReadDTO>>(cancelledShipments);
         }
 
         /// <summary>

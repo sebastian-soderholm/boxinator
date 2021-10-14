@@ -9,13 +9,13 @@ namespace boxinator.Profiles
         public ShipmentStatusLogProfile()
         {
             CreateMap<ShipmentStatusLog, ShipmentStatusLogReadDTO>()
-                .ForMember(dto => dto.Status, opt => opt.MapFrom(s => s.Status.Name))
-                .ForMember(dto => dto.ShipmentId, opt => opt.MapFrom(s => s.Shipment.Id))
+                .ForMember(dto => dto.Status, opt => opt.MapFrom(s => s.Status))
+                .ForPath(dto => dto.ShipmentId, opt => opt.MapFrom(s => s.Shipment.Id))
                 .ReverseMap();
 
             CreateMap<ShipmentStatusLog, ShipmentStatusLogCreateDTO>()
-                .ForMember(dto => dto.Status, opt => opt.MapFrom(s => s.Status.Name))
-                .ForMember(dto => dto.ShipmentId, opt => opt.MapFrom(s => s.Shipment.Id))
+                .ForPath(dto => dto.Status, opt => opt.MapFrom(s => s.Status))
+                .ForPath(dto => dto.ShipmentId, opt => opt.MapFrom(s => s.Shipment.Id))
                 .ReverseMap();
         }
     }
