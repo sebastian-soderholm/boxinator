@@ -10,13 +10,8 @@ using boxinator.Models;
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-<<<<<<< HEAD:API/Migrations/20211015104747_test.Designer.cs
-    [Migration("20211015104747_test")]
+    [Migration("20211015133015_test")]
     partial class test
-=======
-    [Migration("20211015110635_Initial")]
-    partial class Initial
->>>>>>> jani:API/Migrations/20211015110635_Initial.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -347,22 +342,14 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-<<<<<<< HEAD:API/Migrations/20211015104747_test.Designer.cs
-                            Date = new DateTime(2021, 10, 15, 13, 47, 47, 228, DateTimeKind.Local).AddTicks(1991),
-=======
-                            Date = new DateTime(2021, 10, 15, 14, 6, 34, 725, DateTimeKind.Local).AddTicks(9650),
->>>>>>> jani:API/Migrations/20211015110635_Initial.Designer.cs
+                            Date = new DateTime(2021, 10, 15, 16, 30, 15, 290, DateTimeKind.Local).AddTicks(8957),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-<<<<<<< HEAD:API/Migrations/20211015104747_test.Designer.cs
-                            Date = new DateTime(2021, 10, 15, 13, 47, 47, 230, DateTimeKind.Local).AddTicks(6668),
-=======
-                            Date = new DateTime(2021, 10, 15, 14, 6, 34, 729, DateTimeKind.Local).AddTicks(89),
->>>>>>> jani:API/Migrations/20211015110635_Initial.Designer.cs
+                            Date = new DateTime(2021, 10, 15, 16, 30, 15, 294, DateTimeKind.Local).AddTicks(415),
                             ShipmentId = 1,
                             StatusId = 3
                         });

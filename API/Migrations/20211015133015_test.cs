@@ -3,11 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace boxinator.Migrations
 {
-<<<<<<< HEAD:API/Migrations/20211015104747_test.cs
     public partial class test : Migration
-=======
-    public partial class Initial : Migration
->>>>>>> jani:API/Migrations/20211015110635_Initial.cs
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -239,13 +235,8 @@ namespace boxinator.Migrations
                 columns: new[] { "Id", "Date", "ShipmentId", "StatusId" },
                 values: new object[,]
                 {
-<<<<<<< HEAD:API/Migrations/20211015104747_test.cs
-                    { 1, new DateTime(2021, 10, 15, 13, 47, 47, 228, DateTimeKind.Local).AddTicks(1991), 1, 1 },
-                    { 2, new DateTime(2021, 10, 15, 13, 47, 47, 230, DateTimeKind.Local).AddTicks(6668), 1, 3 }
-=======
-                    { 1, new DateTime(2021, 10, 15, 14, 6, 34, 725, DateTimeKind.Local).AddTicks(9650), 1, 1 },
-                    { 2, new DateTime(2021, 10, 15, 14, 6, 34, 729, DateTimeKind.Local).AddTicks(89), 1, 3 }
->>>>>>> jani:API/Migrations/20211015110635_Initial.cs
+                    { 1, new DateTime(2021, 10, 15, 16, 30, 15, 290, DateTimeKind.Local).AddTicks(8957), 1, 1 },
+                    { 2, new DateTime(2021, 10, 15, 16, 30, 15, 294, DateTimeKind.Local).AddTicks(415), 1, 3 }
                 });
 
             migrationBuilder.CreateIndex(
