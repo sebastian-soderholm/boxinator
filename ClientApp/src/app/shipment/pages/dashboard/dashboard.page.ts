@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ShipmentTableData } from '../../models/shipment-table.model';
+import { SessionService } from '../../services/shipment-session.service';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private readonly sessionService: SessionService,
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  get shipments(): ShipmentTableData[] {
+    return this.sessionService.shipmentTableData!;
   }
 
 }

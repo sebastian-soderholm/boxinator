@@ -13,8 +13,14 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+
+// Angular Material
 import { MatTableModule } from '@angular/material/table';
+
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 //Pages
 import { LoginPage } from './login/pages/login/login.page';
@@ -28,7 +34,8 @@ import { MenuPage } from './navigation/pages/menu/menu.page';
 import { CountrySettingsPage } from './admin/pages/country-settings/country-settings.page';
 import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipment.page';
 import { environment } from '../environments/environment';
-import { MatButton } from '@angular/material/button';
+import { DashboardListComponent } from './shipment/components/dashboard-list/dashboard-list.component';
+import { DashboardListItemComponent } from './shipment/components/dashboard-list-item/dashboard-list-item.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +49,9 @@ import { MatButton } from '@angular/material/button';
     EditAccountPage,
     MenuPage,
     CountrySettingsPage,
-    GuestShipmentPage
+    GuestShipmentPage,
+    DashboardListComponent,
+    DashboardListItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +67,10 @@ import { MatButton } from '@angular/material/button';
     MatTableModule,
     MatButtonToggleModule,
     MatSortModule,
-    MatMenuModule
+    MatMenuModule,
+    MatButtonModule,
+    MatCardModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
