@@ -105,17 +105,17 @@ namespace boxinator.Services
         /// Get all current shipments
         /// </summary>
         /// <returns>List of shipments</returns>
-        public async Task<List<ShipmentStatusLog>> GetAllCurrent()
+        public async Task<List<Shipment>> GetAllCurrent()
         {
-            return await _context.ShipmentStatusLogs
-                .Include(x => x.Status)
-                .Include(s => s.Shipment)
-                    .ThenInclude(x => x.Country)
-                .Include(s => s.Shipment)
-                    .ThenInclude(x => x.Boxes)
-                .Include(s => s.Shipment)
-                    .ThenInclude(u => u.User)
-                .Where(s => s.StatusId != 3 && s.StatusId != 2 /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
+            var currentUserId = 1;
+
+            return await _context.Shipments
+                .Include(s => s.User)
+                .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
+                .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
+                .Where(t => t.ShipmentStatusLogs
+                    .Any(x => x.Status.Id != (int)StatusCodes.CANCELLED || x.Status.Id != (int)StatusCodes.RECEIVED))
+                .Where(u => u.UserId == currentUserId).ToListAsync();
         }
 
         /// <summary>
@@ -124,22 +124,30 @@ namespace boxinator.Services
         /// <returns>List of shipments</returns>
         public async Task<List<Shipment>> GetAllComplete()
         {
+            var currentUserId = 1;
+
             return await _context.Shipments
-                //.Include(s => s.Shipment)
-                //.ThenInclude(u => u.User)
-                .Where(s => s.ShipmentStatusLogs.Last().StatusId == 1 /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
+                .Include(s => s.User)
+                .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
+                .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
+                .Where(t => t.ShipmentStatusLogs.Any(x => x.Status.Id == (int)StatusCodes.RECEIVED))
+                .Where(u => u.UserId == currentUserId).ToListAsync();
         }
 
         /// <summary>
         /// Get all cancelled shipments
         /// </summary>
         /// <returns>List of shipments</returns>
-        public async Task<List<ShipmentStatusLog>> GetAllCancelled()
+        public async Task<List<Shipment>> GetAllCancelled()
         {
-            return await _context.ShipmentStatusLogs
-                .Include(s => s.Shipment)
-                .ThenInclude(u => u.User)
-                .Where(s => s.StatusId == 1 /*&& s.Shipment.UserId == currentUserId*/).ToListAsync();
+            var currentUserId = 1;
+
+            return await _context.Shipments
+                .Include(s => s.User)
+                .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
+                .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
+                .Where(t => t.ShipmentStatusLogs.Any(x => x.Status.Id == (int)StatusCodes.CANCELLED))
+                .Where(u => u.UserId == currentUserId).ToListAsync();
         }
 
     }

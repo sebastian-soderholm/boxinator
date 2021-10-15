@@ -11,4 +11,12 @@ namespace boxinator.Models
         REGISTERED_USER = 2,
         ADMINISTRATOR = 3
     }
+
+    public enum StatusCodes
+    {
+        CREATED = 1,
+        INTRANSIT = 2,
+        RECEIVED = 3,
+        CANCELLED = 4
+    }
 }
