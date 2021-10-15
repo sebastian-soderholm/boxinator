@@ -6,6 +6,7 @@ import { MappedData } from '../../models/shipment-table.model';
 import { Box } from '../../models/shipment-table.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Data } from '@angular/router';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-my-shipments',
@@ -25,16 +26,19 @@ export class MyShipmentsPage implements OnInit {
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource: MappedData[] = [];
   dateVisibility: boolean = true;
+  sortedData: MappedData[] = [];
 
   constructor(
     private readonly shipmentService: ShipmentService,
     private readonly sessionService: SessionService
-  ) {}
+  ) {
+    this.sortedData = this.dataSource.slice();
+  }
 
   ngOnInit() {
     this.shipmentService.getAllCurrent(async () => {
       const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
-      this.dataSource = mappedData;
+      this.sortedData = mappedData;
     });
 
     console.log(this.shipmentService.getError())
@@ -74,7 +78,7 @@ export class MyShipmentsPage implements OnInit {
         status: obj.statusReadDTO.name.toString(),
         address: obj.shipmentReadDTO.address.toString(),
         receiverName: obj.shipmentReadDTO.firstName.toString()+" "+obj.shipmentReadDTO.lastName.toString(),
-        date: obj.date.toString(),
+        date: new Date(obj.date).toDateString(),
         boxes: this.mapBoxes(obj.shipmentReadDTO.boxes)
 			};    
 		});
@@ -87,5 +91,31 @@ export class MyShipmentsPage implements OnInit {
 			};    
 		});
    }
+
+   //---------------sorting
+   sortData(sort: Sort) {
+    const data = this.sortedData.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'id': return compare(a.id, b.id, isAsc);
+        case 'cost': return compare(a.cost, b.cost, isAsc);
+        case 'weight': return compare(a.weight, b.weight, isAsc);
+        case 'status': return compare(a.status, b.status, isAsc);
+        case 'receiverName': return compare(a.receiverName, b.receiverName, isAsc);
+        case 'date': return compare(a.date, b.date, isAsc);
+        default: return 0;
+      }
+    });
+
+    function compare(a: number | string, b: number | string, isAsc: boolean) {
+      return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    }
+  }
 
 }

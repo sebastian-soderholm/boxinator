@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSortModule } from '@angular/material/sort';
+import { MatMenuModule } from '@angular/material/menu';
 
 // Firebase
 import { AngularFireModule } from '@angular/fire/compat';
@@ -40,7 +42,7 @@ import { MatButton } from '@angular/material/button';
     EditAccountPage,
     MenuPage,
     CountrySettingsPage,
-    GuestShipmentPage,
+    GuestShipmentPage
   ],
   imports: [
     BrowserModule,
@@ -54,7 +56,9 @@ import { MatButton } from '@angular/material/button';
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
     MatTableModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatSortModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
