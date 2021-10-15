@@ -37,11 +37,27 @@ namespace boxinator.Controllers
         /// </summary>
         /// <param name="userDTO"></param>
         /// <returns>StatusCodes 400/401/201</returns>
-        /// POST: /login
+        /// GET: /verify
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Login() // rename to Verify
+        public async Task<IActionResult> Verify() // rename to Verify
         {
+            // get email from header token
+
+            // check database for matching email
+
+            // if found, return object
+
+            // else add new user and then return object
+            /*
+            User newUser =
+            {
+                Email = token.email; //ehkä näin
+                AccountType = enum.Guest tai 1 tai jotain;
+            }
+            User resultUser = await _service.Add(newUser);
+            return resultUser muista mapperi
+            */
             //string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
             //string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
             /*
@@ -77,6 +93,8 @@ namespace boxinator.Controllers
                 return StatusCode(401);
              */
             return Ok();
+
+            //palauttaa ok tai 401
         }
 
         /*

@@ -1,7 +1,20 @@
 export interface ShipmentTableData {
 	id: number;
-	statusReadDTO: Status;
-	shipmentReadDTO: Shipment;
+	//statusReadDTO: Status;
+	shipmentStatusLogs: ShipmentStatusLog[]
+	receiverAddress: string;
+	receiverFirstName: string;
+	receiverLastName: string;
+	date: string;
+	cost: string;
+	boxes: Box[]
+	//country: Country;
+
+}
+
+export interface ShipmentStatusLog{
+	shipmentId: number;
+	status: Status;
 	date: string;
 }
 
@@ -11,22 +24,14 @@ export interface Status {
 }
 
 export interface Country {
+	id: number;
 	name: string;
+	countryMultiplier: number;
+	zoneId: number;
 }
 
 export interface Box {
 	color: string;
-}
-
-export interface Shipment {
-	id: number;
-	address: string;
-	firstName: string;
-	lastName: string;
-	cost: string;
-	country: Country;
-	boxes: Box[]
-
 }
 
 export interface MappedData {
