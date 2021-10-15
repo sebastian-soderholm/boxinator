@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using boxinator.Models;
 
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    partial class BoxinatorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211015124529_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -340,14 +342,14 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 15, 14, 6, 34, 725, DateTimeKind.Local).AddTicks(9650),
+                            Date = new DateTime(2021, 10, 15, 15, 45, 28, 839, DateTimeKind.Local).AddTicks(1129),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 15, 14, 6, 34, 729, DateTimeKind.Local).AddTicks(89),
+                            Date = new DateTime(2021, 10, 15, 15, 45, 28, 844, DateTimeKind.Local).AddTicks(8992),
                             ShipmentId = 1,
                             StatusId = 3
                         });
