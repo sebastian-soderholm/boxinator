@@ -18,17 +18,18 @@ namespace boxinator.Controllers
     [ApiController]
     [Route("shipments")]
     [EnableCors("_myAllowSpecificOrigins")]
-    [Authorize]
+    //[Authorize]
     public class ShipmentsController : ControllerBase
     {
         private readonly IShipmentService _service;
         private readonly IMapper _mapper;
-        private IConfiguration _configuration;
-        public ShipmentsController(IShipmentService service, IMapper mapper, IConfiguration config)
+        private readonly IAccountService _accountService;
+
+        public ShipmentsController(IShipmentService service, IMapper mapper, IAccountService accountService)
         {
             _service = service;
             _mapper = mapper;
-            _configuration = config;
+            _accountService = accountService;
         }
 
         /// <summary>
@@ -51,10 +52,10 @@ namespace boxinator.Controllers
         // GET: /shipments/complete
         [HttpGet]
         [Route("/shipments/complete")]
-        public async Task<ActionResult<List<ShipmentStatusLogReadDTO>>> GetAllComplete()
+        public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllComplete()
         {
             var completedShipments = await _service.GetAllComplete();
-            return _mapper.Map<List<ShipmentStatusLogReadDTO>>(completedShipments);
+            return _mapper.Map<List<ShipmentReadDTO>>(completedShipments);
         }
 
         /// <summary>
@@ -64,10 +65,10 @@ namespace boxinator.Controllers
         // GET: /shipments/cancelled
         [HttpGet]
         [Route("/shipments/cancelled")]
-        public async Task<ActionResult<List<ShipmentStatusLogReadDTO>>> GetAllCancelled()
+        public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllCancelled()
         {
             var cancelledShipments = await _service.GetAllCancelled();
-            return _mapper.Map<List<ShipmentStatusLogReadDTO>>(cancelledShipments);
+            return _mapper.Map<List<ShipmentReadDTO>>(cancelledShipments);
         }
 
         /// <summary>
@@ -85,19 +86,34 @@ namespace boxinator.Controllers
         }
 
         /// <summary>
-        /// Add new shipment
+        /// Add new guest shipment
         /// </summary>
-        /// <param name="shipmentDTO"></param>
+        /// <param name="shipmentGuestDTO"></param>
         /// <returns>Created shipment</returns>
         // POST: /shipments
-        //[HttpPost]
-        //[Route("/shipments/guest")]
-        //public async Task<ActionResult<ShipmentReadDTO>> GuestAdd(ShipmentGuestCreateDTO shipmentGuestDTO)
-        //{
-        //    Shipment newShipment = _mapper.Map<Shipment>(shipmentGuestDTO);
-        //    var resultShipment = await _service.Add(newShipment);
-        //    return _mapper.Map<ShipmentReadDTO>(resultShipment);
-        //}
+        [HttpPost]
+        [Route("/shipments/guest")]
+        public async Task<ActionResult<ShipmentReadDTO>> GuestAdd(ShipmentGuestCreateDTO shipmentGuestDTO)
+        {
+            //Get user by email from DB 
+            User userFromDB = await _accountService.GetUser(shipmentGuestDTO.Email);
+
+            //check if user does not exist in DB
+            if(userFromDB != null)
+            {
+                //Create user in DB with only email field
+                User userToDB = new User();
+                userToDB.Email = shipmentGuestDTO.Email;
+                userFromDB = await _accountService.Add(userToDB);
+            }
+
+            Shipment newShipment = _mapper.Map<Shipment>(shipmentGuestDTO);
+
+            //Link user to shipment and save to DB
+            newShipment.User = userFromDB;
+            var resultShipment = await _service.Add(newShipment);
+            return _mapper.Map<ShipmentReadDTO>(resultShipment);
+        }
 
         /// <summary>
         /// Get shipment by id

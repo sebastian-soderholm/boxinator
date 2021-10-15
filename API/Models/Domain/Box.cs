@@ -17,6 +17,7 @@ namespace boxinator.Models.Domain
         public string Color { get; set; }
         [Required]
         public int BoxTypeId { get; set; }
+        [Required]
         public BoxType BoxType { get; set; }
         public int ShipmentId { get; set; }
         public Shipment Shipment { get; set; }

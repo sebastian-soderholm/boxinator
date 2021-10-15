@@ -12,6 +12,7 @@ namespace boxinator.Services.Interfaces
         public Task<User> Update(int id, User user);
         public Task<User> Add(User user);
         public Task<bool> Delete(int id);
+        public Task<User> GetUser(string email);
 
     }
 }

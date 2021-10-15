@@ -16,7 +16,7 @@ namespace boxinator.Services.Interfaces
         public Task<Shipment> Get(int id);
         public Task<List<Shipment>> GetByUser(int userId);
         public Task<List<ShipmentStatusLog>> GetAllCurrent();
-        public Task<List<ShipmentStatusLog>> GetAllComplete();
+        public Task<List<Shipment>> GetAllComplete();
         public Task<List<ShipmentStatusLog>> GetAllCancelled();
 
 

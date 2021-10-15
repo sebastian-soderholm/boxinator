@@ -8,7 +8,7 @@ namespace boxinator.Profiles
     {
         public BoxTypeProfile()
         {
-            CreateMap<BoxType, BoxTypeReadDTO>();
+            CreateMap<BoxType, BoxTypeReadDTO>().ReverseMap();
         }
     }
 }
