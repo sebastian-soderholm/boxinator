@@ -8,7 +8,6 @@ namespace boxinator.Models.DTO.Box
 {
     public class BoxCreateDTO
     {
-        public int Id { get; set; }
         public string Color { get; set; }
         public string Name { get; set; }
         public int Weight { get; set; }

@@ -1,15 +1,20 @@
 export interface ShipmentTableData {
 	id: number;
-	//statusReadDTO: Status;
 	shipmentStatusLogs: ShipmentStatusLog[]
 	receiverAddress: string;
 	receiverFirstName: string;
 	receiverLastName: string;
 	date: string;
 	cost: string;
-	boxes: Box[]
+	boxes: Box[];
+	expandedData: ExpandedData []
 	//country: Country;
 
+}
+
+export interface ExpandedData {
+	boxes: Box [];
+	shipmentStatusLogs: ShipmentStatusLog[];
 }
 
 export interface ShipmentStatusLog{

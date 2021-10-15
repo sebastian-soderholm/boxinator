@@ -342,14 +342,14 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 15, 15, 45, 28, 839, DateTimeKind.Local).AddTicks(1129),
+                            Date = new DateTime(2021, 10, 15, 16, 30, 15, 290, DateTimeKind.Local).AddTicks(8957),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 15, 15, 45, 28, 844, DateTimeKind.Local).AddTicks(8992),
+                            Date = new DateTime(2021, 10, 15, 16, 30, 15, 294, DateTimeKind.Local).AddTicks(415),
                             ShipmentId = 1,
                             StatusId = 3
                         });

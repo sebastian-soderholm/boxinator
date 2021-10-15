@@ -26,13 +26,24 @@ namespace boxinator.Services
         /// <returns>Created shipment</returns>
         public async Task<Shipment> Add(Shipment shipment)
         {
-            var resultShipment = await _context.Shipments.AddAsync(shipment);
-            if(resultShipment.Entity != null)
+            //Create ShipmentStatusLog list for new shipment
+
+            //Add status CREATED and link shipment to status
+            ShipmentStatusLog shipmentStatusLog = new ShipmentStatusLog()
+            {
+                ShipmentId = shipment.Id,
+                StatusId = (int)StatusCodes.CREATED,
+                Shipment = shipment,
+                Date = DateTime.Now
+            };
+
+            var resultShipmentStatusLog = await _context.ShipmentStatusLogs.AddAsync(shipmentStatusLog);
+            if(resultShipmentStatusLog.Entity != null)
             {
                 await _context.SaveChangesAsync();
             }
 
-            return resultShipment.Entity;
+            return resultShipmentStatusLog.Entity.Shipment;
         }
 
         /// <summary>

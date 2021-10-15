@@ -17,9 +17,10 @@ namespace boxinator.Models
         public int ShipmentId { get; set; }
         [Required]
         public int StatusId { get; set; }
+        public DateTime Date { get; set; }
+        //Relationships
         public Status Status { get; set; }
         public Shipment Shipment { get; set; }
-        public DateTime Date { get; set; }
 
     }
 }
