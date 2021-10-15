@@ -61,7 +61,7 @@ namespace boxinator
             {
                 Credential = GoogleCredential.FromFile("firebase-secret-file.json")
             });
-
+            /*
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 
                 {
@@ -75,7 +75,7 @@ namespace boxinator
                         ValidateLifetime = true
                     };
                 });
-            
+            */
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Boxinator", Version = "v1" });
@@ -99,6 +99,7 @@ namespace boxinator
             }
 
             app.UseHttpsRedirection();
+
             app.UseAuthentication();
 
             app.UseRouting();
