@@ -38,17 +38,19 @@ namespace boxinator.Controllers
         /// <param name="userDTO"></param>
         /// <returns>StatusCodes 400/401/201</returns>
         /// POST: /login
-        [HttpPost]
-        public async Task<IActionResult> Login(/*UserCreateDTO userDTO*/)
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Login() // rename to Verify
         {
-            string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
-            string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
-
+            //string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
+            //string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
+            /*
             FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
 
             FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
             FirebaseToken decodedToken = await auth.VerifyIdTokenAsync(accessTokenWithoutBearerPrefix);
             string uid = decodedToken.Uid;
+            */
             /*
             if (AuthenticationHeaderValue.TryParse(accessTokenWithoutBearerPrefix, out var headerValue))
             {
@@ -74,7 +76,7 @@ namespace boxinator.Controllers
             if(resultUser == null)
                 return StatusCode(401);
              */
-            return StatusCode(201);
+            return Ok();
         }
 
         /*

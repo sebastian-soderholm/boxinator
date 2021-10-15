@@ -83,6 +83,7 @@ export class LoginService {
     return this._loggedIn;
   }
 
+  // get req, call another method (post) if necessary
   public loginUserTEST(token: string/*, loginInfo: LoginUser | undefined*/): void {
     console.log(token)
     const httpOptions = {
@@ -93,8 +94,8 @@ export class LoginService {
       }),
     };
     //const body = JSON.stringify(loginInfo);
-    const body = JSON.stringify({});
-    this.http.post<LoginUser>(this._apiUrl+'/login', body, httpOptions)
+    const body = {};
+    this.http.get<LoginUser>(this._apiUrl+'/login', httpOptions)
     .subscribe((user: LoginUser) => {
       //this.sessionService.setUser(user);
       console.log("Toimii :D")
