@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShipmentService } from '../../services/shipment.service';
 import { SessionService } from '../../services/shipment-session.service';
-import { ShipmentTableData } from '../../models/shipment-table.model';
+import { ShipmentStatusLog, ShipmentTableData } from '../../models/shipment-table.model';
 import { MappedData } from '../../models/shipment-table.model';
 import { Box } from '../../models/shipment-table.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -45,7 +45,6 @@ export class MyShipmentsPage implements OnInit {
   }
 
   onValChange(selection: any, state : any){
-    console.log(state)
     if(state == true) {
       this.removeColumn(selection);
     }
@@ -72,17 +71,27 @@ export class MyShipmentsPage implements OnInit {
   public mapShipments(shipments: ShipmentTableData[]) {
 		return shipments.map((obj) => {
 			return {
-				id: obj.shipmentReadDTO.id,
-        cost: obj.shipmentReadDTO.cost.toString(),
-        weight: 1,
-        status: obj.statusReadDTO.name.toString(),
-        address: obj.shipmentReadDTO.address.toString(),
-        receiverName: obj.shipmentReadDTO.firstName.toString()+" "+obj.shipmentReadDTO.lastName.toString(),
-        date: new Date(obj.date).toDateString(),
-        boxes: this.mapBoxes(obj.shipmentReadDTO.boxes)
+				id: obj.id,
+        cost: obj.cost,
+        weight: 55,
+        status: this.getStatusFromList(obj.id, obj.shipmentStatusLogs),
+        address: obj.receiverAddress,
+        receiverName: obj.receiverFirstName+" "+obj.receiverLastName,
+        date: this.getDateFromList(obj.id, obj.shipmentStatusLogs),
+        boxes: this.mapBoxes(obj.boxes)
 			};    
 		});
 	 }
+   
+   public getDateFromList(shipmentId: number, logs: ShipmentStatusLog[]) {
+     const date = logs.find(o => o.shipmentId === shipmentId)!.date;
+
+     return new Date(date).toDateString();
+   }
+
+   public getStatusFromList(shipmentId: number, logs: ShipmentStatusLog[]) {
+     return logs.find(o => o.shipmentId === shipmentId)!.status.name;
+   }
 
    public mapBoxes(boxes: Box[]) {
     return boxes.map((obj) => {
