@@ -1,4 +1,16 @@
-<p>Menu</p>
+<h2>Navigation</h2>
 <ul>
+  <li>
+    <a routerLink="/dashboard">Home</a>
+  </li>
+  <li>
+    <a routerLink="/my-shipments">My Shipments</a>
+  </li>
+  <li>
+    <a routerLink="/new-shipment">New Shipment</a>
+  </li>
+  <li>
+    <a routerLink="/my-account">Account</a>
+  </li>
   <button *ngIf="isLoggedIn" (click)="logout()">Logout</button>
 </ul>

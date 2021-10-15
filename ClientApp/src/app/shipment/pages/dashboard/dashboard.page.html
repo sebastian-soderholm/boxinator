@@ -1,1 +1,6 @@
-<p>dashboard works!</p>
+<header>
+  <h1>Your Recent Shipments</h1>
+  <button mat-flat-button color="warn" routerLink="/new-shipment">CREATE A NEW SHIPMENT</button>
+</header>
+
+<app-dashboard-list [shipments]="shipments"></app-dashboard-list>
