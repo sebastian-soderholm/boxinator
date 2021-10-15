@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace boxinator.Migrations
 {
-    public partial class test : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -235,8 +235,8 @@ namespace boxinator.Migrations
                 columns: new[] { "Id", "Date", "ShipmentId", "StatusId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 10, 15, 16, 30, 15, 290, DateTimeKind.Local).AddTicks(8957), 1, 1 },
-                    { 2, new DateTime(2021, 10, 15, 16, 30, 15, 294, DateTimeKind.Local).AddTicks(415), 1, 3 }
+                    { 1, new DateTime(2021, 10, 15, 17, 34, 33, 706, DateTimeKind.Local).AddTicks(3607), 1, 1 },
+                    { 2, new DateTime(2021, 10, 15, 17, 34, 33, 709, DateTimeKind.Local).AddTicks(518), 1, 3 }
                 });
 
             migrationBuilder.CreateIndex(

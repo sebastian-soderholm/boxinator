@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Box, MappedData, ShipmentTableData } from '../../models/shipment-table.model';
+import { Box, MappedData, ShipmentStatusLog, ShipmentTableData } from '../../models/shipment-table.model';
 import { SessionService } from '../../services/shipment-session.service';
 import { ShipmentService } from '../../services/shipment.service';
 
@@ -33,19 +33,32 @@ export class DashboardPage implements OnInit {
 
   public mapShipments(shipments: ShipmentTableData[]) {
 		return shipments.map((obj) => {
+      const currentBoxes = this.mapBoxes(obj.boxes)
+      //const expandedData = this.createExpandedData(obj.id, currentBoxes, obj.shipmentStatusLogs)
+
 			return {
-				id: obj.shipmentReadDTO.id,
-        cost: obj.shipmentReadDTO.cost.toString(),
-        weight: 1,
-        status: obj.statusReadDTO.name.toString(),
-        address: obj.shipmentReadDTO.address.toString(),
-        receiverName: obj.shipmentReadDTO.firstName.toString()+" "+obj.shipmentReadDTO.lastName.toString(),
-        date: new Date(obj.date).toDateString(),
-        boxes: this.mapBoxes(obj.shipmentReadDTO.boxes)
+				id: obj.id,
+        cost: obj.cost,
+        weight: 55,
+        status: this.getStatusFromList(obj.id, obj.shipmentStatusLogs),
+        address: obj.receiverAddress,
+        receiverName: obj.receiverFirstName+" "+obj.receiverLastName,
+        date: this.getDateFromList(obj.id, obj.shipmentStatusLogs),
+        //expandedData: expandedData//this.createExpandedData(obj.id, obj.boxes, currentdate)
+        //boxes: this.mapBoxes(obj.boxes),
+        //shipmentStatusLogs: obj.shipmentStatusLogs
 			};    
 		});
 	 }
+    public getDateFromList(shipmentId: number, logs: ShipmentStatusLog[]) {
+      const date = logs.find(o => o.shipmentId === shipmentId)!.date;
 
+      return new Date(date).toDateString();
+    }
+
+    public getStatusFromList(shipmentId: number, logs: ShipmentStatusLog[]) {
+      return logs.find(o => o.shipmentId === shipmentId)!.status.name;
+    }
    public mapBoxes(boxes: Box[]) {
     return boxes.map((obj) => {
 			return {
