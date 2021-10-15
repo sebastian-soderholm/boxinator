@@ -18,7 +18,7 @@ namespace boxinator.Controllers
 {
     [ApiController]
     [Route("shipments")]
-    //[EnableCors("_myAllowSpecificOrigins")]
+    [EnableCors("_myAllowSpecificOrigins")]
     //[Authorize]
     public class ShipmentsController : ControllerBase
     {
