@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using boxinator.Models;
 using boxinator.Models.Domain;
 using boxinator.Models.DTO.Shipment;
 using boxinator.Models.DTO.ShipmentStatusLog;
