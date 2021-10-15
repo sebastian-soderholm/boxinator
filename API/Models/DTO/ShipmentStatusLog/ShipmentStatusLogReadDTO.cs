@@ -9,6 +9,5 @@ namespace boxinator.Models.DTO.ShipmentStatusLog
         public int ShipmentId { get; set; }
         public StatusReadDTO Status { get; set; }
         public DateTime Date { get; set; }
-
     }
 }

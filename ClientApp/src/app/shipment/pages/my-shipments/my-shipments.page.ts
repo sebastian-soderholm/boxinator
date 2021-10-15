@@ -70,6 +70,9 @@ export class MyShipmentsPage implements OnInit {
  
   public mapShipments(shipments: ShipmentTableData[]) {
 		return shipments.map((obj) => {
+      const currentBoxes = this.mapBoxes(obj.boxes)
+      //const expandedData = this.createExpandedData(obj.id, currentBoxes, obj.shipmentStatusLogs)
+
 			return {
 				id: obj.id,
         cost: obj.cost,
@@ -78,11 +81,24 @@ export class MyShipmentsPage implements OnInit {
         address: obj.receiverAddress,
         receiverName: obj.receiverFirstName+" "+obj.receiverLastName,
         date: this.getDateFromList(obj.id, obj.shipmentStatusLogs),
-        boxes: this.mapBoxes(obj.boxes)
+        //expandedData: expandedData//this.createExpandedData(obj.id, obj.boxes, currentdate)
+        //boxes: this.mapBoxes(obj.boxes),
+        //shipmentStatusLogs: obj.shipmentStatusLogs
 			};    
 		});
 	 }
-   
+
+   /*
+   public createExpandedData(shipmentId : number, boxes: Box[],  logs: ShipmentStatusLog[]) {
+     let infoArray = [];
+     const 
+
+    
+     //const date = logs.find(o => o.shipmentId === shipmentId)!.date;
+
+    return new Date(date).toDateString();
+  }
+   */
    public getDateFromList(shipmentId: number, logs: ShipmentStatusLog[]) {
      const date = logs.find(o => o.shipmentId === shipmentId)!.date;
 
