@@ -12,7 +12,7 @@ namespace boxinator.Models.DTO.Shipment
 {
     public class ShipmentReadDTO
     {
-        public int Id { get; set; }        
+        public int Id { get; set; }
         public string ReceiverFirstName { get; set; }
         public string ReceiverLastName { get; set; }
         public string ReceiverAddress { get; set; }
