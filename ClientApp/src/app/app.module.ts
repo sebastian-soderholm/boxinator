@@ -16,7 +16,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 // Angular Material
 import { MatTableModule } from '@angular/material/table';
-
+import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
@@ -70,7 +70,8 @@ import { DashboardListItemComponent } from './shipment/components/dashboard-list
     MatMenuModule,
     MatButtonModule,
     MatCardModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]
