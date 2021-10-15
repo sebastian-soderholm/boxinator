@@ -239,10 +239,10 @@ namespace boxinator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CountryId")
+                    b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -276,7 +276,6 @@ namespace boxinator.Migrations
                             Id = 1,
                             AccountType = "REGISTERED_USER",
                             CountryId = 1,
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "awesomemartta@gs.com",
                             FirstName = "Martta",
                             LastName = "Johnsson",
@@ -341,14 +340,14 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 15, 1, 4, 2, 798, DateTimeKind.Local).AddTicks(6325),
+                            Date = new DateTime(2021, 10, 15, 12, 31, 38, 199, DateTimeKind.Local).AddTicks(7946),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 15, 1, 4, 2, 801, DateTimeKind.Local).AddTicks(3959),
+                            Date = new DateTime(2021, 10, 15, 12, 31, 38, 202, DateTimeKind.Local).AddTicks(9617),
                             ShipmentId = 1,
                             StatusId = 3
                         });
@@ -405,9 +404,7 @@ namespace boxinator.Migrations
                 {
                     b.HasOne("boxinator.Models.Country", "Country")
                         .WithMany("Users")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
                 });

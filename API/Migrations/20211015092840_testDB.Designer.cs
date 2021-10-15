@@ -10,8 +10,8 @@ using boxinator.Models;
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    [Migration("20211014220403_boxtest3")]
-    partial class boxtest3
+    [Migration("20211015092840_testDB")]
+    partial class testDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -343,14 +343,14 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 15, 1, 4, 2, 798, DateTimeKind.Local).AddTicks(6325),
+                            Date = new DateTime(2021, 10, 15, 12, 28, 40, 321, DateTimeKind.Local).AddTicks(3427),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 15, 1, 4, 2, 801, DateTimeKind.Local).AddTicks(3959),
+                            Date = new DateTime(2021, 10, 15, 12, 28, 40, 325, DateTimeKind.Local).AddTicks(3459),
                             ShipmentId = 1,
                             StatusId = 3
                         });

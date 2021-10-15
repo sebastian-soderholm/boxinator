@@ -10,7 +10,7 @@ namespace boxinator.Models.DTO.ShipmentStatusLog
     public class ShipmentStatusLogCreateDTO
     {
         public int ShipmentId { get; set; }
-        public string Status { get; set; }
+        public StatusCreateDTO Status { get; set; }
         public DateTime Date { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using boxinator.Models;
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    [Migration("20211014220142_boxtest2")]
-    partial class boxtest2
+    [Migration("20211015093138_testDB2")]
+    partial class testDB2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -117,6 +117,13 @@ namespace boxinator.Migrations
                             Id = 1,
                             BoxTypeId = 1,
                             Color = "(32,178,170)",
+                            ShipmentId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BoxTypeId = 1,
+                            Color = "(123,765,3)",
                             ShipmentId = 1
                         });
                 });
@@ -234,10 +241,10 @@ namespace boxinator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CountryId")
+                    b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -271,7 +278,6 @@ namespace boxinator.Migrations
                             Id = 1,
                             AccountType = "REGISTERED_USER",
                             CountryId = 1,
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "awesomemartta@gs.com",
                             FirstName = "Martta",
                             LastName = "Johnsson",
@@ -336,14 +342,14 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 15, 1, 1, 42, 383, DateTimeKind.Local).AddTicks(5481),
+                            Date = new DateTime(2021, 10, 15, 12, 31, 38, 199, DateTimeKind.Local).AddTicks(7946),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 15, 1, 1, 42, 386, DateTimeKind.Local).AddTicks(5343),
+                            Date = new DateTime(2021, 10, 15, 12, 31, 38, 202, DateTimeKind.Local).AddTicks(9617),
                             ShipmentId = 1,
                             StatusId = 3
                         });
@@ -400,9 +406,7 @@ namespace boxinator.Migrations
                 {
                     b.HasOne("boxinator.Models.Country", "Country")
                         .WithMany("Users")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
                 });

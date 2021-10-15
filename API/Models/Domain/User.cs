@@ -19,10 +19,10 @@ namespace boxinator.Models.Domain
         public string FirstName { get; set; }
         [MaxLength(100)]
         public string LastName { get; set; }
-        public int CountryId { get; set; }
+        public int? CountryId { get; set; }
         public Country Country { get; set; }
         public string ZipCode { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public string PhoneNumber { get; set; }
         [Required]
         public string AccountType { get; set; }
