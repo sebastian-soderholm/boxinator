@@ -125,6 +125,7 @@ namespace boxinator.Services
             var currentUserId = 1;
 
             return await _context.Shipments
+                .Include(c => c.Country).ThenInclude(z => z.Zone)
                 .Include(s => s.User)
                 .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
                 .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
@@ -142,6 +143,7 @@ namespace boxinator.Services
             var currentUserId = 1;
 
             return await _context.Shipments
+                .Include(c => c.Country).ThenInclude(z => z.Zone)
                 .Include(s => s.User)
                 .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
                 .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
@@ -158,6 +160,7 @@ namespace boxinator.Services
             var currentUserId = 1;
 
             return await _context.Shipments
+                .Include(c => c.Country).ThenInclude(z => z.Zone)
                 .Include(s => s.User)
                 .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
                 .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
