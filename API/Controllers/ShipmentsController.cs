@@ -17,7 +17,7 @@ namespace boxinator.Controllers
 {
     [ApiController]
     [Route("shipments")]
-    [EnableCors("_myAllowSpecificOrigins")]
+    //[EnableCors("_myAllowSpecificOrigins")]
     //[Authorize]
     public class ShipmentsController : ControllerBase
     {
@@ -96,21 +96,21 @@ namespace boxinator.Controllers
         public async Task<ActionResult<ShipmentReadDTO>> GuestAdd(ShipmentGuestCreateDTO shipmentGuestDTO)
         {
             //Get user by email from DB 
-            User userFromDB = await _accountService.GetUser(shipmentGuestDTO.Email);
+            User userInDB = await _accountService.GetUser(shipmentGuestDTO.Email);
 
             //check if user does not exist in DB
-            if(userFromDB != null)
+            if(userInDB != null)
             {
                 //Create user in DB with only email field
                 User userToDB = new User();
                 userToDB.Email = shipmentGuestDTO.Email;
-                userFromDB = await _accountService.Add(userToDB);
+                userInDB = await _accountService.Add(userToDB);
             }
 
             Shipment newShipment = _mapper.Map<Shipment>(shipmentGuestDTO);
 
             //Link user to shipment and save to DB
-            newShipment.User = userFromDB;
+            newShipment.User = userInDB;
             var resultShipment = await _service.Add(newShipment);
             return _mapper.Map<ShipmentReadDTO>(resultShipment);
         }

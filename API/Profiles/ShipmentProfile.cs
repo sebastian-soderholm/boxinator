@@ -21,13 +21,12 @@ namespace boxinator.Profiles
                 .ReverseMap();
 
             CreateMap<Shipment, ShipmentCreateDTO>()
-                .ForMember(dto => dto.Sender, opt => opt.MapFrom(s => s.User))
+                //.ForMember(dto => dto.Sender, opt => opt.MapFrom(s => s.User))
                 .ForMember(dto => dto.ReveiverFirstName, opt => opt.MapFrom(s => s.FirstName))
                 .ForMember(dto => dto.ReceiverLastName, opt => opt.MapFrom(s => s.LastName))
                 .ForMember(dto => dto.ReceiverZipCode, opt => opt.MapFrom(s => s.Address))
                 .ForMember(dto => dto.ReceiverAddress, opt => opt.MapFrom(s => s.ZipCode))
-                .ForPath(dto => dto.Sender.Id, opt => opt.MapFrom(s => s.UserId))
-                .ForPath(dto => dto.Sender.Id, opt => opt.MapFrom(s => s.UserId))
+                .ForPath(dto => dto.SenderId, opt => opt.MapFrom(s => s.UserId))
                 .ReverseMap();
 
         }

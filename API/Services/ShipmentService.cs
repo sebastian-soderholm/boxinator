@@ -26,6 +26,9 @@ namespace boxinator.Services
         /// <returns>Created shipment</returns>
         public async Task<Shipment> Add(Shipment shipment)
         {
+            //Add status CREATED for new shipment
+            //shipment.ShipmentStatusLogs.Add(new ShipmentStatusLog());
+
             var resultShipment = await _context.Shipments.AddAsync(shipment);
             if(resultShipment.Entity != null)
             {
