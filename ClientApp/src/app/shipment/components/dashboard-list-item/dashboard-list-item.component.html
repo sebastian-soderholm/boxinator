@@ -4,6 +4,10 @@
     <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
   </mat-card-header>
   <mat-card-title>
-    Shipment #12345 to You, Bali
+    Shipment #{{shipment.id}} to {{shipment.receiverFirstName}} {{shipment.receiverLastName}}, {{shipment.country.name}}
+   0 kg | {{shipment.cost}} €
   </mat-card-title>
+  <mat-card-content>
+    Deluxe box
+  </mat-card-content>
 </mat-card>

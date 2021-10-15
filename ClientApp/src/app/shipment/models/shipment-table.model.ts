@@ -8,7 +8,7 @@ export interface ShipmentTableData {
 	cost: string;
 	boxes: Box[];
 	expandedData: ExpandedData []
-	//country: Country;
+	country: Country;
 
 }
 
