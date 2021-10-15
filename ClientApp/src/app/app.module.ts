@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSortModule } from '@angular/material/sort';
+import { MatMenuModule } from '@angular/material/menu';
 
 // Firebase
 import { AngularFireModule } from '@angular/fire/compat';
@@ -12,6 +14,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 //Pages
 import { LoginPage } from './login/pages/login/login.page';
@@ -25,6 +28,7 @@ import { MenuPage } from './navigation/pages/menu/menu.page';
 import { CountrySettingsPage } from './admin/pages/country-settings/country-settings.page';
 import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipment.page';
 import { environment } from '../environments/environment';
+import { MatButton } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,7 @@ import { environment } from '../environments/environment';
     EditAccountPage,
     MenuPage,
     CountrySettingsPage,
-    GuestShipmentPage,
+    GuestShipmentPage
   ],
   imports: [
     BrowserModule,
@@ -51,7 +55,10 @@ import { environment } from '../environments/environment';
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
-    MatTableModule
+    MatTableModule,
+    MatButtonToggleModule,
+    MatSortModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

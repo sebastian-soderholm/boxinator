@@ -1,18 +1,21 @@
 using boxinator.Models;
 using boxinator.Services;
 using boxinator.Services.Interfaces;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
+//using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+//using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
@@ -54,21 +57,41 @@ namespace boxinator
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ISettingsService, SettingsService>();
-
+            /*
+            FirebaseApp.Create(new AppOptions
+            {
+                Credential = GoogleCredential.FromFile("firebase-secret-file.json")
+            });
+            */
+            /*
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 
                 {
-                    options.Authority = "https://securetoken.google.com/boxinator";
+                    options.Authority = "https://securetoken.google.com/1:789898616661:web:1b7959121446003ec9d9dc";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = "https://securetoken.google.com/boxinator",
+                        ValidIssuer = "https://securetoken.google.com/1:789898616661:web:1b7959121446003ec9d9dc",
                         ValidateAudience = true,
-                        ValidAudience = "boxinator",
+                        ValidAudience = "1:789898616661:web:1b7959121446003ec9d9dc",// App Id
                         ValidateLifetime = true
                     };
                 });
-
+            */
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "https://securetoken.google.com/1:789898616661:web:1b7959121446003ec9d9dc";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = "https://securetoken.google.com/1:789898616661:web:1b7959121446003ec9d9dc",
+                        ValidateAudience = true,
+                        ValidAudience = "1:789898616661:web:1b7959121446003ec9d9dc",
+                        ValidateLifetime = true
+                    };
+                });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Boxinator", Version = "v1" });
@@ -83,6 +106,7 @@ namespace boxinator
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(MyAllowSpecificOrigins);
 
             if (env.IsDevelopment())
             {
@@ -92,16 +116,18 @@ namespace boxinator
             }
 
             app.UseHttpsRedirection();
-            app.UseRouting();
-            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthentication();
+
+            app.UseRouting();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+            /*
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -114,6 +140,7 @@ namespace boxinator
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+            */
         }
     }
 }

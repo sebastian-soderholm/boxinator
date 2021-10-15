@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using boxinator.Models;
 
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    partial class BoxinatorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211015092840_testDB")]
+    partial class testDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,10 +241,10 @@ namespace boxinator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CountryId")
+                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DateOfBirth")
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -276,6 +278,7 @@ namespace boxinator.Migrations
                             Id = 1,
                             AccountType = "REGISTERED_USER",
                             CountryId = 1,
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "awesomemartta@gs.com",
                             FirstName = "Martta",
                             LastName = "Johnsson",
@@ -340,14 +343,14 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 14, 17, 39, 46, 529, DateTimeKind.Local).AddTicks(306),
+                            Date = new DateTime(2021, 10, 15, 12, 28, 40, 321, DateTimeKind.Local).AddTicks(3427),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 15, 12, 31, 38, 202, DateTimeKind.Local).AddTicks(9617),
+                            Date = new DateTime(2021, 10, 15, 12, 28, 40, 325, DateTimeKind.Local).AddTicks(3459),
                             ShipmentId = 1,
                             StatusId = 3
                         });
@@ -404,7 +407,9 @@ namespace boxinator.Migrations
                 {
                     b.HasOne("boxinator.Models.Country", "Country")
                         .WithMany("Users")
-                        .HasForeignKey("CountryId");
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Country");
                 });

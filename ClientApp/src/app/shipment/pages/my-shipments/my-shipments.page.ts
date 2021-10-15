@@ -6,6 +6,7 @@ import { MappedData } from '../../models/shipment-table.model';
 import { Box } from '../../models/shipment-table.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Data } from '@angular/router';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-my-shipments',
@@ -21,48 +22,50 @@ import { Data } from '@angular/router';
 })
 export class MyShipmentsPage implements OnInit {
 
-  displayedColumns: string[] = ['id', 'cost', 'weight', 'status', 'receiverName', 'statusId', 'date'];
+  displayedColumns: string[] = ['id', 'cost', 'weight', 'status', 'receiverName', 'date'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource: MappedData[] = [];
+  dateVisibility: boolean = true;
+  sortedData: MappedData[] = [];
 
   constructor(
     private readonly shipmentService: ShipmentService,
     private readonly sessionService: SessionService
-  ) {}
+  ) {
+    this.sortedData = this.dataSource.slice();
+  }
 
   ngOnInit() {
-    this.shipmentService.getShipments(async () => {
-      //console.log(this.sessionService.shipmentTableData)
+    this.shipmentService.getAllCurrent(async () => {
       const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
-      console.log(mappedData)
-      this.dataSource = mappedData;
+      this.sortedData = mappedData;
     });
 
     console.log(this.shipmentService.getError())
   }
 
-  
-  addColumn() {
-    const randomColumn = Math.floor(Math.random() * this.displayedColumns.length);
-    this.columnsToDisplay.push(this.displayedColumns[randomColumn]);
-  }
-
-  removeColumn() {
-    if (this.columnsToDisplay.length) {
-      this.columnsToDisplay.pop();
+  onValChange(selection: any, state : any){
+    console.log(state)
+    if(state == true) {
+      this.removeColumn(selection);
+    }
+    else {
+      this.addColumn(selection);
     }
   }
 
-  shuffle() {
-    let currentIndex = this.columnsToDisplay.length;
-    while (0 !== currentIndex) {
-      let randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
+  addColumn(selection: any) {
+    if(!this.columnsToDisplay.includes(selection)) {
+      this.columnsToDisplay.push(selection);
+    }
+  }
 
-      // Swap
-      let temp = this.columnsToDisplay[currentIndex];
-      this.columnsToDisplay[currentIndex] = this.columnsToDisplay[randomIndex];
-      this.columnsToDisplay[randomIndex] = temp;
+  removeColumn(selection: any) {
+    var index = this.columnsToDisplay.indexOf(selection);
+
+    if (index !== -1) {
+      var filteredAry = this.columnsToDisplay.filter(function(e) { return e !== selection })
+      this.columnsToDisplay = filteredAry;
     }
   }
  
@@ -73,14 +76,15 @@ export class MyShipmentsPage implements OnInit {
         cost: obj.shipmentReadDTO.cost.toString(),
         weight: 1,
         status: obj.statusReadDTO.name.toString(),
-        receiverName: obj.shipmentReadDTO.receiverName.toString(),
-        date: obj.date.toString(),
-        boxes: this.mapArray(obj.shipmentReadDTO.boxes)
+        address: obj.shipmentReadDTO.address.toString(),
+        receiverName: obj.shipmentReadDTO.firstName.toString()+" "+obj.shipmentReadDTO.lastName.toString(),
+        date: new Date(obj.date).toDateString(),
+        boxes: this.mapBoxes(obj.shipmentReadDTO.boxes)
 			};    
 		});
 	 }
 
-   public mapArray(boxes: Box[]) {
+   public mapBoxes(boxes: Box[]) {
     return boxes.map((obj) => {
 			return {
         color: obj.color.toString()
@@ -88,5 +92,30 @@ export class MyShipmentsPage implements OnInit {
 		});
    }
 
+   //---------------sorting
+   sortData(sort: Sort) {
+    const data = this.sortedData.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'id': return compare(a.id, b.id, isAsc);
+        case 'cost': return compare(a.cost, b.cost, isAsc);
+        case 'weight': return compare(a.weight, b.weight, isAsc);
+        case 'status': return compare(a.status, b.status, isAsc);
+        case 'receiverName': return compare(a.receiverName, b.receiverName, isAsc);
+        case 'date': return compare(a.date, b.date, isAsc);
+        default: return 0;
+      }
+    });
+
+    function compare(a: number | string, b: number | string, isAsc: boolean) {
+      return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    }
+  }
 
 }

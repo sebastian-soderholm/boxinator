@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace boxinator.Controllers
@@ -36,19 +38,33 @@ namespace boxinator.Controllers
         /// <param name="userDTO"></param>
         /// <returns>StatusCodes 400/401/201</returns>
         /// POST: /login
-        [HttpPost]
-        public async Task<IActionResult> Login(/*UserCreateDTO userDTO*/)
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Login() // rename to Verify
         {
-            var test2 = HttpContext.User.Identity.IsAuthenticated;
-            var test = HttpContext.User.Claims;
-            var testUser = HttpContext.User;
-            string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
-            string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
-            var auth = FirebaseAuth.DefaultInstance;
+            //string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
+            //string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
+            /*
+            FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
 
-            FirebaseToken decodedToken = await FirebaseAuth.DefaultInstance
-            .VerifyIdTokenAsync(accessTokenWithBearerPrefix);
-                    string uid = decodedToken.Uid;
+            FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
+            FirebaseToken decodedToken = await auth.VerifyIdTokenAsync(accessTokenWithoutBearerPrefix);
+            string uid = decodedToken.Uid;
+            */
+            /*
+            if (AuthenticationHeaderValue.TryParse(accessTokenWithoutBearerPrefix, out var headerValue))
+            {
+                // we have a valid AuthenticationHeaderValue that has the following details:
+
+                var scheme = headerValue.Scheme;
+                var parameter = headerValue.Parameter;
+
+                FirebaseToken decodedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(parameter);
+                string uid = decodedToken.Uid;
+                // scheme will be "Bearer"
+                // parmameter will be the token itself.
+            }
+
             // NOTE! Rate limiting policy must be added
             /*
             if (userDTO == null)
@@ -60,7 +76,7 @@ namespace boxinator.Controllers
             if(resultUser == null)
                 return StatusCode(401);
              */
-            return StatusCode(201);
+            return Ok();
         }
 
         /*
