@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ShipmentService } from '../../services/shipment.service';
 import { SessionService } from '../../services/shipment-session.service';
-import { ShipmentStatusLog, ShipmentTableData } from '../../models/shipment-table.model';
-import { MappedData } from '../../models/shipment-table.model';
+import { InfoData, ShipmentStatusLog, ShipmentTableData } from '../../models/shipment-table.model';
+import { MappedData, ExpandedData } from '../../models/shipment-table.model';
 import { Box } from '../../models/shipment-table.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Data } from '@angular/router';
 import {Sort} from '@angular/material/sort';
+import { expand } from 'rxjs/operators';
 
 @Component({
   selector: 'app-my-shipments',
@@ -70,43 +71,54 @@ export class MyShipmentsPage implements OnInit {
  
   public mapShipments(shipments: ShipmentTableData[]) {
 		return shipments.map((obj) => {
-      const currentBoxes = this.mapBoxes(obj.boxes)
-      //const expandedData = this.createExpandedData(obj.id, currentBoxes, obj.shipmentStatusLogs)
+      const shipmentBoxes = this.mapBoxes(obj.boxes)
+      const expandedData = this.createExpandedData(obj.id, shipmentBoxes, obj.shipmentStatusLogs)
+      const infoData = this.getInfoData(obj.shipmentStatusLogs);
+      const latestStatus = this.getLatestStatus(infoData);
+      const latestDate = this.getLatestDate(infoData);
 
 			return {
 				id: obj.id,
         cost: obj.cost,
         weight: 55,
-        status: this.getStatusFromList(obj.id, obj.shipmentStatusLogs),
+        status: latestStatus,
         address: obj.receiverAddress,
         receiverName: obj.receiverFirstName+" "+obj.receiverLastName,
-        date: this.getDateFromList(obj.id, obj.shipmentStatusLogs),
-        //expandedData: expandedData//this.createExpandedData(obj.id, obj.boxes, currentdate)
-        //boxes: this.mapBoxes(obj.boxes),
-        //shipmentStatusLogs: obj.shipmentStatusLogs
+        date: latestDate,
+        expandedData: expandedData
 			};    
 		});
 	 }
 
-   /*
-   public createExpandedData(shipmentId : number, boxes: Box[],  logs: ShipmentStatusLog[]) {
-     let infoArray = [];
-     const 
+   public getInfoData(logs: ShipmentStatusLog[]) {
+    const infoArray = logs.map((obj) => {
+      return {
+        date: obj.date,
+        statusId: obj.status.id,
+        statusName: obj.status.name
+       };    
+     });
 
-    
-     //const date = logs.find(o => o.shipmentId === shipmentId)!.date;
-
-    return new Date(date).toDateString();
-  }
-   */
-   public getDateFromList(shipmentId: number, logs: ShipmentStatusLog[]) {
-     const date = logs.find(o => o.shipmentId === shipmentId)!.date;
-
-     return new Date(date).toDateString();
+     return infoArray;
    }
 
-   public getStatusFromList(shipmentId: number, logs: ShipmentStatusLog[]) {
-     return logs.find(o => o.shipmentId === shipmentId)!.status.name;
+   
+   public createExpandedData(shipmentId : number, boxes: Box[],  logs: ShipmentStatusLog[]) {
+    let expandedData = <ExpandedData>{};
+    expandedData.boxes = boxes;
+    expandedData.shipmentStatusLogs = logs.filter(l => l.shipmentId == shipmentId);
+
+    return expandedData;
+  }
+   
+   public getLatestDate(infoArray: any[]) {
+      const latestDate = infoArray.sort((a : any, b : any) => b.date - a.date)[0]
+     return new Date(latestDate.date).toDateString();
+   }
+
+   public getLatestStatus(infoArray: any[]) {
+     const latestStatus = infoArray.sort((a : any, b : any) => b.statusId - a.statusId)[0]  
+     return latestStatus.statusName;
    }
 
    public mapBoxes(boxes: Box[]) {

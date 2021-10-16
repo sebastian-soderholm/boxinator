@@ -22,12 +22,22 @@
           <div class="example-element-color">
             <h2>Boxes</h2>
             <ul class="element.boxes">
-              <li *ngFor="let box of element.boxes">
+              <li *ngFor="let box of element.expandedData.boxes">
                 {{box.color}}
               </li>
             </ul>
           </div>
         </div>    
+        <div class="example-element-diagram">
+          <div class="example-element-color">
+            <h2>Info</h2>
+            <ul class="element.boxes">
+              <li *ngFor="let log of element.expandedData.shipmentStatusLogs">
+                {{log.date}}---{{log.status.name}}
+              </li>
+            </ul>
+          </div>
+        </div>  
       </div>
     </td>
   </ng-container>
