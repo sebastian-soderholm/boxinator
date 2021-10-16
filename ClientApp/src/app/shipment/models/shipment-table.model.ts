@@ -12,6 +12,11 @@ export interface ShipmentTableData {
 
 }
 
+export interface InfoData {
+	latestDate: string;
+	latestStatus: string;
+}
+
 export interface ExpandedData {
 	boxes: Box [];
 	shipmentStatusLogs: ShipmentStatusLog[];
