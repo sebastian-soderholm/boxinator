@@ -37,6 +37,17 @@ import { environment } from '../environments/environment';
 import { DashboardListComponent } from './shipment/components/dashboard-list/dashboard-list.component';
 import { DashboardListItemComponent } from './shipment/components/dashboard-list-item/dashboard-list-item.component';
 
+//Material form modules
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+
+//Color picker
+import { ColorPickerModule } from 'ngx-color-picker';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,9 +82,15 @@ import { DashboardListItemComponent } from './shipment/components/dashboard-list
     MatButtonModule,
     MatCardModule,
     MatProgressBarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    ColorPickerModule
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

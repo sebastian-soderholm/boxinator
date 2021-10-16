@@ -1,35 +1,28 @@
-export interface BasicBox {
-  name: "Basic";
-  weight: 1;
-  colorR: number;
-  colorG: number;
-  colorB: number;
-}
-export interface HumbleBox {
-  name: "Humble";
-  weight: 2;
-  colorR: number;
-  colorG: number;
-  colorB: number;
-}
-export interface DeluxeBox {
-  name: "Deluxe";
-  weight: 5;
-  colorR: number;
-  colorG: number;
-  colorB: number;
-}
-export interface PremiumBox {
-  name: "Premium";
-  weight: 8;
-  colorR: number;
-  colorG: number;
-  colorB: number;
-}
 export interface Box {
-  name: "Basic" | "Humble" | "Deluxe" | "Premium";
-  weight: 1|2|5|8;
-  colorR: number;
-  colorG: number;
-  colorB: number;
+  name: string;
+  weight: number;
+  color: string;
 }
+
+export const BoxTypes = [
+  {
+    name: "Basic",
+    weight: 1,
+    // color: "(255,255,255)"
+  },
+  {
+    name: "Humble",
+    weight: 2,
+    // color: "(255,255,255)"
+  },
+  {
+    name: "Deluxe",
+    weight: 5,
+    // color: "(255,255,255)"
+  },
+  {
+    name: "Premium",
+    weight: 8,
+    // color: "(255,255,255)"
+  }
+];

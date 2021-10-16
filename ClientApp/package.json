@@ -21,7 +21,9 @@
     "@angular/platform-browser": "^12.2.9",
     "@angular/platform-browser-dynamic": "^12.2.9",
     "@angular/router": "^12.2.9",
+    "@ng-matero/extensions": "^12.4.0",
     "firebase": "^9.1.2",
+    "ngx-color-picker": "^11.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
