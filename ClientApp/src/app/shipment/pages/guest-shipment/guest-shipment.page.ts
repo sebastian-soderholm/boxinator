@@ -27,9 +27,8 @@ export class GuestShipmentPage implements OnInit {
 
   private _countries: Country[] = []
   private _cost: number = 0;
-  // private _ColorPickerComponent = new ColorPickerComponent();
   private _guestShipmentForm: any;
-
+  private _boxFormArray: any;
 
   constructor(
     private readonly router: Router,
@@ -68,10 +67,10 @@ export class GuestShipmentPage implements OnInit {
         //Must contain only numbers
         Validators.pattern(/^[0-9]*$/)
       ]),
-      boxFormArray: new FormArray([
+      boxFormArray: this._boxFormArray = new FormArray([
         new FormGroup({
-          boxType: new FormControl([]),
-          boxColor: new FormControl([]),
+          boxType: new FormControl(this.boxTypes[0], []),
+          boxColor: new FormControl({color: "rgb(255,255,255)"},[]),
         })
       ], Validators.required)
     });
@@ -83,15 +82,16 @@ export class GuestShipmentPage implements OnInit {
   }
   addBox() {
     const group = new FormGroup({
-      boxType: new FormControl(''),
+      boxType: new FormControl(this.boxTypes[0]),
       boxColor: new FormControl({color: 'rgb(255,255,255)'})
     });
     const boxFormArray = this._guestShipmentForm.get('boxFormArray') as FormArray;
     boxFormArray.push(group)
   }
   removeBox(index: number) {
-    const boxFormArray = this._guestShipmentForm.get('boxFormArray') as FormArray;
-    boxFormArray.removeAt(index)
+    // const boxFormArray = this._guestShipmentForm.get('boxFormArray') as FormArray;
+    this._boxFormArray.removeAt(index)
+
   }
 
   createGuestShipment(): void {
@@ -130,6 +130,7 @@ export class GuestShipmentPage implements OnInit {
 
   }
   clearFormData() {
+
     this._guestShipment = {
       senderEmail: "",
       receiverFirstName: "",
@@ -144,7 +145,7 @@ export class GuestShipmentPage implements OnInit {
 
 
   formChanged() {
-    this.calculateCost()
+    // this.calculateCost()
    }
   calculateCost() {
     const countryMultiplier = this._guestShipmentForm.get('destinationCountryId').value
