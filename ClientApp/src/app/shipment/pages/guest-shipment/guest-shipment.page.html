@@ -34,9 +34,17 @@
   </div>
   <!-- Destination country -->
   <select formControlName="destinationCountryId">
-    <option *ngIf="countries" value="" selected>Loading countries...</option>
+    <!-- <option *ngIf="countries" value="" selected>Loading countries...</option> -->
     <option [ngValue]="country.id" *ngFor="let country of countries">{{country.name}}</option>
   </select>
+
+  <!-- Destination postal code -->
+  <input formControlName="destinationAddress" type="text" placeholder="Address">
+  <div *ngIf="destinationAddress?.dirty || destinationAddress?.touched" class="alert">
+    <div *ngIf="destinationAddress?.errors?.required">
+      <p>Address is required</p>
+    </div>
+  </div>
 
   <!-- Destination postal code -->
   <input formControlName="destinationZipCode" type="text" placeholder="Postal code">
@@ -88,16 +96,21 @@
     <button (click)="addBox()">+</button>
   </ng-container>
 
-  <button type="submit" (click)="createGuestShipment()">
+  <button type="submit" (click)="createGuestShipment()"
+  [disabled]="
+  guestShipmentForm.controls['senderEmail'].invalid ||
+  guestShipmentForm.controls['receiverFirstName'].invalid ||
+  guestShipmentForm.controls['receiverLastName'].invalid ||
+  guestShipmentForm.controls['destinationCountryId'].invalid ||
+  guestShipmentForm.controls['destinationAddress'].invalid ||
+  guestShipmentForm.controls['destinationZipCode'].invalid ||
+  guestShipmentForm.controls['boxFormArray'].invalid
+  "
+  >
     Ship
   </button>
 
 </form>
 
 
-<!-- [disabled]="
-guestShipmentForm.controls['senderEmail'].invalid ||
-guestShipmentForm.controls['receiverFirstName'].invalid ||
-guestShipmentForm.controls['receiverLastName'].invalid ||
-guestShipmentForm.controls['destinationCountryId'].invalid ||
-guestShipmentForm.controls['destinationZipCode'].invalid" -->
+<!--  -->

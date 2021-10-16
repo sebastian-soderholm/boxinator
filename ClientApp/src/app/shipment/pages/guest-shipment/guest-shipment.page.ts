@@ -16,11 +16,12 @@ import { ColorPickerComponent } from 'ngx-color-picker';
 export class GuestShipmentPage implements OnInit {
 
   private _guestShipment: GuestShipment = {
-    senderEmail: "",
-    receiverFirstName: "",
-    receiverLastName: "",
-    destinationCountryId: 0,
-    destinationZipCode: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    countryId: 1,
+    zipCode: "",
+    address: "",
     cost: 0,
     boxes: []
   }
@@ -67,6 +68,9 @@ export class GuestShipmentPage implements OnInit {
         //Must contain only numbers
         Validators.pattern(/^[0-9]*$/)
       ]),
+      destinationAddress: new FormControl('',[
+        Validators.required
+      ]),
       boxFormArray: this._boxFormArray = new FormArray([
         new FormGroup({
           boxType: new FormControl(this.boxTypes[0], []),
@@ -111,11 +115,11 @@ export class GuestShipmentPage implements OnInit {
     console.table(boxFormArray)
 
     //Add field values to shipment
-    this._guestShipment.senderEmail = this._guestShipmentForm.get('senderEmail')?.value
-    this._guestShipment.receiverFirstName = this._guestShipmentForm.get('receiverFirstName')?.value
-    this._guestShipment.receiverLastName = this._guestShipmentForm.get('receiverLastName')?.value
-    this._guestShipment.destinationCountryId = this._guestShipmentForm.get('destinationCountryId')?.value
-    this._guestShipment.destinationZipCode = this._guestShipmentForm.get('destinationZipCode')?.value
+    this._guestShipment.email = this._guestShipmentForm.get('senderEmail')?.value
+    this._guestShipment.firstName = this._guestShipmentForm.get('receiverFirstName')?.value
+    this._guestShipment.lastName = this._guestShipmentForm.get('receiverLastName')?.value
+    this._guestShipment.countryId = this._guestShipmentForm.get('destinationCountryId')?.value
+    this._guestShipment.zipCode = this._guestShipmentForm.get('destinationZipCode')?.value
 
     //Add boxes to shipment
     for(let i=0; i<boxFormArray.length; i++) {
@@ -132,19 +136,17 @@ export class GuestShipmentPage implements OnInit {
 
   }
   clearFormData() {
-
     this._guestShipment = {
-      senderEmail: "",
-      receiverFirstName: "",
-      receiverLastName: "",
-      destinationCountryId: 0,
-      destinationZipCode: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+      countryId: 1,
+      zipCode: "",
+      address: "",
       cost: 0,
       boxes: []
     }
   }
-
-
 
   formChanged() {
     // this.calculateCost()
@@ -176,6 +178,9 @@ export class GuestShipmentPage implements OnInit {
   }
   get destinationZipCode() {
     return this._guestShipmentForm.get('destinationZipCode')
+  }
+  get destinationAddress() {
+    return this._guestShipmentForm.get('destiantionAddress')
   }
   get cost() {
     return this._cost

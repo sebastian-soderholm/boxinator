@@ -19,6 +19,5 @@ namespace boxinator.Models.DTO.Shipment
         public double Cost { get; set; }
         public int CountryId { get; set; }
         public List<BoxCreateDTO> Boxes { get; set; }
-        public List<ShipmentStatusLogCreateDTO> ShipmentStatusLogs { get; set; }
     }
 }
