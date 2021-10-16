@@ -25,7 +25,7 @@ export class MyShipmentsPage implements OnInit {
 
   displayedColumns: string[] = ['id', 'cost', 'weight', 'status', 'receiverName', 'date'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
-  dataSource: MappedData[] = [];
+  private _dataSource: MappedData[] = [];
   dateVisibility: boolean = true;
   sortedData: MappedData[] = [];
   statusOptions : Status[] = [
@@ -37,15 +37,15 @@ export class MyShipmentsPage implements OnInit {
   ]
   fromDate = null;
   toDate = null;
-  selectedStatus = null;
-  selectedFromDate = null;
-  selectedToDate = null;
+  selectedStatus? : number | null;
+  selectedFromDate? : Date[] | null;
+  selectedToDate? : Date[] | null;
 
   constructor(
     private readonly shipmentService: ShipmentService,
     private readonly sessionService: SessionService
   ) {
-    this.sortedData = this.dataSource.slice();
+    this.sortedData = this._dataSource.slice();
   }
 
   ngOnInit() {
@@ -57,17 +57,19 @@ export class MyShipmentsPage implements OnInit {
   }
 
   filterTable() {
-    console.log("filteriiinnnng")
-    console.log(this.selectedStatus)
-    console.log(this.selectedFromDate)
-    console.log(this.selectedToDate)
-    this.shipmentService.getAllCurrent(async () => {
-      const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
-      this.sortedData = mappedData;
-    });
+    if(this.selectedStatus == null && this.selectedFromDate == null && this.selectedToDate == null) {
+      console.log("no filters selected");
+    }
+    else {
+      this.shipmentService.getFilteredShipments(this.selectedStatus!, this.selectedFromDate!, this.selectedToDate!, async () => {
+        const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
+        this.sortedData = mappedData;
+      });
+    }
+
   }
 
-  setSelectedFilterOption(type: any, selected : any) {
+  setSelectedFilterOption(type: string, selected : any) {
     if(type == 'status'){
       this.selectedStatus = selected;
     }
@@ -104,7 +106,7 @@ export class MyShipmentsPage implements OnInit {
     }
   }
  
-  public mapShipments(shipments: ShipmentTableData[]) {
+  mapShipments(shipments: ShipmentTableData[]) {
 		return shipments.map((obj) => {
       const shipmentBoxes = this.mapBoxes(obj.boxes)
       const expandedData = this.createExpandedData(obj.id, shipmentBoxes, obj.shipmentStatusLogs)
@@ -126,7 +128,7 @@ export class MyShipmentsPage implements OnInit {
 	 }
 
    // for getting newest data to parent rows
-  public getInfoData(logs: ShipmentStatusLog[]) {
+  getInfoData(logs: ShipmentStatusLog[]) {
     const infoArray = logs.map((obj) => {
       return {
         date: obj.date,
@@ -138,7 +140,7 @@ export class MyShipmentsPage implements OnInit {
     return infoArray;
   }
   
-  public createExpandedData(shipmentId : number, boxes: Box[],  logs: ShipmentStatusLog[]) {
+  createExpandedData(shipmentId : number, boxes: Box[],  logs: ShipmentStatusLog[]) {
     let expandedData = <ExpandedData>{};
     expandedData.boxes = boxes;
     expandedData.shipmentStatusLogs = logs.filter(l => l.shipmentId == shipmentId);
@@ -146,17 +148,17 @@ export class MyShipmentsPage implements OnInit {
     return expandedData;
   }
   
-  public getLatestDate(infoArray: any[]) {
+  getLatestDate(infoArray: any[]) {
     const latestDate = infoArray.sort((a : any, b : any) => b.date - a.date)[0]
     return new Date(latestDate.date).toDateString();
   }
   
-  public getLatestStatus(infoArray: any[]) {
+  getLatestStatus(infoArray: any[]) {
     const latestStatus = infoArray.sort((a : any, b : any) => b.statusId - a.statusId)[0]  
     return latestStatus.statusName;
   }
   
-  public mapBoxes(boxes: Box[]) {
+  mapBoxes(boxes: Box[]) {
     return boxes.map((obj) => {
       return {
         color: obj.color.toString()

@@ -164,5 +164,36 @@ namespace boxinator.Services
                 .Where(u => u.UserId == currentUserId).ToListAsync();
         }
 
+        /// <summary>
+        /// Get filtered shipments
+        /// </summary>
+        /// <returns>List of shipments by filters</returns>
+        public async Task<List<Shipment>> GetFilteredShipments(int? statusId, DateTime? from, DateTime? to)
+        {
+            var currentUserId = 1;
+
+            var query = _context.Shipments
+                .Include(c => c.Country).ThenInclude(z => z.Zone)
+                .Include(s => s.User).Where(x => x.UserId == currentUserId)
+                .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
+                .Include(s => s.ShipmentStatusLogs).Where(x => x.ShipmentStatusLogs.Any(x => x.StatusId == statusId))
+                .Include(s => s.ShipmentStatusLogs).Where(x => x.ShipmentStatusLogs.Any(x => x.Date > from && x.Date < to))
+                .Include(s => s.ShipmentStatusLogs)
+                .ThenInclude(ssl => ssl.Status)
+                .AsQueryable();
+
+            /*
+            if (statusId != null)
+                query.Where(u => u.User.Id == 8).AsQueryable();
+                //await query.Where(x => x.ShipmentStatusLogs.Any(x => x.Status.Id == statusId)).AsQueryable().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+                //query.Where(t => t.ShipmentStatusLogs.Any(x => x.Status.Id == statusId)).AsQueryable();
+
+            if (from != null)
+                await query.Where(x => x.ShipmentStatusLogs.Any(x => x.Date > from && x.Date < to)).AsQueryable().OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+            
+            //query.Where(x => x.ShipmentStatusLogs.Any(x => x.Date > from && x.Date < to)).AsQueryable();
+            */
+            return await query.ToListAsync();
+        }
     }
 }

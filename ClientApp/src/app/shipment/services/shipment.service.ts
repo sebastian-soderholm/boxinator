@@ -2,7 +2,8 @@ import {
   HttpClient,
 	HttpErrorResponse,
 	HttpResponse,
-	HttpHeaders
+	HttpHeaders,
+  HttpParams
 } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
@@ -37,14 +38,19 @@ export class ShipmentService {
   }
 
   // get filtered shipments
-  public getFiltered(onSuccess: () => void): void {
-    this.http.get<ShipmentTableData[]>(apiUrl + '/shipments')
+  public getFilteredShipments(statusFilter: number | null, dateFromFilter: Date[], dateToFilter: Date[], onSuccess: () => void): void {
+    const params = new HttpParams()
+    .set("statusFilter", statusFilter != null ? statusFilter.toString() : "")
+    .set("dateFromFilter", dateFromFilter != null ? dateFromFilter.toString() : "")
+    .set("dateToFilter", dateToFilter != null ? dateToFilter.toString() : "")
+
+    this.http.get<ShipmentTableData[]>(apiUrl + "/shipments/filtered", {params: params})
     .subscribe((shipments: ShipmentTableData[]) => { 
       console.log(shipments)
       this.sessionService.setShipments(shipments);
       onSuccess();
-    },
-    (error: HttpErrorResponse) => {
+
+    },(error: HttpErrorResponse) => {
       this._error = error.message;
     })
   }
