@@ -1,4 +1,16 @@
+<!-- Filtering options -->
+<mat-form-field>
+  <mat-label>Status option</mat-label>
+  <mat-select [ngModel]="statusOptions" (ngModelChange)="setSelectedFilterOption('status', $event)">
+    <mat-option value="" selected>Status options</mat-option>
+    <mat-option [value]="status.id" *ngFor="let status of statusOptions">{{status.name}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<input type="date" placeholder="From" [ngModel]="fromDate" (ngModelChange)="setSelectedFilterOption('from', $event)">
+<input type="date" placeholder="To" [ngModel]="toDate" (ngModelChange)="setSelectedFilterOption('to', $event)">
 
+<button type="submit" (click)="filterTable()">Filter</button>
+<!-- Column visibility -->
 <h3>Toggle column visibility</h3>
 <mat-button-toggle-group name="selectedColumns" aria-label="selectedColumns" multiple>
   <mat-button-toggle #dateToggleBtn value="date" (change)="onValChange($event.value, dateToggleBtn.checked)">Date</mat-button-toggle>
@@ -8,6 +20,7 @@
   <mat-button-toggle #costToggleBtn value="cost" (change)="onValChange($event.value, costToggleBtn.checked)">Cost</mat-button-toggle>
 </mat-button-toggle-group>
 
+<!-- Table with expandable rows -->
 <table matSort mat-table [dataSource]="sortedData" multiTemplateDataRows class="mat-elevation-z8" (matSortChange)="sortData($event)">
   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
     <th mat-sort-header mat-header-cell *matHeaderCellDef> {{column | uppercase}} </th>

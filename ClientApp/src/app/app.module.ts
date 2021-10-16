@@ -19,8 +19,9 @@ import { MatTableModule } from '@angular/material/table';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
 
 //Pages
 import { LoginPage } from './login/pages/login/login.page';
@@ -71,7 +72,8 @@ import { DashboardListItemComponent } from './shipment/components/dashboard-list
     MatButtonModule,
     MatCardModule,
     MatProgressBarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
-import { ShipmentTableData } from '../models/shipment-table.model';
+import { ShipmentTableData, Status } from '../models/shipment-table.model';
 import { environment } from 'src/environments/environment';
 import { SessionService } from './shipment-session.service';
 
@@ -25,6 +25,19 @@ export class ShipmentService {
 
   // get all current shipments
   public getAllCurrent(onSuccess: () => void): void {
+    this.http.get<ShipmentTableData[]>(apiUrl + '/shipments')
+    .subscribe((shipments: ShipmentTableData[]) => { 
+      console.log(shipments)
+      this.sessionService.setShipments(shipments);
+      onSuccess();
+    },
+    (error: HttpErrorResponse) => {
+      this._error = error.message;
+    })
+  }
+
+  // get filtered shipments
+  public getFiltered(onSuccess: () => void): void {
     this.http.get<ShipmentTableData[]>(apiUrl + '/shipments')
     .subscribe((shipments: ShipmentTableData[]) => { 
       console.log(shipments)
