@@ -91,7 +91,9 @@ export class GuestShipmentPage implements OnInit {
   removeBox(index: number) {
     // const boxFormArray = this._guestShipmentForm.get('boxFormArray') as FormArray;
     this._boxFormArray.removeAt(index)
-
+  }
+  clearAllBoxes(){
+    this._boxFormArray.clear()
   }
 
   createGuestShipment(): void {

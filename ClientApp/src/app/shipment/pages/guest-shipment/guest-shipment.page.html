@@ -54,6 +54,8 @@
 
   <!-- <form class="form" [formGroup]="boxFormGroup"> -->
   <ng-container formArrayName="boxFormArray">
+    <p>Add boxes to your shipment</p>
+    <button (click)="clearAllBoxes()">Clear all</button>
     <!-- boxFormArrayElement represents one box form in formArray -->
     <div *ngFor="let control of boxFormArray.controls; index as i">
 
@@ -78,6 +80,7 @@
         (colorPickerChange)="colorChanged()" />
 
         <button (click)="removeBox(i)">-</button>
+
       </form>
     </div>
 
