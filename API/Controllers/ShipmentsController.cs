@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace boxinator.Controllers
 {
@@ -70,6 +71,29 @@ namespace boxinator.Controllers
         {
             var cancelledShipments = await _service.GetAllCancelled();
             return _mapper.Map<List<ShipmentReadDTO>>(cancelledShipments);
+        }
+
+        /// <summary>
+        /// Get filtered shipments
+        /// </summary>
+        /// <returns>Returns list of filtered shipments</returns>
+        [HttpGet]
+        [Route("/shipments/filtered")]
+        public async Task<ActionResult<List<ShipmentReadDTO>>> GetShipmentsFiltered()
+        {
+            string statusFilter = HttpContext.Request.Query["statusFilter"];
+            string dateFromFilter = HttpContext.Request.Query["dateFromFilter"];
+            string dateToFilter = HttpContext.Request.Query["dateToFilter"];
+
+            int parsedStatusId;
+            int.TryParse(statusFilter, out parsedStatusId);
+            DateTime? parsedDateFrom = dateFromFilter != "" ? DateTime.Parse(dateFromFilter) : null;
+            DateTime? parsedDateTo = dateToFilter != "" ? DateTime.Parse(dateToFilter) : null;
+
+
+            var currentShipments = await _service.GetFilteredShipments(parsedStatusId, parsedDateFrom, parsedDateTo);
+            var mappedList = _mapper.Map<List<ShipmentReadDTO>>(currentShipments);
+            return mappedList;
         }
 
         /// <summary>

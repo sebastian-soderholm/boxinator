@@ -15,8 +15,9 @@ namespace boxinator.Models
     public enum StatusCodes
     {
         CREATED = 1,
-        INTRANSIT = 2,
-        RECEIVED = 3,
-        CANCELLED = 4
+        RECEIVED = 2,
+        INTRANSIT = 3,
+        COMPELED = 4,
+        CANCELLED = 5
     }
 }

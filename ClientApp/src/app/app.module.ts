@@ -19,8 +19,8 @@ import { MatTableModule } from '@angular/material/table';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 //Pages
 import { LoginPage } from './login/pages/login/login.page';
@@ -90,6 +90,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     ColorPickerModule
   ],
   providers: [
+    MatSelectModule
   ],
   bootstrap: [AppComponent]
 })

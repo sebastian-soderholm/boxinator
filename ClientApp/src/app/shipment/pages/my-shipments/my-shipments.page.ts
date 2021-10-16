@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ShipmentService } from '../../services/shipment.service';
 import { SessionService } from '../../services/shipment-session.service';
-import { InfoData, ShipmentStatusLog, ShipmentTableData } from '../../models/shipment-table.model';
-import { MappedData, ExpandedData } from '../../models/shipment-table.model';
-import { Box } from '../../models/shipment-table.model';
+import { ShipmentStatusLog, ShipmentTableData, MappedData, ExpandedData, Status, Box } from '../../models/shipment-table.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Data } from '@angular/router';
 import {Sort} from '@angular/material/sort';
 import { expand } from 'rxjs/operators';
+import { TestBed } from '@angular/core/testing';
+import { FormGroup, NgForm, SelectControlValueAccessor } from '@angular/forms';
 
 @Component({
   selector: 'app-my-shipments',
@@ -25,15 +25,27 @@ export class MyShipmentsPage implements OnInit {
 
   displayedColumns: string[] = ['id', 'cost', 'weight', 'status', 'receiverName', 'date'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
-  dataSource: MappedData[] = [];
+  private _dataSource: MappedData[] = [];
   dateVisibility: boolean = true;
   sortedData: MappedData[] = [];
+  statusOptions : Status[] = [
+    {id: 1, name: "Created"},
+    {id: 2, name: "Received"},
+    {id: 3, name: "Intransit"},
+    {id: 4, name: "Completed"},
+    {id: 5, name: "Cancelled"}
+  ]
+  fromDate = null;
+  toDate = null;
+  selectedStatus? : number | null;
+  selectedFromDate? : Date[] | null;
+  selectedToDate? : Date[] | null;
 
   constructor(
     private readonly shipmentService: ShipmentService,
     private readonly sessionService: SessionService
   ) {
-    this.sortedData = this.dataSource.slice();
+    this.sortedData = this._dataSource.slice();
   }
 
   ngOnInit() {
@@ -42,9 +54,34 @@ export class MyShipmentsPage implements OnInit {
       this.sortedData = mappedData;
     });
 
-    console.log(this.shipmentService.getError())
   }
 
+  filterTable() {
+    if(this.selectedStatus == null && this.selectedFromDate == null && this.selectedToDate == null) {
+      console.log("no filters selected");
+    }
+    else {
+      this.shipmentService.getFilteredShipments(this.selectedStatus!, this.selectedFromDate!, this.selectedToDate!, async () => {
+        const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
+        this.sortedData = mappedData;
+      });
+    }
+
+  }
+
+  setSelectedFilterOption(type: string, selected : any) {
+    if(type == 'status'){
+      this.selectedStatus = selected;
+    }
+    if(type == 'from'){
+      this.selectedFromDate = selected;
+    }
+    if(type == 'to'){
+      this.selectedToDate = selected;
+    }
+  }
+
+  // toggling columns
   onValChange(selection: any, state : any){
     if(state == true) {
       this.removeColumn(selection);
@@ -69,7 +106,7 @@ export class MyShipmentsPage implements OnInit {
     }
   }
  
-  public mapShipments(shipments: ShipmentTableData[]) {
+  mapShipments(shipments: ShipmentTableData[]) {
 		return shipments.map((obj) => {
       const shipmentBoxes = this.mapBoxes(obj.boxes)
       const expandedData = this.createExpandedData(obj.id, shipmentBoxes, obj.shipmentStatusLogs)
@@ -90,53 +127,53 @@ export class MyShipmentsPage implements OnInit {
 		});
 	 }
 
-   public getInfoData(logs: ShipmentStatusLog[]) {
+   // for getting newest data to parent rows
+  getInfoData(logs: ShipmentStatusLog[]) {
     const infoArray = logs.map((obj) => {
       return {
         date: obj.date,
         statusId: obj.status.id,
         statusName: obj.status.name
-       };    
-     });
-
-     return infoArray;
-   }
-
-   
-   public createExpandedData(shipmentId : number, boxes: Box[],  logs: ShipmentStatusLog[]) {
+      };    
+    });
+    
+    return infoArray;
+  }
+  
+  createExpandedData(shipmentId : number, boxes: Box[],  logs: ShipmentStatusLog[]) {
     let expandedData = <ExpandedData>{};
     expandedData.boxes = boxes;
     expandedData.shipmentStatusLogs = logs.filter(l => l.shipmentId == shipmentId);
-
+    
     return expandedData;
   }
-   
-   public getLatestDate(infoArray: any[]) {
-      const latestDate = infoArray.sort((a : any, b : any) => b.date - a.date)[0]
-     return new Date(latestDate.date).toDateString();
-   }
-
-   public getLatestStatus(infoArray: any[]) {
-     const latestStatus = infoArray.sort((a : any, b : any) => b.statusId - a.statusId)[0]  
-     return latestStatus.statusName;
-   }
-
-   public mapBoxes(boxes: Box[]) {
+  
+  getLatestDate(infoArray: any[]) {
+    const latestDate = infoArray.sort((a : any, b : any) => b.date - a.date)[0]
+    return new Date(latestDate.date).toDateString();
+  }
+  
+  getLatestStatus(infoArray: any[]) {
+    const latestStatus = infoArray.sort((a : any, b : any) => b.statusId - a.statusId)[0]  
+    return latestStatus.statusName;
+  }
+  
+  mapBoxes(boxes: Box[]) {
     return boxes.map((obj) => {
-			return {
+      return {
         color: obj.color.toString()
-			};    
-		});
-   }
-
-   //---------------sorting
-   sortData(sort: Sort) {
+      };    
+    });
+  }
+  
+  // sorting on column click
+  sortData(sort: Sort) {
     const data = this.sortedData.slice();
     if (!sort.active || sort.direction === '') {
       this.sortedData = data;
       return;
     }
-
+    
     this.sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
@@ -149,10 +186,10 @@ export class MyShipmentsPage implements OnInit {
         default: return 0;
       }
     });
-
+    
     function compare(a: number | string, b: number | string, isAsc: boolean) {
       return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-    }
+    } 
   }
 
 }

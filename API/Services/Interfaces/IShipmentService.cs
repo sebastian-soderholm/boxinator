@@ -19,6 +19,7 @@ namespace boxinator.Services.Interfaces
         public Task<List<Shipment>> GetAllComplete();
         public Task<List<Shipment>> GetAllCancelled();
 
+        public Task<List<Shipment>> GetFilteredShipments(int? statusId, DateTime? from, DateTime? to);
 
     }
 }
