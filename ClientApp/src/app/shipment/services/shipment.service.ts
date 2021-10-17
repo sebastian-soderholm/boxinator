@@ -11,6 +11,7 @@ import { ShipmentTableData, Status } from '../models/shipment-table.model';
 import { environment } from 'src/environments/environment';
 import { SessionService } from './shipment-session.service';
 import { GuestShipment } from '../models/guest-shipment.model';
+import { CreateShipment } from '../models/create-shipment.model';
 
 const apiUrl = environment.baseURL;
 
@@ -65,6 +66,24 @@ export class ShipmentService {
     };
     console.log("Sending shipment..." + JSON.stringify(shipment))
     this.http.post<GuestShipment[]>(apiUrl + '/shipments/guest', body, httpOptions)
+    .subscribe((createdShipment: any) => {
+      onSuccess();
+    },
+    (error: HttpErrorResponse) => {
+      this._error = error.message;
+      console.table(error)
+    })
+  }
+  //post new guest shipment
+  public postNewShipment(shipment: CreateShipment, onSuccess: () => void) : void {
+    const body = shipment;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    console.log("Sending shipment..." + JSON.stringify(shipment))
+    this.http.post<CreateShipment[]>(apiUrl + '/shipments/', body, httpOptions)
     .subscribe((createdShipment: any) => {
       onSuccess();
     },

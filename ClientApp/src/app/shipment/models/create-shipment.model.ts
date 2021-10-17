@@ -1,12 +1,12 @@
 import { Box } from "./box.model";
 
 export interface CreateShipment {
-  id: number | undefined;
-  firstName: string;
-  lastName: string;
+  senderId: number | undefined;
+  receiverFirstName: string;
+  receiverLastName: string;
+  receiverZipCode: string;
+  receiverAddress: string;
   countryId: number;
-  zipCode: string;
-  address: string;
   cost: number;
   boxes: Box[];
 }

@@ -17,12 +17,12 @@ import { LoginService } from 'src/app/login/services/login.service';
 })
 export class NewShipmentPage implements OnInit {
   private _newShipment: CreateShipment = {
-    id: undefined,
-    firstName: "",
-    lastName: "",
+    senderId: undefined,
+    receiverFirstName: "",
+    receiverLastName: "",
+    receiverZipCode: "",
+    receiverAddress: "",
     countryId: 1,
-    zipCode: "",
-    address: "",
     cost: 0,
     boxes: []
   }
@@ -117,31 +117,31 @@ export class NewShipmentPage implements OnInit {
   getFormData() {
 
     //Add field values to shipment
-    this._newShipment.firstName = this._newShipmentForm.get('receiverFirstName')?.value
-    this._newShipment.lastName = this._newShipmentForm.get('receiverLastName')?.value
+    this._newShipment.receiverFirstName = this._newShipmentForm.get('receiverFirstName')?.value
+    this._newShipment.receiverLastName = this._newShipmentForm.get('receiverLastName')?.value
     this._newShipment.countryId = this._newShipmentForm.get('destinationCountryId')?.value
-    this._newShipment.address = this._newShipmentForm.get('destinationAddress')?.value
-    this._newShipment.zipCode = this._newShipmentForm.get('destinationZipCode')?.value
+    this._newShipment.receiverAddress = this._newShipmentForm.get('destinationAddress')?.value
+    this._newShipment.receiverZipCode = this._newShipmentForm.get('destinationZipCode')?.value
 
     //Add boxes to shipment
     this._newShipment.boxes = this._boxes
 
     //Set logged in user id for shipment
-    this._newShipment.id = this.loginService.user?.id;
+    this._newShipment.senderId = this.loginService.user?.id;
 
     //Post shipment
-    console.table(this._newShipment)
-    // this.shipmentService.postNewShipment(<NewShipment>this._newShipment, () => console.log("hurray!"));
+    // console.table(this._newShipment)
+    this.shipmentService.postNewShipment(<CreateShipment>this._newShipment, () => console.log("hurray!"));
 
   }
   clearFormData() {
     this._newShipment = {
-      id: 0,
-      firstName: "",
-      lastName: "",
+      senderId: undefined,
+      receiverFirstName: "",
+      receiverLastName: "",
+      receiverZipCode: "",
+      receiverAddress: "",
       countryId: 1,
-      zipCode: "",
-      address: "",
       cost: 0,
       boxes: []
     }

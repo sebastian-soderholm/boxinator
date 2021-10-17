@@ -9,6 +9,7 @@ import { NewShipmentPage } from './shipment/pages/new-shipment/new-shipment.page
 import { MyAccountPage } from './account/pages/my-account/my-account.page';
 import { EditAccountPage } from './account/pages/edit-account/edit-account.page';
 import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipment.page';
+import { CountrySettingsPage } from './admin/pages/country-settings/country-settings.page';
 
 const routes: Routes = [
   {
@@ -51,6 +52,11 @@ const routes: Routes = [
   {
     path: 'my-account/edit',
     component: EditAccountPage,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'settings/country',
+    component: CountrySettingsPage,
     canActivate: [AuthGuard]
   },
   {path: '**', redirectTo: ''},
