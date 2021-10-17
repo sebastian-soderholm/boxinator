@@ -35,7 +35,6 @@ export class GuestShipmentPage implements OnInit {
   private _cost: number = 0;
   private _guestShipmentForm: any;
   private _boxFormArray: any;
-  private _boxForm: BoxFormComponent = new BoxFormComponent();
 
   constructor(
     private readonly router: Router,
@@ -149,7 +148,7 @@ export class GuestShipmentPage implements OnInit {
   }
   calculateCost() {
     //Get weights of all boxes
-    const boxWeightArray = this._boxForm.boxes.map((box: Box) => box.weight);
+    const boxWeightArray = this._boxes.map((box: Box) => box.weight);
     //Get country multiplier
     const multiplier = this._guestShipmentForm.get('destinationCountryId').value;
     // Calculate shipping cost if any boxes present

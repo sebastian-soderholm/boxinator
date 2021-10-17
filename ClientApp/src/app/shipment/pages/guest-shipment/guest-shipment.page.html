@@ -34,7 +34,7 @@
   </div>
   <!-- Destination country -->
   <select formControlName="destinationCountryId">
-    <!-- <option *ngIf="countries" value="" selected>Loading countries...</option> -->
+    <option *ngIf="!countries" value="" selected>Loading countries...</option>
     <option [ngValue]="country.id" *ngFor="let country of countries">{{country.name}}</option>
   </select>
 
@@ -60,7 +60,7 @@
   <p>Shipment cost {{cost}}</p>
   <app-box-form (formChange)="boxFormChanged($event)"></app-box-form>
 
-</form>
+
 
 <button type="submit" (click)="createGuestShipment()"
 [disabled]="

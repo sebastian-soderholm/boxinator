@@ -1,10 +1,12 @@
-import { BasicBox, HumbleBox, DeluxeBox, PremiumBox } from "./box.model";
+import { Box } from "./box.model";
 
 export interface CreateShipment {
-  receiverName: string;
+  id: number | undefined;
+  firstName: string;
+  lastName: string;
+  countryId: number;
+  zipCode: string;
+  address: string;
   cost: number;
-  boxes: [BasicBox | HumbleBox | DeluxeBox | PremiumBox];
-  destinationCountryId: number;
+  boxes: Box[];
 }
-
-
