@@ -15,11 +15,9 @@ namespace boxinator.Services.Interfaces
         public Task<bool> Delete(int id);
         public Task<Shipment> Get(int id);
         public Task<List<Shipment>> GetByUser(int userId);
-        public Task<List<Shipment>> GetAllCurrent();
-        public Task<List<Shipment>> GetAllComplete();
-        public Task<List<Shipment>> GetAllCancelled();
-
-        public Task<List<Shipment>> GetFilteredShipments(int? statusId, DateTime? from, DateTime? to);
+        public Task<List<Shipment>> GetAllCurrent(DateTime? from, DateTime? to);
+        public Task<List<Shipment>> GetAllComplete(DateTime? from, DateTime? to);
+        public Task<List<Shipment>> GetAllCancelled(DateTime? from, DateTime? to);
 
     }
 }

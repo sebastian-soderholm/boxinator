@@ -42,7 +42,10 @@ namespace boxinator.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllCurrent()
         {
-            var currentShipments = await _service.GetAllCurrent();
+            DateTime? parsedDateFrom = parseDate(HttpContext.Request.Query["dateFromFilter"]);
+            DateTime? parsedDateTo = parseDate(HttpContext.Request.Query["dateToFilter"]);
+
+            var currentShipments = await _service.GetAllCurrent(parsedDateFrom, parsedDateTo);
             var mappedList = _mapper.Map<List<ShipmentReadDTO>>(currentShipments);
             return mappedList;
         }
@@ -56,7 +59,10 @@ namespace boxinator.Controllers
         [Route("/shipments/complete")]
         public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllComplete()
         {
-            var completedShipments = await _service.GetAllComplete();
+            DateTime? parsedDateFrom = parseDate(HttpContext.Request.Query["dateFromFilter"]);
+            DateTime? parsedDateTo = parseDate(HttpContext.Request.Query["dateToFilter"]);
+
+            var completedShipments = await _service.GetAllComplete(parsedDateFrom, parsedDateTo);
             return _mapper.Map<List<ShipmentReadDTO>>(completedShipments);
         }
 
@@ -69,31 +75,11 @@ namespace boxinator.Controllers
         [Route("/shipments/cancelled")]
         public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllCancelled()
         {
-            var cancelledShipments = await _service.GetAllCancelled();
+            DateTime? parsedDateFrom = parseDate(HttpContext.Request.Query["dateFromFilter"]);
+            DateTime? parsedDateTo = parseDate(HttpContext.Request.Query["dateToFilter"]);
+
+            var cancelledShipments = await _service.GetAllCancelled(parsedDateFrom, parsedDateTo);
             return _mapper.Map<List<ShipmentReadDTO>>(cancelledShipments);
-        }
-
-        /// <summary>
-        /// Get filtered shipments
-        /// </summary>
-        /// <returns>Returns list of filtered shipments</returns>
-        [HttpGet]
-        [Route("/shipments/filtered")]
-        public async Task<ActionResult<List<ShipmentReadDTO>>> GetShipmentsFiltered()
-        {
-            string statusFilter = HttpContext.Request.Query["statusFilter"];
-            string dateFromFilter = HttpContext.Request.Query["dateFromFilter"];
-            string dateToFilter = HttpContext.Request.Query["dateToFilter"];
-
-            int parsedStatusId;
-            int.TryParse(statusFilter, out parsedStatusId);
-            DateTime? parsedDateFrom = dateFromFilter != "" ? DateTime.Parse(dateFromFilter) : null;
-            DateTime? parsedDateTo = dateToFilter != "" ? DateTime.Parse(dateToFilter) : null;
-
-
-            var currentShipments = await _service.GetFilteredShipments(parsedStatusId, parsedDateFrom, parsedDateTo);
-            var mappedList = _mapper.Map<List<ShipmentReadDTO>>(currentShipments);
-            return mappedList;
         }
 
         /// <summary>
@@ -191,6 +177,16 @@ namespace boxinator.Controllers
         public async Task<ActionResult<bool>> Delete(int shipmentId)
         {
             return await _service.Delete(shipmentId);
+        }
+
+        /// <summary>
+        /// Parse date
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>Date or null</returns>
+        private DateTime? parseDate(string date)
+        {
+            return date != "" && date != null ? DateTime.Parse(date) : null;
         }
 
     }

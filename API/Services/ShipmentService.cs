@@ -116,84 +116,70 @@ namespace boxinator.Services
         /// Get all current shipments
         /// </summary>
         /// <returns>List of shipments</returns>
-        public async Task<List<Shipment>> GetAllCurrent()
+        public async Task<List<Shipment>> GetAllCurrent(DateTime? from, DateTime? to)
         {
             var currentUserId = 1;
 
-            return await _context.Shipments
+            var query = _context.Shipments
                 .Include(c => c.Country).ThenInclude(z => z.Zone)
                 .Include(s => s.User)
                 .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
                 .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
                 .Where(t => t.ShipmentStatusLogs
-                    .Any(x => x.Status.Id != (int)StatusCodes.CANCELLED || x.Status.Id != (int)StatusCodes.RECEIVED))
-                .Where(u => u.UserId == currentUserId).ToListAsync();
+                    .Any(x => x.Status.Id != (int)StatusCodes.CANCELLED || x.Status.Id != (int)StatusCodes.COMPELED))
+                .Where(u => u.UserId == currentUserId).AsQueryable();
+
+            if (from != null && to != null)
+                query = query.Where(x => x.ShipmentStatusLogs.Any(x => x.Date >= from && x.Date < to)).AsQueryable();
+
+            return await query.ToListAsync();
+
         }
 
         /// <summary>
         /// Get all complete shipments
         /// </summary>
         /// <returns>List of shipments</returns>
-        public async Task<List<Shipment>> GetAllComplete()
+        public async Task<List<Shipment>> GetAllComplete(DateTime? from, DateTime? to)
         {
             var currentUserId = 1;
-
-            return await _context.Shipments
+            var query = _context.Shipments
                 .Include(c => c.Country).ThenInclude(z => z.Zone)
                 .Include(s => s.User)
                 .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
                 .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
-                .Where(t => t.ShipmentStatusLogs.Any(x => x.Status.Id == (int)StatusCodes.RECEIVED))
-                .Where(u => u.UserId == currentUserId).ToListAsync();
+                .Where(t => t.ShipmentStatusLogs
+                    .Any(x => x.Status.Id == (int)StatusCodes.COMPELED))
+                .Where(u => u.UserId == currentUserId).AsQueryable();
+
+            if (from != null && to != null)
+                query = query.Where(x => x.ShipmentStatusLogs.Any(x => x.Date >= from && x.Date < to)).AsQueryable();
+
+            return await query.ToListAsync();
         }
 
         /// <summary>
         /// Get all cancelled shipments
         /// </summary>
         /// <returns>List of shipments</returns>
-        public async Task<List<Shipment>> GetAllCancelled()
+        public async Task<List<Shipment>> GetAllCancelled(DateTime? from, DateTime? to)
         {
             var currentUserId = 1;
 
-            return await _context.Shipments
+            var query = _context.Shipments
                 .Include(c => c.Country).ThenInclude(z => z.Zone)
                 .Include(s => s.User)
                 .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
                 .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
-                .Where(t => t.ShipmentStatusLogs.Any(x => x.Status.Id == (int)StatusCodes.CANCELLED))
-                .Where(u => u.UserId == currentUserId).ToListAsync();
-        }
+                .Where(t => t.ShipmentStatusLogs
+                    .Any(x => x.Status.Id == (int)StatusCodes.CANCELLED))
+                .Where(u => u.UserId == currentUserId).AsQueryable();
 
-        /// <summary>
-        /// Get filtered shipments
-        /// </summary>
-        /// <returns>List of shipments by filters</returns>
-        public async Task<List<Shipment>> GetFilteredShipments(int? statusId, DateTime? from, DateTime? to)
-        {
-            var currentUserId = 2;
-
-            var query = _context.Shipments
-               .Include(c => c.Country).ThenInclude(z => z.Zone)
-               .Include(s => s.User).Where(x => x.UserId == currentUserId)
-               .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
-               .Include(s => s.ShipmentStatusLogs)
-               .ThenInclude(ssl => ssl.Status)
-               .AsQueryable();
-
-            if(statusId != null)
-            {
-                query = query.Where(x => x.ShipmentStatusLogs.Any(x => x.StatusId == statusId))
-                .AsQueryable();
-
-            }
-
-            if(from != null && to != null)
-            {
-                query = query.Where(x => x.ShipmentStatusLogs.Any(x => x.Date > from && x.Date < to))
-                    .AsQueryable();
-            }
+            if (from != null && to != null)
+                query = query.Where(x => x.ShipmentStatusLogs.Any(x => x.Date >= from && x.Date < to)).AsQueryable();
 
             return await query.ToListAsync();
         }
+
     }
 }
