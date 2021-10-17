@@ -58,59 +58,21 @@
   </div>
 
   <p>Shipment cost {{cost}}</p>
-
-
-  <!-- <form class="form" [formGroup]="boxFormGroup"> -->
-  <ng-container formArrayName="boxFormArray">
-    <p>Add boxes to your shipment</p>
-    <button (click)="clearAllBoxes()">Clear all</button>
-    <!-- boxFormArrayElement represents one box form in formArray -->
-    <div *ngFor="let control of boxFormArray.controls; index as i">
-
-      <form [formGroupName]="i">
-        <p>Select box type</p>
-        <!-- Box type select -->
-        <select formControlName="boxType" required>
-          <option  *ngFor="let box of boxTypes;" [ngValue]="box" >{{box.name}} - {{box.weight}} kg</option>
-          <!-- <option value="1" name="Basic" selected>Basic 1 kg</option>
-          <option value="2" name="Humble" >Humble 2 kg</option>
-          <option value="5" name="Deluxe" >Deluxe 5 kg</option>
-          <option value="8" name="Premium" >Premium 8 kg</option> -->
-        </select>
-
-        <input formControlName="boxColor"
-        [value]="boxFormArray.at(i).get('boxColor')?.value.color"
-        [style.background]="boxFormArray.at(i).get('boxColor')?.value.color"
-        [cpOutputFormat]="'rgba'"
-        [(colorPicker)]="boxFormArray.at(i).get('boxColor')?.value.color"
-        [cpAlphaChannel]="'disabled'"
-        [style.color]="boxFormArray.at(i).get('boxColor')?.value.color"
-        (colorPickerChange)="colorChanged()" />
-
-        <button (click)="removeBox(i)">-</button>
-
-      </form>
-    </div>
-
-
-    <button (click)="addBox()">+</button>
-  </ng-container>
-
-  <button type="submit" (click)="createGuestShipment()"
-  [disabled]="
-  guestShipmentForm.controls['senderEmail'].invalid ||
-  guestShipmentForm.controls['receiverFirstName'].invalid ||
-  guestShipmentForm.controls['receiverLastName'].invalid ||
-  guestShipmentForm.controls['destinationCountryId'].invalid ||
-  guestShipmentForm.controls['destinationAddress'].invalid ||
-  guestShipmentForm.controls['destinationZipCode'].invalid ||
-  guestShipmentForm.controls['boxFormArray'].invalid
-  "
-  >
-    Ship
-  </button>
+  <app-box-form (formChange)="boxFormChanged($event)"></app-box-form>
 
 </form>
 
+<button type="submit" (click)="createGuestShipment()"
+[disabled]="
+guestShipmentForm.controls['senderEmail'].invalid ||
+guestShipmentForm.controls['receiverFirstName'].invalid ||
+guestShipmentForm.controls['receiverLastName'].invalid ||
+guestShipmentForm.controls['destinationCountryId'].invalid ||
+guestShipmentForm.controls['destinationAddress'].invalid ||
+guestShipmentForm.controls['destinationZipCode'].invalid ||
+boxFormIsEmpty
+"
+  >
+  Ship
+</button>
 
-<!--  -->

@@ -11,6 +11,7 @@ namespace boxinator.Models.Domain
     public class User
     {
         [Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
         [MaxLength(100)]
@@ -19,12 +20,14 @@ namespace boxinator.Models.Domain
         public string FirstName { get; set; }
         [MaxLength(100)]
         public string LastName { get; set; }
-        public int? CountryId { get; set; }
-        public Country Country { get; set; }
         public string ZipCode { get; set; }
+        public string Address { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string PhoneNumber { get; set; }
         [Required]
         public string AccountType { get; set; }
+        //Relationships
+        public int? CountryId { get; set; }
+        public Country? Country { get; set; }
     }
 }

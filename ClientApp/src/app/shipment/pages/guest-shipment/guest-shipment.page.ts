@@ -7,6 +7,9 @@ import { SessionService } from 'src/app/login/services/session.service';
 import { Box, BoxTypes } from '../../models/box.model';
 import { GuestShipment } from '../../models/guest-shipment.model';
 import { ColorPickerComponent } from 'ngx-color-picker';
+import { ShipmentService } from '../../services/shipment.service';
+import { BoxFormComponent } from '../../components/box-form/box-form.component';
+
 
 @Component({
   selector: 'app-guest-shipment',
@@ -27,20 +30,23 @@ export class GuestShipmentPage implements OnInit {
   }
 
   private _countries: Country[] = []
+  private _boxes: Box[] = []
+  private _boxFormIsEmpty: boolean = false;
   private _cost: number = 0;
   private _guestShipmentForm: any;
   private _boxFormArray: any;
+  private _boxForm: BoxFormComponent = new BoxFormComponent();
 
   constructor(
     private readonly router: Router,
     private readonly countryService: CountryService,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private readonly shipmentService: ShipmentService
   ) { }
 
   ngOnInit(): void {
     this.countryService.fetchCountriesToSession(async () => {
       this._countries = this.sessionService.countries!;
-      // console.table(this._countries)
     });
 
     this._guestShipmentForm = new FormGroup({
@@ -71,18 +77,21 @@ export class GuestShipmentPage implements OnInit {
       destinationAddress: new FormControl('',[
         Validators.required
       ]),
-      boxFormArray: this._boxFormArray = new FormArray([
-        new FormGroup({
-          boxType: new FormControl(this.boxTypes[0], []),
-          boxColor: new FormControl({color: "rgb(255,255,255)"},[]),
-        })
-      ], Validators.required)
     });
 
-   //Setup eventlisteners for form formchanges
+    this.onChanges();
+  }
+  onChanges(): void {
+    //Setup eventlisteners for formchanges
     this._guestShipmentForm.get("destinationCountryId").valueChanges.subscribe((id:any) => {
       this.calculateCost()
+
    })
+  }
+  boxFormChanged(boxes: Box[]) {
+    this._boxes = boxes;
+    this._boxes.length === 0 ? this._boxFormIsEmpty = true : this._boxFormIsEmpty = false
+    this.calculateCost()
   }
   addBox() {
     const group = new FormGroup({
@@ -109,30 +118,21 @@ export class GuestShipmentPage implements OnInit {
   }
 
   getFormData() {
-    const boxFormArray = this._guestShipmentForm.get('boxFormArray') as FormArray;
-
-    // boxFormArray.controls.reduce((control) => this._guestShipment.cost += control.value.boxWeight.weight * selectedCountryMultiplier)
-    console.table(boxFormArray)
 
     //Add field values to shipment
     this._guestShipment.email = this._guestShipmentForm.get('senderEmail')?.value
     this._guestShipment.firstName = this._guestShipmentForm.get('receiverFirstName')?.value
     this._guestShipment.lastName = this._guestShipmentForm.get('receiverLastName')?.value
     this._guestShipment.countryId = this._guestShipmentForm.get('destinationCountryId')?.value
+    this._guestShipment.address = this._guestShipmentForm.get('destinationAddress')?.value
     this._guestShipment.zipCode = this._guestShipmentForm.get('destinationZipCode')?.value
 
     //Add boxes to shipment
-    for(let i=0; i<boxFormArray.length; i++) {
-      const box: Box = {
-        name: boxFormArray.at(i).get('boxType')?.value.name,
-        weight: boxFormArray.at(i).get('boxType')?.value.weight,
-        color: boxFormArray.at(i).get('boxColor')?.value.color
-      }
-      this._guestShipment.boxes.push(box)
-    }
+    this._guestShipment.boxes = this._boxes
 
-    console.log("Shipment data: ")
+    //Post shipment
     console.table(this._guestShipment)
+    // this.shipmentService.postNewGuestShipment(<GuestShipment>this._guestShipment, () => console.log("hurray!"));
 
   }
   clearFormData() {
@@ -147,20 +147,19 @@ export class GuestShipmentPage implements OnInit {
       boxes: []
     }
   }
-
-  formChanged() {
-    // this.calculateCost()
-   }
   calculateCost() {
-    const countryMultiplier = this._guestShipmentForm.get('destinationCountryId').value
-    const boxFormArray = this._guestShipmentForm.get('boxFormArray').controls;
-    const boxesForShipment: Box[] = []
-
-    // boxesForShipment.reduce()
-    // // Calculate shipping cost
-    // this._cost = boxesForShipment.reduce(function(cost: number, _curr: Box) {
-    //   cost = box.weight * this._guestShipmentForm.get('destinationCountryId').value
-    // });
+    //Get weights of all boxes
+    const boxWeightArray = this._boxForm.boxes.map((box: Box) => box.weight);
+    //Get country multiplier
+    const multiplier = this._guestShipmentForm.get('destinationCountryId').value;
+    // Calculate shipping cost if any boxes present
+    if(boxWeightArray.length > 0) {
+      this._cost = boxWeightArray.reduce((cost: number, weight: number) => {
+        return cost + weight * multiplier
+      });
+    }else{
+      this._cost = 0
+    }
   }
 
   //Form fields
@@ -186,20 +185,13 @@ export class GuestShipmentPage implements OnInit {
     return this._cost
   }
   get boxFormArray() {
-    return this.guestShipmentForm.get('boxFormArray') as FormArray
+    return this._boxFormArray.get('boxFormArray') as FormArray
   }
   get boxTypes() {
     return BoxTypes;
   }
-  // get colorPicker() {
-  //   return this._ColorPickerComponent;
-  // }
-  // changeColor(event: any){
-  //   console.log("Color changed: " + JSON.stringify(this._boxFormGroup.get('boxColor')))
-  // }
-
-  colorChanged(){
-    // console.log("Color changed: " + this.color)
+  get boxFormIsEmpty() {
+    return this._boxFormIsEmpty
   }
   //All available countries
   get countries() {

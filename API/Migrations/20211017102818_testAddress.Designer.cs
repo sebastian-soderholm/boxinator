@@ -10,8 +10,8 @@ using boxinator.Models;
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    [Migration("20211015143434_initial")]
-    partial class initial
+    [Migration("20211017102818_testAddress")]
+    partial class testAddress
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -241,6 +241,9 @@ namespace boxinator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
@@ -342,14 +345,14 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 15, 17, 34, 33, 706, DateTimeKind.Local).AddTicks(3607),
+                            Date = new DateTime(2021, 10, 17, 13, 28, 18, 371, DateTimeKind.Local).AddTicks(8547),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 15, 17, 34, 33, 709, DateTimeKind.Local).AddTicks(518),
+                            Date = new DateTime(2021, 10, 17, 13, 28, 18, 374, DateTimeKind.Local).AddTicks(3705),
                             ShipmentId = 1,
                             StatusId = 3
                         });

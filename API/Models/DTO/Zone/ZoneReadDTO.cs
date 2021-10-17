@@ -8,5 +8,6 @@ namespace boxinator.Models.DTO.Zone
     public class ZoneReadDTO
     {
         public string Name { get; set; }
+        public int CountryMultiplier { get; set; }
     }
 }

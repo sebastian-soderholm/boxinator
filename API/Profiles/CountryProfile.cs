@@ -9,7 +9,7 @@ namespace boxinator.Profiles
         public CountryProfile()
         {
             CreateMap<Country, CountryReadDTO>()
-                .ForMember(dto => dto.CountryMultiplier, opt => opt.MapFrom(c => c.Zone.CountryMultiplier))
+                .ForPath(dto => dto.CountryMultiplier, opt => opt.MapFrom(c => c.Zone.CountryMultiplier))
                 .ReverseMap();
         }
     }

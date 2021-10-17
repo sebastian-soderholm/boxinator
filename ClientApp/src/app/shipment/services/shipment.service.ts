@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 import { ShipmentTableData, Status } from '../models/shipment-table.model';
 import { environment } from 'src/environments/environment';
 import { SessionService } from './shipment-session.service';
+import { GuestShipment } from '../models/guest-shipment.model';
 
 const apiUrl = environment.baseURL;
 
@@ -27,7 +28,7 @@ export class ShipmentService {
   // get all current shipments
   public getAllCurrent(onSuccess: () => void): void {
     this.http.get<ShipmentTableData[]>(apiUrl + '/shipments')
-    .subscribe((shipments: ShipmentTableData[]) => { 
+    .subscribe((shipments: ShipmentTableData[]) => {
       console.log(shipments)
       this.sessionService.setShipments(shipments);
       onSuccess();
@@ -45,7 +46,7 @@ export class ShipmentService {
     .set("dateToFilter", dateToFilter != null ? dateToFilter.toString() : "")
 
     this.http.get<ShipmentTableData[]>(apiUrl + "/shipments/filtered", {params: params})
-    .subscribe((shipments: ShipmentTableData[]) => { 
+    .subscribe((shipments: ShipmentTableData[]) => {
       console.log(shipments)
       this.sessionService.setShipments(shipments);
       onSuccess();
@@ -54,6 +55,25 @@ export class ShipmentService {
       this._error = error.message;
     })
   }
+  //post new guest shipment
+  public postNewGuestShipment(shipment: GuestShipment, onSuccess: () => void) : void {
+    const body = shipment;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    console.log("Sending shipment..." + JSON.stringify(shipment))
+    this.http.post<GuestShipment[]>(apiUrl + '/shipments/guest', body, httpOptions)
+    .subscribe((createdShipment: any) => {
+      onSuccess();
+    },
+    (error: HttpErrorResponse) => {
+      this._error = error.message;
+      console.table(error)
+    })
+  }
+
 
   public getError(): string {
     return this._error;

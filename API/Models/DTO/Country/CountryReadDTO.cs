@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using boxinator.Models.DTO.Zone;
 
 namespace boxinator.Models.DTO.Country
 {
@@ -11,5 +12,6 @@ namespace boxinator.Models.DTO.Country
         public string Name { get; set; }
         public int ZoneId { get; set; }
         public int CountryMultiplier { get; set; }
+        //public ZoneReadDTO Zone { get; set; }
     }
 }

@@ -1,4 +1,3 @@
-import { Country } from "src/app/login/models/country.model";
 import { Box } from "./box.model";
 
 //Guest is anonymous => no personal info, only email

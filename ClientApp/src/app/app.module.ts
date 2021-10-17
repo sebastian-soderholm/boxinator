@@ -45,6 +45,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 //Color picker
 import { ColorPickerModule } from 'ngx-color-picker';
+import { BoxFormComponent } from './shipment/components/box-form/box-form.component';
 
 
 
@@ -63,6 +64,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     GuestShipmentPage,
     DashboardListComponent,
     DashboardListItemComponent,
+    BoxFormComponent,
   ],
   imports: [
     BrowserModule,
