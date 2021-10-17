@@ -115,6 +115,8 @@ export class NewShipmentPage implements OnInit {
   }
 
   getFormData() {
+    this.calculateCost()
+    this._newShipment.cost = this._cost;
 
     //Add field values to shipment
     this._newShipment.receiverFirstName = this._newShipmentForm.get('receiverFirstName')?.value
@@ -130,7 +132,7 @@ export class NewShipmentPage implements OnInit {
     this._newShipment.senderId = this.loginService.user?.id;
 
     //Post shipment
-    // console.table(this._newShipment)
+    console.table(this._newShipment)
     this.shipmentService.postNewShipment(<CreateShipment>this._newShipment, () => console.log("hurray!"));
 
   }
