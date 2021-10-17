@@ -29,11 +29,9 @@ export class MyShipmentsPage implements OnInit {
   dateVisibility: boolean = true;
   sortedData: MappedData[] = [];
   statusOptions : Status[] = [
-    {id: 1, name: "Created"},
-    {id: 2, name: "Received"},
-    {id: 3, name: "Intransit"},
-    {id: 4, name: "Completed"},
-    {id: 5, name: "Cancelled"}
+    {id: 1, name: "Current"},
+    {id: 2, name: "Completed"},
+    {id: 3, name: "Cancelled"}
   ]
   fromDate = null;
   toDate = null;
@@ -60,11 +58,24 @@ export class MyShipmentsPage implements OnInit {
     if(this.selectedStatus == null && this.selectedFromDate == null && this.selectedToDate == null) {
       console.log("no filters selected");
     }
-    else {
-      this.shipmentService.getFilteredShipments(this.selectedStatus!, this.selectedFromDate!, this.selectedToDate!, async () => {
+    else { 
+      let path = "/shipments";
+
+      if(this.selectedStatus == 1){ // Current
+        path = "/shipments";
+      }
+      if(this.selectedStatus == 2){ // Completed
+        path = "/shipments/complete";
+      }
+      if(this.selectedStatus == 3){ // Completed
+        path = "/shipments/cancelled";
+      }
+
+      this.shipmentService.getFilteredShipments(path, this.selectedFromDate!, this.selectedToDate!, async () => {
         const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
         this.sortedData = mappedData;
       });
+      
     }
 
   }

@@ -38,13 +38,12 @@ export class ShipmentService {
   }
 
   // get filtered shipments
-  public getFilteredShipments(statusFilter: number | null, dateFromFilter: Date[], dateToFilter: Date[], onSuccess: () => void): void {
+  public getFilteredShipments(path: string | null, dateFromFilter: Date[], dateToFilter: Date[], onSuccess: () => void): void {
     const params = new HttpParams()
-    .set("statusFilter", statusFilter != null ? statusFilter.toString() : "")
     .set("dateFromFilter", dateFromFilter != null ? dateFromFilter.toString() : "")
     .set("dateToFilter", dateToFilter != null ? dateToFilter.toString() : "")
 
-    this.http.get<ShipmentTableData[]>(apiUrl + "/shipments/filtered", {params: params})
+    this.http.get<ShipmentTableData[]>(apiUrl + path, {params: params})
     .subscribe((shipments: ShipmentTableData[]) => { 
       console.log(shipments)
       this.sessionService.setShipments(shipments);
