@@ -14,7 +14,7 @@ const apiURL = environment.baseURL;
 })
 export class SessionService {
   private _shipments: Shipment[] | undefined
-  private _countries: Country[] | undefined
+  private _countries: Country[] = []
   private _user: User | undefined
   private _userForAdmin: User | undefined
   private _shipmentTableData: ShipmentTableData[] | undefined
@@ -40,7 +40,15 @@ export class SessionService {
     this._countries = countries
     sessionStorage.setItem('countries', JSON.stringify(countries))
   }
+  addCountry(country: Country) {
+    this._countries.push(country)
+  }
 
+  updateCountry(country: Country) {
+    const indexToReplace = this._countries.findIndex(c => country.id === c.id)
+
+    if(indexToReplace) this._countries[indexToReplace] = country
+  }
   setUser(user: User): void {
 		this._user = user;
 		localStorage.setItem('user', JSON.stringify(user))

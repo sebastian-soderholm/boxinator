@@ -17,6 +17,7 @@ export class CountrySettingsComponent implements OnInit {
     id: 0,
     name: '',
     zoneId: 0,
+    zoneName: ''
   }
 
   constructor(
