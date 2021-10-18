@@ -31,10 +31,10 @@ export class DashboardListItemComponent implements OnInit {
       } else if(box.name === "Premium") {
         this.premiumBoxes.push(box.color)
       }
-      console.log(box)
+      console.log("Premium:")
+      console.table(this.premiumBoxes)
+      // console.log(this.humbleBoxes)
     })
-
-    console.log(this.premiumBoxes)
 /*     this.shipment.boxes.map((box) =>
 
     ) */
