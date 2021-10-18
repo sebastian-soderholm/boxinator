@@ -235,8 +235,8 @@ namespace boxinator.Migrations
                 columns: new[] { "Id", "Date", "ShipmentId", "StatusId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 10, 15, 17, 34, 33, 706, DateTimeKind.Local).AddTicks(3607), 1, 1 },
-                    { 2, new DateTime(2021, 10, 15, 17, 34, 33, 709, DateTimeKind.Local).AddTicks(518), 1, 3 }
+                    { 1, new DateTime(2021, 10, 18, 9, 54, 52, 570, DateTimeKind.Local).AddTicks(5622), 1, 1 },
+                    { 2, new DateTime(2021, 10, 18, 9, 54, 52, 573, DateTimeKind.Local).AddTicks(8560), 1, 3 }
                 });
 
             migrationBuilder.CreateIndex(

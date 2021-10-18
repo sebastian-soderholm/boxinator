@@ -17,19 +17,27 @@
         </mat-expansion-panel-header>
         <div class="premium" *ngIf="this.premiumBoxes!.length > 1">
           <p>Premium box</p>
-          <app-colored-boxes *ngFor="let box of premiumBoxes" [box]="box"></app-colored-boxes>
+          <div *ngFor="let box of premiumBoxes">
+            <p [ngStyle]="{'color': 'rgb' + box}">BOX</p>
+          </div>
         </div>
         <div class="deluxe" *ngIf="this.deluxeBoxes!.length > 1">
           <p>Deluxe box</p>
-          <app-colored-boxes *ngFor="let box of deluxeBoxes" [box]="box"></app-colored-boxes>
+          <div *ngFor="let box of premiumBoxes">
+            <p [ngStyle]="{'color': 'rgb' + box}">BOX</p>
+          </div>
         </div>
         <div class="humble" *ngIf="this.humbleBoxes!.length > 1">
           <p>Humble box</p>
-          <app-colored-boxes *ngFor="let box of humbleBoxes" [box]="box"></app-colored-boxes>
+          <div *ngFor="let box of premiumBoxes">
+            <p [ngStyle]="{'color': 'rgb' + box}">BOX</p>
+          </div>
         </div>
         <div class="basic" *ngIf="this.basicBoxes!.length > 1">
           <p>Basic box</p>
-          <app-colored-boxes *ngFor="let box of basicBoxes" [box]="box"></app-colored-boxes>
+          <div *ngFor="let box of premiumBoxes">
+            <p [ngStyle]="{'color': 'rgb' + box}">BOX</p>
+          </div>
         </div>
       </mat-expansion-panel>
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-elevation-z0">
@@ -38,7 +46,9 @@
             Shipment's Status Log
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-status-log *ngFor="let status of this.shipment.shipmentStatusLogs" [status]="status"></app-status-log>
+        <div *ngFor="let status of this.shipment.shipmentStatusLogs">
+          <p>{{this.status.status.name}} {{this.status.date}}</p>
+        </div>
       </mat-expansion-panel>
     </mat-card-actions>
   </mat-card-content>
