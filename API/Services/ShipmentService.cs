@@ -120,19 +120,49 @@ namespace boxinator.Services
         {
             var currentUserId = 1;
 
-            var query = _context.Shipments
-                .Include(c => c.Country).ThenInclude(z => z.Zone)
-                .Include(s => s.User)
-                .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
-                .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
-                .Where(t => t.ShipmentStatusLogs
-                    .Any(x => x.Status.Id != (int)StatusCodes.CANCELLED || x.Status.Id != (int)StatusCodes.COMPELED))
-                .Where(u => u.UserId == currentUserId).AsQueryable();
+            var query = _context.ShipmentStatusLogs.Where(s => s.StatusId != (int)StatusCodes.CANCELLED && s.StatusId != (int)StatusCodes.COMPELED);
 
             if (from != null && to != null)
-                query = query.Where(x => x.ShipmentStatusLogs.Any(x => x.Date >= from && x.Date < to)).AsQueryable();
+                query = query.Where(x => x.Date >= from && x.Date < to);
 
-            return await query.ToListAsync();
+            query = query
+            .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
+            .Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId)
+            .Include(s => s.Shipment).ThenInclude(s => s.Boxes).ThenInclude(b => b.BoxType)
+            .Include(s => s.Status);
+
+            var shipmentStausLogList = await query.ToListAsync();
+            var filtered = shipmentStausLogList
+                .GroupBy(x => x.ShipmentId)
+                .Select(x => x.OrderByDescending(y => y.Date).FirstOrDefault()).ToList();
+
+            List<Shipment> shipmentListFiltered = new List<Shipment>();
+
+            foreach(var shipmentStatusLog in filtered)
+            {
+                if(filtered.Select(x => x.ShipmentId).Contains(shipmentStatusLog.ShipmentId))
+                {
+                    Shipment shipment = new Shipment()
+                    {
+                        Id = shipmentStatusLog.Shipment.Id,
+                        FirstName = shipmentStatusLog.Shipment.FirstName,
+                        LastName = shipmentStatusLog.Shipment.LastName,
+                        Address = shipmentStatusLog.Shipment.Address,
+                        ZipCode = shipmentStatusLog.Shipment.ZipCode,
+                        Cost = shipmentStatusLog.Shipment.Cost,
+                        User = shipmentStatusLog.Shipment.User,
+                        UserId = shipmentStatusLog.Shipment.UserId,
+                        Country = shipmentStatusLog.Shipment.Country,
+                        CountryId = shipmentStatusLog.Shipment.Country.Id,
+                        Boxes = shipmentStatusLog.Shipment.Boxes,
+                        ShipmentStatusLogs = shipmentStatusLog.Shipment.ShipmentStatusLogs
+                    };
+
+                    shipmentListFiltered.Add(shipment);
+                }
+            }
+
+            return shipmentListFiltered;
 
         }
 
@@ -143,19 +173,50 @@ namespace boxinator.Services
         public async Task<List<Shipment>> GetAllComplete(DateTime? from, DateTime? to)
         {
             var currentUserId = 1;
-            var query = _context.Shipments
-                .Include(c => c.Country).ThenInclude(z => z.Zone)
-                .Include(s => s.User)
-                .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
-                .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
-                .Where(t => t.ShipmentStatusLogs
-                    .Any(x => x.Status.Id == (int)StatusCodes.COMPELED))
-                .Where(u => u.UserId == currentUserId).AsQueryable();
+
+            var query = _context.ShipmentStatusLogs.Where(x => x.Status.Id == (int)StatusCodes.COMPELED);
 
             if (from != null && to != null)
-                query = query.Where(x => x.ShipmentStatusLogs.Any(x => x.Date >= from && x.Date < to)).AsQueryable();
+                query = query.Where(x => x.Date >= from && x.Date < to);
 
-            return await query.ToListAsync();
+            query = query
+            .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
+            .Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId)
+            .Include(s => s.Shipment).ThenInclude(s => s.Boxes).ThenInclude(b => b.BoxType)
+            .Include(s => s.Status);
+
+            var shipmentStausLogList = await query.ToListAsync();
+            var filtered = shipmentStausLogList
+                .GroupBy(x => x.ShipmentId)
+                .Select(x => x.OrderByDescending(y => y.Date).FirstOrDefault()).ToList();
+
+            List<Shipment> shipmentListFiltered = new List<Shipment>();
+
+            foreach (var shipmentStatusLog in filtered)
+            {
+                if (filtered.Select(x => x.ShipmentId).Contains(shipmentStatusLog.ShipmentId))
+                {
+                    Shipment shipment = new Shipment()
+                    {
+                        Id = shipmentStatusLog.Shipment.Id,
+                        FirstName = shipmentStatusLog.Shipment.FirstName,
+                        LastName = shipmentStatusLog.Shipment.LastName,
+                        Address = shipmentStatusLog.Shipment.Address,
+                        ZipCode = shipmentStatusLog.Shipment.ZipCode,
+                        Cost = shipmentStatusLog.Shipment.Cost,
+                        User = shipmentStatusLog.Shipment.User,
+                        UserId = shipmentStatusLog.Shipment.UserId,
+                        Country = shipmentStatusLog.Shipment.Country,
+                        CountryId = shipmentStatusLog.Shipment.Country.Id,
+                        Boxes = shipmentStatusLog.Shipment.Boxes,
+                        ShipmentStatusLogs = shipmentStatusLog.Shipment.ShipmentStatusLogs
+                    };
+
+                    shipmentListFiltered.Add(shipment);
+                }
+            }
+
+            return shipmentListFiltered;
         }
 
         /// <summary>
@@ -166,19 +227,50 @@ namespace boxinator.Services
         {
             var currentUserId = 1;
 
-            var query = _context.Shipments
-                .Include(c => c.Country).ThenInclude(z => z.Zone)
-                .Include(s => s.User)
-                .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
-                .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
-                .Where(t => t.ShipmentStatusLogs
-                    .Any(x => x.Status.Id == (int)StatusCodes.CANCELLED))
-                .Where(u => u.UserId == currentUserId).AsQueryable();
+            var query = _context.ShipmentStatusLogs.Where(x => x.Status.Id == (int)StatusCodes.CANCELLED);
 
             if (from != null && to != null)
-                query = query.Where(x => x.ShipmentStatusLogs.Any(x => x.Date >= from && x.Date < to)).AsQueryable();
+                query = query.Where(x => x.Date >= from && x.Date < to);
 
-            return await query.ToListAsync();
+            query = query
+            .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
+            .Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId)
+            .Include(s => s.Shipment).ThenInclude(s => s.Boxes).ThenInclude(b => b.BoxType)
+            .Include(s => s.Status);
+
+            var shipmentStausLogList = await query.ToListAsync();
+            var filtered = shipmentStausLogList
+                .GroupBy(x => x.ShipmentId)
+                .Select(x => x.OrderByDescending(y => y.Date).FirstOrDefault()).ToList();
+
+            List<Shipment> shipmentListFiltered = new List<Shipment>();
+
+            foreach (var shipmentStatusLog in filtered)
+            {
+                if (filtered.Select(x => x.ShipmentId).Contains(shipmentStatusLog.ShipmentId))
+                {
+                    Shipment shipment = new Shipment()
+                    {
+                        Id = shipmentStatusLog.Shipment.Id,
+                        FirstName = shipmentStatusLog.Shipment.FirstName,
+                        LastName = shipmentStatusLog.Shipment.LastName,
+                        Address = shipmentStatusLog.Shipment.Address,
+                        ZipCode = shipmentStatusLog.Shipment.ZipCode,
+                        Cost = shipmentStatusLog.Shipment.Cost,
+                        User = shipmentStatusLog.Shipment.User,
+                        UserId = shipmentStatusLog.Shipment.UserId,
+                        Country = shipmentStatusLog.Shipment.Country,
+                        CountryId = shipmentStatusLog.Shipment.Country.Id,
+                        Boxes = shipmentStatusLog.Shipment.Boxes,
+                        ShipmentStatusLogs = shipmentStatusLog.Shipment.ShipmentStatusLogs
+                    };
+
+                    shipmentListFiltered.Add(shipment);
+                }
+            }
+
+            return shipmentListFiltered;
+
         }
 
     }
