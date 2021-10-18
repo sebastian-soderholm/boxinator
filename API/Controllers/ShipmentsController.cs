@@ -3,6 +3,7 @@ using boxinator.Models;
 using boxinator.Models.Domain;
 using boxinator.Models.DTO.Shipment;
 using boxinator.Models.DTO.ShipmentStatusLog;
+using boxinator.Models.DTO.User;
 using boxinator.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -110,14 +111,19 @@ namespace boxinator.Controllers
             User userInDB = await _accountService.GetUser(shipmentGuestDTO.Email);
 
             //check if user does not exist in DB
-            if(userInDB != null)
+            if(userInDB == null)
             {
-                //Create user in DB with only email field
-                User userToDB = new User();
+                //Add user to DB with only email field
+                UserCreateDTO userToDB = new UserCreateDTO();
                 userToDB.Email = shipmentGuestDTO.Email;
-                userInDB = await _accountService.Add(userToDB);
+                userToDB.AccountType = AccountTypes.GUEST.ToString();
+
+                User newUser = _mapper.Map<User>(userToDB);
+                
+                userInDB = await _accountService.Add(newUser);
             }
 
+             
             Shipment newShipment = _mapper.Map<Shipment>(shipmentGuestDTO);
 
             //Link user to shipment and save to DB

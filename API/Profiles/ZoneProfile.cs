@@ -8,7 +8,7 @@ namespace boxinator.Profiles
     {
         public ZoneProfile()
         {
-            CreateMap<Zone, ZoneReadDTO>();
+            CreateMap<Zone, ZoneReadDTO>().ReverseMap();
         }
     }
 }

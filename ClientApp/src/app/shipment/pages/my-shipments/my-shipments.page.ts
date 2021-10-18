@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShipmentService } from '../../services/shipment.service';
 import { SessionService } from '../../services/shipment-session.service';
+import { BoxTypes } from 'src/app/shared/box.model';
 import { ShipmentStatusLog, ShipmentTableData, MappedData, ExpandedData, Status, Box } from '../../models/shipment-table.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Data } from '@angular/router';
@@ -116,7 +117,7 @@ export class MyShipmentsPage implements OnInit {
       this.columnsToDisplay = filteredAry;
     }
   }
- 
+
   mapShipments(shipments: ShipmentTableData[]) {
 		return shipments.map((obj) => {
       const shipmentBoxes = this.mapBoxes(obj.boxes)
@@ -134,7 +135,7 @@ export class MyShipmentsPage implements OnInit {
         receiverName: obj.receiverFirstName+" "+obj.receiverLastName,
         date: latestDate,
         expandedData: expandedData
-			};    
+			};
 		});
 	 }
 
@@ -145,38 +146,40 @@ export class MyShipmentsPage implements OnInit {
         date: obj.date,
         statusId: obj.status.id,
         statusName: obj.status.name
-      };    
+      };
     });
-    
+
     return infoArray;
   }
-  
+
   createExpandedData(shipmentId : number, boxes: Box[],  logs: ShipmentStatusLog[]) {
     let expandedData = <ExpandedData>{};
     expandedData.boxes = boxes;
     expandedData.shipmentStatusLogs = logs.filter(l => l.shipmentId == shipmentId);
-    
+
     return expandedData;
   }
-  
+
   getLatestDate(infoArray: any[]) {
     const latestDate = infoArray.sort((a : any, b : any) => b.date - a.date)[0]
     return new Date(latestDate.date).toDateString();
   }
-  
+
   getLatestStatus(infoArray: any[]) {
-    const latestStatus = infoArray.sort((a : any, b : any) => b.statusId - a.statusId)[0]  
+    const latestStatus = infoArray.sort((a : any, b : any) => b.statusId - a.statusId)[0]
     return latestStatus.statusName;
   }
-  
+
   mapBoxes(boxes: Box[]) {
     return boxes.map((obj) => {
       return {
+        name: "",
+        weight: 0,
         color: obj.color.toString()
-      };    
+      };
     });
   }
-  
+
   // sorting on column click
   sortData(sort: Sort) {
     const data = this.sortedData.slice();
@@ -184,7 +187,7 @@ export class MyShipmentsPage implements OnInit {
       this.sortedData = data;
       return;
     }
-    
+
     this.sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
@@ -197,10 +200,10 @@ export class MyShipmentsPage implements OnInit {
         default: return 0;
       }
     });
-    
+
     function compare(a: number | string, b: number | string, isAsc: boolean) {
       return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-    } 
+    }
   }
 
 }

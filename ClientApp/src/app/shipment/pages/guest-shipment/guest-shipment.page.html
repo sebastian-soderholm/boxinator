@@ -1,82 +1,78 @@
-<form class="form" [formGroup]="guestShipmentForm">
+<form class="form form-control" [formGroup]="guestShipmentForm">
   <!-- Email -->
   <input class="form-control" formControlName="senderEmail" type="email" placeholder="Email" required>
-  <div *ngIf="senderEmail.dirty || senderEmail.touched" class="alert">
-    <div *ngIf="senderEmail.errors?.required">
+  <div *ngIf="senderEmail?.dirty || senderEmail?.touched" class="alert">
+    <div *ngIf="senderEmail?.errors?.required">
       <p>Email is required</p>
     </div>
-    <div *ngIf="senderEmail.errors?.minlength">
+    <div *ngIf="senderEmail?.errors?.minlength">
       <p>Email is too short</p>
     </div>
-    <div *ngIf="senderEmail.errors?.pattern">
+    <div *ngIf="senderEmail?.errors?.pattern">
       <p>Email format is invalid</p>
     </div>
   </div>
   <!-- Reciever first name -->
   <input class="form-control" formControlName="receiverFirstName" type="text" placeholder="First name" required>
-  <div *ngIf="receiverFirstName.dirty || receiverFirstName.touched" class="alert">
-    <div *ngIf="receiverFirstName.errors?.required">
+  <div *ngIf="receiverFirstName?.dirty || receiverFirstName?.touched" class="alert">
+    <div *ngIf="receiverFirstName?.errors?.required">
       <p>First name is required</p>
     </div>
-    <div *ngIf="receiverFirstName.errors?.pattern">
+    <div *ngIf="receiverFirstName?.errors?.pattern">
       <p>First name can only contain letters</p>
     </div>
   </div>
   <!-- Reciever last name -->
   <input class="form-control" formControlName="receiverLastName" type="text" placeholder="Last name" required>
-  <div *ngIf="receiverLastName.dirty || receiverLastName.touched" class="alert">
-    <div *ngIf="receiverLastName.errors?.required">
+  <div *ngIf="receiverLastName?.dirty || receiverLastName?.touched" class="alert">
+    <div *ngIf="receiverLastName?.errors?.required">
       <p>Last name is required</p>
     </div>
-    <div *ngIf="receiverLastName.errors?.pattern">
+    <div *ngIf="receiverLastName?.errors?.pattern">
       <p>Last name can only contain letters</p>
     </div>
   </div>
   <!-- Destination country -->
   <select formControlName="destinationCountryId">
-    <option value="" selected>Choose your country</option>
+    <option *ngIf="!countries" value="" selected>Loading countries...</option>
     <option [ngValue]="country.id" *ngFor="let country of countries">{{country.name}}</option>
   </select>
 
   <!-- Destination postal code -->
+  <input formControlName="destinationAddress" type="text" placeholder="Address">
+  <div *ngIf="destinationAddress?.dirty || destinationAddress?.touched" class="alert">
+    <div *ngIf="destinationAddress?.errors?.required">
+      <p>Address is required</p>
+    </div>
+  </div>
+
+  <!-- Destination postal code -->
   <input formControlName="destinationZipCode" type="text" placeholder="Postal code">
-  <div *ngIf="destinationZipCode.dirty || destinationZipCode.touched" class="alert">
-    <div *ngIf="destinationZipCode.errors?.minlength">
+  <div *ngIf="destinationZipCode?.dirty || destinationZipCode?.touched" class="alert">
+    <div *ngIf="destinationZipCode?.errors?.minlength">
       <p>Postal code is too short</p>
     </div>
-    <div *ngIf="destinationZipCode.errors?.pattern">
+    <div *ngIf="destinationZipCode?.errors?.pattern">
       <p>Postal code can only contain numbers</p>
     </div>
   </div>
 
   <p>Shipment cost {{cost}}</p>
-</form>
-
-<form class="form" [formGroup]="boxForm">
-  <div *ngFor="let control of boxesForm.controls; index as i">
-    <p>Select box type</p>
-    <!-- Box type select -->
-    <select class="form-control" formControlName="boxWeight" required>
-      <option value="1" selected>Basic 1 kg</option>
-      <option value="2">Humble 2 kg</option>
-      <option value="5">Deluxe 5 kg</option>
-      <option value="8">Premium 8 kg</option>
-    </select>
-
-    <button (click)="removeBox(i)">-</button>
-  </div>
+  <app-box-form (formChange)="boxFormChanged($event)"></app-box-form>
 
 
-  <button (click)="addBox()">+</button>
-</form>
 
-<!-- <button (click)="register()">Register</button> -->
-<button type="submit" (click)="createGuestShipment()" [disabled]="
+<button type="submit" (click)="createGuestShipment()"
+[disabled]="
 guestShipmentForm.controls['senderEmail'].invalid ||
 guestShipmentForm.controls['receiverFirstName'].invalid ||
 guestShipmentForm.controls['receiverLastName'].invalid ||
 guestShipmentForm.controls['destinationCountryId'].invalid ||
-guestShipmentForm.controls['destinationZipCode'].invalid
-">Ship
+guestShipmentForm.controls['destinationAddress'].invalid ||
+guestShipmentForm.controls['destinationZipCode'].invalid ||
+boxFormIsEmpty
+"
+  >
+  Ship
 </button>
 

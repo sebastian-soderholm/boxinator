@@ -4,8 +4,12 @@ import { Router } from '@angular/router';
 import { Country } from 'src/app/login/models/country.model';
 import { CountryService } from 'src/app/login/services/country.service';
 import { SessionService } from 'src/app/login/services/session.service';
-import { BasicBox, Box, DeluxeBox, HumbleBox, PremiumBox } from '../../models/box.model';
+import { Box, BoxTypes } from '../../../shared/box.model';
 import { GuestShipment } from '../../models/guest-shipment.model';
+import { ColorPickerComponent } from 'ngx-color-picker';
+import { ShipmentService } from '../../services/shipment.service';
+import { BoxFormComponent } from '../../components/box-form/box-form.component';
+
 
 @Component({
   selector: 'app-guest-shipment',
@@ -15,31 +19,28 @@ import { GuestShipment } from '../../models/guest-shipment.model';
 export class GuestShipmentPage implements OnInit {
 
   private _guestShipment: GuestShipment = {
-    senderEmail: "",
-    receiverFirstName: "",
-    receiverLastName: "",
-    destinationCountryId: 0,
-    destinationZipCode: "",
-    cost: 0
+    email: "",
+    firstName: "",
+    lastName: "",
+    countryId: 1,
+    zipCode: "",
+    address: "",
+    cost: 0,
+    boxes: []
   }
-  private _box: Box = {
-    name: "Basic",
-    weight: 1,
-    colorR: 0,
-    colorG: 0,
-    colorB: 0
-  }
+
   private _countries: Country[] = []
-  private _guestShipmentForm: any;
-  private _boxesForShipment: Box[] = [];
-  private _boxesForm = new FormArray([]);
-  private _boxForm: any;
+  private _boxes: Box[] = []
+  private _boxFormIsEmpty: boolean = false;
   private _cost: number = 0;
+  private _guestShipmentForm: any;
+  private _boxFormArray: any;
 
   constructor(
     private readonly router: Router,
     private readonly countryService: CountryService,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private readonly shipmentService: ShipmentService
   ) { }
 
   ngOnInit(): void {
@@ -48,75 +49,116 @@ export class GuestShipmentPage implements OnInit {
     });
 
     this._guestShipmentForm = new FormGroup({
-      senderEmail: new FormControl(this._guestShipment.senderEmail, [
+      senderEmail: new FormControl('', [
         Validators.required,
         //Must be in email format
         Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
       ]),
-      receiverFirstName: new FormControl(this._guestShipment.receiverFirstName, [
+      receiverFirstName: new FormControl('', [
         Validators.required,
         //Must contain letters
         Validators.pattern(/[a-z]/gi)
       ]),
-      receiverLastName: new FormControl(this._guestShipment.receiverLastName, [
+      receiverLastName: new FormControl('', [
         Validators.required,
         //Must contain letters
         Validators.pattern(/[a-z]/gi)
       ]),
-      destinationCountryId: new FormControl(this._guestShipment.destinationCountryId, [
+      destinationCountryId: new FormControl(1, [
       ]),
-      destinationZipCode: new FormControl(this._guestShipment.destinationZipCode, [
+      destinationZipCode: new FormControl('', [
         Validators.required,
         //Must be a minimum length
         Validators.minLength(5),
         //Must contain only numbers
         Validators.pattern(/^[0-9]*$/)
       ]),
+      destinationAddress: new FormControl('',[
+        Validators.required
+      ]),
     });
 
-    //Form for adding a single box to shipment
-    this._boxForm = new FormGroup({
-      boxWeight: new FormControl(this._box.weight, [])
-    });
+    this.onChanges();
   }
+  onChanges(): void {
+    //Setup eventlisteners for formchanges
+    this._guestShipmentForm.get("destinationCountryId").valueChanges.subscribe((id:any) => {
+      this.calculateCost()
 
-  calculateCost() {
-    // this._cost = this._boxesForShipment.reduce((cost: number, box: Box) => {
-    //   cost = box.weight * this._guestShipmentForm.get('destinationCountryId').value
-    // });
+   })
   }
-
+  boxFormChanged(boxes: Box[]) {
+    this._boxes = boxes;
+    this._boxes.length === 0 ? this._boxFormIsEmpty = true : this._boxFormIsEmpty = false
+    this.calculateCost()
+  }
   addBox() {
-    this._boxesForm.push(new FormControl(this._boxForm))
+    const group = new FormGroup({
+      boxType: new FormControl(this.boxTypes[0]),
+      boxColor: new FormControl({color: 'rgb(255,255,255)'})
+    });
+    const boxFormArray = this._guestShipmentForm.get('boxFormArray') as FormArray;
+    boxFormArray.push(group)
   }
   removeBox(index: number) {
-    this._boxesForm.removeAt(index)
+    // const boxFormArray = this._guestShipmentForm.get('boxFormArray') as FormArray;
+    this._boxFormArray.removeAt(index)
+  }
+  clearAllBoxes(){
+    this._boxFormArray.clear()
   }
 
   createGuestShipment(): void {
-    this._guestShipment.receiverFirstName = this._guestShipmentForm.get('receiverFirstName').value
-    this._guestShipment.receiverLastName = this._guestShipmentForm.get('receiverLastName').value
-    this._guestShipment.senderEmail = this._guestShipmentForm.get('senderEmail').value
-
-    //Apply countryId only if selected
-    this._guestShipment.destinationCountryId = this._guestShipmentForm.get('destinationCountryId').value
-
-    this._guestShipment.destinationZipCode = this._guestShipmentForm.get('destinationZipCode').value
-
-    console.log("Shipment info: " + JSON.stringify(this._guestShipment))
-
-    const boxesFromForms = this._boxesForm.controls.map(box => {
-      const boxInfo = {
-        // weight: box.get('boxWeight').value
-      }
-    })
-    console.log("Box forms: " + JSON.stringify(this._boxForm))
-    // this.registerService.registerUser(this._registerUser, function(){
-    //   console.log("User registered successfully!")
-    // })
+    this.getFormData()
+    this.clearFormData();
   }
   get guestShipmentForm() {
     return this._guestShipmentForm
+  }
+
+  getFormData() {
+
+    //Add field values to shipment
+    this._guestShipment.email = this._guestShipmentForm.get('senderEmail')?.value
+    this._guestShipment.firstName = this._guestShipmentForm.get('receiverFirstName')?.value
+    this._guestShipment.lastName = this._guestShipmentForm.get('receiverLastName')?.value
+    this._guestShipment.countryId = this._guestShipmentForm.get('destinationCountryId')?.value
+    this._guestShipment.address = this._guestShipmentForm.get('destinationAddress')?.value
+    this._guestShipment.zipCode = this._guestShipmentForm.get('destinationZipCode')?.value
+
+    //Add boxes to shipment
+    this._guestShipment.boxes = this._boxes
+
+    //Post shipment
+    console.table(this._guestShipment)
+    // this.shipmentService.postNewGuestShipment(<GuestShipment>this._guestShipment, () => console.log("hurray!"));
+
+  }
+  clearFormData() {
+    this._guestShipment = {
+      email: "",
+      firstName: "",
+      lastName: "",
+      countryId: 1,
+      zipCode: "",
+      address: "",
+      cost: 0,
+      boxes: []
+    }
+  }
+  calculateCost() {
+    //Get weights of all boxes
+    const boxWeightArray = this._boxes.map((box: Box) => box.weight);
+    //Get country multiplier
+    const multiplier = this._guestShipmentForm.get('destinationCountryId').value;
+    // Calculate shipping cost if any boxes present
+    if(boxWeightArray.length > 0) {
+      this._cost = boxWeightArray.reduce((cost: number, weight: number) => {
+        return cost + weight * multiplier
+      });
+    }else{
+      this._cost = 0
+    }
   }
 
   //Form fields
@@ -135,18 +177,20 @@ export class GuestShipmentPage implements OnInit {
   get destinationZipCode() {
     return this._guestShipmentForm.get('destinationZipCode')
   }
+  get destinationAddress() {
+    return this._guestShipmentForm.get('destiantionAddress')
+  }
   get cost() {
     return this._cost
   }
-  //Box form
-  get boxForm() {
-    return this._boxForm
+  get boxFormArray() {
+    return this._boxFormArray.get('boxFormArray') as FormArray
   }
-  get boxesForm() {
-    return this._boxesForm
+  get boxTypes() {
+    return BoxTypes;
   }
-  get boxesForShipment() {
-    return this._boxesForShipment;
+  get boxFormIsEmpty() {
+    return this._boxFormIsEmpty
   }
   //All available countries
   get countries() {

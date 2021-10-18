@@ -1,1 +1,77 @@
-<p>new-shipment works!</p>
+<form class="form form-control" [formGroup]="newShipmentForm">
+  <!-- Email -->
+  <!-- <input class="form-control" formControlName="senderEmail" type="email" placeholder="Email" required>
+  <div *ngIf="senderEmail?.dirty || senderEmail?.touched" class="alert">
+    <div *ngIf="senderEmail?.errors?.required">
+      <p>Email is required</p>
+    </div>
+    <div *ngIf="senderEmail?.errors?.minlength">
+      <p>Email is too short</p>
+    </div>
+    <div *ngIf="senderEmail?.errors?.pattern">
+      <p>Email format is invalid</p>
+    </div>
+  </div> -->
+  <!-- Reciever first name -->
+  <input class="form-control" formControlName="receiverFirstName" type="text" placeholder="First name" required>
+  <div *ngIf="receiverFirstName?.dirty || receiverFirstName?.touched" class="alert">
+    <div *ngIf="receiverFirstName?.errors?.required">
+      <p>First name is required</p>
+    </div>
+    <div *ngIf="receiverFirstName?.errors?.pattern">
+      <p>First name can only contain letters</p>
+    </div>
+  </div>
+  <!-- Reciever last name -->
+  <input class="form-control" formControlName="receiverLastName" type="text" placeholder="Last name" required>
+  <div *ngIf="receiverLastName?.dirty || receiverLastName?.touched" class="alert">
+    <div *ngIf="receiverLastName?.errors?.required">
+      <p>Last name is required</p>
+    </div>
+    <div *ngIf="receiverLastName?.errors?.pattern">
+      <p>Last name can only contain letters</p>
+    </div>
+  </div>
+  <!-- Destination country -->
+  <select formControlName="destinationCountryId">
+    <option *ngIf="!countries" value="" selected>Loading countries...</option>
+    <option [ngValue]="country.id" *ngFor="let country of countries">{{country.name}}</option>
+  </select>
+
+  <!-- Destination postal code -->
+  <input formControlName="destinationAddress" type="text" placeholder="Address">
+  <div *ngIf="destinationAddress?.dirty || destinationAddress?.touched" class="alert">
+    <div *ngIf="destinationAddress?.errors?.required">
+      <p>Address is required</p>
+    </div>
+  </div>
+
+  <!-- Destination postal code -->
+  <input formControlName="destinationZipCode" type="text" placeholder="Postal code">
+  <div *ngIf="destinationZipCode?.dirty || destinationZipCode?.touched" class="alert">
+    <div *ngIf="destinationZipCode?.errors?.minlength">
+      <p>Postal code is too short</p>
+    </div>
+    <div *ngIf="destinationZipCode?.errors?.pattern">
+      <p>Postal code can only contain numbers</p>
+    </div>
+  </div>
+
+  <p>Shipment cost {{cost}}</p>
+  <app-box-form (formChange)="boxFormChanged($event)"></app-box-form>
+
+
+
+<button type="submit" (click)="createNewShipment()"
+[disabled]="
+newShipmentForm.controls['receiverFirstName'].invalid ||
+newShipmentForm.controls['receiverLastName'].invalid ||
+newShipmentForm.controls['destinationCountryId'].invalid ||
+newShipmentForm.controls['destinationAddress'].invalid ||
+newShipmentForm.controls['destinationZipCode'].invalid ||
+boxFormIsEmpty
+"
+  >
+  Ship
+</button>
+

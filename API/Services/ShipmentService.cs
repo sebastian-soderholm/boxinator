@@ -99,6 +99,7 @@ namespace boxinator.Services
                 .Include(s => s.User)
                 .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
                 .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
+                .Include(s => s.Country).ThenInclude(c => c.Zone)
                 .Where(s => s.Id == id /*&& x.UserId == currentUser*/).FirstOrDefaultAsync();
         }
 
@@ -109,7 +110,10 @@ namespace boxinator.Services
         /// <returns>List of shipments</returns>
         public async Task<List<Shipment>> GetByUser(int userId)
         {
-            return await _context.Shipments.Where(x => x.UserId == userId).ToListAsync();
+            return await _context.Shipments
+                .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
+                .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
+                .Where(x => x.UserId == userId).ToListAsync();
         }
 
         /// <summary>

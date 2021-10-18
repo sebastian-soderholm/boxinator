@@ -21,7 +21,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSelectModule } from '@angular/material/select';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 //Pages
 import { LoginPage } from './login/pages/login/login.page';
@@ -32,11 +32,23 @@ import { NewShipmentPage } from './shipment/pages/new-shipment/new-shipment.page
 import { MyAccountPage } from './account/pages/my-account/my-account.page';
 import { EditAccountPage } from './account/pages/edit-account/edit-account.page';
 import { MenuPage } from './navigation/pages/menu/menu.page';
-import { CountrySettingsPage } from './admin/pages/country-settings/country-settings.page';
 import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipment.page';
 import { environment } from '../environments/environment';
 import { DashboardListComponent } from './shipment/components/dashboard-list/dashboard-list.component';
 import { DashboardListItemComponent } from './shipment/components/dashboard-list-item/dashboard-list-item.component';
+
+//Material form modules
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+
+//Color picker
+import { ColorPickerModule } from 'ngx-color-picker';
+import { BoxFormComponent } from './shipment/components/box-form/box-form.component';
+import { SettingsPage } from './admin/pages/settings/settings.page';
+
+
 
 @NgModule({
   declarations: [
@@ -49,10 +61,11 @@ import { DashboardListItemComponent } from './shipment/components/dashboard-list
     MyAccountPage,
     EditAccountPage,
     MenuPage,
-    CountrySettingsPage,
     GuestShipmentPage,
     DashboardListComponent,
     DashboardListItemComponent,
+    BoxFormComponent,
+    SettingsPage,
   ],
   imports: [
     BrowserModule,
@@ -73,9 +86,15 @@ import { DashboardListItemComponent } from './shipment/components/dashboard-list
     MatCardModule,
     MatProgressBarModule,
     MatSidenavModule,
-    MatSelectModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    ColorPickerModule,
+    MatExpansionModule
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

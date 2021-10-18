@@ -1,4 +1,5 @@
 ﻿using boxinator.Models.DTO.Box;
+using boxinator.Models.DTO.Country;
 using boxinator.Models.DTO.ShipmentStatusLog;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,7 @@ namespace boxinator.Models.DTO.Shipment
         public string ZipCode { get; set; }
         public string Address { get; set; }
         public double Cost { get; set; }
-        public int CountryId { get; set; }
+        public CountryReadDTO Country { get; set; }
         public List<BoxCreateDTO> Boxes { get; set; }
-        public List<ShipmentStatusLogCreateDTO> ShipmentStatusLogs { get; set; }
     }
 }
