@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Country } from 'src/app/login/models/country.model';
 import { CountryService } from 'src/app/login/services/country.service';
 import { SessionService } from 'src/app/login/services/session.service';
 
 @Component({
-  selector: 'app-country-settings',
-  templateUrl: './country-settings.page.html',
-  styleUrls: ['./country-settings.page.scss']
+  selector: 'app-settings',
+  templateUrl: './settings.page.html',
+  styleUrls: ['./settings.page.scss']
 })
-export class CountrySettingsPage implements OnInit {
+export class SettingsPage implements OnInit {
 
   private _countries: Country[] = []
   private _countrySettingsForm: any;

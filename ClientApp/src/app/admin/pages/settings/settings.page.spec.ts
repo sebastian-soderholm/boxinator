@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CountrySettingsPage } from './country-settings.page';
+import { SettingsPage } from './settings.page';
 
-describe('CountrySettingsPage', () => {
-  let component: CountrySettingsPage;
-  let fixture: ComponentFixture<CountrySettingsPage>;
+describe('SettingsPage', () => {
+  let component: SettingsPage;
+  let fixture: ComponentFixture<SettingsPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CountrySettingsPage ]
+      declarations: [ SettingsPage ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CountrySettingsPage);
+    fixture = TestBed.createComponent(SettingsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -31,7 +31,6 @@ import { NewShipmentPage } from './shipment/pages/new-shipment/new-shipment.page
 import { MyAccountPage } from './account/pages/my-account/my-account.page';
 import { EditAccountPage } from './account/pages/edit-account/edit-account.page';
 import { MenuPage } from './navigation/pages/menu/menu.page';
-import { CountrySettingsPage } from './admin/pages/country-settings/country-settings.page';
 import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipment.page';
 import { environment } from '../environments/environment';
 import { DashboardListComponent } from './shipment/components/dashboard-list/dashboard-list.component';
@@ -46,6 +45,7 @@ import { MatSelectModule } from '@angular/material/select';
 //Color picker
 import { ColorPickerModule } from 'ngx-color-picker';
 import { BoxFormComponent } from './shipment/components/box-form/box-form.component';
+import { SettingsPage } from './admin/pages/settings/settings.page';
 
 
 
@@ -60,11 +60,11 @@ import { BoxFormComponent } from './shipment/components/box-form/box-form.compon
     MyAccountPage,
     EditAccountPage,
     MenuPage,
-    CountrySettingsPage,
     GuestShipmentPage,
     DashboardListComponent,
     DashboardListItemComponent,
     BoxFormComponent,
+    SettingsPage,
   ],
   imports: [
     BrowserModule,

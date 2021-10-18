@@ -1,4 +1,4 @@
-import { Box } from "./box.model";
+import { Box } from "../../shared/box.model";
 
 //Guest is anonymous => no personal info, only email
 export interface GuestShipment {

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Box, BoxTypes } from '../../models/box.model';
+import { Box, BoxTypes } from '../../../shared/box.model';
 
 @Component({
   selector: 'app-box-form',
