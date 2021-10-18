@@ -27,7 +27,7 @@ namespace boxinator.Models.Domain
         [Required]
         public string AccountType { get; set; }
         //Relationships
-        public int? CountryId { get; set; }
-        public Country? Country { get; set; }
+        public int CountryId { get; set; }
+        public Country Country { get; set; }
     }
 }
