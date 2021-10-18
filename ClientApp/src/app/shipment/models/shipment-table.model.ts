@@ -37,6 +37,8 @@ export interface Country {
 
 export interface Box {
 	color: string;
+	weight: number;
+	name: string;
 }
 
 export interface MappedData {

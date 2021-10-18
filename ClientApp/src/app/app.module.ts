@@ -21,6 +21,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 //Pages
 import { LoginPage } from './login/pages/login/login.page';
@@ -36,6 +37,8 @@ import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipmen
 import { environment } from '../environments/environment';
 import { DashboardListComponent } from './shipment/components/dashboard-list/dashboard-list.component';
 import { DashboardListItemComponent } from './shipment/components/dashboard-list-item/dashboard-list-item.component';
+import { ColoredBoxesComponent } from './shipment/components/colored-boxes/colored-boxes.component';
+import { StatusLogComponent } from './shipment/components/status-log/status-log.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,8 @@ import { DashboardListItemComponent } from './shipment/components/dashboard-list
     GuestShipmentPage,
     DashboardListComponent,
     DashboardListItemComponent,
+    ColoredBoxesComponent,
+    StatusLogComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,7 +76,8 @@ import { DashboardListItemComponent } from './shipment/components/dashboard-list
     MatButtonModule,
     MatCardModule,
     MatProgressBarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
