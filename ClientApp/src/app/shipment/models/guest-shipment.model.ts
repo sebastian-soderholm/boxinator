@@ -3,12 +3,12 @@ import { Box } from "../../shared/box.model";
 //Guest is anonymous => no personal info, only email
 export interface GuestShipment {
   email: string;
-  firstName: string;
-  lastName: string;
-  countryId: number;
-  zipCode: string;
-  address: string;
+  receiverFirstName: string;
+  receiverLastName: string;
+  receiverZipCode: string;
+  receiverAddress: string;
   cost: number;
+  countryId: number;
   boxes: Box[];
 }
 
