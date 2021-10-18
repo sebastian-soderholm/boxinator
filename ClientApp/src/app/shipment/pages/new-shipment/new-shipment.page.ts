@@ -6,7 +6,6 @@ import { CountryService } from 'src/app/login/services/country.service';
 import { SessionService } from 'src/app/shared/session.service';
 import { Box, BoxTypes } from '../../../shared/box.model';
 import { ShipmentService } from '../../services/shipment.service';
-import { BoxFormComponent } from '../../components/box-form/box-form.component';
 import { CreateShipment } from '../../models/create-shipment.model';
 import { LoginService } from 'src/app/login/services/login.service';
 
