@@ -1,9 +1,56 @@
 <mat-card>
   <mat-card-header>
-    <p>Status: </p>
+    <p>Status: {{this.currentStatus}}</p>
     <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
   </mat-card-header>
   <mat-card-title>
-    Shipment #12345 to You, Bali
+    Shipment #{{shipment.id}} to {{shipment.receiverFirstName}} {{shipment.receiverLastName}}, {{shipment.country.name}}
+    {{this.totalWeight}} kg | {{shipment.cost}} €
   </mat-card-title>
+  <mat-card-content>
+    <mat-card-actions>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-description>
+           Boxes in the Shipment
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="premium" *ngIf="this.premiumBoxes!.length > 1">
+          <p>Premium box</p>
+          <div *ngFor="let box of premiumBoxes">
+            <p [ngStyle]="{'color': 'rgb' + box}">BOX</p>
+          </div>
+        </div>
+        <div class="deluxe" *ngIf="this.deluxeBoxes!.length > 1">
+          <p>Deluxe box</p>
+          <div *ngFor="let box of premiumBoxes">
+            <p [ngStyle]="{'color': 'rgb' + box}">BOX</p>
+          </div>
+        </div>
+        <div class="humble" *ngIf="this.humbleBoxes!.length > 1">
+          <p>Humble box</p>
+          <div *ngFor="let box of premiumBoxes">
+            <p [ngStyle]="{'color': 'rgb' + box}">BOX</p>
+          </div>
+        </div>
+        <div class="basic" *ngIf="this.basicBoxes!.length > 1">
+          <p>Basic box</p>
+          <div *ngFor="let box of premiumBoxes">
+            <p [ngStyle]="{'color': 'rgb' + box}">BOX</p>
+          </div>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-elevation-z0">
+        <mat-expansion-panel-header>
+          <mat-panel-description>
+            Shipment's Status Log
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let status of this.shipment.shipmentStatusLogs">
+          <p>{{this.status.status.name}} {{this.status.date}}</p>
+        </div>
+      </mat-expansion-panel>
+    </mat-card-actions>
+  </mat-card-content>
 </mat-card>
+

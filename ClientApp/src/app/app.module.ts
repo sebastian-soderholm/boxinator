@@ -21,6 +21,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 //Pages
 import { LoginPage } from './login/pages/login/login.page';
@@ -89,10 +90,10 @@ import { SettingsPage } from './admin/pages/settings/settings.page';
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
-    ColorPickerModule
+    ColorPickerModule,
+    MatExpansionModule
   ],
   providers: [
-    MatSelectModule
   ],
   bootstrap: [AppComponent]
 })
