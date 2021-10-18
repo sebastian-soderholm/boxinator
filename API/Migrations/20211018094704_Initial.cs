@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace boxinator.Migrations
 {
-    public partial class testAddress : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,7 +82,7 @@ namespace boxinator.Migrations
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AccountType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CountryId = table.Column<int>(type: "int", nullable: true)
+                    CountryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,7 +92,7 @@ namespace boxinator.Migrations
                         column: x => x.CountryId,
                         principalTable: "Country",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -236,8 +236,8 @@ namespace boxinator.Migrations
                 columns: new[] { "Id", "Date", "ShipmentId", "StatusId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 10, 17, 13, 28, 18, 371, DateTimeKind.Local).AddTicks(8547), 1, 1 },
-                    { 2, new DateTime(2021, 10, 17, 13, 28, 18, 374, DateTimeKind.Local).AddTicks(3705), 1, 3 }
+                    { 1, new DateTime(2021, 10, 18, 12, 47, 3, 753, DateTimeKind.Local).AddTicks(7956), 1, 1 },
+                    { 2, new DateTime(2021, 10, 18, 12, 47, 3, 762, DateTimeKind.Local).AddTicks(342), 1, 3 }
                 });
 
             migrationBuilder.CreateIndex(

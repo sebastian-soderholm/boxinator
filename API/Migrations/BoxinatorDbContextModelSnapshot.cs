@@ -242,7 +242,7 @@ namespace boxinator.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CountryId")
+                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DateOfBirth")
@@ -343,14 +343,14 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 17, 13, 28, 18, 371, DateTimeKind.Local).AddTicks(8547),
+                            Date = new DateTime(2021, 10, 18, 12, 47, 3, 753, DateTimeKind.Local).AddTicks(7956),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 17, 13, 28, 18, 374, DateTimeKind.Local).AddTicks(3705),
+                            Date = new DateTime(2021, 10, 18, 12, 47, 3, 762, DateTimeKind.Local).AddTicks(342),
                             ShipmentId = 1,
                             StatusId = 3
                         });
@@ -407,7 +407,9 @@ namespace boxinator.Migrations
                 {
                     b.HasOne("boxinator.Models.Country", "Country")
                         .WithMany("Users")
-                        .HasForeignKey("CountryId");
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Country");
                 });

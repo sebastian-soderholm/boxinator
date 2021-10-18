@@ -173,7 +173,7 @@ export class MyShipmentsPage implements OnInit {
   mapBoxes(boxes: Box[]) {
     return boxes.map((obj) => {
       return {
-        name: "",
+        name: "test",
         weight: 0,
         color: obj.color.toString()
       };
