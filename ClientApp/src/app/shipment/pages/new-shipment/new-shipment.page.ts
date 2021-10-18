@@ -4,9 +4,8 @@ import { Router } from '@angular/router';
 import { Country } from 'src/app/login/models/country.model';
 import { CountryService } from 'src/app/login/services/country.service';
 import { SessionService } from 'src/app/login/services/session.service';
-import { Box, BoxTypes } from '../../../shared/box.model';
+import { BoxTypes, Box } from 'src/app/shared/box.model';
 import { ShipmentService } from '../../services/shipment.service';
-import { BoxFormComponent } from '../../components/box-form/box-form.component';
 import { CreateShipment } from '../../models/create-shipment.model';
 import { LoginService } from 'src/app/login/services/login.service';
 
