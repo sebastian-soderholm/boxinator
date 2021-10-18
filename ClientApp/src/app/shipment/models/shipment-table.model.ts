@@ -1,3 +1,5 @@
+import { Country } from "src/app/login/models/country.model";
+
 export interface ShipmentTableData {
 	id: number;
 	shipmentStatusLogs: ShipmentStatusLog[]
@@ -33,13 +35,14 @@ export interface Status {
 	name: string;
 }
 
+/*
 export interface Country {
 	id: number;
 	name: string;
 	countryMultiplier: number;
 	zoneId: number;
 }
-
+*/
 export interface Box {
 	color: string;
 	weight: number;

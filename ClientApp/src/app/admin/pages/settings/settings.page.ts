@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Country } from 'src/app/login/models/country.model';
 import { CountryService } from 'src/app/login/services/country.service';
-import { SessionService } from 'src/app/login/services/session.service';
+import { SessionService } from 'src/app/shared/session.service';
 
 @Component({
   selector: 'app-settings',

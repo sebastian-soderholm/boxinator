@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShipmentService } from '../../services/shipment.service';
-import { SessionService } from '../../services/shipment-session.service';
+//import { SessionService } from '../../services/shipment-session.service';
+import { SessionService } from 'src/app/shared/session.service';
 import { BoxTypes } from 'src/app/shared/box.model';
 import { ShipmentStatusLog, ShipmentTableData, MappedData, ExpandedData, Status, Box } from '../../models/shipment-table.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';

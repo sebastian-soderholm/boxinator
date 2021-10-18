@@ -1,8 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SessionService } from 'src/app/login/services/session.service';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
+import { SessionService } from 'src/app/shared/session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,15 @@ export class AccountService {
     this.http.put<User>(this._apiUrl + '/account/' + updateUserInfo.id, body, httpOptions)
     .subscribe((user: User) => {
       //this.sessionService.setUser(user);
+      onSuccess();
+    });
+  }
+
+  // for admin
+  public getUserById(userId: number, onSuccess: () => void): void {
+    this.http.get<User>(this._apiUrl + /account/+userId)
+    .subscribe((user: User) => { 
+      this.sessionService.setFetchedUserInfo(user);
       onSuccess();
     });
   }

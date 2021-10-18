@@ -6,6 +6,7 @@ export interface User {
   password: string;
   dateOfBirth: Date;
   countryId: number;
-  zip: string;
-  contactNumber: string;
+  zipCode: string;
+  phoneNumber: string;
 }
+
