@@ -192,42 +192,5 @@ namespace boxinator.Services
 
         }
 
-        /*
-        private List<Shipment> FilterShipmentList(List<ShipmentStatusLog> shipmentStatusLogList)
-        {
-            List<Shipment> shipmentListFiltered = new List<Shipment>();
-
-            var filteredShipmentStatusLogList = shipmentStatusLogList
-                .GroupBy(x => x.ShipmentId)
-                .Select(x => x.OrderByDescending(y => y.Date).FirstOrDefault()).ToList();
-
-            foreach (var shipmentStatusLog in filteredShipmentStatusLogList)
-            {
-                if (filteredShipmentStatusLogList.Select(x => x.ShipmentId).Contains(shipmentStatusLog.ShipmentId))
-                {
-                    Shipment shipment = new Shipment()
-                    {
-                        Id = shipmentStatusLog.Shipment.Id,
-                        FirstName = shipmentStatusLog.Shipment.FirstName,
-                        LastName = shipmentStatusLog.Shipment.LastName,
-                        Address = shipmentStatusLog.Shipment.Address,
-                        ZipCode = shipmentStatusLog.Shipment.ZipCode,
-                        Cost = shipmentStatusLog.Shipment.Cost,
-                        User = shipmentStatusLog.Shipment.User,
-                        UserId = shipmentStatusLog.Shipment.UserId,
-                        Country = shipmentStatusLog.Shipment.Country,
-                        CountryId = shipmentStatusLog.Shipment.Country.Id,
-                        Boxes = shipmentStatusLog.Shipment.Boxes,
-                        ShipmentStatusLogs = shipmentStatusLog.Shipment.ShipmentStatusLogs
-                    };
-
-                    shipmentListFiltered.Add(shipment);
-                }
-            }
-
-            return shipmentListFiltered;
-        }
-        */
-
     }
 }

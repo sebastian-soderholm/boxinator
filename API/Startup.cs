@@ -57,38 +57,24 @@ namespace boxinator
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ISettingsService, SettingsService>();
+
             /*
             FirebaseApp.Create(new AppOptions
             {
                 Credential = GoogleCredential.FromFile("firebase-secret-file.json")
             });
             */
-            /*
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => 
-                {
-                    options.Authority = "https://securetoken.google.com/1:789898616661:web:1b7959121446003ec9d9dc";
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = "https://securetoken.google.com/1:789898616661:web:1b7959121446003ec9d9dc",
-                        ValidateAudience = true,
-                        ValidAudience = "1:789898616661:web:1b7959121446003ec9d9dc",// App Id
-                        ValidateLifetime = true
-                    };
-                });
-            */
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = "https://securetoken.google.com/1:789898616661:web:1b7959121446003ec9d9dc";
+                    options.Authority = "https://securetoken.google.com/boxinator";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = "https://securetoken.google.com/1:789898616661:web:1b7959121446003ec9d9dc",
+                        ValidIssuer = "https://securetoken.google.com/boxinator",
                         ValidateAudience = true,
-                        ValidAudience = "1:789898616661:web:1b7959121446003ec9d9dc",
+                        ValidAudience = "boxinator",
                         ValidateLifetime = true
                     };
                 });
@@ -116,30 +102,18 @@ namespace boxinator
 
             app.UseHttpsRedirection();
 
-            app.UseAuthentication();
-
             app.UseRouting();
+
             app.UseCors(MyAllowSpecificOrigins);
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-            /*
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
 
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
-            });
-            */
         }
     }
 }

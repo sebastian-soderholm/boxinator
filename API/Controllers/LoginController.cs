@@ -19,7 +19,7 @@ namespace boxinator.Controllers
 {
     [ApiController]
     [Route("login")]
-    [EnableCors("_myAllowSpecificOrigins")]
+    //[EnableCors("_myAllowSpecificOrigins")]
     //[Authorize]
     public class LoginController : ControllerBase
     {
@@ -39,8 +39,8 @@ namespace boxinator.Controllers
         /// <returns>StatusCodes 400/401/201</returns>
         /// GET: /verify
         [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> Verify() // rename to Verify
+        //[Authorize]
+        public async Task<IActionResult> Login() // rename to Verify
         {
             // get email from header token
 
