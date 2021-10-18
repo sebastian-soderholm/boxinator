@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using boxinator.Models;
 using boxinator.Models.DTO.Country;
+using boxinator.Models.DTO.Zone;
 using boxinator.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -50,8 +51,8 @@ namespace boxinator.Controllers
         [Route("/settings/countries")]
         public async Task<ActionResult<CountryReadDTO>> Add(CountryCreateDTO countryDTO)
         {
-            Country newCountry = _mapper.Map<Country>(countryDTO);
-            Country resultCountry = await _service.Add(newCountry);
+           
+            var resultCountry = await _service.Add(countryDTO);
             return _mapper.Map<CountryReadDTO>(resultCountry);
         }
 
@@ -61,15 +62,53 @@ namespace boxinator.Controllers
         /// <param name="countryId"></param>
         /// <param name="countryDTO"></param>
         /// <returns>Updated country</returns>
-        //PUT: /settings/countries:country_id
+        //PUT: /settings/countries
         [HttpPut]
-        [Route("/settings/countries/{countryId}")]
-        public async Task<ActionResult<CountryReadDTO>> Update(int countryId, CountryEditDTO countryDTO)
+        [Route("/settings/countries")]
+        public async Task<ActionResult<CountryReadDTO>> Update(CountryEditDTO countryDTO)
         {
-            Country updatedCountry = _mapper.Map<Country>(countryDTO);
-            Country resultCountry = await _service.Update(countryId, updatedCountry);
+            var resultCountry = await _service.Update(countryDTO);
             return _mapper.Map<CountryReadDTO>(resultCountry);
 
+        }
+        /// <summary>
+        /// Get countries with multipliers
+        /// </summary>
+        /// <returns>List of countries with multipliers</returns>
+        //GET: /settings/zones
+        [HttpGet]
+        [Route("/settings/zones")]
+        public async Task<ActionResult<List<ZoneReadDTO>>> GetAllZones()
+        {
+            var zones = await _service.GetAllZones();
+            return _mapper.Map<List<ZoneReadDTO>>(zones);
+        }
+
+        /// <summary>
+        /// Edit zone info
+        /// </summary>
+        /// <param name="zoneId"></param>
+        /// <param name="zoneDTO"></param>
+        /// <returns></returns>
+        //PUT: /settings/zones
+        [HttpPut]
+        [Route("/settings/zones")]
+        public async Task<ActionResult<ZoneReadDTO>> UpdateZone(ZoneEditDTO zoneDTO)
+        {
+            var resultZone = await _service.UpdateZone(zoneDTO);
+            return _mapper.Map<ZoneReadDTO>(resultZone);
+        }
+        /// <summary>
+        /// Add zone
+        /// </summary>
+        /// <param name="zoneDTO"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/settings/zones")]
+        public async Task<ActionResult<ZoneReadDTO>> Add(ZoneCreateDTO zoneDTO)
+        {
+            var resultZone = await _service.AddZone(zoneDTO);
+            return _mapper.Map<ZoneReadDTO>(resultZone);
         }
     }
 }

@@ -9,6 +9,10 @@ namespace boxinator.Profiles
         public ZoneProfile()
         {
             CreateMap<Zone, ZoneReadDTO>().ReverseMap();
+
+            CreateMap<Zone, ZoneEditDTO>().ReverseMap();
+
+            CreateMap<Zone, ZoneCreateDTO>().ReverseMap();
         }
     }
 }

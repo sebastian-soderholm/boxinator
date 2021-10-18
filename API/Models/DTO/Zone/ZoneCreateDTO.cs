@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace boxinator.Models.DTO.Zone
 {
-    public class ZoneReadDTO
+    public class ZoneCreateDTO
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int CountryMultiplier { get; set; }
     }
