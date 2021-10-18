@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using boxinator.Models;
 using boxinator.Models.DTO.Country;
+using boxinator.Models.DTO.Status;
 using boxinator.Models.DTO.Zone;
 using boxinator.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -72,7 +73,7 @@ namespace boxinator.Controllers
 
         }
         /// <summary>
-        /// Get countries with multipliers
+        /// Get all countries with zone info
         /// </summary>
         /// <returns>List of countries with multipliers</returns>
         //GET: /settings/zones
@@ -109,6 +110,46 @@ namespace boxinator.Controllers
         {
             var resultZone = await _service.AddZone(zoneDTO);
             return _mapper.Map<ZoneReadDTO>(resultZone);
+        }
+
+        /// <summary>
+        /// Get all statuses
+        /// </summary>
+        /// <returns></returns>
+        //GET: /settings/statuses
+        [HttpGet]
+        [Route("/settings/statuses")]
+        public async Task<ActionResult<List<StatusReadDTO>>> GetAllStatuses()
+        {
+            var resultStatuses = await _service.GetAllStatuses();
+            return _mapper.Map<List<StatusReadDTO>>(resultStatuses);
+        }
+
+        /// <summary>
+        /// Update existing status
+        /// </summary>
+        /// <param name="statusDTO"></param>
+        /// <returns></returns>
+        //PUT: /settings/statuses
+        [HttpPut]
+        [Route("/settings/statuses")]
+        public async Task<ActionResult<StatusReadDTO>> UpdateStatus(StatusEditDTO statusDTO)
+        {
+            var resultStatus = await _service.UpdateStatus(statusDTO);
+            return _mapper.Map<StatusReadDTO>(resultStatus);
+        }
+        /// <summary>
+        /// Add status
+        /// </summary>
+        /// <param name="statusDTO"></param>
+        /// <returns></returns>
+        //POST: /settings/statuses
+        [HttpPost]
+        [Route("/settings/statuses")]
+        public async Task<ActionResult<StatusReadDTO>> AddStatus(StatusCreateDTO statusDTO)
+        {
+            var resultStatus = await _service.AddStatus(statusDTO);
+            return _mapper.Map<StatusReadDTO>(resultStatus);
         }
     }
 }

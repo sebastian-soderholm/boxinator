@@ -1,5 +1,7 @@
 ﻿using boxinator.Models;
+using boxinator.Models.Domain;
 using boxinator.Models.DTO.Country;
+using boxinator.Models.DTO.Status;
 using boxinator.Models.DTO.Zone;
 using System;
 using System.Collections.Generic;
@@ -16,9 +18,16 @@ namespace boxinator.Services.Interfaces
         public Task<List<Country>> GetAll();
         public Task<Country> Add(CountryCreateDTO country);
         public Task<Country> Update(CountryEditDTO country);
+
+        // Zones
         public Task<List<Zone>> GetAllZones();
         public Task<Zone> UpdateZone(ZoneEditDTO zone);
         public Task<Zone> AddZone(ZoneCreateDTO zone);
+
+        // Statuses
+        public Task<List<Status>> GetAllStatuses();
+        public Task<Status> UpdateStatus(StatusEditDTO status);
+        public Task<Status> AddStatus(StatusCreateDTO status);
 
     }
 }

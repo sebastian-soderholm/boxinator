@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace boxinator.Models.DTO.Status
 {
-    public class StatusCreateDTO
+    public class StatusEditDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

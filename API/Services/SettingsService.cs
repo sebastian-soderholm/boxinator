@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using System.Threading.Tasks;
+using boxinator.Models.DTO.Status;
 
 namespace boxinator.Services.Interfaces
 {
@@ -134,5 +135,30 @@ namespace boxinator.Services.Interfaces
             return zone;
         }
 
+        public async Task<List<Status>> GetAllStatuses() =>
+            await _context.Statuses.ToListAsync();
+
+        public async Task<Status> UpdateStatus(StatusEditDTO statusDTO)
+        {
+            var statusFromDB = await _context.Statuses.AsNoTracking().FirstOrDefaultAsync(s => s.Id == statusDTO.Id);
+
+            if (statusFromDB != null)
+            {
+                Status status = _mapper.Map<Status>(statusDTO);
+                _context.Update(status);
+                await _context.SaveChangesAsync();
+                return status;
+            }
+
+            return null;
+        }
+
+        public async Task<Status> AddStatus(StatusCreateDTO statusDTO)
+        {
+            Status status = _mapper.Map<Status>(statusDTO);
+            await _context.Statuses.AddAsync(status);
+            await _context.SaveChangesAsync();
+            return status;
+        }
     }
 }
