@@ -13,21 +13,33 @@ const apiURL = environment.baseURL;
   providedIn: 'root',
 })
 export class SessionService {
+  private _user: User | undefined;
   private _shipments: Shipment[] | undefined
   private _countries: Country[] | undefined
+
+  setUser(user: User): void {
+    this._user = user;
+    localStorage.setItem('user', JSON.stringify(user))
+  }
 
   setShipments(shipments: Shipment[]): void {
     this._shipments = shipments;
     localStorage.setItem('shipments', JSON.stringify(shipments))
   }
+
   setCountries(countries: Country[]): void {
     this._countries = countries
     sessionStorage.setItem('countries', JSON.stringify(countries))
   }
 
+  get user(): User | undefined {
+    return this._user;
+  }
+
   get shipments(): Shipment[] | undefined {
     return this._shipments;
   }
+
   get countries(): Country[] | undefined {
     return this._countries
   }
