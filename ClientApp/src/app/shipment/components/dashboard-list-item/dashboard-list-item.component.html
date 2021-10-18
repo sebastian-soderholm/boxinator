@@ -15,25 +15,25 @@
            Boxes in the Shipment
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div class="premium" *ngIf="this.premiumBoxes!.length > 1">
+        <div class="premium" *ngIf="this.premiumBoxes.length > 0">
           <p>Premium box</p>
           <div *ngFor="let box of premiumBoxes">
             <p [ngStyle]="{'color': box}">BOX</p>
           </div>
         </div>
-        <div class="deluxe" *ngIf="this.deluxeBoxes!.length > 1">
+        <div class="deluxe" *ngIf="this.deluxeBoxes.length > 0">
           <p>Deluxe box</p>
           <div *ngFor="let box of deluxeBoxes">
             <p [ngStyle]="{'color': box}">BOX</p>
           </div>
         </div>
-        <div class="humble" *ngIf="this.humbleBoxes!.length > 1">
+        <div class="humble" *ngIf="this.humbleBoxes.length > 0">
           <p>Humble box</p>
           <div *ngFor="let box of humbleBoxes">
             <p [ngStyle]="{'color': box}">BOX</p>
           </div>
         </div>
-        <div class="basic" *ngIf="this.basicBoxes!.length > 1">
+        <div class="basic" *ngIf="this.basicBoxes.length > 0">
           <p>Basic box</p>
           <div *ngFor="let box of basicBoxes">
             <p [ngStyle]="{'color': box}">BOX</p>

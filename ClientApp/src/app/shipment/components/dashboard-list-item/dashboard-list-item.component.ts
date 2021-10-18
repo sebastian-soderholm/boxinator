@@ -16,10 +16,11 @@ export class DashboardListItemComponent implements OnInit {
   premiumBoxes: string[] = [];
   panelOpenState = false;
 
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit(): void {
-    // console.table(this.shipment)
     this.shipment.boxes.forEach((box) => {
       this.totalWeight += box.weight
       if(box.name === "Basic") {
@@ -31,13 +32,7 @@ export class DashboardListItemComponent implements OnInit {
       } else if(box.name === "Premium") {
         this.premiumBoxes.push(box.color)
       }
-      console.log("Premium:")
-      console.table(this.premiumBoxes)
-      // console.log(this.humbleBoxes)
     })
-/*     this.shipment.boxes.map((box) =>
-
-    ) */
     this.currentStatus = this.shipment.shipmentStatusLogs[this.shipment.shipmentStatusLogs.length-1].status.name
   }
 
