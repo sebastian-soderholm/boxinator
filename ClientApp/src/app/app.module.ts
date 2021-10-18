@@ -47,6 +47,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { BoxFormComponent } from './shipment/components/box-form/box-form.component';
 import { SettingsPage } from './admin/pages/settings/settings.page';
+import { CountrySettingsComponent } from './admin/components/country-settings/country-settings.component';
 
 
 
@@ -66,6 +67,7 @@ import { SettingsPage } from './admin/pages/settings/settings.page';
     DashboardListItemComponent,
     BoxFormComponent,
     SettingsPage,
+    CountrySettingsComponent,
   ],
   imports: [
     BrowserModule,
