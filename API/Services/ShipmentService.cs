@@ -26,7 +26,6 @@ namespace boxinator.Services
         /// <returns>Created shipment</returns>
         public async Task<Shipment> Add(Shipment shipment)
         {
-            //Create ShipmentStatusLog list for new shipment
 
             //Add status CREATED and link shipment to status
             ShipmentStatusLog shipmentStatusLog = new ShipmentStatusLog()

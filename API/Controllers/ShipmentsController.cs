@@ -113,12 +113,13 @@ namespace boxinator.Controllers
             //check if user does not exist in DB
             if(userInDB == null)
             {
-                //Add user to DB with only email field
+                //Add user to DB with email, accountType, countryId
                 UserCreateDTO userToDB = new UserCreateDTO();
                 userToDB.Email = shipmentGuestDTO.Email;
                 userToDB.AccountType = AccountTypes.GUEST.ToString();
 
                 User newUser = _mapper.Map<User>(userToDB);
+                newUser.CountryId = shipmentGuestDTO.CountryId;
                 
                 userInDB = await _accountService.Add(newUser);
             }
