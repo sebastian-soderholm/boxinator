@@ -129,13 +129,12 @@ namespace boxinator.Services
                 query = query.Where(x => x.Date >= from && x.Date < to);
 
             query = query
-            .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
-            .Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId)
-            .Include(s => s.Shipment).ThenInclude(s => s.Boxes).ThenInclude(b => b.BoxType)
-            .Include(s => s.Status);
+                .Include(s => s.Shipment).ThenInclude(b => b.Boxes).ThenInclude(z => z.BoxType)
+                .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
+                .Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId)
+                .Include(s => s.Status);
 
             var shipmentStausLogList = await query.ToListAsync();
-            // var categorySelectList = typeof(Categories).ToCategorySelectList();
 
             var endresultList = shipmentStausLogList.ToFilteredShipmentList();
 
@@ -158,11 +157,11 @@ namespace boxinator.Services
                 query = query.Where(x => x.Date >= from && x.Date < to);
 
             query = query
-            .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
-            .Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId)
-            .Include(s => s.Shipment).ThenInclude(s => s.Boxes).ThenInclude(b => b.BoxType)
-            .Include(s => s.Status);
-
+                .Include(s => s.Shipment).ThenInclude(b => b.Boxes).ThenInclude(b => b.BoxType)
+                .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
+                .Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId)
+                .Include(s => s.Status);
+            
             var shipmentStausLogList = await query.ToListAsync();
             var endresultList = shipmentStausLogList.ToFilteredShipmentList();
 
@@ -183,10 +182,10 @@ namespace boxinator.Services
                 query = query.Where(x => x.Date >= from && x.Date < to);
 
             query = query
-            .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
-            .Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId)
-            .Include(s => s.Shipment).ThenInclude(s => s.Boxes).ThenInclude(b => b.BoxType)
-            .Include(s => s.Status);
+                .Include(s => s.Shipment).ThenInclude(s => s.Boxes).ThenInclude(b => b.BoxType)
+                .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
+                .Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId)
+                .Include(s => s.Status);
 
             var shipmentStausLogList = await query.ToListAsync();
             var endresultList = shipmentStausLogList.ToFilteredShipmentList();
