@@ -10,7 +10,7 @@ import { SessionService } from 'src/app/shared/session.service';
   styleUrls: ['./settings.page.scss']
 })
 export class SettingsPage implements OnInit {
-
+  panelOpenState = false;
   private _countries: Country[] = []
   private _countrySettingsForm: any;
   private _selectedCountry: Country = {
