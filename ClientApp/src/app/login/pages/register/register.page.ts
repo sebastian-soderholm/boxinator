@@ -6,7 +6,7 @@ import { Country } from '../../models/country.model';
 import { RegisterUser } from '../../models/register-user.model';
 import { LoginService } from '../../services/login.service';
 import { RegisterService } from '../../services/register.service';
-import { SessionService } from '../../services/session.service';
+import { SessionService } from '../../../shared/session.service';
 import { passwordsMatch } from './fields-match'
 
 @Component({

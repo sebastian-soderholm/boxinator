@@ -59,7 +59,9 @@ namespace boxinator.Services
         public async Task<User> Get(int id)
         {
             return await _context.Users
-                .Where(x => x.Id == id /*&& x.UserId == currentUser*/).FirstOrDefaultAsync();
+                .Where(x => x.Id == id /*&& x.UserId == currentUser*/)
+                .Include(x => x.Country)
+                .FirstOrDefaultAsync();
         }
 
         /// <summary>

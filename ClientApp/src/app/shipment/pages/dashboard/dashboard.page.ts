@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Box, MappedData, ShipmentStatusLog, ShipmentTableData } from '../../models/shipment-table.model';
-import { SessionService } from '../../services/shipment-session.service';
+//import { SessionService } from '../../services/shipment-session.service';
 import { ShipmentService } from '../../services/shipment.service';
-
+import { SessionService } from 'src/app/shared/session.service';
 
 @Component({
   selector: 'app-dashboard',

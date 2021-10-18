@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Country } from '../models/country.model';
-import { SessionService } from './session.service';
+import { SessionService } from '../../shared/session.service';
 
 @Injectable({
   providedIn: 'root'

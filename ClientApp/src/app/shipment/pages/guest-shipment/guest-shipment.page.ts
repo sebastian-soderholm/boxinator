@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Country } from 'src/app/login/models/country.model';
 import { CountryService } from 'src/app/login/services/country.service';
-import { SessionService } from 'src/app/login/services/session.service';
+import { SessionService } from 'src/app/shared/session.service';
 import { Box, BoxTypes } from '../../../shared/box.model';
 import { GuestShipment } from '../../models/guest-shipment.model';
 import { ColorPickerComponent } from 'ngx-color-picker';
