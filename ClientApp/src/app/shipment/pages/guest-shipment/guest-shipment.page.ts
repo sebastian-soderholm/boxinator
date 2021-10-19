@@ -126,6 +126,10 @@ export class GuestShipmentPage implements OnInit {
     this._guestShipment.receiverAddress = this._guestShipmentForm.get('destinationAddress')?.value
     this._guestShipment.receiverZipCode = this._guestShipmentForm.get('destinationZipCode')?.value
 
+    //Add cost to shipment
+    this.calculateCost()
+    this._guestShipment.cost = this.cost
+
     //Add boxes to shipment
     this._guestShipment.boxes = this._boxes
 
