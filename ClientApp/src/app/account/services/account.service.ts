@@ -40,4 +40,18 @@ export class AccountService {
       onSuccess();
     });
   }
+
+  public getBySearchTerm(searchTerm: string , onSuccess: () => void): void {
+    const params = new HttpParams()
+    .set("searchTerm", searchTerm)
+
+    this.http.get<User>(this._apiUrl + '/account', {params: params})
+    .subscribe((user: User) => { 
+      console.log(user)
+      if(user != null){
+        this.sessionService.setFetchedUserInfo(user);
+        onSuccess();
+      }
+    });
+  }
 }

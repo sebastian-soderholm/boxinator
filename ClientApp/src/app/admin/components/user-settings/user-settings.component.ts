@@ -28,7 +28,9 @@ export class UserSettingsComponent implements OnInit {
       });
     }
     else {
-      console.log("not a number")
+      this._accountService.getBySearchTerm(input, async () => {
+        await console.log("success"), this.loadComponent = true;
+      });
     }
 
   }
