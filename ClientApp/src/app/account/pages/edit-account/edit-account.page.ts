@@ -48,17 +48,6 @@ export class EditAccountPage implements OnInit {
             /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
           ),
         ]),
-        // password: new FormControl(this._editUser!.password, [
-        //   Validators.required,
-        //   Validators.minLength(5),
-        //   //At least one lowercase letter, one uppercase letter, one number, one special character
-        //   // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/)
-        // ]),
-        // confirmPassword: new FormControl(this._confirmPassword, [
-        //   Validators.required,
-        //   //At least one lowercase letter, one uppercase letter, one number, one special character
-        //   // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/),
-        // ]),
         dateOfBirth: new FormControl(this._editUser!.dateOfBirth, [
           // Validators.pattern(/a-zA-Z/)
         ]),
@@ -84,8 +73,7 @@ export class EditAccountPage implements OnInit {
     this._editUser!.firstName = this._editUserForm.get('firstName').value;
     this._editUser!.lastName = this._editUserForm.get('lastName').value;
     this._editUser!.email = this._editUserForm.get('email').value;
-    // this._editUser!.password = this._editUserForm.get('password').value;
-    // this._editUser.dateOfBirth = this._editUserForm.get('dateOfBirth').value
+    this._editUser!.dateOfBirth = this._editUserForm.get('dateOfBirth').value
     // this._editUser.dateOfBirth = "2021-10-12T18:00:15.956Z"
     this._editUser!.countryId = this._editUserForm.get('countryId').value;
     this._editUser!.zipCode = this._editUserForm.get('zipCode').value;
@@ -109,9 +97,6 @@ export class EditAccountPage implements OnInit {
   }
   get email() {
     return this._editUserForm.get('email');
-  }
-  get password() {
-    return this._editUserForm.get('password');
   }
   get confirmPassword() {
     return this._editUserForm.get('confirmPassword');
