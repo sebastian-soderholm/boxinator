@@ -20,22 +20,28 @@ export class SessionService {
   private _user: User | undefined
   private _userForAdmin: User | undefined
   private _shipmentTableData: ShipmentTableData[] | undefined
+  private _token: string | undefined;
 
   constructor() {
-		const storedUser = localStorage.getItem('user');
+		const storedUser = sessionStorage.getItem('user');
 		if (storedUser) {
 		  this._user = JSON.parse(storedUser) as User;
 		}
 	}
 
+  setToken(token: string) :void {
+    this._token = token;
+    sessionStorage.setItem('token', token)
+  }
+
   setShipments(shipments: Shipment[]): void {
     this._shipments = shipments;
-    localStorage.setItem('shipments', JSON.stringify(shipments))
+    sessionStorage.setItem('shipments', JSON.stringify(shipments))
   }
 
   setShipmentsTableData(shipments: ShipmentTableData[]): void {
     this._shipmentTableData = shipments;
-    localStorage.setItem('shipmentTableData', JSON.stringify(shipments))
+    sessionStorage.setItem('shipmentTableData', JSON.stringify(shipments))
   }
 
   setCountries(countries: Country[]): void {
@@ -58,13 +64,13 @@ export class SessionService {
 
   setUser(user: User): void {
 		this._user = user;
-		localStorage.setItem('user', JSON.stringify(user))
+		sessionStorage.setItem('user', JSON.stringify(user))
 	}
 
   // for admin only, set when admin is editing user's information
   setFetchedUserInfo(fetchedUser: User): void {
 		this._userForAdmin = fetchedUser;
-		localStorage.setItem('userForAdmin', JSON.stringify(fetchedUser))
+		sessionStorage.setItem('userForAdmin', JSON.stringify(fetchedUser))
 	}
 
   get shipments(): Shipment[] | undefined {
@@ -88,5 +94,9 @@ export class SessionService {
 
   get userForAdmin(): User | undefined {
 		return this._userForAdmin;
+	}
+
+  get token(): string | undefined {
+		return this._token;
 	}
 }

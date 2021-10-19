@@ -41,10 +41,10 @@ export class LoginService {
         }
       })
     );
-    const localStorageUser = localStorage.getItem('user');
-    if (localStorageUser) {
-      this._user = JSON.parse(localStorageUser) as User;
-      console.log(localStorageUser + ' logged in');
+    const sessionStorageUser = sessionStorage.getItem('user');
+    if (sessionStorageUser) {
+      this._user = JSON.parse(sessionStorageUser) as User;
+      console.log(sessionStorageUser + ' logged in');
       this._loggedIn = true;
       // this.userLoggedIn(this._jwt);
     }
@@ -68,14 +68,14 @@ export class LoginService {
 
   setUser(user: User): void {
     this._user = user;
-    localStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('user', JSON.stringify(user));
     this._loggedIn = true;
   }
 
   async logout() {
     await this.afAuth.signOut(); // Sign out from Firebase
     this._user = undefined;
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
     this._loggedIn = false;
     this.router.navigate(['']);
   }
@@ -90,7 +90,7 @@ export class LoginService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
       }),
     };
     this.http
@@ -106,7 +106,7 @@ export class LoginService {
     await this.afAuth.signInWithPopup(provider).then(function (result: any) {
       result.user.getIdToken().then((token:any) => {
         console.log("oikee",token);
-        localStorage.setItem('token', token);
+        sessionStorage.setItem('token', token);
 
       })
       /*
@@ -117,8 +117,8 @@ export class LoginService {
         email: user.email,
         password: 'x',
       }
-      localStorage.setItem("user", JSON.stringify(newUser)); */
-      localStorage.setItem('token', result.credential.idToken);
+      sessionStorage.setItem("user", JSON.stringify(newUser)); */
+      sessionStorage.setItem('token', result.credential.idToken);
       onSuccess();
     });
     /*console.log(result.credential.idToken)
@@ -131,8 +131,8 @@ export class LoginService {
           email: user.email,
           password: 'x',
         }
-        localStorage.setItem("user", JSON.stringify(newUser));
-        localStorage.setItem("token", JSON.stringify(result.credential.idToken));
+        sessionStorage.setItem("user", JSON.stringify(newUser));
+        sessionStorage.setItem("token", JSON.stringify(result.credential.idToken));
         console.log(idToken);
 
       })
@@ -142,8 +142,8 @@ export class LoginService {
         password: 'x',
       }
       let newUser: LoginUser = data
-      localStorage.setItem("token", JSON.stringify(token));
-      localStorage.setItem("user", JSON.stringify(newUser));
+      sessionStorage.setItem("token", JSON.stringify(token));
+      sessionStorage.setItem("user", JSON.stringify(newUser));
       .then((result: any) => {
       console.log(result)
       const userRef: AngularFirestoreDocument<LoginUser> = this.afs.doc(`users/${result.user.uid}`)

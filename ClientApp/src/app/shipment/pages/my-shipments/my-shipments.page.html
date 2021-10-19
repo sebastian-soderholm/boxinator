@@ -36,7 +36,7 @@
             <h2>Boxes</h2>
             <ul class="element.boxes">
               <li *ngFor="let box of element.expandedData.boxes">
-                {{box.color}}
+                <p [ngStyle]="{'color': box.color}">BOX</p>
               </li>
             </ul>
           </div>

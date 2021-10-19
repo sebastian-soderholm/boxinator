@@ -4,6 +4,7 @@ using boxinator.Models.DTO.User;
 using boxinator.Services.Interfaces;
 using FirebaseAdmin;
 using FirebaseAdmin.Auth;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,8 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace boxinator.Controllers
@@ -53,6 +56,21 @@ namespace boxinator.Controllers
             }
 
             return NoContent();
+
+
+
+            /*
+             * var name = _contextAccessor.HttpContext.User.Claims.First(c => c.Type == "user_id").Value;
+
+ApplicationUser user = await _userManager.FindByNameAsync(name);
+
+if (user == null)
+{
+    user = new ApplicationUser(name);
+    await _userManager.CreateAsync(user);                
+}
+             * 
+             * */
 
             //string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
             //string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
