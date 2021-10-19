@@ -1,15 +1,10 @@
 using boxinator.Models;
-using boxinator.Models.Domain;
 using boxinator.Services;
 using boxinator.Services.Interfaces;
-using FirebaseAdmin;
-using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 //using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,11 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 //using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+
 
 namespace boxinator
 {
@@ -61,11 +52,9 @@ namespace boxinator
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ISettingsService, SettingsService>();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            //FirebaseApp.Create(new AppOptions
-            //{
-            //    Credential = GoogleCredential.FromFile("firebase-secret-file.json")
-            //});
+            services.AddHttpContextAccessor();
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -80,36 +69,8 @@ namespace boxinator
                         ValidAudience = "boxinator",
                         ValidateLifetime = true
                     };
-                    /*
-                    options.Events = new JwtBearerEvents
-                    {
-
-                        OnTokenValidated = async ctx =>
-                        {
-                            // 1. grabs the user id from firebase
-                            var name = ctx.Principal.Claims.First(c => c.Type == "user_id").Value;
-
-                            // Get userManager out of DI
-                            var _userManager = ctx.HttpContext.RequestServices.GetRequiredService<UserManager<User>>();
-
-                            // 2. retrieves the roles that the user has
-                            User user = await _userManager.FindByNameAsync(name);
-                            var userRoles = await _userManager.GetRolesAsync(user);
-
-                            //3.  adds the role as a new claim 
-                            ClaimsIdentity identity = ctx.Principal.Identity as ClaimsIdentity;
-                            if (identity != null)
-                            {
-                                foreach (var role in userRoles)
-                                {
-                                    identity.AddClaim(new System.Security.Claims.Claim(ClaimTypes.Role, role));
-                                }
-                            }
-
-                        }
-
-                    };*/
                 });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Boxinator", Version = "v1" });

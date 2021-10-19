@@ -7,6 +7,7 @@ using boxinator.Models.DTO.User;
 using boxinator.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Net.Http.Headers;
@@ -21,7 +22,7 @@ namespace boxinator.Controllers
     [ApiController]
     [Route("shipments")]
     [EnableCors("_myAllowSpecificOrigins")]
-    //[Authorize]
+    [Authorize]
     public class ShipmentsController : ControllerBase
     {
         private readonly IShipmentService _service;
@@ -43,6 +44,7 @@ namespace boxinator.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllCurrent()
         {
+
             DateTime? parsedDateFrom = HttpContext.Request.Query["dateFromFilter"].ToString().parseDate();
             DateTime? parsedDateTo = HttpContext.Request.Query["dateToFilter"].ToString().parseDate();
 
