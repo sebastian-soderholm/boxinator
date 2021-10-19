@@ -14,10 +14,10 @@ namespace boxinator.Services.Interfaces
 {
     public interface ISettingsService
     {
-        public Task<Country> Get(int id);
-        public Task<List<Country>> GetAll();
-        public Task<Country> Add(CountryCreateDTO country);
-        public Task<Country> Update(CountryEditDTO country);
+        public Task<Country> GetCountry(int id);
+        public Task<List<Country>> GetAllCountries();
+        public Task<Country> AddCountry(CountryCreateDTO country);
+        public Task<Country> UpdateCountry(int countryId, CountryEditDTO country);
 
         // Zones
         public Task<List<Zone>> GetAllZones();

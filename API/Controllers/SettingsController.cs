@@ -36,9 +36,9 @@ namespace boxinator.Controllers
         // GET: /settings/countries
         [HttpGet]
         [Route("/settings/countries")]
-        public async Task<ActionResult<List<CountryReadDTO>>> GetAll()
+        public async Task<ActionResult<List<CountryReadDTO>>> GetAllCountries()
         {
-            var countries = await _service.GetAll();
+            var countries = await _service.GetAllCountries();
             return _mapper.Map<List<CountryReadDTO>>(countries);
         }
 
@@ -50,10 +50,10 @@ namespace boxinator.Controllers
         // POST: /settings/countries
         [HttpPost]
         [Route("/settings/countries")]
-        public async Task<ActionResult<CountryReadDTO>> Add(CountryCreateDTO countryDTO)
+        public async Task<ActionResult<CountryReadDTO>> AddCountry(CountryCreateDTO countryDTO)
         {
            
-            var resultCountry = await _service.Add(countryDTO);
+            var resultCountry = await _service.AddCountry(countryDTO);
             return _mapper.Map<CountryReadDTO>(resultCountry);
         }
 
@@ -63,19 +63,16 @@ namespace boxinator.Controllers
         /// <param name="countryId"></param>
         /// <param name="countryDTO"></param>
         /// <returns>Updated country</returns>
-        //PUT: /settings/countries
+        //PUT: /settings/countries/:id
         [HttpPut]
-        [Route("/settings/countries")]
-        public async Task<ActionResult<CountryReadDTO>> Update(CountryEditDTO countryDTO)
+        [Route("/settings/countries/{countryId}")]
+        public async Task<ActionResult<CountryReadDTO>> UpdateCountry(int countryId, CountryEditDTO countryDTO)
         {
-            var resultCountry = await _service.Update(countryDTO);
+            var resultCountry = await _service.UpdateCountry(countryId, countryDTO);
             return _mapper.Map<CountryReadDTO>(resultCountry);
 
         }
-        /// <summary>
-        /// Get all countries with zone info
-        /// </summary>
-        /// <returns>List of countries with multipliers</returns>
+
         //GET: /settings/zones
         [HttpGet]
         [Route("/settings/zones")]

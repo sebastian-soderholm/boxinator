@@ -31,7 +31,7 @@ namespace boxinator.Services.Interfaces
         /// </summary>
         /// <param name="country"></param>
         /// <returns>Created country</returns>
-        public async Task<Country> Add(CountryCreateDTO countryDTO)
+        public async Task<Country> AddCountry(CountryCreateDTO countryDTO)
         {
             var zoneFromDB = await _context.Zones.AsNoTracking().FirstOrDefaultAsync(z => z.Id == countryDTO.ZoneId);
 
@@ -51,7 +51,7 @@ namespace boxinator.Services.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Retrieved country</returns>
-        public async Task<Country> Get(int id)
+        public async Task<Country> GetCountry(int id)
         {
             Country country = await _context.Countries.Where(x => x.Id == id)
             .Include(x => x.Zone)
@@ -65,7 +65,7 @@ namespace boxinator.Services.Interfaces
         /// Get all countries and multipliers
         /// </summary>
         /// <returns>List of countries</returns>
-        public async Task<List<Country>> GetAll() =>
+        public async Task<List<Country>> GetAllCountries() =>
             await _context.Countries.Include(x => x.Zone).ToListAsync();
 
         /// <summary>
@@ -74,11 +74,12 @@ namespace boxinator.Services.Interfaces
         /// <param name="id"></param>
         /// <param name="country"></param>
         /// <returns>Updated country</returns>
-        public async Task<Country> Update(CountryEditDTO countryDTO)
+        
+        public async Task<Country> UpdateCountry(int countryId, CountryEditDTO countryDTO)
         {
             Country country = _mapper.Map<Country>(countryDTO);
 
-            var countryFromDB = await _context.Countries.AsNoTracking().FirstOrDefaultAsync(x => x.Id == countryDTO.Id);
+            var countryFromDB = await _context.Countries.AsNoTracking().FirstOrDefaultAsync(x => x.Id == countryId);
             if(countryFromDB != null)
             {
                 //Get Zone from DB by given zoneId
