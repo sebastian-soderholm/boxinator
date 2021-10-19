@@ -107,6 +107,7 @@ namespace boxinator.Controllers
         // POST: /shipments
         [HttpPost]
         [Route("/shipments/guest")]
+        [AllowAnonymous]
         public async Task<ActionResult<ShipmentReadDTO>> GuestAdd(ShipmentGuestCreateDTO shipmentGuestDTO)
         {
             //Get user by email from DB 
