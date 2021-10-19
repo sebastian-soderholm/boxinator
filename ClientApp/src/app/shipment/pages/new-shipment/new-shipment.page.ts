@@ -150,15 +150,18 @@ export class NewShipmentPage implements OnInit {
   calculateCost() {
     //Get weights of all boxes
     const boxWeightArray = this._boxes.map((box: Box) => box.weight);
-    //Get country multiplier
-    const multiplier = this._newShipmentForm.get('destinationCountryId').value;
+
+    //Get selected country object
+    const selectedCountry = this._countries.find((country: Country) => {
+      return country.id == this._newShipmentForm.get('destinationCountryId').value
+    })
+
+    this._cost = 0;
     // Calculate shipping cost if any boxes present
     if(boxWeightArray.length > 0) {
-      this._cost = boxWeightArray.reduce((cost: number, weight: number) => {
-        return cost + weight * multiplier
+      boxWeightArray.forEach((weight: number) => {
+        this._cost += weight * selectedCountry!.countryMultiplier
       });
-    }else{
-      this._cost = 0
     }
   }
 

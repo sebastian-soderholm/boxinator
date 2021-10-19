@@ -30,11 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <None Include="appsettings.Development.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="appsettings.Development.json" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

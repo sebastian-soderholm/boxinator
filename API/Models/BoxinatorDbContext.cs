@@ -139,6 +139,18 @@ namespace boxinator.Models
                     ZipCode = "00200",
                     PhoneNumber = "0504055679",
                     AccountType = "ADMIN_USER"
+                },
+                new User()
+                {
+                    Id = 3,
+                    FirstName = "Sebastian",
+                    LastName = "Söderholm",
+                    Email = "developer.musetech@gmail.com",
+                    Address = "Kaivokatu 10",
+                    CountryId = 1,
+                    ZipCode = "06100",
+                    PhoneNumber = "0400959078",
+                    AccountType = "ADMIN_USER"
                 }
             );
 

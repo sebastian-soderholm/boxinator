@@ -17,7 +17,8 @@ export class SettingsPage implements OnInit {
     id: 0,
     name: '',
     zoneId: 0,
-    zoneName: ''
+    zoneName: '',
+    countryMultiplier: 0
   }
 
   constructor(
