@@ -58,12 +58,12 @@ namespace boxinator
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ISettingsService, SettingsService>();
 
-            /*
-            FirebaseApp.Create(new AppOptions
-            {
-                Credential = GoogleCredential.FromFile("firebase-secret-file.json")
-            });
-            */
+
+            //FirebaseApp.Create(new AppOptions
+            //{
+            //    Credential = GoogleCredential.FromFile("firebase-secret-file.json")
+            //});
+
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

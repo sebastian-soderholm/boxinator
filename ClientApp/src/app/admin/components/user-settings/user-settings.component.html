@@ -1,0 +1,11 @@
+
+<main>
+	<div class="container">
+		<fieldset>
+			<input type="text" value="Sydney" [(ngModel)]="searchvalue" />
+			<button (click)="onSearch(searchvalue)" formtarget="_blank">Test</button>
+		</fieldset>
+	</div>
+</main>
+
+<app-edit-account *ngIf="loadComponent == true" [showAdminSelection]=true></app-edit-account>

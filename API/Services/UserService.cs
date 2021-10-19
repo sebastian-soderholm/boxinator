@@ -1,5 +1,6 @@
 ﻿using boxinator.Models;
 using boxinator.Models.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,15 @@ namespace boxinator.Services.Interfaces
         /// </summary>
         /// <param name="user"></param>
         /// <returns>User</returns>
-        public async Task<User> Login(User user)
+        public async Task<User> Verify(User user)
         {
             throw new NotImplementedException();
         }
         
+        public async Task<User> Get(string email)
+        {
+            return await _context.Users
+                .Where(x => x.Email == email).FirstOrDefaultAsync();
+        }
     }
 }

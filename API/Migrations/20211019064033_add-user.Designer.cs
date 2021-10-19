@@ -10,8 +10,8 @@ using boxinator.Models;
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    [Migration("20211018094704_Initial")]
-    partial class Initial
+    [Migration("20211019064033_add-user")]
+    partial class adduser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,24 @@ namespace boxinator.Migrations
                             Id = 1,
                             Name = "Premium",
                             Weight = 8
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Deluxe",
+                            Weight = 5
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Humble",
+                            Weight = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Basic",
+                            Weight = 1
                         });
                 });
 
@@ -116,15 +134,36 @@ namespace boxinator.Migrations
                         {
                             Id = 1,
                             BoxTypeId = 1,
-                            Color = "(32,178,170)",
+                            Color = "rgb(32,178,170)",
                             ShipmentId = 1
                         },
                         new
                         {
                             Id = 2,
                             BoxTypeId = 1,
-                            Color = "(123,765,3)",
+                            Color = "rgb(123,765,3)",
                             ShipmentId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BoxTypeId = 2,
+                            Color = "rgb(235, 64, 52)",
+                            ShipmentId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BoxTypeId = 3,
+                            Color = "rgb(235, 223, 52)",
+                            ShipmentId = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BoxTypeId = 4,
+                            Color = "rgb(232, 52, 235)",
+                            ShipmentId = 3
                         });
                 });
 
@@ -178,6 +217,28 @@ namespace boxinator.Migrations
                             Id = 1,
                             Address = "Keskuskatu 1",
                             Cost = 100.0,
+                            CountryId = 1,
+                            FirstName = "Petteri",
+                            LastName = "Smith",
+                            UserId = 1,
+                            ZipCode = "00100"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Keskuskatu 1",
+                            Cost = 200.0,
+                            CountryId = 2,
+                            FirstName = "Martta",
+                            LastName = "Smith",
+                            UserId = 1,
+                            ZipCode = "00100"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "Keskuskatu 1",
+                            Cost = 150.0,
                             CountryId = 1,
                             FirstName = "Petteri",
                             LastName = "Smith",
@@ -280,12 +341,23 @@ namespace boxinator.Migrations
                         {
                             Id = 1,
                             AccountType = "REGISTERED_USER",
-                            CountryId = 1,
+                            CountryId = 2,
                             Email = "awesomemartta@gs.com",
                             FirstName = "Martta",
                             LastName = "Johnsson",
                             PhoneNumber = "16064650210",
                             ZipCode = "610650"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountType = "ADMIN_USER",
+                            CountryId = 1,
+                            Email = "peppi.makela@gmail.com",
+                            FirstName = "Peppi",
+                            LastName = "Mäkelä",
+                            PhoneNumber = "0504055679",
+                            ZipCode = "00200"
                         });
                 });
 
@@ -345,16 +417,37 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 18, 12, 47, 3, 753, DateTimeKind.Local).AddTicks(7956),
+                            Date = new DateTime(2021, 10, 19, 9, 40, 32, 718, DateTimeKind.Local).AddTicks(1730),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 18, 12, 47, 3, 762, DateTimeKind.Local).AddTicks(342),
+                            Date = new DateTime(2021, 10, 19, 9, 40, 32, 720, DateTimeKind.Local).AddTicks(8614),
                             ShipmentId = 1,
                             StatusId = 3
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Date = new DateTime(2021, 10, 19, 9, 40, 32, 720, DateTimeKind.Local).AddTicks(8647),
+                            ShipmentId = 2,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Date = new DateTime(2021, 10, 19, 9, 40, 32, 720, DateTimeKind.Local).AddTicks(8652),
+                            ShipmentId = 2,
+                            StatusId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Date = new DateTime(2021, 10, 19, 9, 40, 32, 720, DateTimeKind.Local).AddTicks(8655),
+                            ShipmentId = 3,
+                            StatusId = 1
                         });
                 });
 

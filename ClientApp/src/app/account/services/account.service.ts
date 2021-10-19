@@ -35,6 +35,7 @@ export class AccountService {
   public getUserById(userId: number, onSuccess: () => void): void {
     this.http.get<User>(this._apiUrl + /account/+userId)
     .subscribe((user: User) => { 
+      console.log(user)
       this.sessionService.setFetchedUserInfo(user);
       onSuccess();
     });

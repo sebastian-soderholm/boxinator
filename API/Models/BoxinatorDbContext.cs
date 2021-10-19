@@ -95,7 +95,26 @@ namespace boxinator.Models
                     Id = 1,
                     Name = "Premium",
                     Weight = 8
+                },
+                new BoxType()
+                {
+                    Id = 2,
+                    Name = "Deluxe",
+                    Weight = 5
+                },
+                new BoxType()
+                {
+                    Id = 3,
+                    Name = "Humble",
+                    Weight = 2
+                },
+                new BoxType()
+                {
+                    Id = 4,
+                    Name = "Basic",
+                    Weight = 1
                 }
+
             );
 
             modelBuilder.Entity<User>().HasData(
@@ -105,10 +124,21 @@ namespace boxinator.Models
                     FirstName = "Martta",
                     LastName = "Johnsson",
                     Email = "awesomemartta@gs.com",
-                    CountryId = 1,
+                    CountryId = 2,
                     ZipCode = "610650",
                     PhoneNumber = "16064650210",
                     AccountType = "REGISTERED_USER"
+                },
+                new User()
+                {
+                    Id = 2,
+                    FirstName = "Peppi",
+                    LastName = "Mäkelä",
+                    Email = "peppi.makela@gmail.com",
+                    CountryId = 1,
+                    ZipCode = "00200",
+                    PhoneNumber = "0504055679",
+                    AccountType = "ADMIN_USER"
                 }
             );
 
@@ -123,6 +153,28 @@ namespace boxinator.Models
                     Cost = 100.00,
                     CountryId = 1,
                     UserId = 1
+                },
+                new Shipment()
+                {
+                    Id = 2,
+                    FirstName = "Martta",
+                    LastName = "Smith",
+                    Address = "Keskuskatu 1",
+                    ZipCode = "00100",
+                    Cost = 200.00,
+                    CountryId = 2,
+                    UserId = 1
+                },
+                new Shipment()
+                {
+                    Id = 3,
+                    FirstName = "Petteri",
+                    LastName = "Smith",
+                    Address = "Keskuskatu 1",
+                    ZipCode = "00100",
+                    Cost = 150.00,
+                    CountryId = 1,
+                    UserId = 1
                 }
             );
 
@@ -130,16 +182,37 @@ namespace boxinator.Models
                 new Box()
                 {
                     Id = 1,
-                    Color = "(32,178,170)",
+                    Color = "rgb(32,178,170)",
                     BoxTypeId = 1,
                     ShipmentId = 1
                 },
                 new Box()
                 {
                     Id = 2,
-                    Color = "(123,765,3)",
+                    Color = "rgb(123,765,3)",
                     BoxTypeId = 1,
                     ShipmentId = 1
+                },
+                new Box()
+                {
+                    Id = 3,
+                    Color = "rgb(235, 64, 52)",
+                    BoxTypeId = 2,
+                    ShipmentId = 2
+                },
+                new Box()
+                {
+                    Id = 4,
+                    Color = "rgb(235, 223, 52)",
+                    BoxTypeId = 3,
+                    ShipmentId = 3
+                },
+                new Box()
+                {
+                    Id = 5,
+                    Color = "rgb(232, 52, 235)",
+                    BoxTypeId = 4,
+                    ShipmentId = 3
                 }
             );
 
@@ -187,6 +260,27 @@ namespace boxinator.Models
                     StatusId = 3,
                     Date = DateTime.Now
 
+                },
+                new ShipmentStatusLog()
+                {
+                    Id = 3,
+                    ShipmentId = 2,
+                    StatusId = 1,
+                    Date = DateTime.Now
+                },
+                new ShipmentStatusLog()
+                {
+                    Id = 4,
+                    ShipmentId = 2,
+                    StatusId = 2,
+                    Date = DateTime.Now
+                },
+                new ShipmentStatusLog()
+                {
+                    Id = 5,
+                    ShipmentId = 3,
+                    StatusId = 1,
+                    Date = DateTime.Now
                 }
             );
                 

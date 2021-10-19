@@ -38,10 +38,31 @@ namespace boxinator.Controllers
         /// <param name="userDTO"></param>
         /// <returns>StatusCodes 400/401/201</returns>
         /// GET: /verify
-        [HttpGet]
+        [HttpGet("/login/verify")]
         //[Authorize]
-        public async Task<IActionResult> Login() // rename to Verify
+        public async Task<ActionResult<UserReadDTO>> Verify() // rename to Verify
         {
+            string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
+            string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
+            var token = new JwtSecurityToken(jwtEncodedString: accessTokenWithoutBearerPrefix);
+            string userEmail = token.Claims.First(c => c.Type == "email").Value;
+            var resultUser = await _service.Get(userEmail);
+            if(resultUser != null)
+            {
+                return _mapper.Map<UserReadDTO>(resultUser);
+            }
+
+            return NoContent();
+
+            //string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
+            //string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
+
+            //FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
+
+            //FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
+            //FirebaseToken decodedToken = await auth.VerifyIdTokenAsync(accessTokenWithoutBearerPrefix);
+            //string uid = decodedToken.Uid;
+
             // get email from header token
 
             // check database for matching email
@@ -92,7 +113,6 @@ namespace boxinator.Controllers
             if(resultUser == null)
                 return StatusCode(401);
              */
-            return Ok();
 
             //palauttaa ok tai 401
         }

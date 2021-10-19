@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace boxinator.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -183,7 +183,13 @@ namespace boxinator.Migrations
             migrationBuilder.InsertData(
                 table: "BoxType",
                 columns: new[] { "Id", "Name", "Weight" },
-                values: new object[] { 1, "Premium", 8 });
+                values: new object[,]
+                {
+                    { 1, "Premium", 8 },
+                    { 2, "Deluxe", 5 },
+                    { 3, "Humble", 2 },
+                    { 4, "Basic", 1 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Status",
@@ -223,12 +229,25 @@ namespace boxinator.Migrations
                 values: new object[] { 1, "Keskuskatu 1", 100.0, 1, "Petteri", "Smith", 1, "00100" });
 
             migrationBuilder.InsertData(
+                table: "Shipment",
+                columns: new[] { "Id", "Address", "Cost", "CountryId", "FirstName", "LastName", "UserId", "ZipCode" },
+                values: new object[] { 2, "Keskuskatu 1", 200.0, 2, "Martta", "Smith", 1, "00100" });
+
+            migrationBuilder.InsertData(
+                table: "Shipment",
+                columns: new[] { "Id", "Address", "Cost", "CountryId", "FirstName", "LastName", "UserId", "ZipCode" },
+                values: new object[] { 3, "Keskuskatu 1", 150.0, 1, "Petteri", "Smith", 1, "00100" });
+
+            migrationBuilder.InsertData(
                 table: "Box",
                 columns: new[] { "Id", "BoxTypeId", "Color", "ShipmentId" },
                 values: new object[,]
                 {
-                    { 1, 1, "(32,178,170)", 1 },
-                    { 2, 1, "(123,765,3)", 1 }
+                    { 1, 1, "rgb(32,178,170)", 1 },
+                    { 2, 1, "rgb(123,765,3)", 1 },
+                    { 3, 2, "rgb(235, 64, 52)", 2 },
+                    { 4, 3, "rgb(235, 223, 52)", 3 },
+                    { 5, 4, "rgb(232, 52, 235)", 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -236,8 +255,11 @@ namespace boxinator.Migrations
                 columns: new[] { "Id", "Date", "ShipmentId", "StatusId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 10, 18, 12, 47, 3, 753, DateTimeKind.Local).AddTicks(7956), 1, 1 },
-                    { 2, new DateTime(2021, 10, 18, 12, 47, 3, 762, DateTimeKind.Local).AddTicks(342), 1, 3 }
+                    { 1, new DateTime(2021, 10, 18, 14, 1, 58, 698, DateTimeKind.Local).AddTicks(2647), 1, 1 },
+                    { 2, new DateTime(2021, 10, 18, 14, 1, 58, 701, DateTimeKind.Local).AddTicks(2122), 1, 3 },
+                    { 3, new DateTime(2021, 10, 18, 14, 1, 58, 701, DateTimeKind.Local).AddTicks(2161), 2, 1 },
+                    { 4, new DateTime(2021, 10, 18, 14, 1, 58, 701, DateTimeKind.Local).AddTicks(2166), 2, 2 },
+                    { 5, new DateTime(2021, 10, 18, 14, 1, 58, 701, DateTimeKind.Local).AddTicks(2169), 3, 1 }
                 });
 
             migrationBuilder.CreateIndex(

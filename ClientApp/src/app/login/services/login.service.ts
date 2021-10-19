@@ -1,50 +1,52 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import firebase from 'firebase/compat/app'
+import firebase from 'firebase/compat/app';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { LoginUser } from '../models/login-user.model';
 import { User } from '../../account/models/user.model';
+import { SessionService } from 'src/app/shared/session.service';
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
-  user$: Observable<User | null | undefined>
+  user$: Observable<User | null | undefined>;
   private _user: User | undefined;
   private _loginUser: LoginUser | undefined;
-  private _jwt: string = "";
+  private _jwt: string = '';
   private _loggedIn: boolean = false;
   private _apiUrl = environment.baseURL;
 
   constructor(
     private readonly http: HttpClient,
     private readonly router: Router,
+    private readonly sessionService: SessionService,
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore
   ) {
     this.user$ = this.afAuth.authState.pipe(
       // Get the auth state, then fetch the Firestore user document or return null
-      switchMap(user => {
+      switchMap((user) => {
         // Logged in
-        if(user) {
+        if (user) {
           return this.afs.doc<User>('users/${user.uid}').valueChanges();
-        // Logged out
+          // Logged out
         } else {
-          return of(null)
+          return of(null);
         }
       })
-    )
+    );
     const localStorageUser = localStorage.getItem('user');
     if (localStorageUser) {
       this._user = JSON.parse(localStorageUser) as User;
-      console.log(localStorageUser + " logged in")
-      this._loggedIn = true
+      console.log(localStorageUser + ' logged in');
+      this._loggedIn = true;
       // this.userLoggedIn(this._jwt);
     }
   }
@@ -78,45 +80,49 @@ export class LoginService {
     this._loggedIn = false;
     this.router.navigate(['']);
   }
-  
+
   get loggedIn(): boolean {
     return this._loggedIn;
   }
 
   // get req, call another method (post) if necessary
-  public loginUserTEST(token: string/*, loginInfo: LoginUser | undefined*/): void {
-    console.log(token)
+  public verifyUser(token: string): void {
+    console.log("testi",token);
     const httpOptions = {
       headers: new HttpHeaders({
-			  'Content-Type': 'application/json',
-			  //'X-API-Key': API_KEY,
-        'Authorization': `Bearer ${token}`
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       }),
     };
-    //const body = JSON.stringify(loginInfo);
-    const body = {};
-    this.http.get<LoginUser>(this._apiUrl+'/login', httpOptions)
-    .subscribe((user: LoginUser) => {
-      //this.sessionService.setUser(user);
-      console.log("Toimii :D")
-    });
+    this.http
+      .get<User>(this._apiUrl + '/login/verify', httpOptions)
+      .subscribe((user: User) => {
+        this.sessionService.setUser(user);
+        console.log(user);
+      });
   }
 
   async googleLogin(onSuccess: () => void) {
     const provider = new firebase.auth.GoogleAuthProvider();
-    await this.afAuth.signInWithPopup(provider)
-    .then(function(result: any) {
+    await this.afAuth.signInWithPopup(provider).then(function (result: any) {
+      result.user.getIdToken().then((token:any) => {
+        console.log("oikee",token);
+        localStorage.setItem('token', token);
+        
+      })
+      /*       
       console.log(result.credential.idToken)
-      //var token = result.credential.accessToken;
+      var token = result.credential.accessToken;
       var user = result.user;
       let newUser: LoginUser = {
         email: user.email,
         password: 'x',
       }
-      localStorage.setItem("user", JSON.stringify(newUser));
-      localStorage.setItem("token", result.credential.idToken);
-      //console.log(result.credential.idToken)
-      /*
+      localStorage.setItem("user", JSON.stringify(newUser)); */
+      localStorage.setItem('token', result.credential.idToken);
+      onSuccess();
+    });
+    /*console.log(result.credential.idToken)
       var token = user.getIdToken(true).then((idToken: any) => {
         const data = {
           email: user.email,
@@ -131,82 +137,19 @@ export class LoginService {
         console.log(idToken);
 
       })
-      */
-      //alert("login OK" + token);
-      /*
+      alert("login OK" + token);
       const data = {
         email: user.email,
         password: 'x',
       }
       let newUser: LoginUser = data
-      */
-      //localStorage.setItem("token", JSON.stringify(token));
-      //localStorage.setItem("user", JSON.stringify(newUser));
-      onSuccess();
-    })/*.then((result: any) => {
+      localStorage.setItem("token", JSON.stringify(token));
+      localStorage.setItem("user", JSON.stringify(newUser));
+      .then((result: any) => {
       console.log(result)
       const userRef: AngularFirestoreDocument<LoginUser> = this.afs.doc(`users/${result.user.uid}`)
       userRef.set(result.user, { merge: true })
-    })*/;
-    
+    })
+    */
   }
 }
-
-/* 
-  async googleLogin() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    const credential = await this.afAuth.signInWithPopup(provider);
-    return this.updateUserData(credential.user);
-  }
-
-  // Updates userdata in Firestore
-  private updateUserData(user: any) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`)
-    console.log(user.email)
-    const data = {
-      id: user.uid,
-      firstName: user.displayName,
-      lastName: 'x',
-      email: user.email,
-      password: 'x',
-      dateOfBirth: new Date(Date.now()),
-      countryId: 1,
-      zip: 'x',
-      contactNumber: 'x'
-    }
-    const newUser: User = data
-    this.setUser(newUser)
-    return userRef.set(data, { merge: true })
-  }
-} 
-
-const provider = new firebase.auth.GoogleAuthProvider();
-    await this.afAuth.signInWithPopup(provider).then(function(result: any) {
-      var token = result.credential.accessToken;
-      var user = result.user;
-      alert("login OK" + user.email);
-      user.getToken().then(function (t: any) {
-          token = t;
-          this.addUser(user.email, token);
-      }); 
-        }).catch(function (error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            alert(errorCode + " - " + errorMessage);
-        });
-  }
-
-  public addUser(email: string, token: string) : Observable<User> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
-    const body = JSON.stringify({
-      email: email,
-      token: token,
-    });
-    return this.http.post<User>(environment.API_URL + '/login', body, httpOptions);
-  }
-
-}  */
