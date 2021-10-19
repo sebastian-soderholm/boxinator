@@ -11,7 +11,6 @@ import { LoginUser } from '../models/login-user.model';
 import { User } from '../../account/models/user.model';
 import { SessionService } from 'src/app/shared/session.service';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -108,9 +107,9 @@ export class LoginService {
       result.user.getIdToken().then((token:any) => {
         console.log("oikee",token);
         localStorage.setItem('token', token);
-        
+
       })
-      /*       
+      /*
       console.log(result.credential.idToken)
       var token = result.credential.accessToken;
       var user = result.user;

@@ -17,6 +17,8 @@ namespace boxinator.Models
         [MaxLength(50)]
         public string Name { get; set; }
         public int ZoneId { get; set; }
+
+        //Relationships
         public Zone Zone { get; set; }
         public List<User> Users { get; set; }
 

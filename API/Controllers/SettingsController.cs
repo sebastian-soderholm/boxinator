@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using boxinator.Models;
 using boxinator.Models.DTO.Country;
+using boxinator.Models.DTO.Status;
+using boxinator.Models.DTO.Zone;
 using boxinator.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -34,9 +36,9 @@ namespace boxinator.Controllers
         // GET: /settings/countries
         [HttpGet]
         [Route("/settings/countries")]
-        public async Task<ActionResult<List<CountryReadDTO>>> GetAll()
+        public async Task<ActionResult<List<CountryReadDTO>>> GetAllCountries()
         {
-            var countries = await _service.GetAll();
+            var countries = await _service.GetAllCountries();
             return _mapper.Map<List<CountryReadDTO>>(countries);
         }
 
@@ -48,10 +50,10 @@ namespace boxinator.Controllers
         // POST: /settings/countries
         [HttpPost]
         [Route("/settings/countries")]
-        public async Task<ActionResult<CountryReadDTO>> Add(CountryCreateDTO countryDTO)
+        public async Task<ActionResult<CountryReadDTO>> AddCountry(CountryCreateDTO countryDTO)
         {
-            Country newCountry = _mapper.Map<Country>(countryDTO);
-            Country resultCountry = await _service.Add(newCountry);
+           
+            var resultCountry = await _service.AddCountry(countryDTO);
             return _mapper.Map<CountryReadDTO>(resultCountry);
         }
 
@@ -61,15 +63,90 @@ namespace boxinator.Controllers
         /// <param name="countryId"></param>
         /// <param name="countryDTO"></param>
         /// <returns>Updated country</returns>
-        //PUT: /settings/countries:country_id
+        //PUT: /settings/countries/:id
         [HttpPut]
         [Route("/settings/countries/{countryId}")]
-        public async Task<ActionResult<CountryReadDTO>> Update(int countryId, CountryEditDTO countryDTO)
+        public async Task<ActionResult<CountryReadDTO>> UpdateCountry(int countryId, CountryEditDTO countryDTO)
         {
-            Country updatedCountry = _mapper.Map<Country>(countryDTO);
-            Country resultCountry = await _service.Update(countryId, updatedCountry);
+            var resultCountry = await _service.UpdateCountry(countryId, countryDTO);
             return _mapper.Map<CountryReadDTO>(resultCountry);
 
+        }
+
+        //GET: /settings/zones
+        [HttpGet]
+        [Route("/settings/zones")]
+        public async Task<ActionResult<List<ZoneReadDTO>>> GetAllZones()
+        {
+            var zones = await _service.GetAllZones();
+            return _mapper.Map<List<ZoneReadDTO>>(zones);
+        }
+
+        /// <summary>
+        /// Edit zone info
+        /// </summary>
+        /// <param name="zoneId"></param>
+        /// <param name="zoneDTO"></param>
+        /// <returns></returns>
+        //PUT: /settings/zones
+        [HttpPut]
+        [Route("/settings/zones")]
+        public async Task<ActionResult<ZoneReadDTO>> UpdateZone(ZoneEditDTO zoneDTO)
+        {
+            var resultZone = await _service.UpdateZone(zoneDTO);
+            return _mapper.Map<ZoneReadDTO>(resultZone);
+        }
+        /// <summary>
+        /// Add zone
+        /// </summary>
+        /// <param name="zoneDTO"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("/settings/zones")]
+        public async Task<ActionResult<ZoneReadDTO>> Add(ZoneCreateDTO zoneDTO)
+        {
+            var resultZone = await _service.AddZone(zoneDTO);
+            return _mapper.Map<ZoneReadDTO>(resultZone);
+        }
+
+        /// <summary>
+        /// Get all statuses
+        /// </summary>
+        /// <returns></returns>
+        //GET: /settings/statuses
+        [HttpGet]
+        [Route("/settings/statuses")]
+        public async Task<ActionResult<List<StatusReadDTO>>> GetAllStatuses()
+        {
+            var resultStatuses = await _service.GetAllStatuses();
+            return _mapper.Map<List<StatusReadDTO>>(resultStatuses);
+        }
+
+        /// <summary>
+        /// Update existing status
+        /// </summary>
+        /// <param name="statusDTO"></param>
+        /// <returns></returns>
+        //PUT: /settings/statuses
+        [HttpPut]
+        [Route("/settings/statuses")]
+        public async Task<ActionResult<StatusReadDTO>> UpdateStatus(StatusEditDTO statusDTO)
+        {
+            var resultStatus = await _service.UpdateStatus(statusDTO);
+            return _mapper.Map<StatusReadDTO>(resultStatus);
+        }
+        /// <summary>
+        /// Add status
+        /// </summary>
+        /// <param name="statusDTO"></param>
+        /// <returns></returns>
+        //POST: /settings/statuses
+        [HttpPost]
+        [Route("/settings/statuses")]
+        public async Task<ActionResult<StatusReadDTO>> AddStatus(StatusCreateDTO statusDTO)
+        {
+            var resultStatus = await _service.AddStatus(statusDTO);
+            return _mapper.Map<StatusReadDTO>(resultStatus);
         }
     }
 }

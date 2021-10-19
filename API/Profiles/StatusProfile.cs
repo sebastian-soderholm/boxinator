@@ -13,6 +13,8 @@ namespace boxinator.Profiles
         public StatusProfile()
         {
             CreateMap<Status, StatusReadDTO>().ReverseMap();
+            CreateMap<Status, StatusEditDTO>().ReverseMap();
+            CreateMap<Status, StatusCreateDTO>().ReverseMap();
         }
     }
 }

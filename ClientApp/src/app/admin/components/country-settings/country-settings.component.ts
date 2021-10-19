@@ -33,7 +33,6 @@ export class CountrySettingsComponent implements OnInit {
       countrySelect: new FormControl(1, [
       ]),
     });
-
   }
 
   ngOnInit(): void {
