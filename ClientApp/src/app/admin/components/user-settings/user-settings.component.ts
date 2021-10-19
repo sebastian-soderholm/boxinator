@@ -20,10 +20,16 @@ export class UserSettingsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onSearch(searchValue: string): void {
+  public onSearch(input: string): void {
     this.loadComponent = false;
-    this._accountService.getUserById(Number(searchValue), async () => {
-      await console.log("success"), this.loadComponent = true;
-    });
+    if(Number(input)) {
+      this._accountService.getUserById(Number(input), async () => {
+        await console.log("success"), this.loadComponent = true;
+      });
+    }
+    else {
+      console.log("not a number")
+    }
+
   }
 }
