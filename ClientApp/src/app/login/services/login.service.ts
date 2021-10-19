@@ -97,7 +97,7 @@ export class LoginService {
       .get<User>(this._apiUrl + '/login/verify', httpOptions)
       .subscribe((user: User) => {
         this.sessionService.setUser(user);
-        console.log('Toimii :D');
+        console.log(user);
       });
   }
 

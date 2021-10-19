@@ -48,6 +48,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { BoxFormComponent } from './shipment/components/box-form/box-form.component';
 import { SettingsPage } from './admin/pages/settings/settings.page';
 import { CountrySettingsComponent } from './admin/components/country-settings/country-settings.component';
+import { UserSettingsComponent } from './admin/components/user-settings/user-settings.component';
 
 
 
@@ -68,6 +69,7 @@ import { CountrySettingsComponent } from './admin/components/country-settings/co
     BoxFormComponent,
     SettingsPage,
     CountrySettingsComponent,
+    UserSettingsComponent,
   ],
   imports: [
     BrowserModule,

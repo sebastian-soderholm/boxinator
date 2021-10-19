@@ -124,10 +124,21 @@ namespace boxinator.Models
                     FirstName = "Martta",
                     LastName = "Johnsson",
                     Email = "awesomemartta@gs.com",
-                    CountryId = 1,
+                    CountryId = 2,
                     ZipCode = "610650",
                     PhoneNumber = "16064650210",
                     AccountType = "REGISTERED_USER"
+                },
+                new User()
+                {
+                    Id = 2,
+                    FirstName = "Peppi",
+                    LastName = "Mäkelä",
+                    Email = "peppi.makela@gmail.com",
+                    CountryId = 1,
+                    ZipCode = "00200",
+                    PhoneNumber = "0504055679",
+                    AccountType = "ADMIN_USER"
                 }
             );
 
