@@ -35,7 +35,7 @@
   </div>
 
   <!-- Password -->
-  <input class="form-control" formControlName="password" type="password" placeholder="Password" required>
+  <!-- <input class="form-control" formControlName="password" type="password" placeholder="Password" required>
   <div *ngIf="password.dirty || password.touched" class="alert">
     <div *ngIf="password.errors?.required">
       <p>Password is required</p>
@@ -46,9 +46,9 @@
     <div *ngIf="password.errors?.pattern">
       <p>Password must contain at least one lowercase and uppercase character, number and special character</p>
     </div>
-  </div>
+  </div> -->
   <!-- Password confirmation -->
-  <input class="form-control" formControlName="confirmPassword" type="password" placeholder="Confirm password" required>
+  <!-- <input class="form-control" formControlName="confirmPassword" type="password" placeholder="Confirm password" required>
   <div *ngIf="confirmPassword.dirty || confirmPassword.touched" class="alert">
     <div *ngIf="confirmPassword.errors?.required">
       <p>Password is required</p>
@@ -56,7 +56,7 @@
     <div *ngIf="!editUserForm.errors?.passwordsMatch">
       <p>Passwords are not equal</p>
     </div>
-  </div>
+  </div> -->
 
   <!-- Date -->
   <input  formControlName="dateOfBirth" type="date" placeholder="Date of birth" max="2021-10-11">
