@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginUser } from '../../models/login-user.model';
 import { LoginService } from '../../services/login.service';
+import { SessionService } from 'src/app/shared/session.service';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +16,9 @@ export class LoginPage implements OnInit {
 
   constructor(
     private readonly loginService: LoginService,
-    private readonly router: Router
-  ) // private readonly sessionService: SessionService
+    private readonly router: Router,
+    private readonly sessionService: SessionService
+  )
   {}
 
   ngOnInit(): void {
@@ -54,11 +56,11 @@ export class LoginPage implements OnInit {
 
   public googleLogin(): void {
     this.loginService.googleLogin( async () => {
-      const token = localStorage.getItem('token') as string
+      const token = sessionStorage.getItem('token') as string
       await this.loginService.verifyUser(token);
 
       /*       
-      let user = localStorage.getItem('user')
+      let user = sessionStorage.getItem('user')
       let newUser = JSON.parse(user!) as LoginUser
       await this.loginService.loginUserTEST(token, newUser);
       console.log(token) 

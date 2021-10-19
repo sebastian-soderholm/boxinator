@@ -78,5 +78,18 @@ namespace boxinator.Controllers
             // RESTRICT TO ADMIN ONLY!
             return await _service.Delete(accountId);
         }
+
+        /// <summary>
+        /// Search user
+        /// </summary>
+        /// <returns>Found user</returns>
+        [HttpGet]
+        public async Task<ActionResult<UserReadDTO>> Search()
+        {
+            string searchTerm = HttpContext.Request.Query["searchTerm"].ToString();
+
+            var resultUser = await _service.Search(searchTerm);
+            return _mapper.Map<UserReadDTO>(resultUser);
+        }
     }
 }

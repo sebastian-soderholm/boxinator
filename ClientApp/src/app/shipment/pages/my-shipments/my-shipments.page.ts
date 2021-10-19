@@ -25,8 +25,10 @@ import { FormGroup, NgForm, SelectControlValueAccessor } from '@angular/forms';
 })
 export class MyShipmentsPage implements OnInit {
 
-  displayedColumns: string[] = ['id', 'cost', 'weight', 'status', 'receiverName', 'date'];
-  columnsToDisplay: string[] = this.displayedColumns.slice();
+  //displayedColumns: string[] = ['id', 'cost', 'weight', 'status', 'receiverName', 'date'];
+  //columnsToDisplay: string[] = this.displayedColumns.slice();
+  displayedColumns: string[] = [];
+  columnsToDisplay: string[] = [];
   private _dataSource: MappedData[] = [];
   dateVisibility: boolean = true;
   sortedData: MappedData[] = [];
@@ -40,6 +42,7 @@ export class MyShipmentsPage implements OnInit {
   selectedStatus? : number | null;
   selectedFromDate? : Date[] | null;
   selectedToDate? : Date[] | null;
+  showEdit: boolean = false;
 
   constructor(
     private readonly shipmentService: ShipmentService,
@@ -49,6 +52,13 @@ export class MyShipmentsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.displayedColumns = ['id', 'cost', 'weight', 'status', 'receiverName', 'date'];
+    if(this.showEdit === true) {
+      this.displayedColumns.push('toggle')
+      this.displayedColumns.push('edit')
+    }
+    this.columnsToDisplay = this.displayedColumns.slice();
+
     this.shipmentService.getAllCurrent(async () => {
       const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
       this.sortedData = mappedData;
@@ -96,11 +106,20 @@ export class MyShipmentsPage implements OnInit {
 
   // toggling columns
   onValChange(selection: any, state : any){
+
     if(state == true) {
       this.removeColumn(selection);
     }
     else {
       this.addColumn(selection);
+    }
+
+    // keeping the toggle status column and edit column last
+    if(this.showEdit === true) {
+    this.removeColumn('toggle');
+    this.addColumn('toggle');
+    this.removeColumn('edit');
+    this.addColumn('edit');
     }
   }
 
@@ -137,11 +156,13 @@ export class MyShipmentsPage implements OnInit {
         address: obj.receiverAddress,
         receiverName: obj.receiverFirstName+" "+obj.receiverLastName,
         date: latestDate,
-        expandedData: expandedData
+        expandedData: expandedData//,  
+        //toggle: HTMLButtonElement,
+        //edit: HTMLButtonElement    
 			};
 		});
   }
-  
+
   mapBoxes(boxes: Box[]) {
     return boxes.map((obj) => {
       return {
