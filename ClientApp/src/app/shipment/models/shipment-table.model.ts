@@ -1,3 +1,4 @@
+import { HtmlAstPath } from "@angular/compiler";
 import { Country } from "src/app/login/models/country.model";
 
 export interface ShipmentTableData {
@@ -11,7 +12,6 @@ export interface ShipmentTableData {
 	boxes: Box[];
 	expandedData: ExpandedData []
 	country: Country;
-
 }
 
 export interface InfoData {
