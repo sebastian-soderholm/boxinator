@@ -8,6 +8,8 @@ namespace boxinator.Services.Interfaces
 {
     public interface IUserService 
     {
-        public Task<User> Login(User user);
+        public Task<User> Verify(User user);
+
+        public Task<User> Get(string email);
     }
 }

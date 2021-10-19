@@ -40,15 +40,19 @@ namespace boxinator.Controllers
         /// GET: /verify
         [HttpGet("/login/verify")]
         //[Authorize]
-        public async Task<IActionResult> Verify() // rename to Verify
+        public async Task<ActionResult<UserReadDTO>> Verify() // rename to Verify
         {
             string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
             string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
             var token = new JwtSecurityToken(jwtEncodedString: accessTokenWithoutBearerPrefix);
+            string userEmail = token.Claims.First(c => c.Type == "email").Value;
+            var resultUser = await _service.Get(userEmail);
+            if(resultUser != null)
+            {
+                return _mapper.Map<UserReadDTO>(resultUser);
+            }
 
-            System.Diagnostics.Debug.WriteLine("email => " + token.Claims.First(c => c.Type == "email").Value);
-
-            return Ok();
+            return NoContent();
 
             //string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
             //string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
