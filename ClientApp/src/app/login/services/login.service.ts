@@ -9,7 +9,8 @@ import { switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { LoginUser } from '../models/login-user.model';
 import { User } from '../../account/models/user.model';
-import { SessionService } from './session.service';
+import { SessionService } from 'src/app/shared/session.service';
+
 
 @Injectable({
   providedIn: 'root',
