@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShipmentService } from '../../services/shipment.service';
-import { SessionService } from '../../services/shipment-session.service';
+//import { SessionService } from '../../services/shipment-session.service';
+import { SessionService } from 'src/app/shared/session.service';
 import { BoxTypes } from 'src/app/shared/box.model';
 import { ShipmentStatusLog, ShipmentTableData, MappedData, ExpandedData, Status, Box } from '../../models/shipment-table.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -52,9 +53,9 @@ export class MyShipmentsPage implements OnInit {
       const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
       this.sortedData = mappedData;
     });
-
   }
 
+  // for filtering data based on selected status and dates
   filterTable() {
     if(this.selectedStatus == null && this.selectedFromDate == null && this.selectedToDate == null) {
       console.log("no filters selected");
@@ -72,13 +73,13 @@ export class MyShipmentsPage implements OnInit {
         path = "/shipments/cancelled";
       }
 
+      // fetch data by filters
       this.shipmentService.getFilteredShipments(path, this.selectedFromDate!, this.selectedToDate!, async () => {
         const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
         this.sortedData = mappedData;
       });
       
     }
-
   }
 
   setSelectedFilterOption(type: string, selected : any) {
@@ -118,18 +119,20 @@ export class MyShipmentsPage implements OnInit {
     }
   }
 
+  // mapping incoming data
   mapShipments(shipments: ShipmentTableData[]) {
 		return shipments.map((obj) => {
-      const shipmentBoxes = this.mapBoxes(obj.boxes)
-      const expandedData = this.createExpandedData(obj.id, shipmentBoxes, obj.shipmentStatusLogs)
+      const boxesInShipment = this.mapBoxes(obj.boxes)
+      const expandedData = this.createExpandedData(obj.id, boxesInShipment, obj.shipmentStatusLogs)
       const infoData = this.getInfoData(obj.shipmentStatusLogs);
       const latestStatus = this.getLatestStatus(infoData);
       const latestDate = this.getLatestDate(infoData);
+      const combinedWeight = this.getCombinedWeight(boxesInShipment);
 
 			return {
 				id: obj.id,
         cost: obj.cost,
-        weight: 55,
+        weight: combinedWeight,
         status: latestStatus,
         address: obj.receiverAddress,
         receiverName: obj.receiverFirstName+" "+obj.receiverLastName,
@@ -137,9 +140,19 @@ export class MyShipmentsPage implements OnInit {
         expandedData: expandedData
 			};
 		});
-	 }
+  }
+  
+  mapBoxes(boxes: Box[]) {
+    return boxes.map((obj) => {
+      return {
+        name: obj.name.toString(),
+        weight: obj.weight,
+        color: obj.color.toString()
+      };
+    });
+  }
 
-   // for getting newest data to parent rows
+  // newest data to parent rows
   getInfoData(logs: ShipmentStatusLog[]) {
     const infoArray = logs.map((obj) => {
       return {
@@ -152,6 +165,7 @@ export class MyShipmentsPage implements OnInit {
     return infoArray;
   }
 
+  // data for expandable row
   createExpandedData(shipmentId : number, boxes: Box[],  logs: ShipmentStatusLog[]) {
     let expandedData = <ExpandedData>{};
     expandedData.boxes = boxes;
@@ -170,14 +184,17 @@ export class MyShipmentsPage implements OnInit {
     return latestStatus.statusName;
   }
 
-  mapBoxes(boxes: Box[]) {
-    return boxes.map((obj) => {
-      return {
-        name: "test",
-        weight: 0,
-        color: obj.color.toString()
-      };
-    });
+  getCombinedWeight(boxes: Box[]) {
+    let sum = 0; 
+    
+    boxes.forEach(box => {
+      for (const property in box) {
+        if(property === "weight"){
+          sum += box[property];
+        }
+      }
+    })
+    return sum;
   }
 
   // sorting on column click

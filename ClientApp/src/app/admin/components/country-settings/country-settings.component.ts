@@ -5,12 +5,12 @@ import { CountryService } from 'src/app/login/services/country.service';
 import { SessionService } from 'src/app/shared/session.service';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.page.html',
-  styleUrls: ['./settings.page.scss']
+  selector: 'app-country-settings',
+  templateUrl: './country-settings.component.html',
+  styleUrls: ['./country-settings.component.scss']
 })
-export class SettingsPage implements OnInit {
-  panelOpenState = false;
+export class CountrySettingsComponent implements OnInit {
+
   private _countries: Country[] = []
   private _countrySettingsForm: any;
   private _selectedCountry: Country = {

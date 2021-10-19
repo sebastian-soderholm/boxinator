@@ -9,7 +9,8 @@ import {
 import { Injectable } from '@angular/core';
 import { ShipmentTableData, Status } from '../models/shipment-table.model';
 import { environment } from 'src/environments/environment';
-import { SessionService } from './shipment-session.service';
+//import { SessionService } from './shipment-session.service';
+import { SessionService } from 'src/app/shared/session.service';
 import { GuestShipment } from '../models/guest-shipment.model';
 import { CreateShipment } from '../models/create-shipment.model';
 
@@ -31,7 +32,7 @@ export class ShipmentService {
     this.http.get<ShipmentTableData[]>(apiUrl + '/shipments')
     .subscribe((shipments: ShipmentTableData[]) => {
       console.log(shipments)
-      this.sessionService.setShipments(shipments);
+      this.sessionService.setShipmentsTableData(shipments);
       onSuccess();
     },
     (error: HttpErrorResponse) => {
@@ -48,7 +49,7 @@ export class ShipmentService {
     this.http.get<ShipmentTableData[]>(apiUrl + path, {params: params})
     .subscribe((shipments: ShipmentTableData[]) => { 
       console.log(shipments)
-      this.sessionService.setShipments(shipments);
+      this.sessionService.setShipmentsTableData(shipments);
       onSuccess();
 
     },(error: HttpErrorResponse) => {

@@ -20,8 +20,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\API\boxinator.csproj" />
-  </ItemGroup>
-
 </Project>

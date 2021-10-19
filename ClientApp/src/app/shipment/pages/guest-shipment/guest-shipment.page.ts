@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Country } from 'src/app/login/models/country.model';
 import { CountryService } from 'src/app/login/services/country.service';
-import { SessionService } from 'src/app/login/services/session.service';
+import { SessionService } from 'src/app/shared/session.service';
 import { Box, BoxTypes } from '../../../shared/box.model';
 import { GuestShipment } from '../../models/guest-shipment.model';
 import { ColorPickerComponent } from 'ngx-color-picker';
@@ -20,12 +20,12 @@ export class GuestShipmentPage implements OnInit {
 
   private _guestShipment: GuestShipment = {
     email: "",
-    firstName: "",
-    lastName: "",
-    countryId: 1,
-    zipCode: "",
-    address: "",
+    receiverFirstName: "",
+    receiverLastName: "",
+    receiverZipCode: "",
+    receiverAddress: "",
     cost: 0,
+    countryId: 1,
     boxes: []
   }
 
@@ -120,28 +120,28 @@ export class GuestShipmentPage implements OnInit {
 
     //Add field values to shipment
     this._guestShipment.email = this._guestShipmentForm.get('senderEmail')?.value
-    this._guestShipment.firstName = this._guestShipmentForm.get('receiverFirstName')?.value
-    this._guestShipment.lastName = this._guestShipmentForm.get('receiverLastName')?.value
+    this._guestShipment.receiverFirstName = this._guestShipmentForm.get('receiverFirstName')?.value
+    this._guestShipment.receiverLastName = this._guestShipmentForm.get('receiverLastName')?.value
     this._guestShipment.countryId = this._guestShipmentForm.get('destinationCountryId')?.value
-    this._guestShipment.address = this._guestShipmentForm.get('destinationAddress')?.value
-    this._guestShipment.zipCode = this._guestShipmentForm.get('destinationZipCode')?.value
+    this._guestShipment.receiverAddress = this._guestShipmentForm.get('destinationAddress')?.value
+    this._guestShipment.receiverZipCode = this._guestShipmentForm.get('destinationZipCode')?.value
 
     //Add boxes to shipment
     this._guestShipment.boxes = this._boxes
 
     //Post shipment
     console.table(this._guestShipment)
-    // this.shipmentService.postNewGuestShipment(<GuestShipment>this._guestShipment, () => console.log("hurray!"));
+    this.shipmentService.postNewGuestShipment(<GuestShipment>this._guestShipment, () => console.log("hurray!"));
 
   }
   clearFormData() {
     this._guestShipment = {
       email: "",
-      firstName: "",
-      lastName: "",
+      receiverFirstName: "",
+      receiverLastName: "",
       countryId: 1,
-      zipCode: "",
-      address: "",
+      receiverZipCode: "",
+      receiverAddress: "",
       cost: 0,
       boxes: []
     }

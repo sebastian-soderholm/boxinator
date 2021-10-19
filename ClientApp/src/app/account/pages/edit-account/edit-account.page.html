@@ -69,19 +69,19 @@
     </div> -->
   </div>
   <!-- Postal code -->
-  <input formControlName="zip" type="text" placeholder="Postal code">
-  <div *ngIf="zip.dirty || zip.touched" class="alert">
-    <div *ngIf="zip.errors?.minlength">
+  <input formControlName="zipCode" type="text" placeholder="Postal code">
+  <div *ngIf="zipCode.dirty || zipCode.touched" class="alert">
+    <div *ngIf="zipCode.errors?.minlength">
       <p>Postal code is too short</p>
     </div>
-    <div *ngIf="zip.errors?.pattern">
+    <div *ngIf="zipCode.errors?.pattern">
       <p>Postal code can only contain numbers</p>
     </div>
   </div>
-  <!-- Contact Number -->
-  <input formControlName="contactNumber" type="text" placeholder="Contact number">
-  <div *ngIf="contactNumber.dirty || contactNumber.touched" class="alert">
-    <div *ngIf="contactNumber.errors?.pattern">
+  <!-- Phone Number -->
+  <input formControlName="phoneNumber" type="text" placeholder="Contact number">
+  <div *ngIf="phoneNumber.dirty || phoneNumber.touched" class="alert">
+    <div *ngIf="phoneNumber.errors?.pattern">
       <p>Format invalid</p>
     </div>
   </div>
@@ -96,7 +96,7 @@
   editUserForm.controls['dateOfBirth'].invalid ||
   editUserForm.controls['countryId'].invalid ||
   editUserForm.controls['zip'].invalid ||
-  editUserForm.controls['contactNumber'].invalid
+  editUserForm.controls['phoneNumber'].invalid
   ">
     Submit
   </button>

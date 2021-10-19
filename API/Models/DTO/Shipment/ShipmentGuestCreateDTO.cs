@@ -13,12 +13,12 @@ namespace boxinator.Models.DTO.Shipment
         //Guest email
         public string Email { get; set; }
         //Shipment reciever info
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string ZipCode { get; set; }
-        public string Address { get; set; }
+        public string ReceiverFirstName { get; set; }
+        public string ReceiverLastName { get; set; }
+        public string ReceiverZipCode { get; set; }
+        public string ReceiverAddress { get; set; }
         public double Cost { get; set; }
-        public CountryReadDTO Country { get; set; }
+        public int CountryId { get; set; }
         public List<BoxCreateDTO> Boxes { get; set; }
     }
 }

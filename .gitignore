@@ -6,3 +6,5 @@ BoxinatorAPITests/obj/project.nuget.cache
 BoxinatorAPITests/obj/Debug/net5.0/BoxinatorAPITests.GeneratedMSBuildEditorConfig.editorconfig
 BoxinatorAPITests/obj/Debug/net5.0/BoxinatorAPITests.GeneratedMSBuildEditorConfig.editorconfig
 BoxinatorAPITests/obj/Debug/net5.0/BoxinatorAPITests.GeneratedMSBuildEditorConfig.editorconfig
+API/boxinator.csproj
+API/boxinator.csproj
