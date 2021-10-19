@@ -12,7 +12,7 @@ namespace boxinator.Controllers
     [ApiController]
     [Route("account")]
     [EnableCors("_myAllowSpecificOrigins")]
-    //[Authorize]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _service;
