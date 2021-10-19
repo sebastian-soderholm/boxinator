@@ -16,12 +16,7 @@ export class BoxFormComponent implements OnInit {
 
   constructor() {
     this._boxForm = new FormGroup({
-      boxFormArray: this._boxFormArray = new FormArray([
-        new FormGroup({
-          boxType: new FormControl(this.boxTypes[0], []),
-          boxColor: new FormControl({color: "rgb(255,255,255)"},[]),
-        })
-      ])
+      boxFormArray: this._boxFormArray = new FormArray([])
     })
   }
 
@@ -34,7 +29,6 @@ export class BoxFormComponent implements OnInit {
       //Emit event
       this.formChange.emit(this.boxes)
     })
-
   }
 
   addBox() {
