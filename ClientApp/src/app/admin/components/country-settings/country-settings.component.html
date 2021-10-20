@@ -12,24 +12,14 @@
 
     <form [formGroupName]="i">
 
-
-
-      <div formControlName="uneditedCountry" >
-        <div *ngFor="let country of countriesFormArray.at(i).get('uneditedCountry')?.value">
-          {{country}}
-        </div>
-      </div>
-
-
-
-      <input formControlName="countryName" >
+      <input formControlName="countryName" [value]="control.value.countryName" >
 
       <!-- Change country name -->
-      <p *ngFor="name of control.value">Moi</p>
+      <!-- <p>{{}}</p> -->
 
       <select formControlName="countryZone">
         <!-- Select zone for country -->
-        <option *ngFor="let zone of zones">{{zone.name}}</option>
+        <option *ngFor="let zone of zones" [ngValue]="control.value.zoneId">{{control.value.zoneName}}</option>
       </select>
 
       <!-- <button (click)="countrySave(i)">Save</button> -->
@@ -38,7 +28,7 @@
       <button (click)="countrySave({
         id: countriesFormArray.at(i).get('uneditedCountry')?.value.id,
         name: countriesFormArray.at(i).get('countryName')?.value,
-        zoneId: countriesFormArray.at(i).get('countryZone')?.value.zoneId
+        zoneId: countriesFormArray.at(i).get('countryZone')?.value
       })">Save</button>
     </form>
   </div>

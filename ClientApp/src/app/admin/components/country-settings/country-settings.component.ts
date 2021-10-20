@@ -12,53 +12,58 @@ import { ZoneService } from '../../services/zone.service';
   styleUrls: ['./country-settings.component.scss'],
 })
 export class CountrySettingsComponent implements OnInit {
-  private _countries: Country[] = [
-  {
-    id: 1,
-    name: 'Finland',
-    zoneId: 1,
-    zoneName: 'Europe',
-    countryMultiplier: 100,
-  },
-  {
-    id: 2,
-    name: 'Sweden',
-    zoneId: 1,
-    zoneName: 'Europe',
-    countryMultiplier: 100,
-  },
-  {
-    id: 3,
-    name: 'China',
-    zoneId: 2,
-    zoneName: 'Asia',
-    countryMultiplier: 200,
-  },
-  {
-    id: 4,
-    name: 'Uganda',
-    zoneId: 3,
-    zoneName: 'Africa',
-    countryMultiplier: 300,
-  },
-];
-  private _zones: Zone[] = [
-  {
-    id: 1,
-    name: 'Europe',
-    countryMultiplier: 100,
-  },
-  {
-    id: 2,
-    name: 'Asia',
-    countryMultiplier: 200,
-  },
-  {
-    id: 3,
-    name: 'Africa',
-    countryMultiplier: 300,
-  },
-];
+
+//   private _countries: Country[] = [
+//   {
+//     id: 1,
+//     name: 'Finland',
+//     zoneId: 1,
+//     zoneName: 'Europe',
+//     countryMultiplier: 100,
+//   },
+//   {
+//     id: 2,
+//     name: 'Sweden',
+//     zoneId: 1,
+//     zoneName: 'Europe',
+//     countryMultiplier: 100,
+//   },
+//   {
+//     id: 3,
+//     name: 'China',
+//     zoneId: 2,
+//     zoneName: 'Asia',
+//     countryMultiplier: 200,
+//   },
+//   {
+//     id: 4,
+//     name: 'Uganda',
+//     zoneId: 3,
+//     zoneName: 'Africa',
+//     countryMultiplier: 300,
+//   },
+// ];
+// private _zones: Zone[] = [
+//   {
+//     id: 1,
+//     name: 'Europe',
+//     countryMultiplier: 100,
+//   },
+//   {
+//     id: 2,
+//     name: 'Asia',
+//     countryMultiplier: 200,
+//   },
+//   {
+//     id: 3,
+//     name: 'Africa',
+//     countryMultiplier: 300,
+//   },
+// ];
+
+
+  private _countries: Country[] = [];
+  private _zones: Zone[] = [];
   private _settingsForm: any;
   private _zonesSelect: any;
   private _countryForm: any;
@@ -80,23 +85,23 @@ export class CountrySettingsComponent implements OnInit {
     private readonly sessionService: SessionService
   ) {
 
-    // this.zoneService.fetchZonesToSession(async () => {
-    //   this._zones = this.sessionService.zones!;
-    // });
-    // this.countryService.fetchCountriesToSession(async () => {
-    //   this._countries = this.sessionService.countries!;
-    // });
+
 
     this._settingsForm = new FormGroup({
       zoneSelect: this._zonesSelect = new FormControl(1, []),
       countriesFormArray: this._countriesFormArray = new FormArray([]),
     });
-
-
   }
 
   ngOnInit(): void {
-    // this.onChange({});
+    this.zoneService.fetchZonesToSession(async () => {
+      this._zones = this.sessionService.zones!;
+    });
+    this.countryService.fetchCountriesToSession(async () => {
+      this._countries = this.sessionService.countries!;
+    });
+
+    console.table(this._countries)
   }
 
   onChanges() {
@@ -147,12 +152,12 @@ export class CountrySettingsComponent implements OnInit {
   get countries() {
     return this._countries;
   }
-  get countriesFormArray() {
-    return this._settingsForm.get("countriesFormArray") as FormArray;
-  }
   // get countriesFormArray() {
-  //   return this._countriesFormArray as FormArray;
+  //   return this._settingsForm.get("countriesFormArray") as FormArray;
   // }
+  get countriesFormArray() {
+    return this._countriesFormArray as FormArray;
+  }
   get settingsForm() {
     return this._settingsForm;
   }

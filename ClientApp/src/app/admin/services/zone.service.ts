@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ExtensionsService } from 'src/app/shared/extensions.service';
 import { SessionService } from 'src/app/shared/session.service';
 import { environment } from 'src/environments/environment';
 import { Zone } from '../models/zone.model';
@@ -13,7 +14,8 @@ export class ZoneService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private readonly extensionService: ExtensionsService
   ) { }
 
   // Zones

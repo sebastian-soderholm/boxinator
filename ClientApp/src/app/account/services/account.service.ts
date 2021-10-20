@@ -36,7 +36,7 @@ export class AccountService {
   // for admin
   public getUserById(userId: number, onSuccess: () => void): void {
     this.http.get<User>(this._apiUrl + /account/+userId, this.extensionService.authenticationHeadersFull)
-    .subscribe((user: User) => { 
+    .subscribe((user: User) => {
       console.log(user)
       this.sessionService.setFetchedUserInfo(user);
       onSuccess();
@@ -58,7 +58,7 @@ export class AccountService {
 		};
 
     this.http.get<User>(this._apiUrl + '/account', { headers: httpOptions.headers, params: params})
-    .subscribe((user: User) => { 
+    .subscribe((user: User) => {
       console.log(user)
       if(user != null){
         this.sessionService.setFetchedUserInfo(user);
