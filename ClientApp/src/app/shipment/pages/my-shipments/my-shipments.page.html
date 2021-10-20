@@ -31,18 +31,18 @@
 <table matSort mat-table [dataSource]="sortedData" multiTemplateDataRows class="mat-elevation-z8" (matSortChange)="sortData($event)">
   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
     <th mat-sort-header mat-header-cell *matHeaderCellDef> {{column | uppercase}} </th>
-    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+    <td mat-cell *matCellDef="let shipmentTableData"> {{shipmentTableData[column]}} </td>
   </ng-container>
 
   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
   <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-      <div class="example-element-detail" [@detailExpand]="element == element.boxes ? 'expanded' : 'collapsed'">
+    <td mat-cell *matCellDef="let shipmentTableData" [attr.colspan]="columnsToDisplay.length">
+      <div class="example-element-detail" [@detailExpand]="shipmentTableData == shipmentTableData.boxes ? 'expanded' : 'collapsed'">
         <div class="example-element-diagram">
           <div class="example-element-color">
             <h2>Boxes</h2>
             <ul class="element.boxes">
-              <li *ngFor="let box of element.expandedData.boxes">
+              <li *ngFor="let box of shipmentTableData.expandedData.boxes">
                 <p [ngStyle]="{'color': box.color}">BOX</p>
               </li>
             </ul>
@@ -52,18 +52,18 @@
           <div class="example-element-color">
             <h2>Info</h2>
             <ul class="element.boxes">
-              <li *ngFor="let log of element.expandedData.shipmentStatusLogs">
+              <li *ngFor="let log of shipmentTableData.expandedData.shipmentStatusLogs">
                 {{log.date | date}}---{{log.status.name}}
               </li>
             </ul>
           </div>
         </div>  
-        <div class="example-element-diagram">
+        <div class="example-element-diagram" *ngIf="shipmentTableData.status != 'CANCELLED' && shipmentTableData.status != 'COMPLETED'">
           <div class="example-element-color">
             <h2>Edit</h2>
             <div>
-              <button mat-flat-button color="accent" (click)="addNewStatus(element.id)">Update status</button>
-              <button mat-flat-button color="accent" routerLink="/edit-shipment">Edit</button>
+              <button mat-flat-button color="accent" (click)="addNewStatus(shipmentTableData.id)">Update status</button>
+              <button mat-flat-button color="accent" [routerLink]="['/edit-shipment/', shipmentTableData.id]">Edit</button>
             </div>
           </div>
         </div> 
@@ -72,10 +72,10 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+  <tr mat-row *matRowDef="let shipmentTableData; columns: columnsToDisplay;"
       class="example-element-row"
-      [class.example-expanded-row]="element.boxes === element"
-      (click)="element.boxes = element.boxes === element ? null : element">
+      [class.example-expanded-row]="shipmentTableData.boxes === shipmentTableData"
+      (click)="shipmentTableData.boxes = shipmentTableData.boxes === shipmentTableData ? null : shipmentTableData">
   </tr>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>

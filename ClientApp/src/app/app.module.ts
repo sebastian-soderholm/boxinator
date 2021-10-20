@@ -52,6 +52,7 @@ import { SettingsPage } from './admin/pages/settings/settings.page';
 import { CountrySettingsComponent } from './admin/components/country-settings/country-settings.component';
 import { UserSettingsComponent } from './admin/components/user-settings/user-settings.component';
 import { DatePipe } from '@angular/common';
+import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.page';
 
 
 
@@ -73,6 +74,7 @@ import { DatePipe } from '@angular/common';
     SettingsPage,
     CountrySettingsComponent,
     UserSettingsComponent,
+    EditShipmentPage,
   ],
   imports: [
     BrowserModule,
