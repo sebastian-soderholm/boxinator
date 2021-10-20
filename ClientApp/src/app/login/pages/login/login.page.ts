@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginUser } from '../../models/login-user.model';
 import { LoginService } from '../../services/login.service';
-import { SessionService } from 'src/app/shared/session.service';
 
 @Component({
   selector: 'app-login',
@@ -16,9 +15,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     private readonly loginService: LoginService,
-    private readonly router: Router,
-    private readonly sessionService: SessionService
-  )
+    private readonly router: Router
+  ) // private readonly sessionService: SessionService
   {}
 
   ngOnInit(): void {

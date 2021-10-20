@@ -27,7 +27,6 @@ export class SettingsPage implements OnInit {
   ) {
     this.countryService.fetchCountriesToSession(async () => {
       this._countries = this.sessionService.countries!;
-      console.table(this._countries)
     });
 
     this._countrySettingsForm = new FormGroup({
@@ -43,6 +42,7 @@ export class SettingsPage implements OnInit {
   }
 
   onChanges() {
+
     //Change selected country on select change
     this._countrySettingsForm.get("countrySelect").valueChanges.subscribe((id:any) => {
       this._selectedCountry = this._countries.find(country => {

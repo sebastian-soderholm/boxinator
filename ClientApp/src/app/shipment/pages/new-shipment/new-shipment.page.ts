@@ -130,8 +130,11 @@ export class NewShipmentPage implements OnInit {
     //Set logged in user id for shipment
     this._newShipment.senderId = this.loginService.user?.id;
 
+    //Add cost to shipment
+    this.calculateCost()
+    this._newShipment.cost = this.cost
+
     //Post shipment
-    console.table(this._newShipment)
     this.shipmentService.postNewShipment(<CreateShipment>this._newShipment, () => console.log("hurray!"));
 
   }

@@ -29,16 +29,7 @@ export class ShipmentService {
 
   // get all current shipments
   public getAllCurrent(onSuccess: () => void): void {
-    let token = sessionStorage.getItem('token')
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      }),
-    };
-
-    this.http.get<ShipmentTableData[]>(apiUrl + '/shipments', httpOptions)
+    this.http.get<ShipmentTableData[]>(apiUrl + '/shipments')
     .subscribe((shipments: ShipmentTableData[]) => {
       console.log(shipments)
       this.sessionService.setShipmentsTableData(shipments);
