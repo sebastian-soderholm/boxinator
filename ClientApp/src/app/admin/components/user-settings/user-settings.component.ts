@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AccountService } from 'src/app/account/services/account.service';
 import { SessionService } from 'src/app/shared/session.service';
+import { User } from '../../../account/models/user.model';
 
 @Component({
   selector: 'app-user-settings',
@@ -11,6 +12,8 @@ import { SessionService } from 'src/app/shared/session.service';
 export class UserSettingsComponent implements OnInit {
   searchvalue: string = "";
   loadComponent: boolean = false;
+  loadList: boolean = false;
+  users: User[] | undefined;
 
   constructor(
     private readonly _accountService: AccountService,
@@ -18,6 +21,11 @@ export class UserSettingsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  selectUser(user: User) {
+    console.log("user selected")
+    this.loadComponent = true;
   }
 
   public onSearch(input: string): void {
@@ -29,7 +37,9 @@ export class UserSettingsComponent implements OnInit {
     }
     else {
       this._accountService.getBySearchTerm(input, async () => {
-        await console.log("success"), this.loadComponent = true;
+        await console.log("success"),
+        this.users = this._sessionService.usersForAdmin;
+        this.loadList = true//, this.loadComponent = true;
       });
     }
 

@@ -5,6 +5,7 @@ using boxinator.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace boxinator.Controllers
@@ -84,12 +85,12 @@ namespace boxinator.Controllers
         /// </summary>
         /// <returns>Found user</returns>
         [HttpGet]
-        public async Task<ActionResult<UserReadDTO>> Search()
+        public async Task<ActionResult<List<UserReadDTO>>> Search()
         {
             string searchTerm = HttpContext.Request.Query["searchTerm"].ToString();
 
-            var resultUser = await _service.Search(searchTerm);
-            return _mapper.Map<UserReadDTO>(resultUser);
+            var resultUsers = await _service.Search(searchTerm);
+            return _mapper.Map<List<UserReadDTO>>(resultUsers);
         }
     }
 }
