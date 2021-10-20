@@ -48,7 +48,6 @@ namespace boxinator
                 options.UseSqlServer(Configuration.GetSection("ConnectionStrings").GetSection("localSQLBoxinatorDB").Value));
 
             services.AddScoped<IShipmentService, ShipmentService>();
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ISettingsService, SettingsService>();
 
