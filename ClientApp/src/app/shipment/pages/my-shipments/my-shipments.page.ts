@@ -41,6 +41,8 @@ export class MyShipmentsPage implements OnInit {
   selectedFromDate? : Date[] | null;
   selectedToDate? : Date[] | null;
   showEdit: boolean = false;
+  cancelledStatus?: Status | null;
+  completedStatus?: Status | null;
 
   constructor(
     private readonly shipmentService: ShipmentService,
@@ -50,6 +52,15 @@ export class MyShipmentsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.cancelledStatus = {
+      id: 5,
+      name: "CANCELLED"
+    }
+    this.completedStatus = {
+      id: 4,
+      name: "COMPLETED"
+    }
+
     this.sessionService.removeShipmentsTableData();
 
     this.shipmentService.getAllCurrent(async () => {
@@ -159,7 +170,7 @@ export class MyShipmentsPage implements OnInit {
         address: obj.receiverAddress,
         receiverName: obj.receiverFirstName+" "+obj.receiverLastName,
         date: latestDate,
-        expandedData: expandedData
+        expandedData: expandedData,
 			};
 		});
   }
