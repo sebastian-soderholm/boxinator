@@ -25,10 +25,8 @@ import { FormGroup, NgForm, SelectControlValueAccessor } from '@angular/forms';
 })
 export class MyShipmentsPage implements OnInit {
 
-  //displayedColumns: string[] = ['id', 'cost', 'weight', 'status', 'receiverName', 'date'];
-  //columnsToDisplay: string[] = this.displayedColumns.slice();
-  displayedColumns: string[] = [];
-  columnsToDisplay: string[] = [];
+  displayedColumns: string[] = ['id', 'cost', 'weight', 'status', 'receiverName', 'date'];
+  columnsToDisplay: string[] = this.displayedColumns.slice();
   private _dataSource: MappedData[] = [];
   dateVisibility: boolean = true;
   sortedData: MappedData[] = [];
@@ -52,13 +50,6 @@ export class MyShipmentsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.displayedColumns = ['id', 'cost', 'weight', 'status', 'receiverName', 'date'];
-    if(this.showEdit === true) {
-      this.displayedColumns.push('toggle')
-      this.displayedColumns.push('edit')
-    }
-    this.columnsToDisplay = this.displayedColumns.slice();
-
     this.shipmentService.getAllCurrent(async () => {
       const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
       this.sortedData = mappedData;
@@ -156,9 +147,7 @@ export class MyShipmentsPage implements OnInit {
         address: obj.receiverAddress,
         receiverName: obj.receiverFirstName+" "+obj.receiverLastName,
         date: latestDate,
-        expandedData: expandedData//,  
-        //toggle: HTMLButtonElement,
-        //edit: HTMLButtonElement    
+        expandedData: expandedData
 			};
 		});
   }

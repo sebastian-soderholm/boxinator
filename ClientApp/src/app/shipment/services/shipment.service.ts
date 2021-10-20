@@ -1,7 +1,6 @@
 import {
   HttpClient,
 	HttpErrorResponse,
-	HttpResponse,
 	HttpHeaders,
   HttpParams
 } from '@angular/common/http';
@@ -13,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { SessionService } from 'src/app/shared/session.service';
 import { GuestShipment } from '../models/guest-shipment.model';
 import { CreateShipment } from '../models/create-shipment.model';
+import { ExtensionsService } from 'src/app/shared/extensions.service';
 
 const apiUrl = environment.baseURL;
 
@@ -24,12 +24,14 @@ const apiUrl = environment.baseURL;
 export class ShipmentService {
   private _error: string = '';
 
-  constructor(private readonly http: HttpClient, private readonly sessionService: SessionService) {
+  constructor(private readonly http: HttpClient, 
+    private readonly sessionService: SessionService, 
+    private readonly extensionService: ExtensionsService) {
   }
 
   // get all current shipments
   public getAllCurrent(onSuccess: () => void): void {
-    this.http.get<ShipmentTableData[]>(apiUrl + '/shipments')
+    this.http.get<ShipmentTableData[]>(apiUrl + '/shipments', this.extensionService.authenticationHeadersFull)
     .subscribe((shipments: ShipmentTableData[]) => {
       console.log(shipments)
       this.sessionService.setShipmentsTableData(shipments);
@@ -46,7 +48,16 @@ export class ShipmentService {
     .set("dateFromFilter", dateFromFilter != null ? dateFromFilter.toString() : "")
     .set("dateToFilter", dateToFilter != null ? dateToFilter.toString() : "")
 
-    this.http.get<ShipmentTableData[]>(apiUrl + path, {params: params})
+    const token = sessionStorage.getItem('token') as string
+
+		const httpOptions = {
+		  headers: new HttpHeaders({
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${token}`,
+		  }),
+		};
+
+    this.http.get<ShipmentTableData[]>(apiUrl + path, { headers: httpOptions.headers, params: params})
     .subscribe((shipments: ShipmentTableData[]) => { 
       console.log(shipments)
       this.sessionService.setShipmentsTableData(shipments);
