@@ -38,10 +38,6 @@ export class LoginPage implements OnInit {
   login(): void {
     this._loginUser.email = this._loginForm.get('email').value
     this._loginUser.password = this._loginForm.get('password').value
-    // console.log(this._loginUser);
-/*     this.loginService.loginUserTEST(this._loginUser, function(){
-      console.log("User logged in!")
-    }) */
   }
 
   get email() {
@@ -58,13 +54,6 @@ export class LoginPage implements OnInit {
     this.loginService.googleLogin( async () => {
       const token = sessionStorage.getItem('token') as string
       await this.loginService.verifyUser(token);
-
-      /*       
-      let user = sessionStorage.getItem('user')
-      let newUser = JSON.parse(user!) as LoginUser
-      await this.loginService.loginUserTEST(token, newUser);
-      console.log(token) 
-      */
     });
   }
 }
