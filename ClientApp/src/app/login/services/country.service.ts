@@ -20,7 +20,8 @@ export class CountryService {
   public fetchCountriesToSession(onSuccess: () => void): void {
     this.http.get<Country[]>(this._apiUrl + '/settings/countries')
     .subscribe((countries: Country[]) => {
-      this.sessionService.setCountries(countries)
+      // this.sessionService.setCountries(countries)
+      console.log(countries)
       onSuccess()
     },
     (error: HttpErrorResponse) => {

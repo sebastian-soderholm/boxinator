@@ -45,8 +45,8 @@ export class CountryListItemComponent implements OnInit {
 
     this.countryService.postCountry(country, () => console.log("country saved!"));
 
-    this.country.name = this._countryForm.get("countryName").value
-    this.country.zoneId = this._countryForm.get("countryZone").value
+    // this.country.name = this._countryForm.get("countryName").value
+    // this.country.zoneId = this._countryForm.get("countryZone").value
 
     console.table(this.country)
     // this.zoneService.fetchZonesToSession(async () => {

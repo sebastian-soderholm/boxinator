@@ -5,7 +5,6 @@ import { CountryService } from 'src/app/login/services/country.service';
 import { SessionService } from 'src/app/shared/session.service';
 import { Zone } from '../../models/zone.model';
 import { ZoneService } from '../../services/zone.service';
-import { CountryListComponent } from '../country-list/country-list.component';
 
 @Component({
   selector: 'app-country-settings',
@@ -37,6 +36,8 @@ export class CountrySettingsComponent implements OnInit {
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService
   ) {
+
+
     this._settingsForm = new FormGroup({
       zoneSelect: this._zonesSelect = new FormControl(1, []),
       countriesFormArray: this._countriesFormArray = new FormArray([]),
@@ -44,18 +45,20 @@ export class CountrySettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.zoneService.fetchZoneCountriesToSession(this._selectedZoneId, async () => {
+    //   this._countries = this.sessionService.countries!;
+    // });
     this.zoneService.fetchZonesToSession(async () => {
       this._zones = this.sessionService.zones!;
+      this._selectedZoneId = this._zones[0].id
     });
-    this._selectedZoneId = this._zones[0].id
+
   }
 
 
 
   onChanges() {
-    this.zoneService.fetchZoneCountriesToSession(this._selectedZoneId, async () => {
-      this._countries = this.sessionService.countries!;
-    });
+
 
     console.log("Loaded countries for id: " + this._selectedZoneId, this._countries)
     this.setCountriesForm();

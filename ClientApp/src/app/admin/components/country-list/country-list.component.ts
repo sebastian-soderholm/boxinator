@@ -19,11 +19,15 @@ export class CountryListComponent implements OnInit {
     private readonly zoneService: ZoneService,
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService
-  ) {}
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.countryService.fetchCountriesToSession(async () => {
       this.countries = this.sessionService.countries!;
+
     });
+
   }
 }
