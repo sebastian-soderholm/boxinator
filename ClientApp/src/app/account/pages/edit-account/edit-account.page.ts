@@ -7,6 +7,9 @@ import { RegisterService } from 'src/app/login/services/register.service';
 import { User } from '../../models/user.model';
 import { AccountService } from '../../services/account.service';
 import { SessionService } from 'src/app/shared/session.service';
+import { CountryService } from 'src/app/login/services/country.service';
+import { Country } from 'src/app/login/models/country.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit-account',
@@ -15,6 +18,7 @@ import { SessionService } from 'src/app/shared/session.service';
 })
 export class EditAccountPage implements OnInit {
   private _editUser: User | undefined;
+  private _countries: Country[] = [];
   private _editUserForm: any;
   private _confirmPassword: string = '';
   @Input() showAdminSelection: boolean = false;
@@ -23,11 +27,21 @@ export class EditAccountPage implements OnInit {
     private readonly _loginService: LoginService,
     private readonly _accountService: AccountService,
     private readonly _sessionService: SessionService,
-    private readonly _router: Router
+    private readonly _router: Router,
+    private readonly _countryService: CountryService,
+    private readonly _datepipe: DatePipe
   ) {}
 
   ngOnInit(): void {
     this._editUser = this.showAdminSelection == true ? this._sessionService.userForAdmin : this._sessionService.user;
+
+    console.table(this._editUser)
+    this._countryService.fetchCountriesToSession(async () => {
+      this._countries = this._sessionService.countries!;
+    });
+    console.table(this._countries)
+
+    console.log("User dob: ", this._datepipe.transform(this._editUser!.dateOfBirth, 'dd-mm-yyyy'))
 
     this._editUserForm = new FormGroup(
       {
@@ -48,7 +62,7 @@ export class EditAccountPage implements OnInit {
             /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
           ),
         ]),
-        dateOfBirth: new FormControl(this._editUser!.dateOfBirth, [
+        dateOfBirth: new FormControl(this._datepipe.transform(this._editUser!.dateOfBirth, 'dd-mm-yyyy'), [
           // Validators.pattern(/a-zA-Z/)
         ]),
         countryId: new FormControl(this._editUser!.countryId, [
@@ -72,9 +86,7 @@ export class EditAccountPage implements OnInit {
   updateUser() {
     this._editUser!.firstName = this._editUserForm.get('firstName').value;
     this._editUser!.lastName = this._editUserForm.get('lastName').value;
-    this._editUser!.email = this._editUserForm.get('email').value;
     this._editUser!.dateOfBirth = this._editUserForm.get('dateOfBirth').value
-    // this._editUser.dateOfBirth = "2021-10-12T18:00:15.956Z"
     this._editUser!.countryId = this._editUserForm.get('countryId').value;
     this._editUser!.zipCode = this._editUserForm.get('zipCode').value;
     this._editUser!.phoneNumber = this._editUserForm.get('phoneNumber').value;
@@ -107,10 +119,16 @@ export class EditAccountPage implements OnInit {
   get countryId() {
     return this._editUserForm.get('countryId');
   }
+  get countries() {
+    return this._countries;
+  }
   get zipCode() {
     return this._editUserForm.get('zipCode');
   }
   get phoneNumber() {
     return this._editUserForm.get('phoneNumber');
+  }
+  get userDateOfBirth() {
+    return this._editUser?.dateOfBirth
   }
 }

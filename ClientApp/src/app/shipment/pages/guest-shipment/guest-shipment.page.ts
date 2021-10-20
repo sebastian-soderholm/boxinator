@@ -84,7 +84,6 @@ export class GuestShipmentPage implements OnInit {
     //Setup eventlisteners for formchanges
     this._guestShipmentForm.get("destinationCountryId").valueChanges.subscribe((id:any) => {
       this.calculateCost()
-
    })
   }
   boxFormChanged(boxes: Box[]) {
@@ -119,7 +118,6 @@ export class GuestShipmentPage implements OnInit {
   getFormData() {
 
     //Add field values to shipment
-    this._guestShipment.email = this._guestShipmentForm.get('senderEmail')?.value
     this._guestShipment.receiverFirstName = this._guestShipmentForm.get('receiverFirstName')?.value
     this._guestShipment.receiverLastName = this._guestShipmentForm.get('receiverLastName')?.value
     this._guestShipment.countryId = this._guestShipmentForm.get('destinationCountryId')?.value

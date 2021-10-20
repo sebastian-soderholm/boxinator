@@ -21,7 +21,7 @@
     </div>
   </div>
   <!-- Email -->
-  <input class="form-control" formControlName="email" type="email" placeholder="Email" required>
+  <!-- <input class="form-control" formControlName="email" type="email" placeholder="Email" required>
   <div *ngIf="email.dirty || email.touched" class="alert">
     <div *ngIf="email.errors?.required">
       <p>Email is required</p>
@@ -32,42 +32,27 @@
     <div *ngIf="email.errors?.pattern">
       <p>Email format is invalid</p>
     </div>
-  </div>
-
-  <!-- Password -->
-  <!-- <input class="form-control" formControlName="password" type="password" placeholder="Password" required>
-  <div *ngIf="password.dirty || password.touched" class="alert">
-    <div *ngIf="password.errors?.required">
-      <p>Password is required</p>
-    </div>
-    <div *ngIf="password.errors?.minlength">
-      <p>Password is too short</p>
-    </div>
-    <div *ngIf="password.errors?.pattern">
-      <p>Password must contain at least one lowercase and uppercase character, number and special character</p>
-    </div>
-  </div> -->
-  <!-- Password confirmation -->
-  <!-- <input class="form-control" formControlName="confirmPassword" type="password" placeholder="Confirm password" required>
-  <div *ngIf="confirmPassword.dirty || confirmPassword.touched" class="alert">
-    <div *ngIf="confirmPassword.errors?.required">
-      <p>Password is required</p>
-    </div>
-    <div *ngIf="!editUserForm.errors?.passwordsMatch">
-      <p>Passwords are not equal</p>
-    </div>
   </div> -->
 
   <!-- Date -->
-  <input  formControlName="dateOfBirth" type="date" placeholder="Date of birth" max="2021-10-11">
+  <input  formControlName="dateOfBirth" type="date" placeholder="Date of birth">
 
   <!-- Country -->
-  <input  formControlName="countryId" type="number" placeholder="1">
-  <div *ngIf="countryId.dirty || countryId.touched" class="alert">
+  <!-- <select  formControlName="countryId" type="number" placeholder="1">
+  <div *ngIf="countryId.dirty || countryId.touched" class="alert"> -->
     <!-- <div *ngIf="countryId.errors?.pattern">
       <p>Country name can only contain letters</p>
     </div> -->
-  </div>
+  <!-- </div> -->
+
+  <!-- Destination country -->
+  <select formControlName="countryId">
+    <option *ngIf="!countries" selected>Loading countries...</option>
+    <option [ngValue]="country.id" *ngFor="let country of countries">{{country.name}}</option>
+  </select>
+
+
+
   <!-- Postal code -->
   <input formControlName="zipCode" type="text" placeholder="Postal code">
   <div *ngIf="zipCode.dirty || zipCode.touched" class="alert">
@@ -90,12 +75,9 @@
   <button type="submit" (click)="updateUser()" [disabled]="
   editUserForm.controls['firstName'].invalid ||
   editUserForm.controls['lastName'].invalid  ||
-  editUserForm.controls['email'].invalid  ||
-  editUserForm.controls['password'].invalid  ||
-  editUserForm.controls['confirmPassword'].invalid ||
   editUserForm.controls['dateOfBirth'].invalid ||
   editUserForm.controls['countryId'].invalid ||
-  editUserForm.controls['zip'].invalid ||
+  editUserForm.controls['zipCode'].invalid ||
   editUserForm.controls['phoneNumber'].invalid
   ">
     Submit
