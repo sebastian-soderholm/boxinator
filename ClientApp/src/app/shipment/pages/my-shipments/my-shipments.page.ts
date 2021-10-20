@@ -7,7 +7,7 @@ import { ShipmentStatusLog, ShipmentTableData, MappedData, ExpandedData, Status,
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Data } from '@angular/router';
 import {Sort} from '@angular/material/sort';
-import { expand } from 'rxjs/operators';
+import { expand, sequenceEqual } from 'rxjs/operators';
 import { TestBed } from '@angular/core/testing';
 import { FormGroup, NgForm, SelectControlValueAccessor } from '@angular/forms';
 
@@ -81,6 +81,14 @@ export class MyShipmentsPage implements OnInit {
       });
       
     }
+  }
+
+  addNewStatus(shipmentId: number) {
+    console.log(shipmentId +" jee");
+    console.log(this.sortedData)
+    this.shipmentService.addNewStatusLog(shipmentId, async() =>{
+      console.log("status added ");
+    })
   }
 
   setSelectedFilterOption(type: string, selected : any) {

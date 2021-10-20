@@ -42,6 +42,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 //Color picker
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -96,7 +98,9 @@ import { DatePipe } from '@angular/common';
     MatRadioModule,
     MatSelectModule,
     ColorPickerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule 
   ],
   providers: [
     DatePipe

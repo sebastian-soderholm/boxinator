@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
-import { ShipmentTableData, Status } from '../models/shipment-table.model';
+import { ShipmentStatusLog, ShipmentTableData, Status } from '../models/shipment-table.model';
 import { environment } from 'src/environments/environment';
 //import { SessionService } from './shipment-session.service';
 import { SessionService } from 'src/app/shared/session.service';
@@ -33,7 +33,6 @@ export class ShipmentService {
   public getAllCurrent(onSuccess: () => void): void {
     this.http.get<ShipmentTableData[]>(apiUrl + '/shipments', this.extensionService.authenticationHeadersFull)
     .subscribe((shipments: ShipmentTableData[]) => {
-      console.log(shipments)
       this.sessionService.setShipmentsTableData(shipments);
       onSuccess();
     },
@@ -104,6 +103,27 @@ export class ShipmentService {
     })
   }
 
+  //add new status
+  public addNewStatusLog(shipmentId: number, onSuccess: () => void) : void {
+    this.http.get<ShipmentStatusLog>(apiUrl + '/shipments/log/' +shipmentId, this.extensionService.authenticationHeadersFull)
+    .subscribe((newStatusLog: ShipmentStatusLog) => {
+      let shipmentTableDataArray = this.sessionService!.shipmentTableData;
+      let shipment = shipmentTableDataArray!.find(l => l.id == newStatusLog.shipmentId);
+      shipment?.shipmentStatusLogs.push(newStatusLog);
+
+      console.log("uuuujeee")
+      console.log(shipmentTableDataArray)
+
+      this.sessionService.setShipmentsTableData(shipmentTableDataArray!);
+
+      //console.log(this.sessionService.shipmentTableData)
+      onSuccess();
+    },
+    (error: HttpErrorResponse) => {
+      this._error = error.message;
+      console.table(error)
+    })
+  }
 
   public getError(): string {
     return this._error;
