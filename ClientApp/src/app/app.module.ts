@@ -77,6 +77,8 @@ import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.p
     CountrySettingsComponent,
     UserSettingsComponent,
     EditShipmentPage,
+    CountryListComponent,
+    CountryListItemComponent
   ],
   imports: [
     BrowserModule,
@@ -104,7 +106,8 @@ import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.p
     ColorPickerModule,
     MatExpansionModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+
   ],
   providers: [
     DatePipe

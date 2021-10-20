@@ -5,6 +5,7 @@ import { CountryService } from 'src/app/login/services/country.service';
 import { SessionService } from 'src/app/shared/session.service';
 import { Zone } from '../../models/zone.model';
 import { ZoneService } from '../../services/zone.service';
+import { CountryListComponent } from '../country-list/country-list.component';
 
 @Component({
   selector: 'app-country-settings',
@@ -12,54 +13,6 @@ import { ZoneService } from '../../services/zone.service';
   styleUrls: ['./country-settings.component.scss'],
 })
 export class CountrySettingsComponent implements OnInit {
-
-//   private _countries: Country[] = [
-//   {
-//     id: 1,
-//     name: 'Finland',
-//     zoneId: 1,
-//     zoneName: 'Europe',
-//     countryMultiplier: 100,
-//   },
-//   {
-//     id: 2,
-//     name: 'Sweden',
-//     zoneId: 1,
-//     zoneName: 'Europe',
-//     countryMultiplier: 100,
-//   },
-//   {
-//     id: 3,
-//     name: 'China',
-//     zoneId: 2,
-//     zoneName: 'Asia',
-//     countryMultiplier: 200,
-//   },
-//   {
-//     id: 4,
-//     name: 'Uganda',
-//     zoneId: 3,
-//     zoneName: 'Africa',
-//     countryMultiplier: 300,
-//   },
-// ];
-// private _zones: Zone[] = [
-//   {
-//     id: 1,
-//     name: 'Europe',
-//     countryMultiplier: 100,
-//   },
-//   {
-//     id: 2,
-//     name: 'Asia',
-//     countryMultiplier: 200,
-//   },
-//   {
-//     id: 3,
-//     name: 'Africa',
-//     countryMultiplier: 300,
-//   },
-// ];
 
   private _countries: Country[] = [];
   private _zones: Zone[] = [];

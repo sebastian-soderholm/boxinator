@@ -1,9 +1,7 @@
-<form [formGroup]="countryForm">
+<!-- <form [formGroup]="countryForm">
   <input formControlName="countryName">
-  <!-- <span>{{country.zoneName}}</span> -->
 
   <select formControlName="countryZone">
-    <!-- <option *ngIf="!zones">Loading zones...</option> -->
     <option *ngFor="let zone in zones" [ngValue]="zone">{{zone.name}}</option>
   </select>
   <span>{{country.zoneId}}</span>
@@ -18,4 +16,4 @@
     zoneName: country.zoneName,
     countryMultiplier: country.countryMultiplier
   })">Save</button>
-</form>
+</form> -->
