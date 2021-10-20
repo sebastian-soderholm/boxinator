@@ -19,7 +19,7 @@ export class MenuPage implements OnInit {
 
   logout() {
     this.loginService.logout();
-    console.log("Logging out..." + " localStorage: " + this.loginService.user)
+    console.log("Logging out..." + " sessionStorage: " + this.loginService.user)
     this.router.navigate([''])
   }
 
