@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 import { SessionService } from 'src/app/shared/session.service';
+import { ExtensionsService } from 'src/app/shared/extensions.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class AccountService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private readonly extensionService: ExtensionsService
   ) { }
 
   public updateUser(updateUserInfo: User, onSuccess: () => void): void {
@@ -33,7 +35,7 @@ export class AccountService {
 
   // for admin
   public getUserById(userId: number, onSuccess: () => void): void {
-    this.http.get<User>(this._apiUrl + /account/+userId)
+    this.http.get<User>(this._apiUrl + /account/+userId, this.extensionService.authenticationHeadersFull)
     .subscribe((user: User) => { 
       console.log(user)
       this.sessionService.setFetchedUserInfo(user);
@@ -41,11 +43,21 @@ export class AccountService {
     });
   }
 
+  // for admin
   public getBySearchTerm(searchTerm: string , onSuccess: () => void): void {
     const params = new HttpParams()
     .set("searchTerm", searchTerm)
 
-    this.http.get<User>(this._apiUrl + '/account', {params: params})
+    const token = sessionStorage.getItem('token') as string
+
+		const httpOptions = {
+		  headers: new HttpHeaders({
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${token}`,
+		  }),
+		};
+
+    this.http.get<User>(this._apiUrl + '/account', { headers: httpOptions.headers, params: params})
     .subscribe((user: User) => { 
       console.log(user)
       if(user != null){
