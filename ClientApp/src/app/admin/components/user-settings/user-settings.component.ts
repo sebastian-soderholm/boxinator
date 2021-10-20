@@ -14,6 +14,7 @@ export class UserSettingsComponent implements OnInit {
   loadComponent: boolean = false;
   loadList: boolean = false;
   users: User[] | undefined;
+  selectedUser: User | undefined;
 
   constructor(
     private readonly _accountService: AccountService,
@@ -24,8 +25,9 @@ export class UserSettingsComponent implements OnInit {
   }
 
   selectUser(user: User) {
-    console.log("user selected")
     this.loadComponent = true;
+    this.selectedUser = user;
+    //this._sessionService.setFetchedUserInfo(user)
   }
 
   public onSearch(input: string): void {
