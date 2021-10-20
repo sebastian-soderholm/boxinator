@@ -32,8 +32,10 @@ export class ZoneService {
   }
 
   public fetchZoneCountriesToSession(zoneId: number, onSuccess: () => void) {
-    this.http.get<Country[]>(this._apiUrl + '/settings/zones/' + zoneId)
+    this.http.get<Country[]>(this._apiUrl + '/settings/zones/' + zoneId + '?id=' + zoneId)
     .subscribe((countries: Country[]) => {
+      console.log("Requesting: " + this._apiUrl + '/settings/zones/' + zoneId + '?id=' + zoneId)
+      console.log("Recieved countries: ", countries)
       this.sessionService.setCountries(countries)
       onSuccess()
     },

@@ -3,6 +3,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Country } from 'src/app/login/models/country.model';
 import { CountryService } from 'src/app/login/services/country.service';
 import { SessionService } from 'src/app/shared/session.service';
+import { CountriesAndZones } from '../../models/countries-zones.model';
+import { ZoneService } from '../../services/zone.service';
 
 @Component({
   selector: 'app-settings',
@@ -21,7 +23,13 @@ export class SettingsPage implements OnInit {
     countryMultiplier: 0
   }
 
+  countriesAndZones: CountriesAndZones = {
+    countries: [],
+    zones: []
+  }
+
   constructor(
+    private readonly zoneService: ZoneService,
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService,
   ) {
@@ -37,7 +45,6 @@ export class SettingsPage implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.onChanges();
   }
 
@@ -60,5 +67,6 @@ export class SettingsPage implements OnInit {
   get selectedCountry() {
     return this._selectedCountry
   }
+
 
 }

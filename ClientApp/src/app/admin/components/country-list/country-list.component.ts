@@ -11,7 +11,12 @@ import { CountryListItemComponent } from '../country-list-item/country-list-item
   styleUrls: ['./country-list.component.scss']
 })
 export class CountryListComponent implements OnInit {
-  @Input() countries: Country[] | undefined;
+  @Input()
+  set countries(countries: Country[]) {
+    this._countries = countries
+    console.log("country-list: ", countries)
+  }
+
 
   private _countries: Country[] = []
 
@@ -19,15 +24,20 @@ export class CountryListComponent implements OnInit {
     private readonly zoneService: ZoneService,
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.countryService.fetchCountriesToSession(async () => {
-      this.countries = this.sessionService.countries!;
+    // this.countryService.fetchCountriesToSession(async () => {
+    //   this.countries = this.sessionService.countries!;
+    //   console.log("Countries fetched!", this.countries)
+    // });
+    // this.countries?.subscribe((countries: Country[]) => {
 
-    });
-
+    // })
   }
+
+  get countries(){
+    return this._countries
+  }
+
 }

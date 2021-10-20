@@ -31,5 +31,21 @@
 
 </ng-container>
 </form> -->
-<h1>Countries</h1>
-<app-country-list [ngModel]="countries"></app-country-list>
+
+<p>Select zone</p>
+<form [formGroup]="zoneSelectForm">
+  <select formControlName="zoneSelectControl" (change)='zoneSelected(zoneSelectForm.value.zoneSelectControl)'>
+    <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
+  </select>
+</form>
+
+<!-- <form [formGroup]="zoneSelectForm">
+  <select formControlName="zoneSelectControl">
+    <option *ngFor="let zone of states" [ngValue]="state">
+      {{ state.abbrev }}
+    </option>
+  </select>
+</form> -->
+
+<!-- <p>Form value: {{ zoneSelectForm.value | json}}</p> -->
+<app-country-list [countries]="countries!"></app-country-list>

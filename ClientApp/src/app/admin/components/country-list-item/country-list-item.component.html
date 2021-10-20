@@ -1,21 +1,21 @@
 <p>{{country.name}}</p>
 
 <form [formGroup]="countryForm">
-  <input formControlName="countryName">
+  <input formControlName="countryName" [value]="country.name" [placeholder]="country.name">
 
-  <select formControlName="countryZone">
-    <option *ngFor="let zone in zones" [ngValue]="zone">{{zone.name}}</option>
+  <select formControlName="countryZone" (change)='zoneSelected(countryForm.value.countryZone)'>
+    <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
   </select>
-  <span>{{country.zoneId}}</span>
+  <span>Multiplier: {{country.countryMultiplier}} *</span>
 
-
-  <span>{{country.countryMultiplier}}</span>
-
-  <button (click)="updateCountry({
+  <!-- <button (click)="saveCountry({
     id: country.id,
     name: country.name,
     zoneId: country.zoneId,
     zoneName: country.zoneName,
     countryMultiplier: country.countryMultiplier
-  })">Save</button>
+  })">Save</button> -->
+
 </form>
+
+<button (click)="saveCountry()">Save</button>

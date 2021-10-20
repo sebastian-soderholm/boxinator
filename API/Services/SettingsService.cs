@@ -66,7 +66,7 @@ namespace boxinator.Services.Interfaces
         /// </summary>
         /// <returns>List of countries</returns>
         public async Task<List<Country>> GetAllCountries() =>
-            await _context.Countries.Include(x => x.Zone).ToListAsync();
+            await _context.Countries.Include(c => c.Zone).ToListAsync();
 
         /// <summary>
         /// Update country by id
@@ -109,7 +109,9 @@ namespace boxinator.Services.Interfaces
         /// <param name="zoneId"></param>
         /// <returns></returns>
         public async Task<List<Country>> GetZoneCountries(int zoneId) =>
-            await _context.Countries.Where(c => c.ZoneId == zoneId).ToListAsync();
+            await _context.Countries.Where(c => c.ZoneId == zoneId)
+            .Include(c => c.Zone)
+            .ToListAsync();
 
         /// <summary>
         /// Update Zone info

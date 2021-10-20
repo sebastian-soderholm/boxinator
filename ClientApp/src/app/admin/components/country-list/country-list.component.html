@@ -1,5 +1,11 @@
 <div>
-  <h1>Countries</h1>
+  <p>Country list</p>
+  <input *ngFor="let country in countries" [value]="country.name">
+  <!-- <app-country-list-item></app-country-list-item> -->
   <app-country-list-item *ngFor="let country of countries" [country]="country"></app-country-list-item>
+
+  <!-- <ul>
+    <li *ngFor="let country of countries">{{country.name}}</li>
+  </ul> -->
 </div>
 

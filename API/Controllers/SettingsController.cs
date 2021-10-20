@@ -17,7 +17,7 @@ namespace boxinator.Controllers
     [ApiController]
     [Route("settings")]
     [EnableCors("_myAllowSpecificOrigins")]
-    [Authorize]
+    //[Authorize]
     public class SettingsController : ControllerBase
     {
         private readonly ISettingsService _service;
@@ -84,9 +84,8 @@ namespace boxinator.Controllers
             return _mapper.Map<List<ZoneReadDTO>>(zones);
         }
 
-        //GET: /settings/zones/:zoneId
-        [HttpGet]
-        [Route("/settings/zones/{zoneId}")]
+        //GET: /settings/zones/{zoneId}
+        [HttpGet("/settings/zones/{zoneId}")]
         [AllowAnonymous]
         public async Task<ActionResult<List<CountryReadDTO>>> GetZonesCountries(int id)
         {
