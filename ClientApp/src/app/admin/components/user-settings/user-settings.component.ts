@@ -27,7 +27,7 @@ export class UserSettingsComponent implements OnInit {
   selectUser(user: User) {
     this.loadComponent = true;
     this.selectedUser = user;
-    //this._sessionService.setFetchedUserInfo(user)
+    this._sessionService.setFetchedUserInfo(user)
   }
 
   public onSearch(input: string): void {
