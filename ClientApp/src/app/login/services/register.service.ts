@@ -21,7 +21,7 @@ export class RegisterService {
   ) {}
 
   public registerUser(registerUserInfo: RegisterUser, onSuccess: () => void): void {
-    const token = sessionStorage.getItem('token') as string
+    const token = this.sessionService.token;
     const id = this.sessionService.user!.id;
     const httpOptions = {
       headers: new HttpHeaders({

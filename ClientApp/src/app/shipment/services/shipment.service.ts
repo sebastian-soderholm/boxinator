@@ -48,7 +48,7 @@ export class ShipmentService {
     .set("dateFromFilter", dateFromFilter != null ? dateFromFilter.toString() : "")
     .set("dateToFilter", dateToFilter != null ? dateToFilter.toString() : "")
 
-    const token = sessionStorage.getItem('token') as string
+    const token = this.sessionService.token;
 
 		const httpOptions = {
 		  headers: new HttpHeaders({

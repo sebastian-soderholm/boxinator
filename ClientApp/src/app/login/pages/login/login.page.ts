@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SessionService } from 'src/app/shared/session.service';
 import { LoginService } from '../../services/login.service';
 
 @Component({
@@ -11,6 +12,7 @@ export class LoginPage implements OnInit {
   
   constructor(
     private readonly loginService: LoginService,
+    private readonly sessionService: SessionService,
     private readonly router: Router
   )
   {}
@@ -34,7 +36,7 @@ export class LoginPage implements OnInit {
 
   public googleLogin(): void {
     this.loginService.googleLogin( () => {
-      const token = sessionStorage.getItem('token') as string
+      const token = this.sessionService.token!;
       this.loginService.verifyUser(token)
     });
   }
