@@ -7,28 +7,26 @@ import { RegisterUser } from '../../models/register-user.model';
 import { LoginService } from '../../services/login.service';
 import { RegisterService } from '../../services/register.service';
 import { SessionService } from '../../../shared/session.service';
-import { passwordsMatch } from './fields-match'
+import { passwordsMatch } from './fields-match';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
-  styleUrls: ['./register.page.scss']
+  styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
   private _registerUser: RegisterUser = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
+    id: this.sessionService.user!.id,
+    firstName: '',
+    lastName: '',
+    email: this.sessionService.user!.email,
     countryId: null,
     zipCode: null,
     dateOfBirth: null,
-    phoneNumber: null
-  }
-  private _countries: Country[] = []
-  private _registerForm: any
-  private _confirmPassword: string = ""
-
+    phoneNumber: null,
+  };
+  private _countries: Country[] = [];
+  private _registerForm: any;
 
   constructor(
     private readonly loginService: LoginService,
@@ -36,33 +34,99 @@ export class RegisterPage implements OnInit {
     private readonly router: Router,
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    if(this.loginService.loggedIn) {
-      this.router.navigate(['dashboard'])
+    if (this.loginService.loggedIn) {
+      this.router.navigate(['dashboard']);
     }
-
     this.countryService.fetchCountriesToSession(async () => {
       this._countries = this.sessionService.countries!;
-      // console.log(this.sessionService.countries);
+      console.log(this.sessionService.countries);
     });
 
-    //Fetch all countries
-    // this.countryService.getCountries(async () => {
-    //   console.log(this.countryService.countries);
-    // })
-    this._registerForm = new FormGroup({
-      firstName: new FormControl(this._registerUser.firstName, [
-        Validators.required,
-        //Must contain letters
-        Validators.pattern(/[a-z]/gi)
-      ]),
-      lastName: new FormControl(this._registerUser.lastName, [
-        Validators.required,
-        //Must contain letters
-        Validators.pattern(/[a-z]/gi)
-      ]),
+    this._registerForm = new FormGroup(
+      {
+        firstName: new FormControl(this._registerUser.firstName, [
+          Validators.required,
+          //Must contain letters
+          Validators.pattern(/[a-z]/gi),
+        ]),
+        lastName: new FormControl(this._registerUser.lastName, [
+          Validators.required,
+          //Must contain letters
+          Validators.pattern(/[a-z]/gi),
+        ]),
+        dateOfBirth: new FormControl(this._registerUser.dateOfBirth, [
+          // Validators.pattern(/a-zA-Z/)
+        ]),
+        // country: new FormControl(this._registerUser.country, [
+        //   //Must contain only letters
+        //   Validators.pattern(/[a-z]/gi)
+        // ]),
+        countries: new FormControl(this._registerUser.countryId, [
+          //Must contain only letters
+          // Validators.pattern(/[a-z]/gi)
+        ]),
+        zipCode: new FormControl(this._registerUser.zipCode, [
+          //Must be a minimum length
+          Validators.minLength(5),
+          //Must contain only numbers
+          Validators.pattern(/^[0-9]*$/),
+        ]),
+        phoneNumber: new FormControl(this._registerUser.phoneNumber, [
+          //Must be a valid phone number format
+          // Validators.pattern(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/)
+        ]),
+      },
+      { validators: passwordsMatch }
+    );
+  }
+
+  register(): void {
+    this._registerUser.firstName = this._registerForm.get('firstName').value;
+    this._registerUser.lastName = this._registerForm.get('lastName').value;
+    this._registerUser.dateOfBirth = this._registerForm.get('dateOfBirth').value;
+    this._registerUser.countryId = this._registerForm.get('countries').value; //Apply countryId only if selected
+    this._registerUser.zipCode = this._registerForm.get('zipCode').value;
+    this._registerUser.phoneNumber = this._registerForm.get('phoneNumber').value;
+    this.registerService.registerUser(this._registerUser, function(){
+       console.log("User registered successfully!")
+    })
+  }
+  get registerForm() {
+    return this._registerForm;
+  }
+  //Form fields
+  get firstName() {
+    return this._registerForm.get('firstName');
+  }
+  get lastName() {
+    return this._registerForm.get('lastName');
+  }
+  get email() {
+    return this._registerForm.get('email');
+  }
+  get dateOfBirth() {
+    return this._registerForm.get('dateOfBirth');
+  }
+  get country() {
+    return this._registerForm.get('country');
+  }
+  get countries() {
+    return this._countries;
+  }
+  get zipCode() {
+    return this._registerForm.get('zipCode');
+  }
+  get phoneNumber() {
+    return this._registerForm.get('phoneNumber');
+  }
+}
+
+/* 
+      Email & password validation
+
       email: new FormControl(this._registerUser.email, [
         Validators.required,
         //Must be in email format
@@ -78,84 +142,5 @@ export class RegisterPage implements OnInit {
         Validators.required,
         //At least one lowercase letter, one uppercase letter, one number, one special character
         // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/),
-
-      ]),
-      dateOfBirth: new FormControl(this._registerUser.dateOfBirth, [
-        // Validators.pattern(/a-zA-Z/)
-      ]),
-      // country: new FormControl(this._registerUser.country, [
-      //   //Must contain only letters
-      //   Validators.pattern(/[a-z]/gi)
-      // ]),
-      countries: new FormControl(this._registerUser.countryId, [
-        //Must contain only letters
-        // Validators.pattern(/[a-z]/gi)
-      ]),
-      zipCode: new FormControl(this._registerUser.zipCode, [
-        //Must be a minimum length
-        Validators.minLength(5),
-        //Must contain only numbers
-        Validators.pattern(/^[0-9]*$/)
-      ]),
-      phoneNumber: new FormControl(this._registerUser.phoneNumber, [
-        //Must be a valid phone number format
-        // Validators.pattern(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/)
-      ]),
-    },{ validators: passwordsMatch });
-  }
-
-  register(): void {
-    this._registerUser.firstName = this._registerForm.get('firstName').value
-    this._registerUser.lastName = this._registerForm.get('lastName').value
-    this._registerUser.email = this._registerForm.get('email').value
-    this._registerUser.password = this._registerForm.get('password').value
-
-    this._registerUser.dateOfBirth = this._registerForm.get('dateOfBirth').value
-    // this._registerUser.dateOfBirth = "2021-10-12T18:00:15.956Z"
-
-    //Apply countryId only if selected
-    this._registerUser.countryId = this._registerForm.get('countries').value
-
-    this._registerUser.zipCode = this._registerForm.get('zipCode').value
-    this._registerUser.phoneNumber = this._registerForm.get('phoneNumber').value
-
-    console.log("Register user: " + JSON.stringify(this._registerUser))
-    // this.registerService.registerUser(this._registerUser, function(){
-    //   console.log("User registered successfully!")
-    // })
-  }
-  get registerForm() {
-    return this._registerForm
-  }
-  //Form fields
-  get firstName() {
-    return this._registerForm.get('firstName')
-  }
-  get lastName() {
-    return this._registerForm.get('lastName')
-  }
-  get email() {
-    return this._registerForm.get('email')
-  }
-  get password() {
-    return this._registerForm.get('password')
-  }
-  get confirmPassword() {
-    return this._registerForm.get('confirmPassword')
-  }
-  get dateOfBirth() {
-    return this._registerForm.get('dateOfBirth')
-  }
-  get country() {
-    return this._registerForm.get('country')
-  }
-  get countries() {
-    return this._countries;
-  }
-  get zipCode() {
-    return this._registerForm.get('zipCode')
-  }
-  get phoneNumber() {
-    return this._registerForm.get('phoneNumber')
-  }
-}
+      ]), 
+      */

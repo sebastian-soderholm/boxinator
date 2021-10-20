@@ -38,6 +38,14 @@ export class LoginService {
     this._loggedIn = true;
   }
 
+  get loggedIn(): boolean {
+    return this._loggedIn;
+  }
+
+  setLoggedIn(loggedIn: boolean): void {
+    this._loggedIn = loggedIn;
+  }
+
   async logout() {
     await this.afAuth.signOut(); // Sign out from Firebase
     this._user = undefined;
@@ -47,9 +55,8 @@ export class LoginService {
     this.router.navigate(['']);
   }
 
-  get loggedIn(): boolean {
-    return this._loggedIn;
-  }
+
+
 
   // get req, call another method (post) if necessary
   public verifyUser(token: string): void {
@@ -64,6 +71,12 @@ export class LoginService {
       .subscribe((user: User) => {
         this.sessionService.setUser(user);
         this._user = user;
+        if(this._user.firstName != null ) {
+          this._loggedIn = true;
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.router.navigate(['/register']);
+        }
       });
   }
 

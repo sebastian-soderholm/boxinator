@@ -22,9 +22,4 @@ export class MenuPage implements OnInit {
     console.log("Logging out..." + " sessionStorage: " + this.loginService.user)
     this.router.navigate([''])
   }
-
-  get isLoggedIn(): boolean {
-    return this.loginService.loggedIn
-  }
-
 }

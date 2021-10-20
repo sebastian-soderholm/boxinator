@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { LoginService } from './login/services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,12 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class AppComponent {
   title = 'Boxinator';
+
+  constructor(
+    private readonly loginService: LoginService,
+    ) { }
+
+  get isLoggedIn(): boolean {
+    return this.loginService.loggedIn
+  }
 }
