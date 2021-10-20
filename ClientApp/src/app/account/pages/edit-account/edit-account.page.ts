@@ -34,7 +34,7 @@ export class EditAccountPage implements OnInit, OnChanges {
   ) {}
   
   ngOnChanges() {
-    this._editUser = this.showAdminSelection == true ? this.incomingUser : this._sessionService.user;
+    this._editUser = this.showAdminSelection == true ? this._sessionService.userForAdmin : this._sessionService.user;
   }
 
   ngOnInit(): void {
