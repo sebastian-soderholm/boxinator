@@ -135,12 +135,13 @@ export class CountrySettingsComponent implements OnInit {
           countryName: new FormControl(country.name, [Validators.required]),
           countryZone: new FormControl(country.zoneName, [Validators.required]),
         });
-        console.log("Country Form: ", countryForm)
+        // console.log("Country Form: ", countryForm)
 
         // this._countriesFormArray.push(new FormArray([]))
-        this._countriesFormArray.push(countryForm)
+        // this._countriesFormArray.push(countryForm)
       }
     });
+    console.table(this._settingsForm)
   }
 
   get zones() {

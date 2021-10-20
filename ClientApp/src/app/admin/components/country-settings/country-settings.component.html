@@ -12,7 +12,7 @@
 
     <form [formGroupName]="i">
 
-      <input formControlName="countryName" [value]="control.value.countryName" >
+      <input type="text" formControlName="countryName" [value]="control.value.countryName" >
 
       <!-- Change country name -->
       <!-- <p>{{}}</p> -->
@@ -22,13 +22,14 @@
         <option *ngFor="let zone of zones" [ngValue]="control.value.zoneId">{{control.value.zoneName}}</option>
       </select>
 
+      <p>UneditedCountry: {{settingsForm.controls.countriesFormArray.controls[i].uneditedCountry}}</p>
       <!-- <button (click)="countrySave(i)">Save</button> -->
 
       <!-- Return edited country object fields on click -->
       <button (click)="countrySave({
         id: countriesFormArray.at(i).get('uneditedCountry')?.value.id,
         name: countriesFormArray.at(i).get('countryName')?.value,
-        zoneId: countriesFormArray.at(i).get('countryZone')?.value
+        zoneId: countriesFormArray.at(i).get('countryZone')?.value.id
       })">Save</button>
     </form>
   </div>
