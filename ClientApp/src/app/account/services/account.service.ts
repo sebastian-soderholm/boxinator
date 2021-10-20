@@ -35,7 +35,7 @@ export class AccountService {
 
   // for admin
   public getUserById(userId: number, onSuccess: () => void): void {
-    this.http.get<User>(this._apiUrl + /account/+userId, this.extensionService.authenticationHeadersFull)
+    this.http.get<User>(this._apiUrl + '/account/'+userId, this.extensionService.authenticationHeadersFull)
     .subscribe((user: User) => {
       console.log(user)
       this.sessionService.setFetchedUserInfo(user);

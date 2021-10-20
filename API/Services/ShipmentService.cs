@@ -19,6 +19,38 @@ namespace boxinator.Services
             _context = context;
         }
 
+        public async Task<ShipmentStatusLog> AddStatusLog(int shipmentId)
+        {
+            var newestStatusLog = await _context.ShipmentStatusLogs.AsNoTracking()
+                .Where(x => x.ShipmentId == shipmentId).OrderByDescending(x => x.Date)
+                .Include(s => s.Shipment)
+                .FirstOrDefaultAsync();
+
+            // get next status
+            Status nextStatus = _context.Statuses.AsNoTracking().Where(x => x.Id == (newestStatusLog.StatusId + 1)).FirstOrDefaultAsync().Result;
+
+            if (newestStatusLog != null)
+            {
+                ShipmentStatusLog newLog = new ShipmentStatusLog();
+                newLog.ShipmentId = newestStatusLog.ShipmentId;
+                newLog.StatusId = nextStatus.Id;
+                newLog.Date = DateTime.Now;
+
+                var resultShipmentStatusLog = await _context.ShipmentStatusLogs.AddAsync(newLog);
+
+                if (resultShipmentStatusLog.Entity != null)
+                {
+                    await _context.SaveChangesAsync();
+                    resultShipmentStatusLog.Entity.Shipment = newestStatusLog.Shipment;
+                    resultShipmentStatusLog.Entity.Status = nextStatus;
+                }
+
+                return resultShipmentStatusLog.Entity;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Add new shipment
         /// </summary>
@@ -123,7 +155,12 @@ namespace boxinator.Services
         {
             var currentUserId = 1;
 
-            var query = _context.ShipmentStatusLogs.Where(s => s.StatusId != (int)StatusCodes.CANCELLED && s.StatusId != (int)StatusCodes.COMPELED);
+            var newestShipmentIds = _context.ShipmentStatusLogs.AsEnumerable()
+                    .GroupBy(x => x.ShipmentId)
+                    .Select(x => x.OrderByDescending(y => y.Date).Distinct().FirstOrDefault())
+                    .Where(s => s.StatusId != (int)StatusCodes.CANCELLED && s.StatusId != (int)StatusCodes.COMPELED).Select(x => x.ShipmentId).ToList();
+
+            var query = _context.ShipmentStatusLogs.Where(x => newestShipmentIds.Contains(x.ShipmentId));
 
             if (from != null && to != null)
                 query = query.Where(x => x.Date >= from && x.Date < to);

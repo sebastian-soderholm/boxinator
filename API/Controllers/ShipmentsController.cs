@@ -190,6 +190,14 @@ namespace boxinator.Controllers
             return await _service.Delete(shipmentId);
         }
 
+        [HttpGet("/shipments/log/{shipmentId}")]
+        public async Task<ActionResult<ShipmentStatusLogReadDTO>> UpdateStatus(int shipmentId)
+        {
+            ShipmentStatusLog updatedLog = await _service.AddStatusLog(shipmentId);
+            return _mapper.Map<ShipmentStatusLogReadDTO>(updatedLog);
+
+        }
+
 
     }
 }

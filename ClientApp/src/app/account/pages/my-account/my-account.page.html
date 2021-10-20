@@ -1,27 +1,28 @@
 <h1>MY ACCOUNT PAGE</h1>
-<fieldset>
-	<mat-form-field class="full-width" appearance="outline">
+<mat-form-field appearance="standard">
+	<mat-form-field class="full-width" appearance="standard">
 		<input [readonly]="readonly" autocomplete="off" matInput placeholder="First name">{{ userInfo?.firstName }}
 	</mat-form-field>
-	<mat-form-field class="full-width" appearance="outline">
+	<mat-form-field class="full-width" appearance="standard">
 		<input [readonly]="readonly" autocomplete="off" matInput placeholder="Last name">{{ userInfo?.lastName }}
 	</mat-form-field>
-	<mat-form-field class="full-width" appearance="outline">
+	<mat-form-field class="full-width" appearance="standard">
 		<input [readonly]="readonly" autocomplete="off" matInput placeholder="Email">{{ userInfo?.email }}
 	</mat-form-field>
-	<mat-form-field class="full-width" appearance="outline">
-		<input [readonly]="readonly" autocomplete="off" matInput placeholder="Date of birth">{{ userInfo?.dateOfBirth }}
+	<mat-form-field class="full-width" appearance="standard">
+		<input [readonly]="readonly" autocomplete="off" matInput placeholder="Date of birth">{{ userInfo?.dateOfBirth | date }}
 	</mat-form-field>
-	<mat-form-field class="full-width" appearance="outline">
+	<mat-form-field class="full-width" appearance="standard">
 		<input [readonly]="readonly" autocomplete="off" matInput placeholder="Country">{{ userInfo?.countryId }}
 	</mat-form-field>
-	<mat-form-field class="full-width" appearance="outline">
+	<mat-form-field class="full-width" appearance="standard">
 		<input [readonly]="readonly" autocomplete="off" matInput placeholder="Zip code">{{ userInfo?.zipCode }}
 	</mat-form-field>
-	<mat-form-field class="full-width" appearance="outline">
+	<mat-form-field class="full-width" appearance="standard">
 		<input [readonly]="readonly" autocomplete="off" matInput placeholder="Contact number">{{ userInfo?.phoneNumber }}
 	</mat-form-field>
-</fieldset>
+	<button routerLink="/my-account/edit">Edit account</button>
+
+</mat-form-field>
 
 
-<button routerLink="/my-account/edit">Edit account</button>

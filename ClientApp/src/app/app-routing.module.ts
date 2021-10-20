@@ -10,6 +10,7 @@ import { MyAccountPage } from './account/pages/my-account/my-account.page';
 import { EditAccountPage } from './account/pages/edit-account/edit-account.page';
 import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipment.page';
 import { SettingsPage } from './admin/pages/settings/settings.page';
+import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.page';
 
 const routes: Routes = [
   {
@@ -57,6 +58,11 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsPage,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'edit-shipment/:id',
+    component: EditShipmentPage,
     canActivate: [AuthGuard]
   },
   {path: '**', redirectTo: ''},

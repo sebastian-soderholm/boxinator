@@ -1,3 +1,8 @@
+<!-- New shipment navigation -->
+<div>
+  <button class="new-shipment-btn" mat-flat-button color="warn" routerLink="/new-shipment">CREATE A NEW SHIPMENT</button>
+</div>
+
 <!-- Filtering options -->
 <mat-form-field>
   <mat-label>Status option</mat-label>
@@ -6,10 +11,12 @@
     <mat-option [value]="status.id" *ngFor="let status of statusOptions">{{status.name}}</mat-option>
   </mat-select>
 </mat-form-field>
+
+<!-- Date pickers -->
 <input type="date" placeholder="From" [ngModel]="fromDate" (ngModelChange)="setSelectedFilterOption('from', $event)">
 <input type="date" placeholder="To" [ngModel]="toDate" (ngModelChange)="setSelectedFilterOption('to', $event)">
 
-<button type="submit" (click)="filterTable()">Filter</button>
+<button mat-flat-button color="accent" type="submit" (click)="filterTable()">Filter</button>
 <!-- Column visibility -->
 <h3>Toggle column visibility</h3>
 <mat-button-toggle-group name="selectedColumns" aria-label="selectedColumns" multiple>
@@ -24,18 +31,18 @@
 <table matSort mat-table [dataSource]="sortedData" multiTemplateDataRows class="mat-elevation-z8" (matSortChange)="sortData($event)">
   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
     <th mat-sort-header mat-header-cell *matHeaderCellDef> {{column | uppercase}} </th>
-    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+    <td mat-cell *matCellDef="let shipmentTableData"> {{shipmentTableData[column]}} </td>
   </ng-container>
 
   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
   <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-      <div class="example-element-detail" [@detailExpand]="element == element.boxes ? 'expanded' : 'collapsed'">
+    <td mat-cell *matCellDef="let shipmentTableData" [attr.colspan]="columnsToDisplay.length">
+      <div class="example-element-detail" [@detailExpand]="shipmentTableData == shipmentTableData.boxes ? 'expanded' : 'collapsed'">
         <div class="example-element-diagram">
           <div class="example-element-color">
             <h2>Boxes</h2>
             <ul class="element.boxes">
-              <li *ngFor="let box of element.expandedData.boxes">
+              <li *ngFor="let box of shipmentTableData.expandedData.boxes">
                 <p [ngStyle]="{'color': box.color}">BOX</p>
               </li>
             </ul>
@@ -45,15 +52,19 @@
           <div class="example-element-color">
             <h2>Info</h2>
             <ul class="element.boxes">
-              <li *ngFor="let log of element.expandedData.shipmentStatusLogs">
-                {{log.date}}---{{log.status.name}}
+              <li *ngFor="let log of shipmentTableData.expandedData.shipmentStatusLogs">
+                {{log.date | date}}---{{log.status.name}}
               </li>
             </ul>
           </div>
         </div>  
-        <div class="example-element-diagram">
+        <div class="example-element-diagram" *ngIf="shipmentTableData.status != 'CANCELLED' && shipmentTableData.status != 'COMPLETED'">
           <div class="example-element-color">
-            <h2>Buttons etc</h2>
+            <h2>Edit</h2>
+            <div>
+              <button mat-flat-button color="accent" (click)="addNewStatus(shipmentTableData.id)">Update status</button>
+              <button mat-flat-button color="accent" [routerLink]="['/edit-shipment/', shipmentTableData.id]">Edit</button>
+            </div>
           </div>
         </div> 
       </div>
@@ -61,10 +72,10 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+  <tr mat-row *matRowDef="let shipmentTableData; columns: columnsToDisplay;"
       class="example-element-row"
-      [class.example-expanded-row]="element.boxes === element"
-      (click)="element.boxes = element.boxes === element ? null : element">
+      [class.example-expanded-row]="shipmentTableData.boxes === shipmentTableData"
+      (click)="shipmentTableData.boxes = shipmentTableData.boxes === shipmentTableData ? null : shipmentTableData">
   </tr>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
