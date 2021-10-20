@@ -426,35 +426,35 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 20, 15, 36, 7, 795, DateTimeKind.Local).AddTicks(2977),
+                            Date = new DateTime(2021, 10, 20, 20, 23, 10, 720, DateTimeKind.Local).AddTicks(7245),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 20, 15, 36, 7, 797, DateTimeKind.Local).AddTicks(7579),
+                            Date = new DateTime(2021, 10, 20, 20, 23, 10, 723, DateTimeKind.Local).AddTicks(6748),
                             ShipmentId = 1,
                             StatusId = 3
                         },
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2021, 10, 20, 15, 36, 7, 797, DateTimeKind.Local).AddTicks(7609),
+                            Date = new DateTime(2021, 10, 20, 20, 23, 10, 723, DateTimeKind.Local).AddTicks(6782),
                             ShipmentId = 2,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2021, 10, 20, 15, 36, 7, 797, DateTimeKind.Local).AddTicks(7613),
+                            Date = new DateTime(2021, 10, 20, 20, 23, 10, 723, DateTimeKind.Local).AddTicks(6787),
                             ShipmentId = 2,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 5,
-                            Date = new DateTime(2021, 10, 20, 15, 36, 7, 797, DateTimeKind.Local).AddTicks(7616),
+                            Date = new DateTime(2021, 10, 20, 20, 23, 10, 723, DateTimeKind.Local).AddTicks(6790),
                             ShipmentId = 3,
                             StatusId = 1
                         });
