@@ -3,11 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { LoginUser } from '../models/login-user.model';
 import { User } from '../../account/models/user.model';
 import { SessionService } from 'src/app/shared/session.service';
 
@@ -15,10 +11,7 @@ import { SessionService } from 'src/app/shared/session.service';
   providedIn: 'root',
 })
 export class LoginService {
-  user$: Observable<User | null | undefined>;
   private _user: User | undefined;
-  private _loginUser: LoginUser | undefined;
-  private _jwt: string = '';
   private _loggedIn: boolean = false;
   private _apiUrl = environment.baseURL;
 
@@ -27,39 +20,12 @@ export class LoginService {
     private readonly router: Router,
     private readonly sessionService: SessionService,
     private afAuth: AngularFireAuth,
-    private afs: AngularFirestore
   ) {
-    this.user$ = this.afAuth.authState.pipe(
-      // Get the auth state, then fetch the Firestore user document or return null
-      switchMap((user) => {
-        // Logged in
-        if (user) {
-          return this.afs.doc<User>('users/${user.uid}').valueChanges();
-          // Logged out
-        } else {
-          return of(null);
-        }
-      })
-    );
     const sessionStorageUser = sessionStorage.getItem('user');
     if (sessionStorageUser) {
       this._user = JSON.parse(sessionStorageUser) as User;
-      console.log(sessionStorageUser + ' logged in');
       this._loggedIn = true;
-      // this.userLoggedIn(this._jwt);
     }
-  }
-
-  private async userLoggedIn(token: string) {
-    await this.http
-      .get<User[]>(`${this._apiUrl}/loggedin?token=${token}`)
-      .subscribe((user) => {
-        if (user) {
-          this._loggedIn = true;
-        } else {
-          this.logout();
-        }
-      });
   }
 
   get user(): User | undefined {
@@ -76,6 +42,7 @@ export class LoginService {
     await this.afAuth.signOut(); // Sign out from Firebase
     this._user = undefined;
     sessionStorage.removeItem('user');
+    sessionStorage.removeItem('token');
     this._loggedIn = false;
     this.router.navigate(['']);
   }
@@ -86,7 +53,6 @@ export class LoginService {
 
   // get req, call another method (post) if necessary
   public verifyUser(token: string): void {
-    console.log("testi",token);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -97,58 +63,16 @@ export class LoginService {
       .get<User>(this._apiUrl + '/login/verify', httpOptions)
       .subscribe((user: User) => {
         this.sessionService.setUser(user);
-        console.log(user);
       });
   }
 
   async googleLogin(onSuccess: () => void) {
     const provider = new firebase.auth.GoogleAuthProvider();
-    await this.afAuth.signInWithPopup(provider).then(function (result: any) {
-      result.user.getIdToken().then((token:any) => {
-        console.log("oikee",token);
+    await this.afAuth.signInWithPopup(provider).then(async function (result: any) {
+      await result.user.getIdToken().then((token:any) => {
         sessionStorage.setItem('token', token);
-
       })
-      /*
-      console.log(result.credential.idToken)
-      var token = result.credential.accessToken;
-      var user = result.user;
-      let newUser: LoginUser = {
-        email: user.email,
-        password: 'x',
-      }
-      sessionStorage.setItem("user", JSON.stringify(newUser)); */
-      sessionStorage.setItem('token', result.credential.idToken);
       onSuccess();
     });
-    /*console.log(result.credential.idToken)
-      var token = user.getIdToken(true).then((idToken: any) => {
-        const data = {
-          email: user.email,
-          password: 'x',
-        }
-        let newUser: LoginUser = {
-          email: user.email,
-          password: 'x',
-        }
-        sessionStorage.setItem("user", JSON.stringify(newUser));
-        sessionStorage.setItem("token", JSON.stringify(result.credential.idToken));
-        console.log(idToken);
-
-      })
-      alert("login OK" + token);
-      const data = {
-        email: user.email,
-        password: 'x',
-      }
-      let newUser: LoginUser = data
-      sessionStorage.setItem("token", JSON.stringify(token));
-      sessionStorage.setItem("user", JSON.stringify(newUser));
-      .then((result: any) => {
-      console.log(result)
-      const userRef: AngularFirestoreDocument<LoginUser> = this.afs.doc(`users/${result.user.uid}`)
-      userRef.set(result.user, { merge: true })
-    })
-    */
   }
 }

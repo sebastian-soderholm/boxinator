@@ -20,38 +20,15 @@
       <p>Last name can only contain letters</p>
     </div>
   </div>
-  <!-- Email -->
-  <!-- <input class="form-control" formControlName="email" type="email" placeholder="Email" required>
-  <div *ngIf="email.dirty || email.touched" class="alert">
-    <div *ngIf="email.errors?.required">
-      <p>Email is required</p>
-    </div>
-    <div *ngIf="email.errors?.minlength">
-      <p>Email is too short</p>
-    </div>
-    <div *ngIf="email.errors?.pattern">
-      <p>Email format is invalid</p>
-    </div>
-  </div> -->
 
   <!-- Date -->
   <input  formControlName="dateOfBirth" type="date" placeholder="Date of birth">
 
-  <!-- Country -->
-  <!-- <select  formControlName="countryId" type="number" placeholder="1">
-  <div *ngIf="countryId.dirty || countryId.touched" class="alert"> -->
-    <!-- <div *ngIf="countryId.errors?.pattern">
-      <p>Country name can only contain letters</p>
-    </div> -->
-  <!-- </div> -->
-
-  <!-- Destination country -->
+  <!-- user country -->
   <select formControlName="countryId">
     <option *ngIf="!countries" selected>Loading countries...</option>
     <option [ngValue]="country.id" *ngFor="let country of countries">{{country.name}}</option>
   </select>
-
-
 
   <!-- Postal code -->
   <input formControlName="zipCode" type="text" placeholder="Postal code">
