@@ -77,6 +77,11 @@ export class SessionService {
 		sessionStorage.setItem('userForAdmin', JSON.stringify(fetchedUser))
 	}
 
+  logout(): void {
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+  }
+
   get shipments(): Shipment[] | undefined {
     return this._shipments;
   }

@@ -48,7 +48,7 @@ export class AccountService {
     const params = new HttpParams()
     .set("searchTerm", searchTerm)
 
-    const token = sessionStorage.getItem('token') as string
+    const token = this.sessionService.token;
 
 		const httpOptions = {
 		  headers: new HttpHeaders({

@@ -1,4 +1,4 @@
-<h1>Register</h1>
+<h1>Register to Boxinator</h1>
 <form class="form" [formGroup]="registerForm">
   <!-- First name -->
   <input class="form-control" formControlName="firstName" type="text" placeholder="First name" required>
@@ -20,61 +20,13 @@
       <p>Last name can only contain letters</p>
     </div>
   </div>
-  <!-- Email -->
-  <input class="form-control" formControlName="email" type="email" placeholder="Email" required>
-  <div *ngIf="email.dirty || email.touched" class="alert">
-    <div *ngIf="email.errors?.required">
-      <p>Email is required</p>
-    </div>
-    <div *ngIf="email.errors?.minlength">
-      <p>Email is too short</p>
-    </div>
-    <div *ngIf="email.errors?.pattern">
-      <p>Email format is invalid</p>
-    </div>
-  </div>
-
-  <!-- Password -->
-  <input class="form-control" formControlName="password" type="password" placeholder="Password" required>
-  <div *ngIf="password.dirty || password.touched" class="alert">
-    <div *ngIf="password.errors?.required">
-      <p>Password is required</p>
-    </div>
-    <div *ngIf="password.errors?.minlength">
-      <p>Password is too short</p>
-    </div>
-    <div *ngIf="password.errors?.pattern">
-      <p>Password must contain at least one lowercase and uppercase character, number and special character</p>
-    </div>
-  </div>
-  <!-- Password confirmation -->
-  <input class="form-control" formControlName="confirmPassword" type="password" placeholder="Confirm password" required>
-  <div *ngIf="confirmPassword.dirty || confirmPassword.touched" class="alert">
-    <div *ngIf="confirmPassword.errors?.required">
-      <p>Password is required</p>
-    </div>
-    <div *ngIf="!registerForm.errors?.passwordsMatch">
-      <p>Passwords are not equal</p>
-    </div>
-  </div>
-
   <!-- Date -->
   <input  formControlName="dateOfBirth" type="date" placeholder="Date of birth" max="2021-10-11">
-
-  <!-- Country -->
-  <!-- <input  formControlName="country" type="text" placeholder="Country of residence">
-  <div *ngIf="country.dirty || country.touched" class="alert">
-    <div *ngIf="country.errors?.pattern">
-      <p>Country name can only contain letters</p>
-    </div>
-  </div> -->
-
   <!-- Countries -->
   <select formControlName="countries">
     <option value="" selected>Choose your country</option>
     <option [ngValue]="country.id" *ngFor="let country of countries">{{country.name}}</option>
   </select>
-
   <!-- Postal code -->
   <input formControlName="zipCode" type="text" placeholder="Postal code">
   <div *ngIf="zipCode.dirty || zipCode.touched" class="alert">
@@ -92,19 +44,63 @@
       <p>Format invalid</p>
     </div>
   </div>
-
-  <!-- <button (click)="register()">Register</button> -->
+  <!-- Submit button -->
   <button type="submit" (click)="register()" [disabled]="
   registerForm.controls['firstName'].invalid ||
   registerForm.controls['lastName'].invalid  ||
-  registerForm.controls['email'].invalid  ||
-  registerForm.controls['password'].invalid  ||
-  registerForm.controls['confirmPassword'].invalid ||
   registerForm.controls['dateOfBirth'].invalid ||
-
   registerForm.controls['zipCode'].invalid ||
   registerForm.controls['phoneNumber'].invalid
   ">
     Submit
   </button>
 </form>
+
+
+<!-- 
+Email 
+  <input class="form-control" formControlName="email" type="email" placeholder="Email" required>
+  <div *ngIf="email.dirty || email.touched" class="alert">
+    <div *ngIf="email.errors?.required">
+      <p>Email is required</p>
+    </div>
+    <div *ngIf="email.errors?.minlength">
+      <p>Email is too short</p>
+    </div>
+    <div *ngIf="email.errors?.pattern">
+      <p>Email format is invalid</p>
+    </div>
+  </div>
+
+Password
+  <input class="form-control" formControlName="password" type="password" placeholder="Password" required>
+  <div *ngIf="password.dirty || password.touched" class="alert">
+    <div *ngIf="password.errors?.required">
+      <p>Password is required</p>
+    </div>
+    <div *ngIf="password.errors?.minlength">
+      <p>Password is too short</p>
+    </div>
+    <div *ngIf="password.errors?.pattern">
+      <p>Password must contain at least one lowercase and uppercase character, number and special character</p>
+    </div>
+  </div>
+Password confirmation 
+  <input class="form-control" formControlName="confirmPassword" type="password" placeholder="Confirm password" required>
+  <div *ngIf="confirmPassword.dirty || confirmPassword.touched" class="alert">
+    <div *ngIf="confirmPassword.errors?.required">
+      <p>Password is required</p>
+    </div>
+    <div *ngIf="!registerForm.errors?.passwordsMatch">
+      <p>Passwords are not equal</p>
+    </div>
+  </div>
+
+ Country 
+ <input  formControlName="country" type="text" placeholder="Country of residence">
+  <div *ngIf="country.dirty || country.touched" class="alert">
+    <div *ngIf="country.errors?.pattern">
+      <p>Country name can only contain letters</p>
+    </div>
+  </div>
+-->
