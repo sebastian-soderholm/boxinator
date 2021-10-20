@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { passwordsMatch } from 'src/app/login/pages/register/fields-match';
@@ -16,12 +16,13 @@ import { DatePipe } from '@angular/common';
   templateUrl: './edit-account.page.html',
   styleUrls: ['./edit-account.page.scss'],
 })
-export class EditAccountPage implements OnInit {
+export class EditAccountPage implements OnInit, OnChanges {
   private _editUser: User | undefined;
   private _countries: Country[] = [];
   private _editUserForm: any;
   private _confirmPassword: string = '';
   @Input() showAdminSelection: boolean = false;
+  @Input() incomingUser: User | undefined;
 
   constructor(
     private readonly _loginService: LoginService,
@@ -31,6 +32,10 @@ export class EditAccountPage implements OnInit {
     private readonly _countryService: CountryService,
     private readonly _datepipe: DatePipe
   ) {}
+  
+  ngOnChanges() {
+    this._editUser = this.showAdminSelection == true ? this.incomingUser : this._sessionService.user;
+  }
 
   ngOnInit(): void {
     this._editUser = this.showAdminSelection == true ? this._sessionService.userForAdmin : this._sessionService.user;

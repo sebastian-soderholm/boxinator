@@ -43,7 +43,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
 
 //Color picker
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -102,7 +103,8 @@ import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.p
     ColorPickerModule,
     MatExpansionModule,
     MatDatepickerModule,
-    MatNativeDateModule 
+    MatNativeDateModule,
+    MatListModule
   ],
   providers: [
     DatePipe

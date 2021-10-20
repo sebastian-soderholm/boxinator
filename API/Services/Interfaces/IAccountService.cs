@@ -13,7 +13,7 @@ namespace boxinator.Services.Interfaces
         public Task<User> Add(User user);
         public Task<bool> Delete(int id);
         public Task<User> GetUser(string email);
-        public Task<User> Search(string term);
+        public Task<List<User>> Search(string term);
 
     }
 }

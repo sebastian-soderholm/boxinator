@@ -57,11 +57,11 @@ export class AccountService {
 		  }),
 		};
 
-    this.http.get<User>(this._apiUrl + '/account', { headers: httpOptions.headers, params: params})
-    .subscribe((user: User) => { 
-      console.log(user)
-      if(user != null){
-        this.sessionService.setFetchedUserInfo(user);
+    this.http.get<User[]>(this._apiUrl + '/account', { headers: httpOptions.headers, params: params})
+    .subscribe((users: User[]) => { 
+      console.log(users)
+      if(users.length > 0){
+        this.sessionService.setFetchedUsersInfo(users);
         onSuccess();
       }
     });

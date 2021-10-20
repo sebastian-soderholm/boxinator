@@ -100,17 +100,16 @@ namespace boxinator.Services
         /// </summary>
         /// <param name="term"></param>
         /// <returns>Retrieved user</returns>
-        public async Task<User> Search(string term)
+        public async Task<List<User>> Search(string term)
         {
-            //var user = await _context.Users.Where(x => x.FirstName == term || x.LastName == term).FirstOrDefaultAsync();
-            var user = await _context.Users
+            var userList = await _context.Users
                 .Where(x =>
                 x.FirstName.Contains(term) || 
                 x.LastName.Contains(term) ||
                 x.Email.Contains(term) ||
                 x.Address.Contains(term))
-                .FirstOrDefaultAsync();
-            return user;
+                .ToListAsync();
+            return userList;
         }
     }
 }
