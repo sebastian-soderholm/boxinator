@@ -50,6 +50,8 @@ export class MyShipmentsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.sessionService.removeShipmentsTableData();
+
     this.shipmentService.getAllCurrent(async () => {
       const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
       this.sortedData = mappedData;
@@ -88,6 +90,8 @@ export class MyShipmentsPage implements OnInit {
     console.log(this.sortedData)
     this.shipmentService.addNewStatusLog(shipmentId, async() =>{
       console.log("status added ");
+      const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
+      this.sortedData = mappedData;
     })
   }
 

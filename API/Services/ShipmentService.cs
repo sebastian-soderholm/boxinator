@@ -155,7 +155,12 @@ namespace boxinator.Services
         {
             var currentUserId = 1;
 
-            var query = _context.ShipmentStatusLogs.Where(s => s.StatusId != (int)StatusCodes.CANCELLED && s.StatusId != (int)StatusCodes.COMPELED);
+            var newestShipmentIds = _context.ShipmentStatusLogs.AsEnumerable()
+                    .GroupBy(x => x.ShipmentId)
+                    .Select(x => x.OrderByDescending(y => y.Date).Distinct().FirstOrDefault())
+                    .Where(s => s.StatusId != (int)StatusCodes.CANCELLED && s.StatusId != (int)StatusCodes.COMPELED).Select(x => x.ShipmentId).ToList();
+
+            var query = _context.ShipmentStatusLogs.Where(x => newestShipmentIds.Contains(x.ShipmentId));
 
             if (from != null && to != null)
                 query = query.Where(x => x.Date >= from && x.Date < to);

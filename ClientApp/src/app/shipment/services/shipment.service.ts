@@ -111,12 +111,8 @@ export class ShipmentService {
       let shipment = shipmentTableDataArray!.find(l => l.id == newStatusLog.shipmentId);
       shipment?.shipmentStatusLogs.push(newStatusLog);
 
-      console.log("uuuujeee")
-      console.log(shipmentTableDataArray)
-
       this.sessionService.setShipmentsTableData(shipmentTableDataArray!);
 
-      //console.log(this.sessionService.shipmentTableData)
       onSuccess();
     },
     (error: HttpErrorResponse) => {

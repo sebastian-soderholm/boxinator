@@ -44,6 +44,10 @@ export class SessionService {
     sessionStorage.setItem('shipmentTableData', JSON.stringify(shipments))
   }
 
+  removeShipmentsTableData() {
+    sessionStorage.removeItem('shipmentTableData');
+  }
+
   setCountries(countries: Country[]): void {
     this._countries = countries
     sessionStorage.setItem('countries', JSON.stringify(countries))
