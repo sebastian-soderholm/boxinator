@@ -119,9 +119,9 @@ namespace boxinator.Services.Interfaces
         /// <param name="id"></param>
         /// <param name="zoneDTO"></param>
         /// <returns></returns>
-        public async Task<Zone> UpdateZone(ZoneEditDTO zoneDTO)
+        public async Task<Zone> UpdateZone(int zoneId, ZoneEditDTO zoneDTO)
         {
-            var zoneFromDB = await _context.Zones.AsNoTracking().FirstOrDefaultAsync(z => z.Id == zoneDTO.Id);
+            var zoneFromDB = await _context.Zones.AsNoTracking().FirstOrDefaultAsync(z => z.Id == zoneId);
 
             if (zoneFromDB != null)
             {

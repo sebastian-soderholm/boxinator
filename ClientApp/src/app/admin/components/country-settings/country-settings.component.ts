@@ -87,6 +87,10 @@ export class CountrySettingsComponent implements OnInit {
       this.countries = this.sessionService.countries
     })
   }
+  saveZone(zone: Zone) {
+    console.log("Zone saved: ", zone)
+    this.zoneService.updateZone(zone)
+  }
   onChanges() {
     // console.log("Loaded countries for id: " + this._selectedZoneId, this._countries)
     // this.setCountriesForm();

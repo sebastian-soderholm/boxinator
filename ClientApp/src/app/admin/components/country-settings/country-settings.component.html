@@ -39,6 +39,9 @@
   </select>
 </form>
 
+<input type="text" [value]="zoneSelectForm.value.zoneSelectControl.name">
+<input type="number" [value]="zoneSelectForm.value.zoneSelectControl.countryMultiplier">
+<button (click)="saveZone(zoneSelectForm.value.zoneSelectControl)">Save zone</button>
 <!-- <form [formGroup]="zoneSelectForm">
   <select formControlName="zoneSelectControl">
     <option *ngFor="let zone of states" [ngValue]="state">
@@ -47,5 +50,5 @@
   </select>
 </form> -->
 
-<!-- <p>Form value: {{ zoneSelectForm.value | json}}</p> -->
+<!-- <p>Form value: {{ zoneSelectForm.value.zoneSelectControl | json}}</p> -->
 <app-country-list [countries]="countries!"></app-country-list>

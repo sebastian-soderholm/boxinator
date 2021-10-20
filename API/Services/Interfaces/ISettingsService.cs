@@ -21,7 +21,7 @@ namespace boxinator.Services.Interfaces
         public Task<List<Country>> GetZoneCountries(int id);
         // Zones
         public Task<List<Zone>> GetAllZones();
-        public Task<Zone> UpdateZone(ZoneEditDTO zone);
+        public Task<Zone> UpdateZone(int zoneId, ZoneEditDTO zone);
         public Task<Zone> AddZone(ZoneCreateDTO zone);
         
 

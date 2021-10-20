@@ -65,11 +65,15 @@ export class SessionService {
     this._zones = zones;
     sessionStorage.setItem('zones', JSON.stringify(zones))
   }
-
   setUser(user: User): void {
 		this._user = user;
 		sessionStorage.setItem('user', JSON.stringify(user))
 	}
+  updateZone(zone: Zone) {
+    const indexToReplace = this._countries.findIndex(c => zone.id === c.id)
+
+    if(indexToReplace) this._zones[indexToReplace] = zone
+  }
 
   // for admin only, set when admin is editing user's information
   setFetchedUserInfo(fetchedUser: User): void {

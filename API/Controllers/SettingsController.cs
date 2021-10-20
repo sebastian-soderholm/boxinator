@@ -99,12 +99,12 @@ namespace boxinator.Controllers
         /// <param name="zoneId"></param>
         /// <param name="zoneDTO"></param>
         /// <returns></returns>
-        //PUT: /settings/zones
+        //PUT: /settings/zones/{zoneId}
         [HttpPut]
-        [Route("/settings/zones")]
-        public async Task<ActionResult<ZoneReadDTO>> UpdateZone(ZoneEditDTO zoneDTO)
+        [Route("/settings/zones/{zoneId}")]
+        public async Task<ActionResult<ZoneReadDTO>> UpdateZone(int zoneId, ZoneEditDTO zoneDTO)
         {
-            var resultZone = await _service.UpdateZone(zoneDTO);
+            var resultZone = await _service.UpdateZone(zoneId, zoneDTO);
             return _mapper.Map<ZoneReadDTO>(resultZone);
         }
         /// <summary>
