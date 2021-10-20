@@ -12,18 +12,61 @@ import { ZoneService } from '../../services/zone.service';
   styleUrls: ['./country-settings.component.scss'],
 })
 export class CountrySettingsComponent implements OnInit {
-  private _countries: Country[] = [];
-  private _zones: Zone[] = [];
+  private _countries: Country[] = [
+  {
+    id: 1,
+    name: 'Finland',
+    zoneId: 1,
+    zoneName: 'Europe',
+    countryMultiplier: 100,
+  },
+  {
+    id: 2,
+    name: 'Sweden',
+    zoneId: 1,
+    zoneName: 'Europe',
+    countryMultiplier: 100,
+  },
+  {
+    id: 3,
+    name: 'China',
+    zoneId: 2,
+    zoneName: 'Asia',
+    countryMultiplier: 200,
+  },
+  {
+    id: 4,
+    name: 'Uganda',
+    zoneId: 3,
+    zoneName: 'Africa',
+    countryMultiplier: 300,
+  },
+];
+  private _zones: Zone[] = [
+  {
+    id: 1,
+    name: 'Europe',
+    countryMultiplier: 100,
+  },
+  {
+    id: 2,
+    name: 'Asia',
+    countryMultiplier: 200,
+  },
+  {
+    id: 3,
+    name: 'Africa',
+    countryMultiplier: 300,
+  },
+];
   private _settingsForm: any;
   private _zonesSelect: any;
   private _countryForm: any;
   private _countriesFormArray: FormArray | any;
-  private _selectedCountry: Country = {
+  private _selectedCountry: any = {
     id: 0,
     name: '',
     zoneId: 0,
-    zoneName: '',
-    countryMultiplier: 0,
   };
   private _selectedZone: Zone = {
     id: 0,
@@ -36,17 +79,20 @@ export class CountrySettingsComponent implements OnInit {
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService
   ) {
-    this.zoneService.fetchZonesToSession(async () => {
-      this._zones = this.sessionService.zones!;
-    });
-    this.countryService.fetchCountriesToSession(async () => {
-      this._countries = this.sessionService.countries!;
-    });
+
+    // this.zoneService.fetchZonesToSession(async () => {
+    //   this._zones = this.sessionService.zones!;
+    // });
+    // this.countryService.fetchCountriesToSession(async () => {
+    //   this._countries = this.sessionService.countries!;
+    // });
 
     this._settingsForm = new FormGroup({
       zoneSelect: this._zonesSelect = new FormControl(1, []),
       countriesFormArray: this._countriesFormArray = new FormArray([]),
     });
+
+
   }
 
   ngOnInit(): void {
@@ -59,7 +105,7 @@ export class CountrySettingsComponent implements OnInit {
     this.setCountriesForm();
   }
 
-  countrySave(editedCountry: Country) {
+  countrySave(editedCountry: any) {
     console.table(editedCountry)
     const countryFormArray = this._countriesFormArray as FormArray;
 
@@ -83,8 +129,10 @@ export class CountrySettingsComponent implements OnInit {
           uneditedCountry: new FormControl(country),
           countryName: new FormControl(country.name, [Validators.required]),
           countryZone: new FormControl(country.zoneName, [Validators.required]),
-        })
-        console.table(countryForm)
+        });
+        console.log("Country Form: ", countryForm)
+
+        // this._countriesFormArray.push(new FormArray([]))
         this._countriesFormArray.push(countryForm)
       }
     });

@@ -35,13 +35,9 @@ export class EditAccountPage implements OnInit {
   ngOnInit(): void {
     this._editUser = this.showAdminSelection == true ? this._sessionService.userForAdmin : this._sessionService.user;
 
-    console.table(this._editUser)
     this._countryService.fetchCountriesToSession(async () => {
       this._countries = this._sessionService.countries!;
     });
-    console.table(this._countries)
-
-    console.log("User dob: ", this._datepipe.transform(this._editUser!.dateOfBirth, 'dd-mm-yyyy'))
 
     this._editUserForm = new FormGroup(
       {
@@ -62,7 +58,7 @@ export class EditAccountPage implements OnInit {
             /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
           ),
         ]),
-        dateOfBirth: new FormControl(this._datepipe.transform(this._editUser!.dateOfBirth, 'dd-mm-yyyy'), [
+        dateOfBirth: new FormControl("2021-10-19 12:17:18.6767435", [
           // Validators.pattern(/a-zA-Z/)
         ]),
         countryId: new FormControl(this._editUser!.countryId, [
