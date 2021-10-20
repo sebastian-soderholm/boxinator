@@ -10,8 +10,8 @@ using boxinator.Models;
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    [Migration("20211019064033_add-user")]
-    partial class adduser
+    [Migration("20211019091719_testUser")]
+    partial class testUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -358,6 +358,18 @@ namespace boxinator.Migrations
                             LastName = "Mäkelä",
                             PhoneNumber = "0504055679",
                             ZipCode = "00200"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccountType = "ADMIN_USER",
+                            Address = "Kaivokatu 10",
+                            CountryId = 1,
+                            Email = "developer.musetech@gmail.com",
+                            FirstName = "Sebastian",
+                            LastName = "Söderholm",
+                            PhoneNumber = "0400959078",
+                            ZipCode = "06100"
                         });
                 });
 
@@ -417,35 +429,35 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 19, 9, 40, 32, 718, DateTimeKind.Local).AddTicks(1730),
+                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 676, DateTimeKind.Local).AddTicks(7435),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 19, 9, 40, 32, 720, DateTimeKind.Local).AddTicks(8614),
+                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9513),
                             ShipmentId = 1,
                             StatusId = 3
                         },
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2021, 10, 19, 9, 40, 32, 720, DateTimeKind.Local).AddTicks(8647),
+                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9571),
                             ShipmentId = 2,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2021, 10, 19, 9, 40, 32, 720, DateTimeKind.Local).AddTicks(8652),
+                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9577),
                             ShipmentId = 2,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 5,
-                            Date = new DateTime(2021, 10, 19, 9, 40, 32, 720, DateTimeKind.Local).AddTicks(8655),
+                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9583),
                             ShipmentId = 3,
                             StatusId = 1
                         });

@@ -126,6 +126,10 @@ export class GuestShipmentPage implements OnInit {
     this._guestShipment.receiverAddress = this._guestShipmentForm.get('destinationAddress')?.value
     this._guestShipment.receiverZipCode = this._guestShipmentForm.get('destinationZipCode')?.value
 
+    //Add cost to shipment
+    this.calculateCost()
+    this._guestShipment.cost = this.cost
+
     //Add boxes to shipment
     this._guestShipment.boxes = this._boxes
 
@@ -149,15 +153,18 @@ export class GuestShipmentPage implements OnInit {
   calculateCost() {
     //Get weights of all boxes
     const boxWeightArray = this._boxes.map((box: Box) => box.weight);
-    //Get country multiplier
-    const multiplier = this._guestShipmentForm.get('destinationCountryId').value;
+
+    //Get selected country object
+    const selectedCountry = this._countries.find((country: Country) => {
+      return country.id == this._guestShipmentForm.get('destinationCountryId').value
+    })
+
+    this._cost = 0;
     // Calculate shipping cost if any boxes present
     if(boxWeightArray.length > 0) {
-      this._cost = boxWeightArray.reduce((cost: number, weight: number) => {
-        return cost + weight * multiplier
+      boxWeightArray.forEach((weight: number) => {
+        this._cost += weight * selectedCountry!.countryMultiplier
       });
-    }else{
-      this._cost = 0
     }
   }
 

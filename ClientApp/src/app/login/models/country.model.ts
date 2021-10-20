@@ -3,4 +3,5 @@ export interface Country {
   name: string;
   zoneId: number;
   zoneName: string
+  countryMultiplier: number;
 }

@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using boxinator.Models;
 
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    [Migration("20211018110159_initial")]
-    partial class initial
+    partial class BoxinatorDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -341,12 +339,35 @@ namespace boxinator.Migrations
                         {
                             Id = 1,
                             AccountType = "REGISTERED_USER",
-                            CountryId = 1,
+                            CountryId = 2,
                             Email = "awesomemartta@gs.com",
                             FirstName = "Martta",
                             LastName = "Johnsson",
                             PhoneNumber = "16064650210",
                             ZipCode = "610650"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountType = "ADMIN_USER",
+                            CountryId = 1,
+                            Email = "peppi.makela@gmail.com",
+                            FirstName = "Peppi",
+                            LastName = "Mäkelä",
+                            PhoneNumber = "0504055679",
+                            ZipCode = "00200"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccountType = "ADMIN_USER",
+                            Address = "Kaivokatu 10",
+                            CountryId = 1,
+                            Email = "developer.musetech@gmail.com",
+                            FirstName = "Sebastian",
+                            LastName = "Söderholm",
+                            PhoneNumber = "0400959078",
+                            ZipCode = "06100"
                         });
                 });
 
@@ -406,35 +427,35 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 18, 14, 1, 58, 698, DateTimeKind.Local).AddTicks(2647),
+                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 676, DateTimeKind.Local).AddTicks(7435),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 18, 14, 1, 58, 701, DateTimeKind.Local).AddTicks(2122),
+                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9513),
                             ShipmentId = 1,
                             StatusId = 3
                         },
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2021, 10, 18, 14, 1, 58, 701, DateTimeKind.Local).AddTicks(2161),
+                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9571),
                             ShipmentId = 2,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2021, 10, 18, 14, 1, 58, 701, DateTimeKind.Local).AddTicks(2166),
+                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9577),
                             ShipmentId = 2,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 5,
-                            Date = new DateTime(2021, 10, 18, 14, 1, 58, 701, DateTimeKind.Local).AddTicks(2169),
+                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9583),
                             ShipmentId = 3,
                             StatusId = 1
                         });
