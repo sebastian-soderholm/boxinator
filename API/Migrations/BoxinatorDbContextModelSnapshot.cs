@@ -296,9 +296,8 @@ namespace boxinator.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AccountType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AccountType")
+                        .HasColumnType("int");
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -338,7 +337,7 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            AccountType = "REGISTERED_USER",
+                            AccountType = 2,
                             CountryId = 2,
                             Email = "awesomemartta@gs.com",
                             FirstName = "Martta",
@@ -349,7 +348,7 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 2,
-                            AccountType = "ADMIN_USER",
+                            AccountType = 3,
                             CountryId = 1,
                             Email = "peppi.makela@gmail.com",
                             FirstName = "Peppi",
@@ -360,7 +359,7 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 3,
-                            AccountType = "ADMIN_USER",
+                            AccountType = 3,
                             Address = "Kaivokatu 10",
                             CountryId = 1,
                             Email = "developer.musetech@gmail.com",
@@ -427,35 +426,35 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 676, DateTimeKind.Local).AddTicks(7435),
+                            Date = new DateTime(2021, 10, 20, 15, 36, 7, 795, DateTimeKind.Local).AddTicks(2977),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9513),
+                            Date = new DateTime(2021, 10, 20, 15, 36, 7, 797, DateTimeKind.Local).AddTicks(7579),
                             ShipmentId = 1,
                             StatusId = 3
                         },
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9571),
+                            Date = new DateTime(2021, 10, 20, 15, 36, 7, 797, DateTimeKind.Local).AddTicks(7609),
                             ShipmentId = 2,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9577),
+                            Date = new DateTime(2021, 10, 20, 15, 36, 7, 797, DateTimeKind.Local).AddTicks(7613),
                             ShipmentId = 2,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 5,
-                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9583),
+                            Date = new DateTime(2021, 10, 20, 15, 36, 7, 797, DateTimeKind.Local).AddTicks(7616),
                             ShipmentId = 3,
                             StatusId = 1
                         });

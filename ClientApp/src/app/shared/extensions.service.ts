@@ -1,5 +1,6 @@
 import { HttpHeaders } from '@angular/common/http'; 
 import { Injectable } from '@angular/core';
+import { SessionService } from './session.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -7,8 +8,10 @@ import { Injectable } from '@angular/core';
   export class ExtensionsService {
 	private _fullAuthenticationHeaders: object | undefined
   
-	constructor() {
-		const token = sessionStorage.getItem('token') as string
+	constructor(
+		private readonly sessionService: SessionService
+	) {
+		const token = this.sessionService.token;
 		const headerObj = new HttpHeaders({
 			'Content-Type': 'application/json',
 			'Authorization': `Bearer ${token}`,

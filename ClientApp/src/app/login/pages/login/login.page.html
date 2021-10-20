@@ -1,6 +1,13 @@
-<h1>Login</h1>
-<form class="form" [formGroup]="loginForm">
-  <!-- Email -->
+<h1>Welcome to Boxinator</h1>
+
+<button mat-flat-button color="primary" (click)="googleLogin()">Login with Google</button>
+
+<button mat-flat-button color="warn" routerLink="/guest">New Shipment</button>
+
+<!-- 
+  Ready made validated form for login information
+  <form class="form" [formGroup]="loginForm">
+  Email 
   <input class="form-control" formControlName="email" type="email" placeholder="Email" required>
   <div *ngIf="email.dirty || email.touched" class="alert">
     <div *ngIf="email.errors?.required">
@@ -10,7 +17,7 @@
       <p>Email format is invalid</p>
     </div>
   </div>
-  <!-- Password -->
+  Password 
   <input class="form-control" formControlName="password" type="password"  placeholder="Password" required>
   <div *ngIf="password.dirty || password.touched" class="alert">
     <div *ngIf="password.errors?.required">
@@ -18,8 +25,5 @@
     </div>
   </div>
   <button type="submit" [disabled]="loginForm.controls['email'].invalid || loginForm.controls['password'].invalid" (click)="login()">Login</button>
-</form>
-
-<button (click)="googleLogin()">Google Login</button>
-
-<button routerLink="/guest">New shipment</button>
+</form> 
+-->

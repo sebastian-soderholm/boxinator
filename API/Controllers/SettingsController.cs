@@ -36,6 +36,7 @@ namespace boxinator.Controllers
         // GET: /settings/countries
         [HttpGet]
         [Route("/settings/countries")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<CountryReadDTO>>> GetAllCountries()
         {
             var countries = await _service.GetAllCountries();

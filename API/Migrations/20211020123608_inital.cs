@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace boxinator.Migrations
 {
-    public partial class testUser : Migration
+    public partial class inital : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -81,7 +81,7 @@ namespace boxinator.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AccountType = table.Column<int>(type: "int", nullable: false),
                     CountryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -221,17 +221,17 @@ namespace boxinator.Migrations
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "Id", "AccountType", "Address", "CountryId", "DateOfBirth", "Email", "FirstName", "LastName", "PhoneNumber", "ZipCode" },
-                values: new object[] { 2, "ADMIN_USER", null, 1, null, "peppi.makela@gmail.com", "Peppi", "Mäkelä", "0504055679", "00200" });
+                values: new object[] { 2, 3, null, 1, null, "peppi.makela@gmail.com", "Peppi", "Mäkelä", "0504055679", "00200" });
 
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "Id", "AccountType", "Address", "CountryId", "DateOfBirth", "Email", "FirstName", "LastName", "PhoneNumber", "ZipCode" },
-                values: new object[] { 3, "ADMIN_USER", "Kaivokatu 10", 1, null, "developer.musetech@gmail.com", "Sebastian", "Söderholm", "0400959078", "06100" });
+                values: new object[] { 3, 3, "Kaivokatu 10", 1, null, "developer.musetech@gmail.com", "Sebastian", "Söderholm", "0400959078", "06100" });
 
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "Id", "AccountType", "Address", "CountryId", "DateOfBirth", "Email", "FirstName", "LastName", "PhoneNumber", "ZipCode" },
-                values: new object[] { 1, "REGISTERED_USER", null, 2, null, "awesomemartta@gs.com", "Martta", "Johnsson", "16064650210", "610650" });
+                values: new object[] { 1, 2, null, 2, null, "awesomemartta@gs.com", "Martta", "Johnsson", "16064650210", "610650" });
 
             migrationBuilder.InsertData(
                 table: "Shipment",
@@ -265,11 +265,11 @@ namespace boxinator.Migrations
                 columns: new[] { "Id", "Date", "ShipmentId", "StatusId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 10, 19, 12, 17, 18, 676, DateTimeKind.Local).AddTicks(7435), 1, 1 },
-                    { 2, new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9513), 1, 3 },
-                    { 3, new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9571), 2, 1 },
-                    { 4, new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9577), 2, 2 },
-                    { 5, new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9583), 3, 1 }
+                    { 1, new DateTime(2021, 10, 20, 15, 36, 7, 795, DateTimeKind.Local).AddTicks(2977), 1, 1 },
+                    { 2, new DateTime(2021, 10, 20, 15, 36, 7, 797, DateTimeKind.Local).AddTicks(7579), 1, 3 },
+                    { 3, new DateTime(2021, 10, 20, 15, 36, 7, 797, DateTimeKind.Local).AddTicks(7609), 2, 1 },
+                    { 4, new DateTime(2021, 10, 20, 15, 36, 7, 797, DateTimeKind.Local).AddTicks(7613), 2, 2 },
+                    { 5, new DateTime(2021, 10, 20, 15, 36, 7, 797, DateTimeKind.Local).AddTicks(7616), 3, 1 }
                 });
 
             migrationBuilder.CreateIndex(

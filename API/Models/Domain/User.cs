@@ -25,7 +25,7 @@ namespace boxinator.Models.Domain
         public DateTime? DateOfBirth { get; set; }
         public string PhoneNumber { get; set; }
         [Required]
-        public string AccountType { get; set; }
+        public AccountTypes AccountType { get; set; }
         //Relationships
         public int CountryId { get; set; }
         public Country Country { get; set; }
