@@ -1,0 +1,21 @@
+<form [formGroup]="countryForm">
+  <input formControlName="countryName">
+  <!-- <span>{{country.zoneName}}</span> -->
+
+  <select formControlName="countryZone">
+    <!-- <option *ngIf="!zones">Loading zones...</option> -->
+    <option *ngFor="let zone in zones" [ngValue]="zone">{{zone.name}}</option>
+  </select>
+  <span>{{country.zoneId}}</span>
+
+
+  <span>{{country.countryMultiplier}}</span>
+
+  <button (click)="updateCountry({
+    id: country.id,
+    name: country.name,
+    zoneId: country.zoneId,
+    zoneName: country.zoneName,
+    countryMultiplier: country.countryMultiplier
+  })">Save</button>
+</form>

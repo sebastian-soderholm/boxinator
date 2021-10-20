@@ -29,7 +29,6 @@ export class CountryService {
   }
   //Add new country to DB & sessionService
   public postCountry(country: Country, onSuccess: () => void): void {
-
     this.http.post<Country>(this._apiUrl + '/settings/countries', country, this.extensionService.authenticationHeadersFull)
     .subscribe((country: Country) => {
       //Set country to session service on success

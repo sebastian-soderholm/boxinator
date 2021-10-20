@@ -84,6 +84,16 @@ namespace boxinator.Controllers
             return _mapper.Map<List<ZoneReadDTO>>(zones);
         }
 
+        //GET: /settings/zones/:zoneId
+        [HttpGet]
+        [Route("/settings/zones/{zoneId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<CountryReadDTO>>> GetZonesCountries(int id)
+        {
+            var zones = await _service.GetZoneCountries(id);
+            return _mapper.Map<List<CountryReadDTO>>(zones);
+        }
+
         /// <summary>
         /// Edit zone info
         /// </summary>
@@ -150,5 +160,7 @@ namespace boxinator.Controllers
             var resultStatus = await _service.AddStatus(statusDTO);
             return _mapper.Map<StatusReadDTO>(resultStatus);
         }
+
+
     }
 }

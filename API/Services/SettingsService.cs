@@ -104,6 +104,14 @@ namespace boxinator.Services.Interfaces
             await _context.Zones.ToListAsync();
 
         /// <summary>
+        /// Get all countries for a zone id
+        /// </summary>
+        /// <param name="zoneId"></param>
+        /// <returns></returns>
+        public async Task<List<Country>> GetZoneCountries(int zoneId) =>
+            await _context.Countries.Where(c => c.ZoneId == zoneId).ToListAsync();
+
+        /// <summary>
         /// Update Zone info
         /// </summary>
         /// <param name="id"></param>

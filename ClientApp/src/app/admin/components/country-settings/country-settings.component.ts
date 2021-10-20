@@ -61,9 +61,9 @@ export class CountrySettingsComponent implements OnInit {
 //   },
 // ];
 
-
   private _countries: Country[] = [];
   private _zones: Zone[] = [];
+  private _selectedZoneId = 1;
   private _settingsForm: any;
   private _zonesSelect: any;
   private _countryForm: any;
@@ -84,9 +84,6 @@ export class CountrySettingsComponent implements OnInit {
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService
   ) {
-
-
-
     this._settingsForm = new FormGroup({
       zoneSelect: this._zonesSelect = new FormControl(1, []),
       countriesFormArray: this._countriesFormArray = new FormArray([]),
@@ -97,16 +94,17 @@ export class CountrySettingsComponent implements OnInit {
     this.zoneService.fetchZonesToSession(async () => {
       this._zones = this.sessionService.zones!;
     });
-    this.countryService.fetchCountriesToSession(async () => {
+    this._selectedZoneId = this._zones[0].id
+  }
+
+
+
+  onChanges() {
+    this.zoneService.fetchZoneCountriesToSession(this._selectedZoneId, async () => {
       this._countries = this.sessionService.countries!;
     });
 
-    console.table(this._countries)
-  }
-
-  onChanges() {
-    this._selectedZone = this._settingsForm.get('zoneSelect').value;
-
+    console.log("Loaded countries for id: " + this._selectedZoneId, this._countries)
     this.setCountriesForm();
   }
 
@@ -127,17 +125,19 @@ export class CountrySettingsComponent implements OnInit {
     this._countriesFormArray = new FormArray([]);
 
     this._countries.forEach((country) => {
-      if (country.zoneId === this.selectedZone.id) {
+      if (country.zoneId === this._selectedZone.id) {
         console.log("Populating form with country: ", country)
         //New form group & add to form array
         const countryForm = new FormGroup({
-          uneditedCountry: new FormControl(country),
-          countryName: new FormControl(country.name, [Validators.required]),
-          countryZone: new FormControl(country.zoneName, [Validators.required]),
+            countryId: new FormControl(country.id),
+            countryName: new FormControl(country.name, [Validators.required]),
+            countryZoneId: new FormControl(country.zoneId),
+            countryZoneName: new FormControl(country.zoneName, [Validators.required]),
+            countryMultiplier: new FormControl(country.countryMultiplier),
         });
         // console.log("Country Form: ", countryForm)
 
-        // this._countriesFormArray.push(new FormArray([]))
+        this._countriesFormArray.push(new FormArray([]))
         // this._countriesFormArray.push(countryForm)
       }
     });

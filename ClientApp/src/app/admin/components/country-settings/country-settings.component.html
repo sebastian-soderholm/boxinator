@@ -1,8 +1,7 @@
-<form [formGroup]="settingsForm">
+<!-- <form [formGroup]="settingsForm">
   <p>Select zone</p>
   <select formControlName="zoneSelect" (change)="onChanges()">
     <option *ngIf="!zones" selected>Loading zones...</option>
-    <!-- Zones select -->
     <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
   </select>
 
@@ -12,20 +11,16 @@
 
     <form [formGroupName]="i">
 
-      <input type="text" formControlName="countryName" [value]="control.value.countryName" >
+      <input type="text" formControlName="countryName" [value]="control.value.countryId"/>
 
-      <!-- Change country name -->
-      <!-- <p>{{}}</p> -->
+      <p type="text" formControlName="countryName" >{{control.value.countryName}}</p>
 
       <select formControlName="countryZone">
-        <!-- Select zone for country -->
         <option *ngFor="let zone of zones" [ngValue]="control.value.zoneId">{{control.value.zoneName}}</option>
       </select>
 
-      <p>UneditedCountry: {{settingsForm.controls.countriesFormArray.controls[i].uneditedCountry}}</p>
-      <!-- <button (click)="countrySave(i)">Save</button> -->
-
-      <!-- Return edited country object fields on click -->
+      <p>UneditedCountry: {{control.value.countryName}}</p>
+      <p>UneditedCountry: {{settingsForm.controls.countriesFormArray.controls[i].uneditedCountry.zoneId}}</p>
       <button (click)="countrySave({
         id: countriesFormArray.at(i).get('uneditedCountry')?.value.id,
         name: countriesFormArray.at(i).get('countryName')?.value,
@@ -35,4 +30,6 @@
   </div>
 
 </ng-container>
-</form>
+</form> -->
+
+<app-country-list ></app-country-list>
