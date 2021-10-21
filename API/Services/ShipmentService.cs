@@ -151,32 +151,39 @@ namespace boxinator.Services
         /// Get all current shipments
         /// </summary>
         /// <returns>List of shipments</returns>
-        public async Task<List<Shipment>> GetAllCurrent(DateTime? from, DateTime? to)
+        public async Task<List<Shipment>> GetAllCurrent(DateTime? from, DateTime? to, int? currentUserId)
         {
-            var currentUserId = 1;
-
+            // group statuslogs by shipmentId, get newest from each group
             var newestShipmentIds = _context.ShipmentStatusLogs.AsEnumerable()
                     .GroupBy(x => x.ShipmentId)
                     .Select(x => x.OrderByDescending(y => y.Date).Distinct().FirstOrDefault())
                     .Where(s => s.StatusId != (int)StatusCodes.CANCELLED && s.StatusId != (int)StatusCodes.COMPELED).Select(x => x.ShipmentId).ToList();
 
+            // retrieve matching logs
             var query = _context.ShipmentStatusLogs.Where(x => newestShipmentIds.Contains(x.ShipmentId));
 
+            // filter by dates
             if (from != null && to != null)
                 query = query.Where(x => x.Date >= from && x.Date < to);
 
+            // filter by user
+            if (currentUserId != null)
+                query = query.Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId);
+
+            // include additional data
             query = query
                 .Include(s => s.Shipment).ThenInclude(b => b.Boxes).ThenInclude(z => z.BoxType)
                 .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
-                .Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId)
+                .Include(s => s.Shipment)
                 .Include(s => s.Status);
 
+            // execute query
             var shipmentStausLogList = await query.ToListAsync();
+             
+            // turn list from ShipmentStatusLog to Shipment
+            var endResultList = shipmentStausLogList.ToFilteredShipmentList();
 
-            var endresultList = shipmentStausLogList.ToFilteredShipmentList();
-
-            return endresultList;
-
+            return endResultList;
 
         }
 
@@ -184,22 +191,29 @@ namespace boxinator.Services
         /// Get all complete shipments
         /// </summary>
         /// <returns>List of shipments</returns>
-        public async Task<List<Shipment>> GetAllComplete(DateTime? from, DateTime? to)
+        public async Task<List<Shipment>> GetAllComplete(DateTime? from, DateTime? to, int? currentUserId)
         {
-            var currentUserId = 1;
-
+            // set up query
             var query = _context.ShipmentStatusLogs.Where(x => x.Status.Id == (int)StatusCodes.COMPELED);
 
+            // filter by dates
             if (from != null && to != null)
                 query = query.Where(x => x.Date >= from && x.Date < to);
 
+            // filter by user
+            if (currentUserId != null)
+                query = query.Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId);
+
+            // include additional data
             query = query
                 .Include(s => s.Shipment).ThenInclude(b => b.Boxes).ThenInclude(b => b.BoxType)
                 .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
-                .Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId)
-                .Include(s => s.Status);
-            
+                .Include(s => s.Shipment).Include(s => s.Status);
+
+            // execute query
             var shipmentStausLogList = await query.ToListAsync();
+
+            // turn list from ShipmentStatusLog to Shipment
             var endresultList = shipmentStausLogList.ToFilteredShipmentList();
 
             return endresultList;
@@ -209,22 +223,29 @@ namespace boxinator.Services
         /// Get all cancelled shipments
         /// </summary>
         /// <returns>List of shipments</returns>
-        public async Task<List<Shipment>> GetAllCancelled(DateTime? from, DateTime? to)
+        public async Task<List<Shipment>> GetAllCancelled(DateTime? from, DateTime? to, int? currentUserId)
         {
-            var currentUserId = 1;
-
+            // set up query
             var query = _context.ShipmentStatusLogs.Where(x => x.Status.Id == (int)StatusCodes.CANCELLED);
 
+            // filter by dates
             if (from != null && to != null)
                 query = query.Where(x => x.Date >= from && x.Date < to);
 
+            // filter by user
+            if (currentUserId != null)
+                query = query.Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId);
+
+            // include additional data
             query = query
                 .Include(s => s.Shipment).ThenInclude(s => s.Boxes).ThenInclude(b => b.BoxType)
                 .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
-                .Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId)
-                .Include(s => s.Status);
+                .Include(s => s.Shipment).Include(s => s.Status);
 
+            // execute query
             var shipmentStausLogList = await query.ToListAsync();
+
+            // turn list from ShipmentStatusLog to Shipment
             var endresultList = shipmentStausLogList.ToFilteredShipmentList();
 
             return endresultList;

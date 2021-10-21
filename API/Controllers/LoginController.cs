@@ -39,14 +39,10 @@ namespace boxinator.Controllers
         /// <returns>Fetched user or created user</returns>
         /// GET: /login/verify
         [HttpGet("/login/verify")]
-        public async Task<ActionResult<UserReadDTO>> Verify() // rename to Verify
+        public async Task<ActionResult<UserReadDTO>> Verify()
         {
-            // Fetches token from header
-            string accessTokenWithBearerPrefix = Request.Headers[HeaderNames.Authorization];
-            string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
-            var token = new JwtSecurityToken(jwtEncodedString: accessTokenWithoutBearerPrefix);
-            // Fetch user's email with the token
-            string userEmail = token.Claims.First(c => c.Type == "email").Value;
+            // Fetch user's email from token
+            var userEmail = Request.ExtractEmailFromToken();
             var resultUser = await _service.GetUser(userEmail);
             // If email was found in the database, returns user
             if(resultUser != null)

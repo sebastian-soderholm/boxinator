@@ -25,13 +25,13 @@ namespace boxinator.Controllers
     [Authorize]
     public class ShipmentsController : ControllerBase
     {
-        private readonly IShipmentService _service;
+        private readonly IShipmentService _shipmentService;
         private readonly IMapper _mapper;
         private readonly IAccountService _accountService;
 
         public ShipmentsController(IShipmentService service, IMapper mapper, IAccountService accountService)
         {
-            _service = service;
+            _shipmentService = service;
             _mapper = mapper;
             _accountService = accountService;
         }
@@ -45,10 +45,18 @@ namespace boxinator.Controllers
         public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllCurrent()
         {
 
-            DateTime? parsedDateFrom = HttpContext.Request.Query["dateFromFilter"].ToString().parseDate();
-            DateTime? parsedDateTo = HttpContext.Request.Query["dateToFilter"].ToString().parseDate();
+            DateTime? parsedDateFrom = HttpContext.Request.Query["dateFromFilter"].ToString().ParseDate();
+            DateTime? parsedDateTo = HttpContext.Request.Query["dateToFilter"].ToString().ParseDate();
 
-            var currentShipments = await _service.GetAllCurrent(parsedDateFrom, parsedDateTo);
+            // for getting items by current user
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            // for showing admin user all shipments
+            if (currentUser.IsAdmin())
+                currentUser = null;
+
+            var currentShipments = await _shipmentService.GetAllCurrent(parsedDateFrom, parsedDateTo, currentUser?.Id);
             var mappedList = _mapper.Map<List<ShipmentReadDTO>>(currentShipments);
             return mappedList;
         }
@@ -62,10 +70,18 @@ namespace boxinator.Controllers
         [Route("/shipments/complete")]
         public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllComplete()
         {
-            DateTime? parsedDateFrom = HttpContext.Request.Query["dateFromFilter"].ToString().parseDate();
-            DateTime? parsedDateTo = HttpContext.Request.Query["dateToFilter"].ToString().parseDate();
+            DateTime? parsedDateFrom = HttpContext.Request.Query["dateFromFilter"].ToString().ParseDate();
+            DateTime? parsedDateTo = HttpContext.Request.Query["dateToFilter"].ToString().ParseDate();
 
-            var completedShipments = await _service.GetAllComplete(parsedDateFrom, parsedDateTo);
+            // for getting items by current user
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            // for showing admin user all shipments
+            if (currentUser.IsAdmin())
+                currentUser = null;
+
+            var completedShipments = await _shipmentService.GetAllComplete(parsedDateFrom, parsedDateTo, currentUser?.Id);
             return _mapper.Map<List<ShipmentReadDTO>>(completedShipments);
         }
 
@@ -78,10 +94,18 @@ namespace boxinator.Controllers
         [Route("/shipments/cancelled")]
         public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllCancelled()
         {
-            DateTime? parsedDateFrom = HttpContext.Request.Query["dateFromFilter"].ToString().parseDate();
-            DateTime? parsedDateTo = HttpContext.Request.Query["dateToFilter"].ToString().parseDate();
+            DateTime? parsedDateFrom = HttpContext.Request.Query["dateFromFilter"].ToString().ParseDate();
+            DateTime? parsedDateTo = HttpContext.Request.Query["dateToFilter"].ToString().ParseDate();
 
-            var cancelledShipments = await _service.GetAllCancelled(parsedDateFrom, parsedDateTo);
+            // for getting items by current user
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            // for showing admin user all shipments
+            if (currentUser.IsAdmin())
+                currentUser = null;
+
+            var cancelledShipments = await _shipmentService.GetAllCancelled(parsedDateFrom, parsedDateTo, currentUser?.Id);
             return _mapper.Map<List<ShipmentReadDTO>>(cancelledShipments);
         }
 
@@ -96,7 +120,7 @@ namespace boxinator.Controllers
         public async Task<ActionResult<ShipmentReadDTO>> Add(ShipmentCreateDTO shipmentDTO)
         {
             Shipment newShipment = _mapper.Map<Shipment>(shipmentDTO);
-            var resultShipment = await _service.Add(newShipment);
+            var resultShipment = await _shipmentService.Add(newShipment);
             return _mapper.Map<ShipmentReadDTO>(resultShipment);
         }
 
@@ -133,7 +157,7 @@ namespace boxinator.Controllers
 
             //Link user to shipment and save to DB
             newShipment.User = userInDB;
-            var resultShipment = await _service.Add(newShipment);
+            var resultShipment = await _shipmentService.Add(newShipment);
             return _mapper.Map<ShipmentReadDTO>(resultShipment);
         }
 
@@ -146,7 +170,15 @@ namespace boxinator.Controllers
         [HttpGet("/shipments/{shipmentId}")]
         public async Task<ActionResult<ShipmentReadDTO>> Get(int shipmentId)
         {
-            var shipment = await _service.Get(shipmentId);
+            // for getting items by current user
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            // for showing admin user all shipments
+            if (currentUser.IsAdmin())
+                currentUser = null;
+
+            var shipment = await _shipmentService.Get(shipmentId);
             return _mapper.Map<ShipmentReadDTO>(shipment);
         }
 
@@ -158,9 +190,21 @@ namespace boxinator.Controllers
         // GET: /shipments/customer/:customer_id
         [HttpGet("/shipments/customer/{userId}")]
         public async Task<ActionResult<List<ShipmentReadDTO>>> GetByUser(int userId)
-        {
-            var shipments = await _service.GetByUser(userId);
-            return _mapper.Map<List<ShipmentReadDTO>>(shipments);
+        {            
+            // for getting items by current user
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            // currentUser can retrieve their own shipments and admin is allowed to search any shipment
+            if(userId == currentUser.Id || currentUser.IsAdmin())
+            {
+                var shipments = await _shipmentService.GetByUser(userId);
+                return _mapper.Map<List<ShipmentReadDTO>>(shipments);
+            }
+
+            // empty result
+            return new List<ShipmentReadDTO>();
+
         }
 
         /// <summary>
@@ -174,7 +218,7 @@ namespace boxinator.Controllers
         public async Task<ActionResult<ShipmentReadDTO>> Update(int shipmentId, ShipmentEditDTO shipmentDto)
         {
             Shipment updatedShipment = _mapper.Map<Shipment>(shipmentDto);
-            var resultShipment = await _service.Update(shipmentId, updatedShipment);
+            var resultShipment = await _shipmentService.Update(shipmentId, updatedShipment);
             return _mapper.Map<ShipmentReadDTO>(resultShipment);
         }
 
@@ -187,13 +231,18 @@ namespace boxinator.Controllers
         [HttpDelete("/shipments/{shipmentId}")]
         public async Task<ActionResult<bool>> Delete(int shipmentId)
         {
-            return await _service.Delete(shipmentId);
+            return await _shipmentService.Delete(shipmentId);
         }
 
+        /// <summary>
+        /// Change shipments status to next one by adding new log
+        /// </summary>
+        /// <param name="shipmentId"></param>
+        /// <returns>Newest statusLog</returns>
         [HttpGet("/shipments/log/{shipmentId}")]
         public async Task<ActionResult<ShipmentStatusLogReadDTO>> UpdateStatus(int shipmentId)
         {
-            ShipmentStatusLog updatedLog = await _service.AddStatusLog(shipmentId);
+            ShipmentStatusLog updatedLog = await _shipmentService.AddStatusLog(shipmentId);
             return _mapper.Map<ShipmentStatusLogReadDTO>(updatedLog);
 
         }
