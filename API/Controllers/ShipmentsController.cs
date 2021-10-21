@@ -118,7 +118,7 @@ namespace boxinator.Controllers
             if(userInDB == null)
             {
                 //Add user to DB with email, accountType, countryId
-                UserCreateDTO userToDB = new UserCreateDTO();
+                User userToDB = new User();
                 userToDB.Email = shipmentGuestDTO.Email;
                 userToDB.AccountType = AccountTypes.GUEST.ToString();
 

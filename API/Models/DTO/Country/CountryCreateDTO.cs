@@ -9,6 +9,5 @@ namespace boxinator.Models.DTO.Country
     {
         public string Name { get; set; }
         public int ZoneId { get; set; }
-        //public int CountryMultiplier { get; set; }
     }
 }

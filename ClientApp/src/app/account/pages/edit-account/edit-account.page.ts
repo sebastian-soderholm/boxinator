@@ -88,6 +88,7 @@ export class EditAccountPage implements OnInit, OnChanges {
   }
 
   updateUser() {
+
     this._editUser!.firstName = this._editUserForm.get('firstName').value;
     this._editUser!.lastName = this._editUserForm.get('lastName').value;
     this._editUser!.dateOfBirth = this._editUserForm.get('dateOfBirth').value
@@ -96,7 +97,9 @@ export class EditAccountPage implements OnInit, OnChanges {
     this._editUser!.zipCode = this._editUserForm.get('zipCode').value;
     this._editUser!.phoneNumber = this._editUserForm.get('phoneNumber').value;
 
-    console.table(this._editUser) 
+    // this._editUser.country
+
+    console.table(this._editUser)
     this._accountService.updateUser(this._editUser!, async () => {
       console.log('User updated successfully!');
     });

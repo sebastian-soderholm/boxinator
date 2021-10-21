@@ -61,10 +61,6 @@ export class RegisterPage implements OnInit {
         dateOfBirth: new FormControl(this._registerUser.dateOfBirth, [
           // Validators.pattern(/a-zA-Z/)
         ]),
-        // country: new FormControl(this._registerUser.country, [
-        //   //Must contain only letters
-        //   Validators.pattern(/[a-z]/gi)
-        // ]),
         countries: new FormControl(this._registerUser.countryId, [
           //Must contain only letters
           // Validators.pattern(/[a-z]/gi)

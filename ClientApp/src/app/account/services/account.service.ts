@@ -23,6 +23,7 @@ export class AccountService {
     this.http.put<User>(this._apiUrl + '/account/' + updateUserInfo.id, body, this.extensionService.authenticationHeadersFull)
     .subscribe((user: User) => {
       this.sessionService.setUser(user);
+
       onSuccess();
     });
   }
@@ -31,7 +32,6 @@ export class AccountService {
   public getUserById(userId: number, onSuccess: () => void): void {
     this.http.get<User>(this._apiUrl + '/account/'+userId, this.extensionService.authenticationHeadersFull)
     .subscribe((user: User) => {
-      console.log(user)
       this.sessionService.setFetchedUserInfo(user);
       onSuccess();
     });
