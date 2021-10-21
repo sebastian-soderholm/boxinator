@@ -12,6 +12,7 @@ import { SessionService } from './session.service';
 		private readonly sessionService: SessionService
 	) {
 		const token = this.sessionService.token;
+
 		const headerObj = new HttpHeaders({
 			'Content-Type': 'application/json',
 			'Authorization': `Bearer ${token}`,
