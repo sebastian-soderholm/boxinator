@@ -1,6 +1,9 @@
 ﻿using boxinator.Models.Domain;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,15 +46,44 @@ namespace boxinator.Models
             return shipmentListFiltered;
         }
 
-
         /// <summary>
         /// Parse date
         /// </summary>
         /// <param name="date"></param>
         /// <returns>Date or null</returns>
-        public static DateTime? parseDate(this string date)
+        public static DateTime? ParseDate(this string date)
         {
             return date != "" && date != null ? DateTime.Parse(date) : null;
+        }
+
+        /// <summary>
+        /// Extract user email from authorization header
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>Email</returns>
+        public static string ExtractEmailFromToken(this HttpRequest request)
+        {
+            // Fetches token from header
+            string accessTokenWithBearerPrefix = request.Headers[HeaderNames.Authorization];
+            string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
+            var token = new JwtSecurityToken(jwtEncodedString: accessTokenWithoutBearerPrefix);
+            // Fetch user's email with the token
+            string userEmail = token.Claims.First(c => c.Type == "email").Value;
+
+            return userEmail;
+        }
+
+        /// <summary>
+        /// Role check
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>True if admin</returns>
+        public static bool IsAdmin(this User user)
+        {
+            if (user.AccountType == AccountTypes.ADMINISTRATOR.ToString())
+                return true;
+
+            return false;
         }
 
     }
