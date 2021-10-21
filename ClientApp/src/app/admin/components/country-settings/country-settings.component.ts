@@ -61,7 +61,7 @@ export class CountrySettingsComponent implements OnInit {
     });
 
     this.zoneSelectForm = new FormGroup({
-      zoneSelectControl: new FormControl([]),
+      zoneSelectControl: new FormControl(this.zones, []),
     });
 
 
@@ -81,15 +81,25 @@ export class CountrySettingsComponent implements OnInit {
 
   zoneSelected(zone: Zone) {
     //Fetche countries for zone to pass to child component
-    console.log("Zone changed:", zone)
+    // console.log("Zone changed:", zone)
+
+
 
     this.zoneService.fetchZoneCountriesToSession(zone.id, async () => {
       this.countries = this.sessionService.countries
     })
   }
   saveZone(zone: Zone) {
-    console.log("Zone saved: ", zone)
-    this.zoneService.updateZone(zone)
+
+    const putZone: Zone = {
+      id: this.zoneSelectForm.get("zoneSelectControl").value,
+      name: "",
+      countryMultiplier: 0
+    }
+
+    console.log("Zone saved: ", putZone)
+
+    // this.zoneService.updateZone(zone)
   }
   onChanges() {
     // console.log("Loaded countries for id: " + this._selectedZoneId, this._countries)
