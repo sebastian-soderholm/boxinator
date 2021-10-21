@@ -20,7 +20,6 @@ export class MyAccountPage implements OnInit {
 
   ngOnInit(): void {
     this._user = this._sessionService.user;
-
     /*
     if(this._sessionService.user.role == admin) {
       this._accountService.getUserById(this._loggedInUserId, async () => {
