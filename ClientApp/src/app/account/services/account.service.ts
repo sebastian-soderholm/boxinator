@@ -19,16 +19,10 @@ export class AccountService {
   ) { }
 
   public updateUser(updateUserInfo: User, onSuccess: () => void): void {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-        //'X-API-Key': API_KEY,
-      }),
-    };
     const body = JSON.stringify(updateUserInfo);
-    this.http.put<User>(this._apiUrl + '/account/' + updateUserInfo.id, body, httpOptions)
+    this.http.put<User>(this._apiUrl + '/account/' + updateUserInfo.id, body, this.extensionService.authenticationHeadersFull)
     .subscribe((user: User) => {
-      //this.sessionService.setUser(user);
+      this.sessionService.setUser(user);
       onSuccess();
     });
   }
