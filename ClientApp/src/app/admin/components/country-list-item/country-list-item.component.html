@@ -7,17 +7,7 @@
     <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
   </select>
   <span>Multiplier: {{country.countryMultiplier}} *</span>
-
-  <!-- <button (click)="saveCountry({
-    id: country.id,
-    name: country.name,
-    zoneId: country.zoneId,
-    zoneName: country.zoneName,
-    countryMultiplier: country.countryMultiplier
-  })">Save</button> -->
-
 </form>
 
-<!-- <p>{{ zones | json }}</p> -->
 
 <button (click)="saveCountry()">Save</button>

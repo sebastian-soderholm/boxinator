@@ -6,9 +6,9 @@
   </select>
 </form>
 
-<input type="text" [value]="zoneSelectForm.value.zoneSelectControl.name">
-<input type="number" [value]="zoneSelectForm.value.zoneSelectControl.countryMultiplier">
-<button (click)="saveZone()">Save zone</button>
+<input type="text" formControlName="zoneNameControl" [value]="selectedZone?.name">
+<input type="number" formControlName="zoneMultiplierControl" [value]="selectedZone?.countryMultiplier">
+<button (click)="saveZone(zoneSelectForm.value.zoneSelectControl)">Save zone</button>
 
 
 <!-- <p>Form value: {{ zoneSelectForm.value.zoneSelectControl | json}}</p> -->

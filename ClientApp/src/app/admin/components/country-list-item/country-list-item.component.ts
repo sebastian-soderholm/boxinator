@@ -16,25 +16,17 @@ export class CountryListItemComponent implements OnInit {
   @Input()
   set country(country: Country) {
     this._country = country;
-    // console.log("country-list-item: ", country)
   }
   get country() {
-    return this._country
+    return this._country!
   }
   @Input()
   set zones(zones: Zone[]) {
     this._zones = zones;
-    console.log("country-list-item zones: ", this._zones)
   }
 
 
-  private _country: Country = {
-    id: 0,
-    name: "",
-    zoneId: 0,
-    zoneName: "",
-    countryMultiplier: 0
-  };
+  private _country: Country | undefined
 
   private _zones: Zone[] = []
   private _selectedZone: Zone | undefined;
@@ -48,11 +40,8 @@ export class CountryListItemComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.zoneService.fetchZonesToSession(async () => {
-    //   this._zones = this.sessionService.zones!;
-    // })
     this._countryForm = new FormGroup({
-      countryName: new FormControl(this.country?.name, [
+      countryName: new FormControl(this.country.name, [
         Validators.required,
         Validators.pattern(/[a-z]/)
       ]),
@@ -68,7 +57,7 @@ export class CountryListItemComponent implements OnInit {
   }
   saveCountry() {
     const postCountry = {
-      id: this._country.id,
+      id: this._country?.id,
       name: this._countryForm.get("countryName").value,
       zoneId: this._selectedZone!.id
     }

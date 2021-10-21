@@ -14,9 +14,6 @@ import { ZoneService } from '../../services/zone.service';
 })
 export class CountrySettingsComponent implements OnInit {
 
-  // private _countries: Country[] = [];
-  // private _zones: Zone[] = [];
-
   zoneSelectForm: FormGroup | any
   zoneSelectControl: FormControl | any
   selectedZone: Zone | undefined
@@ -30,20 +27,21 @@ export class CountrySettingsComponent implements OnInit {
   ) {
     this.zoneService.fetchZonesToSession(async () => {
       this.zones = this.sessionService.zones!;
-      // console.log("Settings page zones: ", this.zones)
+      this.selectedZone = this.sessionService.zones![0]
     });
   }
-
   ngOnInit(): void {
     this.zoneSelectForm = new FormGroup({
       zoneSelectControl: new FormControl(this.zones, [
         Validators.required
       ]),
+      zoneNameControl: new FormControl([]),
+      zoneMultiplierControl: new FormControl([])
     });
   }
-
   zoneSelected() {
-
+    // this.selectedZone = this.zoneSelectForm.get("zoneSelectControl").value
+    // console.log(this.zoneSelectForm.get("zoneSelectControl").value)
 
     this.zoneService.fetchZoneCountriesToSession(this.zoneSelectForm.get("zoneSelectControl").value.id, async () => {
       this.countries = this.sessionService.countries
@@ -51,15 +49,16 @@ export class CountrySettingsComponent implements OnInit {
     })
   }
   //Update zone info
-  saveZone() {
+  saveZone(zone: Zone) {
 
-    console.log("ZoneControl",this.zoneSelectForm.get("zoneSelectControl"))
+    console.log(this.zoneSelectForm.get("zoneNameControl").value.name, this.zoneSelectForm.get("zoneNameControl").value.countryMultiplier)
+
     const putZone: Zone = {
       id: this.zoneSelectForm.get("zoneSelectControl").value.id,
       name: this.zoneSelectForm.get("zoneSelectControl").value.name,
       countryMultiplier: this.zoneSelectForm.get("zoneSelectControl").value.countryMultiplier
     }
-    console.log("Zone saved: ", putZone)
+    // console.log("Zone saved: ", putZone)
 
     // this.zoneService.updateZone(zone)
   }
