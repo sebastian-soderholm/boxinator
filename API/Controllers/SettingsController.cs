@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using boxinator.Models;
+using boxinator.Models.Domain;
 using boxinator.Models.DTO.Country;
 using boxinator.Models.DTO.Status;
 using boxinator.Models.DTO.Zone;
@@ -20,12 +21,14 @@ namespace boxinator.Controllers
     //[Authorize]
     public class SettingsController : ControllerBase
     {
-        private readonly ISettingsService _service;
+        private readonly ISettingsService _settingsService;
+        private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
 
-        public SettingsController(ISettingsService service, IMapper mapper)
+        public SettingsController(ISettingsService settingsService, IMapper mapper, IAccountService accountService)
         {
-            _service = service;
+            _settingsService = settingsService;
+            _accountService = accountService;
             _mapper = mapper;
         }
 
@@ -39,8 +42,17 @@ namespace boxinator.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<List<CountryReadDTO>>> GetAllCountries()
         {
-            var countries = await _service.GetAllCountries();
-            return _mapper.Map<List<CountryReadDTO>>(countries);
+            // current user for role check
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            if (currentUser.IsAdmin())
+            {
+                var countries = await _settingsService.GetAllCountries();
+                return _mapper.Map<List<CountryReadDTO>>(countries);
+            }
+
+            return StatusCode(403);
         }
 
         /// <summary>
@@ -53,9 +65,17 @@ namespace boxinator.Controllers
         [Route("/settings/countries")]
         public async Task<ActionResult<CountryReadDTO>> AddCountry(CountryCreateDTO countryDTO)
         {
-           
-            var resultCountry = await _service.AddCountry(countryDTO);
-            return _mapper.Map<CountryReadDTO>(resultCountry);
+            // current user for role check
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            if (currentUser.IsAdmin())
+            {
+                var resultCountry = await _settingsService.AddCountry(countryDTO);
+                return _mapper.Map<CountryReadDTO>(resultCountry);
+            }
+
+            return StatusCode(403);
         }
 
         /// <summary>
@@ -69,9 +89,17 @@ namespace boxinator.Controllers
         [Route("/settings/countries/{countryId}")]
         public async Task<ActionResult<CountryReadDTO>> UpdateCountry(int countryId, CountryEditDTO countryDTO)
         {
-            var resultCountry = await _service.UpdateCountry(countryId, countryDTO);
-            return _mapper.Map<CountryReadDTO>(resultCountry);
+            // current user for role check
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
 
+            if (currentUser.IsAdmin())
+            {
+                var resultCountry = await _settingsService.UpdateCountry(countryId, countryDTO);
+                return _mapper.Map<CountryReadDTO>(resultCountry);
+            }
+
+            return StatusCode(403);
         }
 
         //GET: /settings/zones
@@ -80,7 +108,7 @@ namespace boxinator.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<List<ZoneReadDTO>>> GetAllZones()
         {
-            var zones = await _service.GetAllZones();
+            var zones = await _settingsService.GetAllZones();
             return _mapper.Map<List<ZoneReadDTO>>(zones);
         }
 
@@ -89,7 +117,7 @@ namespace boxinator.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<List<CountryReadDTO>>> GetZonesCountries(int zoneId)
         {
-            var zones = await _service.GetZoneCountries(zoneId);
+            var zones = await _settingsService.GetZoneCountries(zoneId);
             return _mapper.Map<List<CountryReadDTO>>(zones);
         }
 
@@ -103,10 +131,20 @@ namespace boxinator.Controllers
         [HttpPut]
         [Route("/settings/zones/{zoneId}")]
         public async Task<ActionResult<ZoneReadDTO>> UpdateZone(int zoneId, ZoneEditDTO zoneDTO)
-        {
-            var resultZone = await _service.UpdateZone(zoneId, zoneDTO);
-            return _mapper.Map<ZoneReadDTO>(resultZone);
+        {            
+            // current user for role check
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            if (currentUser.IsAdmin())
+            {
+                var resultZone = await _settingsService.UpdateZone(zoneId, zoneDTO);
+                return _mapper.Map<ZoneReadDTO>(resultZone);
+            }
+
+            return StatusCode(403);
         }
+
         /// <summary>
         /// Add zone
         /// </summary>
@@ -116,8 +154,18 @@ namespace boxinator.Controllers
         [Route("/settings/zones")]
         public async Task<ActionResult<ZoneReadDTO>> Add(ZoneCreateDTO zoneDTO)
         {
-            var resultZone = await _service.AddZone(zoneDTO);
-            return _mapper.Map<ZoneReadDTO>(resultZone);
+            // current user for role check
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            if (currentUser.IsAdmin())
+            {
+                var resultZone = await _settingsService.AddZone(zoneDTO);
+                return _mapper.Map<ZoneReadDTO>(resultZone);
+            }
+
+            return StatusCode(403);
+
         }
 
         /// <summary>
@@ -129,8 +177,17 @@ namespace boxinator.Controllers
         [Route("/settings/statuses")]
         public async Task<ActionResult<List<StatusReadDTO>>> GetAllStatuses()
         {
-            var resultStatuses = await _service.GetAllStatuses();
-            return _mapper.Map<List<StatusReadDTO>>(resultStatuses);
+            // current user for role check
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            if (currentUser.IsAdmin())
+            {
+                var resultStatuses = await _settingsService.GetAllStatuses();
+                return _mapper.Map<List<StatusReadDTO>>(resultStatuses);
+            }
+
+            return StatusCode(403);
         }
 
         /// <summary>
@@ -143,9 +200,20 @@ namespace boxinator.Controllers
         [Route("/settings/statuses")]
         public async Task<ActionResult<StatusReadDTO>> UpdateStatus(StatusEditDTO statusDTO)
         {
-            var resultStatus = await _service.UpdateStatus(statusDTO);
-            return _mapper.Map<StatusReadDTO>(resultStatus);
+            // current user for role check
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            if (currentUser.IsAdmin())
+            {
+                var resultStatus = await _settingsService.UpdateStatus(statusDTO);
+                return _mapper.Map<StatusReadDTO>(resultStatus);
+            }
+
+            // not authorized
+            return StatusCode(403);
         }
+
         /// <summary>
         /// Add status
         /// </summary>
@@ -156,8 +224,18 @@ namespace boxinator.Controllers
         [Route("/settings/statuses")]
         public async Task<ActionResult<StatusReadDTO>> AddStatus(StatusCreateDTO statusDTO)
         {
-            var resultStatus = await _service.AddStatus(statusDTO);
-            return _mapper.Map<StatusReadDTO>(resultStatus);
+            // current user for role check
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            if(currentUser.IsAdmin())
+            {
+                var resultStatus = await _settingsService.AddStatus(statusDTO);
+                return _mapper.Map<StatusReadDTO>(resultStatus);
+            }
+
+            // not authorized
+            return StatusCode(403);
         }
 
 

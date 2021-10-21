@@ -185,7 +185,7 @@ namespace boxinator.Controllers
         /// Get shipments by user id
         /// </summary>
         /// <param name="userId"></param>
-        /// <returns>List of shipments</returns>
+        /// <returns>List of shipments or 403</returns>
         // GET: /shipments/customer/:customer_id
         [HttpGet("/shipments/customer/{userId}")]
         public async Task<ActionResult<List<ShipmentReadDTO>>> GetByUser(int userId)
@@ -201,9 +201,7 @@ namespace boxinator.Controllers
                 return _mapper.Map<List<ShipmentReadDTO>>(shipments);
             }
 
-            // empty result
-            return new List<ShipmentReadDTO>();
-
+            return StatusCode(403);
         }
 
         /// <summary>
@@ -211,7 +209,7 @@ namespace boxinator.Controllers
         /// </summary>
         /// <param name="shipmentId"></param>
         /// <param name="shipmentDto"></param>
-        /// <returns>Updated shipment</returns>
+        /// <returns>Updated shipment or 403</returns>
         //PUT: /shipments/:shipment_id
         [HttpPut("/shipments/{shipmentId}")]
         public async Task<ActionResult<ShipmentReadDTO>> Update(int shipmentId, ShipmentEditDTO shipmentDto)
@@ -227,8 +225,8 @@ namespace boxinator.Controllers
                 return _mapper.Map<ShipmentReadDTO>(resultShipment);
             }
 
-            // empty result
-            return new ShipmentReadDTO();
+            // not authorized
+            return StatusCode(403);
 
         }
 
