@@ -21,6 +21,12 @@ export class CountryListItemComponent implements OnInit {
   get country() {
     return this._country
   }
+  @Input()
+  set zones(zones: Zone[]) {
+    this._zones = zones;
+    console.log("country-list-item zones: ", this._zones)
+  }
+
 
   private _country: Country = {
     id: 0,
@@ -38,17 +44,13 @@ export class CountryListItemComponent implements OnInit {
     private readonly sessionService: SessionService,
     private readonly countryService: CountryService,
     private readonly zoneService: ZoneService
-  ) {
-
-  }
+  ) { }
 
   ngOnInit(): void {
 
-    this.zoneService.fetchZonesToSession(async () => {
-      this._zones = this.sessionService.zones!;
-    })
-
-
+    // this.zoneService.fetchZonesToSession(async () => {
+    //   this._zones = this.sessionService.zones!;
+    // })
     this._countryForm = new FormGroup({
       countryName: new FormControl(this.country?.name, [
         Validators.required,
@@ -63,22 +65,8 @@ export class CountryListItemComponent implements OnInit {
 
   zoneSelected(selectedZone: Zone) {
     this._selectedZone = selectedZone;
-    // console.log("Zone selected: ", this._selectedZone)
   }
-
   saveCountry() {
-
-
-    // const selectedZone = this._zones.find((zone : Zone) => {
-    //   return zone.id === this._countryForm.get("countryZone").value
-    // })
-
-    // this.country!.zoneId = selectedZone!.id
-    // this.country!.zoneName = selectedZone!.name
-    // this.country!.countryMultiplier = selectedZone!.countryMultiplier
-
-    // this.country!.name = this._countryForm.get("countryName").value
-
     const postCountry = {
       id: this._country.id,
       name: this._countryForm.get("countryName").value,
@@ -87,9 +75,6 @@ export class CountryListItemComponent implements OnInit {
 
     console.log("Post country: ", postCountry)
     this.countryService.updateCountry(this.country, () => console.log("country saved!"));
-
-
-    // console.table(this.country)
   }
 
   get countryForm() {
@@ -98,8 +83,4 @@ export class CountryListItemComponent implements OnInit {
   get zones() {
     return this._zones;
   }
-  // get country(): Country {
-  //   return this.country
-  // }
-
 }

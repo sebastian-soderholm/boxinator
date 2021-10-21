@@ -17,171 +17,58 @@ export class CountrySettingsComponent implements OnInit {
   // private _countries: Country[] = [];
   // private _zones: Zone[] = [];
 
-  zones: Zone[] = []
   zoneSelectForm: FormGroup | any
   zoneSelectControl: FormControl | any
   selectedZone: Zone | undefined
   countries: Country[] | undefined
-
-
-  countriesAndZones: CountriesAndZones = {
-    countries: [],
-    zones: []
-  }
-
-  // private _selectedZoneId = 1;
-  // private _settingsForm: any;
-  // private _zonesSelect: any;
-  // private _countryForm: any;
-  // private _countriesFormArray: FormArray | any;
-  // private _selectedCountry: any = {
-  //   id: 0,
-  //   name: '',
-  //   zoneId: 0,
-  // };
-  // private _selectedZone: Zone = {
-  //   id: 0,
-  //   name: '',
-  //   countryMultiplier: 0,
-  // };
+  zones: Zone[] | undefined
 
   constructor(
     private readonly zoneService: ZoneService,
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService
   ) {
-
-  }
-
-  ngOnInit(): void {
-
     this.zoneService.fetchZonesToSession(async () => {
       this.zones = this.sessionService.zones!;
       // console.log("Settings page zones: ", this.zones)
     });
-
-    this.zoneSelectForm = new FormGroup({
-      zoneSelectControl: new FormControl(this.zones, []),
-    });
-
-
-    // this.countryService.fetchCountriesToSession(async () => {
-    //   this.countriesAndZones.countries = this.sessionService.countries!;
-
-    // })
-
-    // console.log("Country settings: ", this.sessionService.countries)
-
-
-    // this._settingsForm = new FormGroup({
-    //   zoneSelect: this._zonesSelect = new FormControl(1, []),
-    //   countriesFormArray: this._countriesFormArray = new FormArray([]),
-    // });
   }
 
-  zoneSelected(zone: Zone) {
-    //Fetche countries for zone to pass to child component
-    // console.log("Zone changed:", zone)
+  ngOnInit(): void {
+    this.zoneSelectForm = new FormGroup({
+      zoneSelectControl: new FormControl(this.zones, [
+        Validators.required
+      ]),
+    });
+  }
+
+  zoneSelected() {
 
 
-
-    this.zoneService.fetchZoneCountriesToSession(zone.id, async () => {
+    this.zoneService.fetchZoneCountriesToSession(this.zoneSelectForm.get("zoneSelectControl").value.id, async () => {
       this.countries = this.sessionService.countries
+      // console.log("Fetching countries: ", this.countries)
     })
   }
-  saveZone(zone: Zone) {
+  //Update zone info
+  saveZone() {
 
+    console.log("ZoneControl",this.zoneSelectForm.get("zoneSelectControl"))
     const putZone: Zone = {
-      id: this.zoneSelectForm.get("zoneSelectControl").value,
-      name: "",
-      countryMultiplier: 0
+      id: this.zoneSelectForm.get("zoneSelectControl").value.id,
+      name: this.zoneSelectForm.get("zoneSelectControl").value.name,
+      countryMultiplier: this.zoneSelectForm.get("zoneSelectControl").value.countryMultiplier
     }
-
     console.log("Zone saved: ", putZone)
 
     // this.zoneService.updateZone(zone)
   }
   onChanges() {
-    // console.log("Loaded countries for id: " + this._selectedZoneId, this._countries)
-    // this.setCountriesForm();
   }
 
   countrySave(editedCountry: any) {
-    // console.table(editedCountry)
-    // const countryFormArray = this._countriesFormArray as FormArray;
-
-    // const country: Country = {
-    //   id: countryFormArray.at(i).get('countryName')?.value,
-    //   name: countryFormArray.at(i).get('countryName')?.value,
-    //   zoneId: 0,
-    //   zoneName: '',
-    //   countryMultiplier: 0
-    // }
   }
 
-  setCountriesForm() {
-    // this._countriesFormArray = new FormArray([]);
-
-    // this._countries.forEach((country) => {
-    //   if (country.zoneId === this._selectedZone.id) {
-    //     console.log("Populating form with country: ", country)
-    //     //New form group & add to form array
-    //     const countryForm = new FormGroup({
-    //         countryId: new FormControl(country.id),
-    //         countryName: new FormControl(country.name, [Validators.required]),
-    //         countryZoneId: new FormControl(country.zoneId),
-    //         countryZoneName: new FormControl(country.zoneName, [Validators.required]),
-    //         countryMultiplier: new FormControl(country.countryMultiplier),
-    //     });
-    //     // console.log("Country Form: ", countryForm)
-
-    //     this._countriesFormArray.push(new FormArray([]))
-    //     // this._countriesFormArray.push(countryForm)
-    //   }
-    // });
-    // console.table(this._settingsForm)
-  }
-
-  // get countriesAndZones() {
-  //   return this._countriesAndZones;
-  // }
-  // get countries() {
-  //   return this._countriesAndZones.countries;
-  // }
-
-  // get zones() {
-  //   return this._zones;
-  // }
-  // get selectedZone() {
-  //   return this._selectedZone;
-  // }
-  // get countries() {
-  //   return this._countries;
-  // }
-  // get countriesFormArray() {
-  //   return this._settingsForm.get("countriesFormArray") as FormArray;
-  // }
-  // get countriesFormArray() {
-  //   return this._countriesFormArray as FormArray;
-  // }
-  // get settingsForm() {
-  //   return this._settingsForm;
-  // }
-  // get selectedCountry() {
-  //   return this._selectedCountry;
-  // }
-
-  // get countriesAndSettings(): CountriesAndZones {
-  //   return {
-  //     countries: this.sessionService.countries,
-  //     zones: this.sessionService.zones
-  //   }
-  // }
-
-  // get zones(): Zone[] {
-  //   return this._zones;
-  // }
-
-
+  setCountriesForm() {}
 
 }
