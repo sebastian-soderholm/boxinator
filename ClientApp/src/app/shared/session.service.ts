@@ -19,6 +19,7 @@ export class SessionService {
   private _zones: Zone[] = []
   private _user: User | undefined
   private _userForAdmin: User | undefined
+  private _usersForAdmin: User[] | undefined
   private _shipmentTableData: ShipmentTableData[] | undefined
   private _token: string | undefined;
 
@@ -81,6 +82,12 @@ export class SessionService {
 		sessionStorage.setItem('userForAdmin', JSON.stringify(fetchedUser))
 	}
 
+  // for admin only, set when admin is editing user's information
+  setFetchedUsersInfo(fetchedUsers: User[]): void {
+    this._usersForAdmin = fetchedUsers;
+    sessionStorage.setItem('usersForAdmin', JSON.stringify(fetchedUsers))
+  }
+
   logout(): void {
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('token');
@@ -107,6 +114,10 @@ export class SessionService {
 
   get userForAdmin(): User | undefined {
 		return this._userForAdmin;
+	}
+
+  get usersForAdmin(): User[] | undefined {
+		return this._usersForAdmin;
 	}
 
   get token(): string | undefined {

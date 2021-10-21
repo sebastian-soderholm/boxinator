@@ -59,7 +59,7 @@ namespace boxinator.Controllers
                 User newUser = _mapper.Map<User>(new User()
                 {
                     Email = userEmail,
-                    AccountType = AccountTypes.REGISTERED_USER,
+                    AccountType = "REGISTERED_USER",
                     CountryId = 1
                 });
                 
