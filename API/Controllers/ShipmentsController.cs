@@ -217,9 +217,20 @@ namespace boxinator.Controllers
         [HttpPut("/shipments/{shipmentId}")]
         public async Task<ActionResult<ShipmentReadDTO>> Update(int shipmentId, ShipmentEditDTO shipmentDto)
         {
-            Shipment updatedShipment = _mapper.Map<Shipment>(shipmentDto);
-            var resultShipment = await _shipmentService.Update(shipmentId, updatedShipment);
-            return _mapper.Map<ShipmentReadDTO>(resultShipment);
+            // for getting items by current user
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            if (currentUser.IsAdmin())
+            {
+                Shipment updatedShipment = _mapper.Map<Shipment>(shipmentDto);
+                var resultShipment = await _shipmentService.Update(shipmentId, updatedShipment);
+                return _mapper.Map<ShipmentReadDTO>(resultShipment);
+            }
+
+            // empty result
+            return new ShipmentReadDTO();
+
         }
 
         /// <summary>
@@ -239,6 +250,7 @@ namespace boxinator.Controllers
         /// </summary>
         /// <param name="shipmentId"></param>
         /// <returns>Newest statusLog</returns>
+        /// // GET: /shipments/log/:shipment_id
         [HttpGet("/shipments/log/{shipmentId}")]
         public async Task<ActionResult<ShipmentStatusLogReadDTO>> UpdateStatus(int shipmentId)
         {
