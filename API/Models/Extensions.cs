@@ -65,12 +65,16 @@ namespace boxinator.Models
         {
             // Fetches token from header
             string accessTokenWithBearerPrefix = request.Headers[HeaderNames.Authorization];
-            string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
-            var token = new JwtSecurityToken(jwtEncodedString: accessTokenWithoutBearerPrefix);
-            // Fetch user's email with the token
-            string userEmail = token.Claims.First(c => c.Type == "email").Value;
 
-            return userEmail;
+            if(accessTokenWithBearerPrefix != null)
+            {
+                string accessTokenWithoutBearerPrefix = accessTokenWithBearerPrefix.Substring("Bearer ".Length);
+                var token = new JwtSecurityToken(jwtEncodedString: accessTokenWithoutBearerPrefix);
+                // Fetch user's email with the token
+                return token.Claims.First(c => c.Type == "email").Value;
+            }
+
+            return "";
         }
 
         /// <summary>
@@ -80,7 +84,7 @@ namespace boxinator.Models
         /// <returns>True if admin</returns>
         public static bool IsAdmin(this User user)
         {
-            if (user.AccountType == AccountTypes.ADMINISTRATOR.ToString())
+            if (user?.AccountType == AccountTypes.ADMINISTRATOR.ToString())
                 return true;
 
             return false;
