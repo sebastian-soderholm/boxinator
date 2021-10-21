@@ -6,7 +6,7 @@
   <select formControlName="countryZone" (change)='zoneSelected(countryForm.value.countryZone)'>
     <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
   </select>
-  <span>Multiplier: {{country.countryMultiplier}} *</span>
+  <span>Multiplier: <strong>{{country.countryMultiplier}}</strong></span>
 </form>
 
 
