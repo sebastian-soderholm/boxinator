@@ -56,12 +56,15 @@ export class CountrySettingsComponent implements OnInit {
 
     // console.log(this.zoneSelectForm.get("zoneNameControl").value.name, this.zoneSelectForm.get("zoneNameControl").value.countryMultiplier)
 
+    this.selectedZone!.countryMultiplier = this.zoneSelectForm.get("zoneMultiplierControl").value
+
     const putZone: Zone = {
       id: this.zoneSelectForm.get("zoneSelectControl").value.id,
       name: this.zoneSelectForm.get("zoneNameControl").value,
       countryMultiplier: this.zoneSelectForm.get("zoneMultiplierControl").value
     }
     console.log("Zone saved: ", putZone)
+
 
     // this.zoneService.updateZone(zone)
   }

@@ -72,4 +72,7 @@ export class CountryListItemComponent implements OnInit {
   get zones() {
     return this._zones;
   }
+  get selectedZone() {
+    return this._selectedZone
+  }
 }
