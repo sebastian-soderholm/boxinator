@@ -32,7 +32,7 @@ export class EditAccountPage implements OnInit, OnChanges {
     private readonly _countryService: CountryService,
     private readonly _datepipe: DatePipe
   ) {}
-  
+
   ngOnChanges() {
     this._editUser = this.showAdminSelection == true ? this._sessionService.userForAdmin : this._sessionService.user;
   }
@@ -69,6 +69,9 @@ export class EditAccountPage implements OnInit, OnChanges {
         countryId: new FormControl(this._editUser!.countryId, [
           // Validators.pattern(/[a-z]/gi)
         ]),
+        address: new FormControl(this._editUser!.address, [
+          Validators.required,
+        ]),
         zipCode: new FormControl(this._editUser!.zipCode, [
           //Must be a minimum length
           Validators.minLength(5),
@@ -88,6 +91,7 @@ export class EditAccountPage implements OnInit, OnChanges {
     this._editUser!.firstName = this._editUserForm.get('firstName').value;
     this._editUser!.lastName = this._editUserForm.get('lastName').value;
     this._editUser!.dateOfBirth = this._editUserForm.get('dateOfBirth').value
+    this._editUser!.address = this._editUserForm.get('address').value
     this._editUser!.countryId = this._editUserForm.get('countryId').value;
     this._editUser!.zipCode = this._editUserForm.get('zipCode').value;
     this._editUser!.phoneNumber = this._editUserForm.get('phoneNumber').value;
@@ -125,6 +129,9 @@ export class EditAccountPage implements OnInit, OnChanges {
   }
   get zipCode() {
     return this._editUserForm.get('zipCode');
+  }
+  get address() {
+    return this._editUserForm.get('address');
   }
   get phoneNumber() {
     return this._editUserForm.get('phoneNumber');

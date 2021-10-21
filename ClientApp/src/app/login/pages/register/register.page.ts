@@ -22,6 +22,7 @@ export class RegisterPage implements OnInit {
     email: this.sessionService.user!.email,
     countryId: null,
     zipCode: null,
+    address: "",
     dateOfBirth: null,
     phoneNumber: null,
   };
@@ -124,7 +125,7 @@ export class RegisterPage implements OnInit {
   }
 }
 
-/* 
+/*
       Email & password validation
 
       email: new FormControl(this._registerUser.email, [
@@ -142,5 +143,5 @@ export class RegisterPage implements OnInit {
         Validators.required,
         //At least one lowercase letter, one uppercase letter, one number, one special character
         // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/),
-      ]), 
+      ]),
       */
