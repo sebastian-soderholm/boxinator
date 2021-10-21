@@ -18,7 +18,7 @@ namespace boxinator.Controllers
     [ApiController]
     [Route("settings")]
     [EnableCors("_myAllowSpecificOrigins")]
-    //[Authorize]
+    [Authorize]
     public class SettingsController : ControllerBase
     {
         private readonly ISettingsService _settingsService;
