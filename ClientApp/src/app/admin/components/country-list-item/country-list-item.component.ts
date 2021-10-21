@@ -63,7 +63,7 @@ export class CountryListItemComponent implements OnInit {
     }
 
     console.log("Post country: ", postCountry)
-    this.countryService.updateCountry(this.country, () => console.log("country saved!"));
+    // this.countryService.updateCountry(this.country, () => console.log("country saved!"));
   }
 
   get countryForm() {
