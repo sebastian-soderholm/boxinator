@@ -1,1 +1,15 @@
-<p>edit-shipment works!</p>
+<div class="mat-h2">Edit shipment</div>
+
+<form (ngSubmit)="onSubmitEditForm()">
+	<!-- Shared header-->
+	<app-shared-form [header]="editForm?.get('header')!" [parentGroup]="editForm"></app-shared-form>
+	
+	<!-- Non shared -->
+	<div [formGroup]="editForm!">
+		<mat-form-field appearance="outline">
+			<mat-label>Additional field</mat-label>
+			<input matInput placeholder="Additional field" formControlName="additionalField">
+		</mat-form-field>
+		<button type="submit" mat-raised-button color="accent">Save</button>
+	</div>
+</form>

@@ -35,6 +35,10 @@ export class SessionService {
     sessionStorage.setItem('token', token)
   }
 
+  getToken() : any{
+    return sessionStorage.getItem('token');
+  }
+
   setShipments(shipments: Shipment[]): void {
     this._shipments = shipments;
     sessionStorage.setItem('shipments', JSON.stringify(shipments))
