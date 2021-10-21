@@ -40,6 +40,15 @@
       <p>Postal code can only contain numbers</p>
     </div>
   </div>
+
+  <input formControlName="address" type="text" placeholder="Address">
+  <div *ngIf="address.dirty || address.touched" class="alert">
+    <div *ngIf="address.errors?.pattern">
+      <p>Postal code can only contain numbers</p>
+    </div>
+  </div>
+
+
   <!-- Phone Number -->
   <input formControlName="phoneNumber" type="text" placeholder="Contact number">
   <div *ngIf="phoneNumber.dirty || phoneNumber.touched" class="alert">
