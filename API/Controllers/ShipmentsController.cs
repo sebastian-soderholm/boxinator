@@ -116,7 +116,6 @@ namespace boxinator.Controllers
         /// <returns>Created shipment</returns>
         // POST: /shipments
         [HttpPost]
-        [Route("/shipments/")]
         public async Task<ActionResult<ShipmentReadDTO>> Add(ShipmentCreateDTO shipmentDTO)
         {
             Shipment newShipment = _mapper.Map<Shipment>(shipmentDTO);
