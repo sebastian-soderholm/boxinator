@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Country } from '../models/country.model';
 import { SessionService } from 'src/app/shared/session.service';
-import { Zone } from 'src/app/admin/models/zone.model';
+import { ExtensionsService } from 'src/app/shared/extensions.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,8 @@ export class CountryService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly sessionService: SessionService) { }
+    private readonly sessionService: SessionService,
+    private readonly extensionService: ExtensionsService) { }
 
   public fetchCountriesToSession(onSuccess: () => void): void {
     this.http.get<Country[]>(this._apiUrl + '/settings/countries')
@@ -28,14 +29,7 @@ export class CountryService {
   }
   //Add new country to DB & sessionService
   public postCountry(country: Country, onSuccess: () => void): void {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-        //'X-API-Key': API_KEY,
-      }),
-    };
-
-    this.http.post<Country>(this._apiUrl + '/settings/countries', country, httpOptions)
+    this.http.post<Country>(this._apiUrl + '/settings/countries', country, this.extensionService.authenticationHeadersFull)
     .subscribe((country: Country) => {
       //Set country to session service on success
       this.sessionService.addCountry(country)
@@ -47,14 +41,8 @@ export class CountryService {
   }
   //Add new country to DB & sessionService
   public updateCountry(country: Country, onSuccess: () => void): void {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-        //'X-API-Key': API_KEY,
-      }),
-    };
 
-    this.http.put<Country>(this._apiUrl + '/settings/countries', country, httpOptions)
+    this.http.put<Country>(this._apiUrl + '/settings/countries', country, this.extensionService.authenticationHeadersFull)
     .subscribe((country: Country) => {
       //Update country in sessionService
       this.sessionService.updateCountry(country)

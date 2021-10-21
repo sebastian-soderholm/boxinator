@@ -1,11 +1,11 @@
 export interface RegisterUser {
+  id: number | null;
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
   countryId: number | null;
   zipCode: string | null;
+  address: string;
   dateOfBirth: string | null;
   phoneNumber: string | null;
-
 }

@@ -19,6 +19,7 @@ export class SessionService {
   private _zones: Zone[] = []
   private _user: User | undefined
   private _userForAdmin: User | undefined
+  private _usersForAdmin: User[] | undefined
   private _shipmentTableData: ShipmentTableData[] | undefined
   private _token: string | undefined;
 
@@ -44,6 +45,10 @@ export class SessionService {
     sessionStorage.setItem('shipmentTableData', JSON.stringify(shipments))
   }
 
+  removeShipmentsTableData() {
+    sessionStorage.removeItem('shipmentTableData');
+  }
+
   setCountries(countries: Country[]): void {
     this._countries = countries
     sessionStorage.setItem('countries', JSON.stringify(countries))
@@ -61,17 +66,32 @@ export class SessionService {
     this._zones = zones;
     sessionStorage.setItem('zones', JSON.stringify(zones))
   }
-
   setUser(user: User): void {
 		this._user = user;
 		sessionStorage.setItem('user', JSON.stringify(user))
 	}
+  updateZone(zone: Zone) {
+    const indexToReplace = this._countries.findIndex(c => zone.id === c.id)
+
+    if(indexToReplace) this._zones[indexToReplace] = zone
+  }
 
   // for admin only, set when admin is editing user's information
   setFetchedUserInfo(fetchedUser: User): void {
 		this._userForAdmin = fetchedUser;
 		sessionStorage.setItem('userForAdmin', JSON.stringify(fetchedUser))
 	}
+
+  // for admin only, set when admin is editing user's information
+  setFetchedUsersInfo(fetchedUsers: User[]): void {
+    this._usersForAdmin = fetchedUsers;
+    sessionStorage.setItem('usersForAdmin', JSON.stringify(fetchedUsers))
+  }
+
+  logout(): void {
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+  }
 
   get shipments(): Shipment[] | undefined {
     return this._shipments;
@@ -94,6 +114,10 @@ export class SessionService {
 
   get userForAdmin(): User | undefined {
 		return this._userForAdmin;
+	}
+
+  get usersForAdmin(): User[] | undefined {
+		return this._usersForAdmin;
 	}
 
   get token(): string | undefined {

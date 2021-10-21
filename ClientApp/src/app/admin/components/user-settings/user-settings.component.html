@@ -7,4 +7,13 @@
 	<button (click)="onSearch(searchvalue)" formtarget="_blank" [disabled]="searchvalue === ''">Search</button>
  </div>
 
-<app-edit-account *ngIf="loadComponent == true" [showAdminSelection]=true></app-edit-account>
+ <!-- User selection -->
+ <mat-nav-list>
+	<mat-list-item *ngFor="let user of users">
+	   <button mat-icon-button (click)="selectUser(user)">{{ user.firstName }} {{ user.lastName }}
+	   </button>
+	</mat-list-item>
+  </mat-nav-list>
+
+
+<app-edit-account *ngIf="loadComponent == true" [showAdminSelection]=true [incomingUser]=selectedUser></app-edit-account>

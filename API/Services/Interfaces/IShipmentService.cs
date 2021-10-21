@@ -11,6 +11,7 @@ namespace boxinator.Services.Interfaces
     public interface IShipmentService
     {
         public Task<Shipment> Add(Shipment shipment);
+        public Task<ShipmentStatusLog> AddStatusLog(int shipmentId);
         public Task<Shipment> Update(int id, Shipment shipment);
         public Task<bool> Delete(int id);
         public Task<Shipment> Get(int id);

@@ -8,5 +8,11 @@ BoxinatorAPITests/obj/Debug/net5.0/BoxinatorAPITests.GeneratedMSBuildEditorConfi
 BoxinatorAPITests/obj/Debug/net5.0/BoxinatorAPITests.GeneratedMSBuildEditorConfig.editorconfig
 API/boxinator.csproj
 API/boxinator.csproj
+API/Migrations/20211020172311_testing.cs
+API/Migrations/20211020172311_testing.Designer.cs
+API/Migrations/BoxinatorDbContextModelSnapshot.cs
+API/Migrations/BoxinatorDbContextModelSnapshot.cs
+API/Migrations/BoxinatorDbContextModelSnapshot.cs
 API/Migrations/20211021082148_boxinator.cs
 API/Migrations/20211021082148_boxinator.Designer.cs
+API/Migrations/BoxinatorDbContextModelSnapshot.cs

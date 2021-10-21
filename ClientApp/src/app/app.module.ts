@@ -42,6 +42,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
 
 //Color picker
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -50,6 +53,9 @@ import { SettingsPage } from './admin/pages/settings/settings.page';
 import { CountrySettingsComponent } from './admin/components/country-settings/country-settings.component';
 import { UserSettingsComponent } from './admin/components/user-settings/user-settings.component';
 import { DatePipe } from '@angular/common';
+import { CountryListComponent } from './admin/components/country-list/country-list.component';
+import { CountryListItemComponent } from './admin/components/country-list-item/country-list-item.component';
+import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.page';
 
 
 
@@ -71,6 +77,9 @@ import { DatePipe } from '@angular/common';
     SettingsPage,
     CountrySettingsComponent,
     UserSettingsComponent,
+    EditShipmentPage,
+    CountryListComponent,
+    CountryListItemComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +105,10 @@ import { DatePipe } from '@angular/common';
     MatRadioModule,
     MatSelectModule,
     ColorPickerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatListModule
   ],
   providers: [
     DatePipe

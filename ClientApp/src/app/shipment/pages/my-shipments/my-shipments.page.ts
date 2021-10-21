@@ -7,7 +7,7 @@ import { ShipmentStatusLog, ShipmentTableData, MappedData, ExpandedData, Status,
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Data } from '@angular/router';
 import {Sort} from '@angular/material/sort';
-import { expand } from 'rxjs/operators';
+import { expand, sequenceEqual } from 'rxjs/operators';
 import { TestBed } from '@angular/core/testing';
 import { FormGroup, NgForm, SelectControlValueAccessor } from '@angular/forms';
 
@@ -25,10 +25,8 @@ import { FormGroup, NgForm, SelectControlValueAccessor } from '@angular/forms';
 })
 export class MyShipmentsPage implements OnInit {
 
-  //displayedColumns: string[] = ['id', 'cost', 'weight', 'status', 'receiverName', 'date'];
-  //columnsToDisplay: string[] = this.displayedColumns.slice();
-  displayedColumns: string[] = [];
-  columnsToDisplay: string[] = [];
+  displayedColumns: string[] = ['id', 'cost', 'weight', 'status', 'receiverName', 'date'];
+  columnsToDisplay: string[] = this.displayedColumns.slice();
   private _dataSource: MappedData[] = [];
   dateVisibility: boolean = true;
   sortedData: MappedData[] = [];
@@ -43,6 +41,8 @@ export class MyShipmentsPage implements OnInit {
   selectedFromDate? : Date[] | null;
   selectedToDate? : Date[] | null;
   showEdit: boolean = false;
+  cancelledStatus?: Status | null;
+  completedStatus?: Status | null;
 
   constructor(
     private readonly shipmentService: ShipmentService,
@@ -52,12 +52,16 @@ export class MyShipmentsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.displayedColumns = ['id', 'cost', 'weight', 'status', 'receiverName', 'date'];
-    if(this.showEdit === true) {
-      this.displayedColumns.push('toggle')
-      this.displayedColumns.push('edit')
+    this.cancelledStatus = {
+      id: 5,
+      name: "CANCELLED"
     }
-    this.columnsToDisplay = this.displayedColumns.slice();
+    this.completedStatus = {
+      id: 4,
+      name: "COMPLETED"
+    }
+
+    this.sessionService.removeShipmentsTableData();
 
     this.shipmentService.getAllCurrent(async () => {
       const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
@@ -90,6 +94,16 @@ export class MyShipmentsPage implements OnInit {
       });
       
     }
+  }
+
+  addNewStatus(shipmentId: number) {
+    console.log(shipmentId +" jee");
+    console.log(this.sortedData)
+    this.shipmentService.addNewStatusLog(shipmentId, async() =>{
+      console.log("status added ");
+      const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
+      this.sortedData = mappedData;
+    })
   }
 
   setSelectedFilterOption(type: string, selected : any) {
@@ -156,9 +170,7 @@ export class MyShipmentsPage implements OnInit {
         address: obj.receiverAddress,
         receiverName: obj.receiverFirstName+" "+obj.receiverLastName,
         date: latestDate,
-        expandedData: expandedData//,  
-        //toggle: HTMLButtonElement,
-        //edit: HTMLButtonElement    
+        expandedData: expandedData,
 			};
 		});
   }

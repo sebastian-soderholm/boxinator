@@ -1,36 +1,54 @@
-<form [formGroup]="settingsForm">
+<!-- <form [formGroup]="settingsForm">
   <p>Select zone</p>
   <select formControlName="zoneSelect" (change)="onChanges()">
     <option *ngIf="!zones" selected>Loading zones...</option>
-    <!-- Zones select -->
     <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
   </select>
 
   <p>Countries in {{selectedZone.name}}</p>
-  <div formArrayName="countriesFormArray" *ngFor="let controls of countriesFormArray.controls; index as i">
+  <ng-container formArrayName="countriesFormArray">
+    <div *ngFor="let control of countriesFormArray.controls; index as i">
 
     <form [formGroupName]="i">
-      <p formControlName="uneditedCountry"></p>
 
-      <input formControlName="countryName" >
-      <!-- Change country name -->
-      <select formControlName="countryZone" >
-        <!-- Select zone for country -->
-        <option *ngFor="let zone of zones">{{zone.name}}</option>
+      <input type="text" formControlName="countryName" [value]="control.value.countryId"/>
+
+      <p type="text" formControlName="countryName" >{{control.value.countryName}}</p>
+
+      <select formControlName="countryZone">
+        <option *ngFor="let zone of zones" [ngValue]="control.value.zoneId">{{control.value.zoneName}}</option>
       </select>
 
-      <!-- <button (click)="countrySave(i)">Save</button> -->
-
-      <!-- Return country object fields on click -->
+      <p>UneditedCountry: {{control.value.countryName}}</p>
+      <p>UneditedCountry: {{settingsForm.controls.countriesFormArray.controls[i].uneditedCountry.zoneId}}</p>
       <button (click)="countrySave({
         id: countriesFormArray.at(i).get('uneditedCountry')?.value.id,
         name: countriesFormArray.at(i).get('countryName')?.value,
-        zoneId: countriesFormArray.at(i).get('countryZone')?.value.zoneId,
-        zoneName: countriesFormArray.at(i).get('countryZone')?.value,
-        countryMultiplier: countries[i].countryMultiplier
+        zoneId: countriesFormArray.at(i).get('countryZone')?.value.id
       })">Save</button>
     </form>
   </div>
 
+</ng-container>
+</form> -->
 
+<p>Select zone</p>
+<form [formGroup]="zoneSelectForm">
+  <select formControlName="zoneSelectControl" (change)='zoneSelected(zoneSelectForm.value.zoneSelectControl)'>
+    <option *ngFor="let zone of zones" [ngValue]="zone" selected>{{zone.name}}</option>
+  </select>
 </form>
+
+<input type="text" [value]="zoneSelectForm.value.zoneSelectControl.name">
+<input type="number" [value]="zoneSelectForm.value.zoneSelectControl.countryMultiplier">
+<button (click)="saveZone(zoneSelectForm.value.zoneSelectControl)">Save zone</button>
+<!-- <form [formGroup]="zoneSelectForm">
+  <select formControlName="zoneSelectControl">
+    <option *ngFor="let zone of states" [ngValue]="state">
+      {{ state.abbrev }}
+    </option>
+  </select>
+</form> -->
+
+<!-- <p>Form value: {{ zoneSelectForm.value.zoneSelectControl | json}}</p> -->
+<app-country-list [countries]="countries!"></app-country-list>

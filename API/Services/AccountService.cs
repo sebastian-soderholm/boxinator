@@ -72,16 +72,15 @@ namespace boxinator.Services
         /// <returns>Updated user</returns>
         public async Task<User> Update(int id, User user)
         {
-            var resultUser = await _context.Users
-                .Where(x => x.Id == id /*&& x.UserId == currentUser*/).FirstOrDefaultAsync();
+            var resultUser = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == user.Id);
 
             if (resultUser != null)
             {
-                resultUser = user;
+                _context.Update(user);
                 await _context.SaveChangesAsync();
             }
 
-            return resultUser;
+            return user;
         }
         /// <summary>
         /// Get user by email 
@@ -101,17 +100,16 @@ namespace boxinator.Services
         /// </summary>
         /// <param name="term"></param>
         /// <returns>Retrieved user</returns>
-        public async Task<User> Search(string term)
+        public async Task<List<User>> Search(string term)
         {
-            //var user = await _context.Users.Where(x => x.FirstName == term || x.LastName == term).FirstOrDefaultAsync();
-            var user = await _context.Users
+            var userList = await _context.Users
                 .Where(x =>
                 x.FirstName.Contains(term) || 
                 x.LastName.Contains(term) ||
                 x.Email.Contains(term) ||
                 x.Address.Contains(term))
-                .FirstOrDefaultAsync();
-            return user;
+                .ToListAsync();
+            return userList;
         }
     }
 }

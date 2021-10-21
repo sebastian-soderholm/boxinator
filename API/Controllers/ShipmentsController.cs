@@ -92,6 +92,7 @@ namespace boxinator.Controllers
         /// <returns>Created shipment</returns>
         // POST: /shipments
         [HttpPost]
+        [Route("/shipments/")]
         public async Task<ActionResult<ShipmentReadDTO>> Add(ShipmentCreateDTO shipmentDTO)
         {
             Shipment newShipment = _mapper.Map<Shipment>(shipmentDTO);
@@ -187,6 +188,14 @@ namespace boxinator.Controllers
         public async Task<ActionResult<bool>> Delete(int shipmentId)
         {
             return await _service.Delete(shipmentId);
+        }
+
+        [HttpGet("/shipments/log/{shipmentId}")]
+        public async Task<ActionResult<ShipmentStatusLogReadDTO>> UpdateStatus(int shipmentId)
+        {
+            ShipmentStatusLog updatedLog = await _service.AddStatusLog(shipmentId);
+            return _mapper.Map<ShipmentStatusLogReadDTO>(updatedLog);
+
         }
 
 

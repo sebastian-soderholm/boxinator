@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { passwordsMatch } from 'src/app/login/pages/register/fields-match';
@@ -16,12 +16,13 @@ import { DatePipe } from '@angular/common';
   templateUrl: './edit-account.page.html',
   styleUrls: ['./edit-account.page.scss'],
 })
-export class EditAccountPage implements OnInit {
+export class EditAccountPage implements OnInit, OnChanges {
   private _editUser: User | undefined;
   private _countries: Country[] = [];
   private _editUserForm: any;
   private _confirmPassword: string = '';
   @Input() showAdminSelection: boolean = false;
+  @Input() incomingUser: User | undefined;
 
   constructor(
     private readonly _loginService: LoginService,
@@ -32,16 +33,16 @@ export class EditAccountPage implements OnInit {
     private readonly _datepipe: DatePipe
   ) {}
 
+  ngOnChanges() {
+    this._editUser = this.showAdminSelection == true ? this._sessionService.userForAdmin : this._sessionService.user;
+  }
+
   ngOnInit(): void {
     this._editUser = this.showAdminSelection == true ? this._sessionService.userForAdmin : this._sessionService.user;
 
-    console.table(this._editUser)
     this._countryService.fetchCountriesToSession(async () => {
       this._countries = this._sessionService.countries!;
     });
-    console.table(this._countries)
-
-    console.log("User dob: ", this._datepipe.transform(this._editUser!.dateOfBirth, 'dd-mm-yyyy'))
 
     this._editUserForm = new FormGroup(
       {
@@ -62,11 +63,14 @@ export class EditAccountPage implements OnInit {
             /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
           ),
         ]),
-        dateOfBirth: new FormControl(this._datepipe.transform(this._editUser!.dateOfBirth, 'dd-mm-yyyy'), [
+        dateOfBirth: new FormControl("2021-10-19 12:17:18.6767435", [
           // Validators.pattern(/a-zA-Z/)
         ]),
         countryId: new FormControl(this._editUser!.countryId, [
           // Validators.pattern(/[a-z]/gi)
+        ]),
+        address: new FormControl(this._editUser!.address, [
+          Validators.required,
         ]),
         zipCode: new FormControl(this._editUser!.zipCode, [
           //Must be a minimum length
@@ -87,15 +91,15 @@ export class EditAccountPage implements OnInit {
     this._editUser!.firstName = this._editUserForm.get('firstName').value;
     this._editUser!.lastName = this._editUserForm.get('lastName').value;
     this._editUser!.dateOfBirth = this._editUserForm.get('dateOfBirth').value
+    this._editUser!.address = this._editUserForm.get('address').value
     this._editUser!.countryId = this._editUserForm.get('countryId').value;
     this._editUser!.zipCode = this._editUserForm.get('zipCode').value;
     this._editUser!.phoneNumber = this._editUserForm.get('phoneNumber').value;
 
-
-    console.table(this._editUser)
-    // this._accountService.updateUser(this._editUser?, function () {
-    //   console.log('User updated successfully!');
-    // });
+    console.table(this._editUser) 
+    this._accountService.updateUser(this._editUser!, async () => {
+      console.log('User updated successfully!');
+    });
   }
   get editUserForm() {
     return this._editUserForm;
@@ -124,6 +128,9 @@ export class EditAccountPage implements OnInit {
   }
   get zipCode() {
     return this._editUserForm.get('zipCode');
+  }
+  get address() {
+    return this._editUserForm.get('address');
   }
   get phoneNumber() {
     return this._editUserForm.get('phoneNumber');

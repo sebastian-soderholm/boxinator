@@ -17,7 +17,7 @@ namespace boxinator.Controllers
     [ApiController]
     [Route("settings")]
     [EnableCors("_myAllowSpecificOrigins")]
-    [Authorize]
+    //[Authorize]
     public class SettingsController : ControllerBase
     {
         private readonly ISettingsService _service;
@@ -36,6 +36,7 @@ namespace boxinator.Controllers
         // GET: /settings/countries
         [HttpGet]
         [Route("/settings/countries")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<CountryReadDTO>>> GetAllCountries()
         {
             var countries = await _service.GetAllCountries();
@@ -76,10 +77,20 @@ namespace boxinator.Controllers
         //GET: /settings/zones
         [HttpGet]
         [Route("/settings/zones")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<ZoneReadDTO>>> GetAllZones()
         {
             var zones = await _service.GetAllZones();
             return _mapper.Map<List<ZoneReadDTO>>(zones);
+        }
+
+        //GET: /settings/zones/{zoneId}
+        [HttpGet("/settings/zones/{zoneId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<CountryReadDTO>>> GetZonesCountries(int zoneId)
+        {
+            var zones = await _service.GetZoneCountries(zoneId);
+            return _mapper.Map<List<CountryReadDTO>>(zones);
         }
 
         /// <summary>
@@ -88,12 +99,12 @@ namespace boxinator.Controllers
         /// <param name="zoneId"></param>
         /// <param name="zoneDTO"></param>
         /// <returns></returns>
-        //PUT: /settings/zones
+        //PUT: /settings/zones/{zoneId}
         [HttpPut]
-        [Route("/settings/zones")]
-        public async Task<ActionResult<ZoneReadDTO>> UpdateZone(ZoneEditDTO zoneDTO)
+        [Route("/settings/zones/{zoneId}")]
+        public async Task<ActionResult<ZoneReadDTO>> UpdateZone(int zoneId, ZoneEditDTO zoneDTO)
         {
-            var resultZone = await _service.UpdateZone(zoneDTO);
+            var resultZone = await _service.UpdateZone(zoneId, zoneDTO);
             return _mapper.Map<ZoneReadDTO>(resultZone);
         }
         /// <summary>
@@ -148,5 +159,7 @@ namespace boxinator.Controllers
             var resultStatus = await _service.AddStatus(statusDTO);
             return _mapper.Map<StatusReadDTO>(resultStatus);
         }
+
+
     }
 }

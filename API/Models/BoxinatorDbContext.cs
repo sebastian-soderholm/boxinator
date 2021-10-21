@@ -138,7 +138,7 @@ namespace boxinator.Models
                     CountryId = 1,
                     ZipCode = "00200",
                     PhoneNumber = "0504055679",
-                    AccountType = "ADMIN_USER"
+                    AccountType = "ADMINISTRATOR"
                 },
                 new User()
                 {
@@ -150,7 +150,7 @@ namespace boxinator.Models
                     CountryId = 1,
                     ZipCode = "06100",
                     PhoneNumber = "0400959078",
-                    AccountType = "ADMIN_USER"
+                    AccountType = "ADMINISTRATOR"
                 }
             );
 

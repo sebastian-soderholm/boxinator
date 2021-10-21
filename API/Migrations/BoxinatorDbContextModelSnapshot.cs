@@ -349,7 +349,7 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 2,
-                            AccountType = "ADMIN_USER",
+                            AccountType = "ADMINISTRATOR",
                             CountryId = 1,
                             Email = "peppi.makela@gmail.com",
                             FirstName = "Peppi",
@@ -360,7 +360,7 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 3,
-                            AccountType = "ADMIN_USER",
+                            AccountType = "ADMINISTRATOR",
                             Address = "Kaivokatu 10",
                             CountryId = 1,
                             Email = "developer.musetech@gmail.com",
@@ -427,35 +427,35 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 676, DateTimeKind.Local).AddTicks(7435),
+                            Date = new DateTime(2021, 10, 21, 11, 21, 47, 546, DateTimeKind.Local).AddTicks(1143),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9513),
+                            Date = new DateTime(2021, 10, 21, 11, 21, 47, 549, DateTimeKind.Local).AddTicks(8758),
                             ShipmentId = 1,
                             StatusId = 3
                         },
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9571),
+                            Date = new DateTime(2021, 10, 21, 11, 21, 47, 549, DateTimeKind.Local).AddTicks(8818),
                             ShipmentId = 2,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9577),
+                            Date = new DateTime(2021, 10, 21, 11, 21, 47, 549, DateTimeKind.Local).AddTicks(8823),
                             ShipmentId = 2,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 5,
-                            Date = new DateTime(2021, 10, 19, 12, 17, 18, 681, DateTimeKind.Local).AddTicks(9583),
+                            Date = new DateTime(2021, 10, 21, 11, 21, 47, 549, DateTimeKind.Local).AddTicks(8827),
                             ShipmentId = 3,
                             StatusId = 1
                         });
