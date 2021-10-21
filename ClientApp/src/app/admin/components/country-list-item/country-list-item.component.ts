@@ -16,7 +16,7 @@ export class CountryListItemComponent implements OnInit {
   @Input()
   set country(country: Country) {
     this._country = country;
-    console.log("country-list-item: ", country)
+    // console.log("country-list-item: ", country)
   }
   get country() {
     return this._country
@@ -63,7 +63,7 @@ export class CountryListItemComponent implements OnInit {
 
   zoneSelected(selectedZone: Zone) {
     this._selectedZone = selectedZone;
-    console.log("Zone selected: ", this._selectedZone)
+    // console.log("Zone selected: ", this._selectedZone)
   }
 
   saveCountry() {

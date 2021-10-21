@@ -35,7 +35,7 @@
 <p>Select zone</p>
 <form [formGroup]="zoneSelectForm">
   <select formControlName="zoneSelectControl" (change)='zoneSelected(zoneSelectForm.value.zoneSelectControl)'>
-    <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
+    <option *ngFor="let zone of zones" [ngValue]="zone" selected>{{zone.name}}</option>
   </select>
 </form>
 
