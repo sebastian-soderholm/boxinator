@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Country } from '../models/country.model';
 import { SessionService } from 'src/app/shared/session.service';
 import { ExtensionsService } from 'src/app/shared/extensions.service';
+import { CountryAdd } from 'src/app/admin/models/country-add';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +29,9 @@ export class CountryService {
     })
   }
   //Add new country to DB & sessionService
-  public postCountry(country: Country, onSuccess: () => void): void {
-    this.http.post<Country>(this._apiUrl + '/settings/countries', country, this.extensionService.authenticationHeadersFull)
-    .subscribe((country: Country) => {
+  public postCountry(country: CountryAdd, onSuccess: () => void): void {
+    this.http.post<CountryAdd>(this._apiUrl + '/settings/countries', country, this.extensionService.authenticationHeadersFull)
+    .subscribe((country: any) => {
       //Set country to session service on success
       this.sessionService.addCountry(country)
       onSuccess()

@@ -1,24 +1,40 @@
 <p>Select zone</p>
 <form [formGroup]="zoneSelectForm">
+  <ng-container>
+    <select formControlName="zoneSelectControl" (change)='zoneSelected()'>
+      <!-- <option >Select country</option> -->
+      <option *ngFor="let zone of zones" [ngValue]="zone" selected>{{zone.name}}</option>
+    </select>
 
-  <select formControlName="zoneSelectControl" (change)='zoneSelected()'>
-    <!-- <option selected>Select country</option> -->
-    <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
-  </select>
+    <ng-container *ngIf="selectedZone">
+      <p>Zone name:</p>
+      <input type="text" formControlName="zoneNameControl" [value]="selectedZone?.name">
 
-  <p>Zone name:</p>
-  <input type="text" formControlName="zoneNameControl" [value]="selectedZone?.name">
+      <p>Zone multiplier</p>
+      <input type="number" formControlName="zoneMultiplierControl" [value]="selectedZone?.countryMultiplier">
+      <button (click)="saveZone()">Save zone</button>
+    </ng-container>
+  </ng-container>
 
-  <p>Zone multiplier</p>
-  <input type="number" formControlName="zoneMultiplierControl" [value]="selectedZone?.countryMultiplier">
-  <button (click)="saveZone(zoneSelectForm.value.zoneSelectControl)">Save zone</button>
+  <ng-container *ngIf="selectedZone">
+    <!-- Add country form -->
+    <ng-container>
+      <p>Add country to {{selectedZone?.name}}</p>
+      <input formControlName="addCountryName" [value]="addCountry!.name" [placeholder]="addCountry!.name">
+    </ng-container>
 
+    <ng-container>
+      <select formControlName="addCountryZone" (change)='addCountryChanged()' required>
+        <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
+      </select>
+    </ng-container>
 
-
-
+    <button (click)="addCountryToZone()">Add country</button>
+  </ng-container>
 </form>
-<div *ngIf="countries">
 
-</div>
-<!-- <p>Form value: {{ zoneSelectForm.value.zoneSelectControl | json}}</p> -->
+<!-- Message if countries exist in zone -->
+<h3 *ngIf="!(!countries || countries.length === 0)">Countries in {{selectedZone?.name}}</h3>
+
 <app-country-list [countries]=countries! [zones]=zones!></app-country-list>
+<!-- <p>Form value: {{ zoneSelectForm.value.zoneSelectControl | json}}</p> -->

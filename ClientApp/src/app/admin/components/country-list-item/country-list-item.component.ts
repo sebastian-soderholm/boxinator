@@ -51,7 +51,7 @@ export class CountryListItemComponent implements OnInit {
       ])
     })
 
-
+    this.zoneSelected(this._zones[0])
   }
 
   zoneSelected(selectedZone: Zone) {
@@ -61,10 +61,11 @@ export class CountryListItemComponent implements OnInit {
 
     this.country.name = this._countryForm.get("countryName").value
     this.country.zoneId = this._selectedZone!.id
-
+    this.country.zoneName = this._selectedZone!.name
+    this.country.countryMultiplier = this._selectedZone!.countryMultiplier
 
     console.log("Post country: ", this.country)
-    // this.countryService.updateCountry(this.country, () => console.log("country saved!"));
+    this.countryService.updateCountry(this.country, () => console.log("country saved!"));
   }
 
   get countryForm() {

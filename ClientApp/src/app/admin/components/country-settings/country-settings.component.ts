@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { Country } from 'src/app/login/models/country.model';
 import { CountryService } from 'src/app/login/services/country.service';
 import { SessionService } from 'src/app/shared/session.service';
-import { CountriesAndZones } from '../../models/countries-zones.model';
+import { CountryAdd } from '../../models/country-add';
 import { Zone } from '../../models/zone.model';
 import { ZoneService } from '../../services/zone.service';
 
@@ -13,12 +13,24 @@ import { ZoneService } from '../../services/zone.service';
   styleUrls: ['./country-settings.component.scss'],
 })
 export class CountrySettingsComponent implements OnInit {
+  zoneSelectForm: FormGroup | any;
+  zoneSelectControl: FormControl | any;
+  selectedZone: Zone | undefined;
+  countries: Country[] | undefined;
+  zones: Zone[] | undefined;
+  editedZone: Zone = {
+    id: 0,
+    name: '',
+    countryMultiplier: 0,
+  };
 
-  zoneSelectForm: FormGroup | any
-  zoneSelectControl: FormControl | any
-  selectedZone: Zone | undefined
-  countries: Country[] | undefined
-  zones: Zone[] | undefined
+  addCountryForm: FormGroup | any;
+  addCountry: CountryAdd = {
+    name: '',
+    zoneId: 0,
+  };
+
+  selectedCountryZone: Zone | undefined;
 
   constructor(
     private readonly zoneService: ZoneService,
@@ -31,50 +43,66 @@ export class CountrySettingsComponent implements OnInit {
       // this.zoneSelected()
     });
   }
+
   ngOnInit(): void {
     this.zoneSelectForm = new FormGroup({
-      zoneSelectControl: new FormControl(this.zones, [
-        Validators.required
-      ]),
+      zoneSelectControl: new FormControl(this.zones, [Validators.required]),
       zoneNameControl: new FormControl([]),
-      zoneMultiplierControl: new FormControl([])
+      zoneMultiplierControl: new FormControl([]),
+
+      addCountryName: new FormControl(this.addCountry!.name, [
+        Validators.required,
+        Validators.pattern(/[a-z]/),
+      ]),
+      addCountryZone: new FormControl(this.zones, [
+        Validators.required,
+        Validators.pattern(/[a-z]/),
+      ]),
     });
   }
+
   zoneSelected() {
+    this.countries = []
     // this.selectedZone = this.zoneSelectForm.get("zoneSelectControl").value
-    // console.log(this.zoneSelectForm.get("zoneSelectControl").value)
+    console.log(this.zoneSelectForm.get('zoneSelectControl').value);
 
-    this.zoneService.fetchZoneCountriesToSession(this.zoneSelectForm.get("zoneSelectControl").value.id, async () => {
-      this.countries = this.sessionService.countries
-      // console.log("Fetching countries: ", this.countries)
-    })
-    this.selectedZone = this.zoneSelectForm.get("zoneSelectControl").value
-
-
+    this.zoneService.fetchZoneCountriesToSession(
+      this.zoneSelectForm.get('zoneSelectControl').value.id,
+      async () => {
+        this.countries = this.sessionService.countries;
+        // console.log("Fetching countries: ", this.countries)
+      }
+    );
+    this.selectedZone = this.zoneSelectForm.get('zoneSelectControl').value;
   }
+
+  addCountryToZone() {
+    if(!this.zoneSelectForm.get("addCountryName").value || !this.zoneSelectForm.get("addCountryZone").value) return
+
+    this.addCountry.name = this.zoneSelectForm.get("addCountryName").value
+    this.addCountry.zoneId =  this.zoneSelectForm.get("addCountryZone").value.id
+    console.log('Adding country', this.addCountry);
+
+    this.countryService.postCountry(this.addCountry, () => {console.log("Country added", this.addCountry)})
+  }
+  addCountryChanged() {
+    console.log("add country zone selected")
+  }
+
   //Update zone info
-  saveZone(zone: Zone) {
+  saveZone() {
+    // if (this.editedZone.id === 0) return;
 
-    // console.log(this.zoneSelectForm.get("zoneNameControl").value.name, this.zoneSelectForm.get("zoneNameControl").value.countryMultiplier)
+    this.editedZone.id = this.selectedZone?.id!;
+    this.editedZone.name = this.zoneSelectForm.get('zoneNameControl').value;
+    this.editedZone.countryMultiplier = this.zoneSelectForm.get('zoneMultiplierControl').value;
 
-    this.selectedZone!.countryMultiplier = this.zoneSelectForm.get("zoneMultiplierControl").value
-
-    const putZone: Zone = {
-      id: this.zoneSelectForm.get("zoneSelectControl").value.id,
-      name: this.zoneSelectForm.get("zoneNameControl").value,
-      countryMultiplier: this.zoneSelectForm.get("zoneMultiplierControl").value
-    }
-    console.log("Zone saved: ", putZone)
-
-
-    // this.zoneService.updateZone(zone)
+    console.log('Saving zone: ', this.editedZone);
+    this.zoneService.updateZone(this.editedZone);
   }
-  onChanges() {
-  }
+  onChanges() {}
 
-  countrySave(editedCountry: any) {
-  }
+  countrySave(editedCountry: any) {}
 
   setCountriesForm() {}
-
 }
