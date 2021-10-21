@@ -27,7 +27,8 @@ export class CountrySettingsComponent implements OnInit {
   ) {
     this.zoneService.fetchZonesToSession(async () => {
       this.zones = this.sessionService.zones!;
-      this.selectedZone = this.sessionService.zones![0]
+      // this.selectedZone = this.sessionService.zones![0]
+      // this.zoneSelected()
     });
   }
   ngOnInit(): void {

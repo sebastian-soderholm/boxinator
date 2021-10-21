@@ -45,24 +45,25 @@ export class CountryListItemComponent implements OnInit {
         Validators.required,
         Validators.pattern(/[a-z]/)
       ]),
-      countryZone: new FormControl(this.country.zoneName, [
+      countryZone: new FormControl(this._zones[0], [
         Validators.required,
         Validators.pattern(/[a-z]/)
       ])
     })
+
+
   }
 
   zoneSelected(selectedZone: Zone) {
     this._selectedZone = selectedZone;
   }
   saveCountry() {
-    const postCountry = {
-      id: this._country?.id,
-      name: this._countryForm.get("countryName").value,
-      zoneId: this._selectedZone!.id
-    }
 
-    console.log("Post country: ", postCountry)
+    this.country.name = this._countryForm.get("countryName").value
+    this.country.zoneId = this._selectedZone!.id
+
+
+    console.log("Post country: ", this.country)
     // this.countryService.updateCountry(this.country, () => console.log("country saved!"));
   }
 

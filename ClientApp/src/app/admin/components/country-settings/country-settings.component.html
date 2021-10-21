@@ -2,13 +2,23 @@
 <form [formGroup]="zoneSelectForm">
 
   <select formControlName="zoneSelectControl" (change)='zoneSelected()'>
-    <option *ngFor="let zone of zones" [ngValue]="zone" selected>{{zone.name}}</option>
+    <!-- <option selected>Select country</option> -->
+    <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
   </select>
 
+  <p>Zone name:</p>
   <input type="text" formControlName="zoneNameControl" [value]="selectedZone?.name">
+
+  <p>Zone multiplier</p>
   <input type="number" formControlName="zoneMultiplierControl" [value]="selectedZone?.countryMultiplier">
   <button (click)="saveZone(zoneSelectForm.value.zoneSelectControl)">Save zone</button>
 
+
+
+
 </form>
+<div *ngIf="countries">
+
+</div>
 <!-- <p>Form value: {{ zoneSelectForm.value.zoneSelectControl | json}}</p> -->
 <app-country-list [countries]=countries! [zones]=zones!></app-country-list>
