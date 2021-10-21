@@ -87,7 +87,7 @@ namespace boxinator.Services
         {
             var resultShipment = await _context.Shipments
                 .Include(s => s.User)
-                .Where(x => x.Id == id /*&& x.UserId == currentUser*/).FirstOrDefaultAsync();
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
 
             if (resultShipment != null)
             {
