@@ -178,7 +178,7 @@ namespace boxinator.Controllers
             if (currentUser.IsAdmin())
                 currentUser = null;
 
-            var shipment = await _shipmentService.Get(shipmentId);
+            var shipment = await _shipmentService.Get(shipmentId, currentUser?.Id);
             return _mapper.Map<ShipmentReadDTO>(shipment);
         }
 
@@ -195,7 +195,7 @@ namespace boxinator.Controllers
             var userEmail = Request.ExtractEmailFromToken();
             User currentUser = await _accountService.GetUser(userEmail);
 
-            // currentUser can retrieve their own shipments and admin is allowed to search any shipment
+            // currentUser can retrieve their own shipments and admin is allowed to search for any shipment
             if(userId == currentUser.Id || currentUser.IsAdmin())
             {
                 var shipments = await _shipmentService.GetByUser(userId);

@@ -124,14 +124,21 @@ namespace boxinator.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Retrieved shipment</returns>
-        public async Task<Shipment> Get(int id)
+        public async Task<Shipment> Get(int id, int? currentUserId)
         {
-            return await _context.Shipments
+            // find shipment by id
+            Shipment resultShipment = await _context.Shipments
                 .Include(s => s.User)
                 .Include(s => s.Boxes).ThenInclude(b => b.BoxType)
                 .Include(s => s.ShipmentStatusLogs).ThenInclude(ssl => ssl.Status)
                 .Include(s => s.Country).ThenInclude(c => c.Zone)
-                .Where(s => s.Id == id /*&& x.UserId == currentUser*/).FirstOrDefaultAsync();
+                .Where(s => s.Id == id).FirstOrDefaultAsync();
+
+            // if currentUser is not admin and if returned shipment's user doesn't match current user 
+            if (currentUserId != null && resultShipment.UserId != currentUserId)
+                return null;
+
+            return resultShipment;
         }
 
         /// <summary>
