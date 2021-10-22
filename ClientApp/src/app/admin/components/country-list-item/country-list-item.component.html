@@ -3,18 +3,36 @@
   <mat-form-field class="form-field" appearance="outline">
     <mat-label> Country:
     </mat-label>
-    <input matInput formControlName="countryName" [value]="country.name" [placeholder]="country.name">
+    <input matInput formControlName="countryName" [value]="country.name">
+    <!-- error -->
+    <mat-error *ngIf="(countryForm.controls.countryName?.touched || countryForm.controls.countryName?.dirty) && countryForm.controls.countryName?.errors?.required">
+      Country name required
+    </mat-error>
+    <mat-error *ngIf="(countryForm.controls.countryName?.touched || countryForm.controls.countryName?.dirty) && countryForm.controls.countryName?.errors?.pattern">
+      Country name must contain only letters
+    </mat-error>
+
   </mat-form-field>
 
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-select formControlName="countryZone" (change)='zoneSelected(countryForm.value.countryZone)'>
-        <mat-option *ngFor="let zone of zones" [value]="zone">{{zone.name}}</mat-option>
-      </mat-select>
-      <mat-label >
-        Multiplier: {{selectedZone!.countryMultiplier}}
-      </mat-label>
-    </mat-form-field>
+  <mat-form-field class="form-field" appearance="outline">
+    <mat-select formControlName="countryZone">
+      <mat-option *ngFor="let zone of zones" [value]="zone">{{zone.name}}</mat-option>
+    </mat-select>
+    <mat-label>
+      Zone Multiplier: {{selectedZone?.countryMultiplier}}
+    </mat-label>
+  </mat-form-field>
+  <!-- error -->
+  <mat-error *ngIf="countryForm.controls.countryName?.errors?.required">
+    Country zone required
+  </mat-error>
 
 
-  <button mat-raised-button color="primary" (click)="saveCountry()">Save</button>
+
+  <button mat-raised-button color="primary" (click)="saveCountry()"
+  [disabled]="(countryForm.controls['countryName'].invalid || countryForm.controls['countryZone'].invalid )
+  && countryForm.controls['countryName'].touched
+"
+
+  >Save</button>
 </form>

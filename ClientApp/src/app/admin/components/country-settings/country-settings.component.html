@@ -1,42 +1,88 @@
 <p>Select zone</p>
 <form [formGroup]="zoneSelectForm">
 
-    <select formControlName="zoneSelectControl" (change)='zoneSelected()'>
-      <!-- <option *ngIf="selectedZone === undefined" >Select country</option> -->
-      <option *ngFor="let zone of zones" [ngValue]="zone" selected>{{zone.name}}</option>
-    </select>
+  <mat-form-field class="form-field" appearance="outline">
+    <mat-select formControlName="zoneSelectControl">
+      <mat-option *ngFor="let zone of zones" [value]="zone" selected>{{zone.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
 
-  <ng-container *ngIf="selectedZone">
-
+  <!-- <ng-container *ngIf="selectedZone"> -->
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Zone name</mat-label>
-      <input matInput type="text" formControlName="zoneNameControl" [value]="selectedZone?.name">
+      <input matInput formControlName="zoneNameControl" [value]="selectedZone?.name">
     </mat-form-field>
+
+    <!-- Errors -->
+    <mat-error *ngIf="(zoneSelectForm.controls.zoneNameControl?.touched || zoneSelectForm.controls.zoneNameControl?.dirty) && zoneSelectForm.controls.zoneNameControl?.errors?.required">
+      Zone name is required
+    </mat-error>
+    <!-- Errors -->
+    <mat-error *ngIf="(zoneSelectForm.controls.zoneNameControl?.touched || zoneSelectForm.controls.zoneNameControl?.dirty) && zoneSelectForm.controls.zoneNameControl?.errors?.pattern">
+      Zone name can only contain letters
+    </mat-error>
+
 
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Zone multiplier</mat-label>
       <input matInput type="number" formControlName="zoneMultiplierControl" [value]="selectedZone?.countryMultiplier">
     </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="saveZone()">Save zone</button>
+    <!-- Errors -->
+    <mat-error *ngIf="(zoneSelectForm.controls.zoneMultiplierControl?.touched || zoneSelectForm.controls.zoneMultiplierControl?.dirty) && zoneSelectForm.controls.zoneMultiplierControl?.errors?.required">
+      Zone multiplier is required
+    </mat-error>
 
-  </ng-container>
 
 
+    <button mat-raised-button color="primary" (click)="saveZone()"
+    [disabled]="
+    zoneSelectForm.controls['zoneNameControl'].invalid ||
+    zoneSelectForm.controls['zoneMultiplierControl'].invalid
+    ">Save zone</button>
+  <!-- </ng-container> -->
+</form>
+
+<form [formGroup]="addCountryForm">
   <ng-container *ngIf="selectedZone">
     <!-- Add country form -->
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Add country to {{selectedZone?.name}}</mat-label>
-      <input matInput formControlName="addCountryName" [value]="addCountry!.name" [placeholder]="addCountry!.name">
+      <input matInput formControlName="addCountryName" [value]="addCountry?.name" [placeholder]="addCountry!.name">
+
+      <!-- Errors -->
+      <mat-error *ngIf="(addCountryForm.controls.addCountryName?.touched || addCountryForm.controls.addCountryName?.dirty) && addCountryForm.controls.addCountryName?.errors?.required">
+        Country name is required
+      </mat-error>
+      <mat-error *ngIf="(addCountryForm.controls.addCountryName?.touched || addCountryForm.controls.addCountryName?.dirty) && addCountryForm.controls.addCountryName?.errors?.pattern">
+        Country name must contain only letters
+      </mat-error>
     </mat-form-field>
 
-    <ng-container>
-      <select formControlName="addCountryZone" (change)='addCountryChanged()' required>
-        <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
-      </select>
-    </ng-container>
+    <!-- <ng-container>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>
+          Multiplier: {{selectedCountryZone?.countryMultiplier}}
+        </mat-label>
+        <mat-select formControlName="addCountryZone">
+          <mat-option *ngFor="let zone of zones" [value]="zone">{{zone.name}}</mat-option>
+        </mat-select>
 
-    <button mat-raised-button (click)="addCountryToZone()">Add country</button>
+        <mat-error *ngIf="addCountryForm.controls.addCountryZone?.errors?.required">
+          Country zone is required
+        </mat-error>
+        <mat-error *ngIf="addCountryForm.controls.countryName?.errors?.pattern">
+          Country name must contain only letters
+        </mat-error>
+      </mat-form-field>
+    </ng-container> -->
+
+    <button mat-raised-button color="primary" (click)="addCountryToZone()"
+    [disabled]="
+    addCountryForm?.controls['addCountryName'].invalid
+    "
+    >Add country</button>
   </ng-container>
 </form>
 
@@ -44,4 +90,4 @@
 <h3 *ngIf="!(!countries || countries.length === 0)">Countries in {{selectedZone?.name}}</h3>
 
 <app-country-list [countries]=countries! [zones]=zones!></app-country-list>
-<!-- <p>Form value: {{ zoneSelectForm.value.zoneSelectControl | json}}</p> -->
+

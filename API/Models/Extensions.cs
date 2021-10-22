@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ namespace boxinator.Models
         /// <returns>Date or null</returns>
         public static DateTime? ParseDate(this string date)
         {
-            return date != "" && date != null ? DateTime.Parse(date) : null;
+            return date != "" && date != null ? DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture) : null;
         }
 
         /// <summary>

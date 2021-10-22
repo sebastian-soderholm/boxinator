@@ -26,8 +26,8 @@ export class ShipmentService {
   private _error: string = '';
   private _shipment: CreateShipment | undefined;
 
-  constructor(private readonly http: HttpClient, 
-    private readonly sessionService: SessionService, 
+  constructor(private readonly http: HttpClient,
+    private readonly sessionService: SessionService,
     private readonly extensionService: ExtensionsService) {
   }
 
@@ -61,7 +61,8 @@ export class ShipmentService {
   }
 
   // get filtered shipments
-  public getFilteredShipments(path: string | null, dateFromFilter: Date[], dateToFilter: Date[], onSuccess: () => void): void {
+  public getFilteredShipments(path: string | null, dateFromFilter: string, dateToFilter: string, onSuccess: () => void): void {
+    console.log(dateToFilter)
     const params = new HttpParams()
     .set("dateFromFilter", dateFromFilter != null ? dateFromFilter.toString() : "")
     .set("dateToFilter", dateToFilter != null ? dateToFilter.toString() : "")
@@ -76,7 +77,7 @@ export class ShipmentService {
 		};
 
     this.http.get<ShipmentTableData[]>(apiUrl + path, { headers: httpOptions.headers, params: params})
-    .subscribe((shipments: ShipmentTableData[]) => { 
+    .subscribe((shipments: ShipmentTableData[]) => {
       console.log(shipments)
       this.sessionService.setShipmentsTableData(shipments);
       onSuccess();

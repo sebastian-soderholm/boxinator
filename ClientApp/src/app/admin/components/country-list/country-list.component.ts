@@ -19,7 +19,6 @@ export class CountryListComponent implements OnInit {
   @Input()
     set zones(zones: Zone[]) {
     this._zones = zones;
-    // console.log("country-list zones: ", this._zones)
   }
 
   private _countries: Country[] = []
