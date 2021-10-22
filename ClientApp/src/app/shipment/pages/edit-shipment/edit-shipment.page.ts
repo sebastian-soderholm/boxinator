@@ -36,6 +36,7 @@ export class EditShipmentPage implements OnInit, OnChanges {
 
       this.shipmentService.getByIdObservable(Number(this.shipmentId!))
       .subscribe((result : EditShipment) => {
+        console.log(result)
         this.editForm = this.fb.group({
           header: this.sharedShipmentFormService.sharedForm(result),
           //additionalField: [null]
