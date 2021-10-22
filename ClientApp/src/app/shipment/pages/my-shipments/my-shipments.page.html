@@ -65,7 +65,7 @@
             </ul>
           </div>
         </div>  
-        <div class="example-element-diagram" *ngIf="shipmentTableData.status != 'CANCELLED' && shipmentTableData.status != 'COMPLETED'">
+        <div class="example-element-diagram" *ngIf="shipmentTableData.status != 'CANCELLED' && shipmentTableData.status != 'COMPLETED' && canEdit">
           <div class="example-element-color">
             <h2>Edit</h2>
             <div>

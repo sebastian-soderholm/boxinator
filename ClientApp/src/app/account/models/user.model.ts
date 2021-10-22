@@ -8,5 +8,6 @@ export interface User {
   address: string;
   zipCode: string;
   phoneNumber: string;
+  accountType: string;
 }
 
