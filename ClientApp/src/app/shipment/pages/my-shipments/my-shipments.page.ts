@@ -10,6 +10,7 @@ import {Sort} from '@angular/material/sort';
 import { expand, sequenceEqual } from 'rxjs/operators';
 import { TestBed } from '@angular/core/testing';
 import { FormGroup, NgForm, SelectControlValueAccessor } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-my-shipments',
@@ -38,15 +39,16 @@ export class MyShipmentsPage implements OnInit {
   fromDate = null;
   toDate = null;
   selectedStatus? : number | null;
-  selectedFromDate? : Date[] | null;
-  selectedToDate? : Date[] | null;
+  selectedFromDate? : string | null;
+  selectedToDate? : string | null;
   showEdit: boolean = false;
   cancelledStatus?: Status | null;
   completedStatus?: Status | null;
 
   constructor(
     private readonly shipmentService: ShipmentService,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private datePipe: DatePipe
   ) {
     this.sortedData = this._dataSource.slice();
   }
@@ -86,7 +88,7 @@ export class MyShipmentsPage implements OnInit {
       if(this.selectedStatus == 3){ // Completed
         path = "/shipments/cancelled";
       }
-
+      
       // fetch data by filters
       this.shipmentService.getFilteredShipments(path, this.selectedFromDate!, this.selectedToDate!, async () => {
         const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
@@ -106,18 +108,20 @@ export class MyShipmentsPage implements OnInit {
     })
   }
 
-  setSelectedFilterOption(type: string, selected : any) {
-    if(type == 'status'){
-      this.selectedStatus = selected;
-    }
-    if(type == 'from'){
-      this.selectedFromDate = selected;
-    }
-    if(type == 'to'){
-      this.selectedToDate = selected;
-    }
+  setSelectedStatus(selected : any) {
+    this.selectedStatus = selected;
   }
 
+  setSelectedDate(type: string, selected : any) {
+    let formattedDate = this.datePipe.transform(selected.value, 'dd/MM/yyyy');
+
+    if(type == 'from'){
+      this.selectedFromDate = formattedDate!;
+    }
+    if(type == 'to'){
+      this.selectedToDate = formattedDate!;
+    }
+  }
   // toggling columns
   onValChange(selection: any, state : any){
 
@@ -154,6 +158,7 @@ export class MyShipmentsPage implements OnInit {
 
   // mapping incoming data
   mapShipments(shipments: ShipmentTableData[]) {
+    
 		return shipments.map((obj) => {
       const boxesInShipment = this.mapBoxes(obj.boxes)
       const expandedData = this.createExpandedData(obj.id, boxesInShipment, obj.shipmentStatusLogs)

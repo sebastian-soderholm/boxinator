@@ -4,18 +4,43 @@
 </div>
 
 <!-- Filtering options -->
-<mat-form-field>
+<mat-form-field appearance="outline">
   <mat-label>Status option</mat-label>
-  <mat-select [ngModel]="statusOptions" (ngModelChange)="setSelectedFilterOption('status', $event)">
+  <mat-select [ngModel]="statusOptions" (ngModelChange)="setSelectedStatus($event)">
     <mat-option value="" selected>Status options</mat-option>
     <mat-option [value]="status.id" *ngFor="let status of statusOptions">{{status.name}}</mat-option>
   </mat-select>
 </mat-form-field>
 
 <!-- Date pickers -->
+<mat-form-field appearance="outline">
+  <mat-label>Enter a date range</mat-label>
+  <mat-date-range-input [rangePicker]="picker">
+    <input matStartDate placeholder="Start date" (dateChange)="setSelectedDate('from', $event)">
+    <input matEndDate placeholder="End date" (dateChange)="setSelectedDate('to', $event)">
+  </mat-date-range-input>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker></mat-date-range-picker>
+</mat-form-field>
+<!--
+<mat-form-field appearance="outline">
+  <mat-label>Choose a date</mat-label>
+  <input matInput [matDatepicker]="fromDate" (dateChange)="setSelectedDate('from', $event)">
+  <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+  <mat-datepicker #fromDate></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>Choose a date</mat-label>
+  <input matInput [matDatepicker]="toDate" (dateChange)="setSelectedDate('to', $event)">
+  <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+  <mat-datepicker #toDate></mat-datepicker>
+</mat-form-field>
+-->
+<!--
 <input type="date" placeholder="From" [ngModel]="fromDate" (ngModelChange)="setSelectedFilterOption('from', $event)">
 <input type="date" placeholder="To" [ngModel]="toDate" (ngModelChange)="setSelectedFilterOption('to', $event)">
-
+-->
 <button mat-flat-button color="accent" type="submit" (click)="filterTable()">Filter</button>
 <!-- Column visibility -->
 <h3>Toggle column visibility</h3>

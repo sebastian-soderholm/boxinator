@@ -61,7 +61,8 @@ export class ShipmentService {
   }
 
   // get filtered shipments
-  public getFilteredShipments(path: string | null, dateFromFilter: Date[], dateToFilter: Date[], onSuccess: () => void): void {
+  public getFilteredShipments(path: string | null, dateFromFilter: string, dateToFilter: string, onSuccess: () => void): void {
+    console.log(dateToFilter)
     const params = new HttpParams()
     .set("dateFromFilter", dateFromFilter != null ? dateFromFilter.toString() : "")
     .set("dateToFilter", dateToFilter != null ? dateToFilter.toString() : "")
