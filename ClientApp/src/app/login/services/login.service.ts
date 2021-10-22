@@ -14,7 +14,7 @@ export class LoginService {
   private _user: User | undefined;
   private _loggedIn: boolean = false;
   private _apiUrl = environment.baseURL;
-
+  
   constructor(
     private readonly http: HttpClient,
     private readonly router: Router,

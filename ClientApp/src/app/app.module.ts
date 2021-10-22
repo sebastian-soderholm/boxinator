@@ -56,6 +56,7 @@ import { DatePipe } from '@angular/common';
 import { CountryListComponent } from './admin/components/country-list/country-list.component';
 import { CountryListItemComponent } from './admin/components/country-list-item/country-list-item.component';
 import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.page';
+import { SharedFormComponent } from './shipment/components/shared-form/shared-form.component';
 
 
 
@@ -79,7 +80,8 @@ import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.p
     UserSettingsComponent,
     EditShipmentPage,
     CountryListComponent,
-    CountryListItemComponent
+    CountryListItemComponent,
+    SharedFormComponent
   ],
   imports: [
     BrowserModule,

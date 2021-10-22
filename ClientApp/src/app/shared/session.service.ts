@@ -8,6 +8,7 @@ import { Country } from '../login/models/country.model';
 import { ShipmentTableData } from '../shipment/models/shipment-table.model'
 import { Zone } from '../admin/models/zone.model';
 import { CountryAdd } from '../admin/models/country-add';
+import { CreateShipment } from '../shipment/models/create-shipment.model';
 
 const apiURL = environment.baseURL;
 
@@ -23,6 +24,7 @@ export class SessionService {
   private _usersForAdmin: User[] | undefined
   private _shipmentTableData: ShipmentTableData[] | undefined
   private _token: string | undefined;
+  private _editableShipment: CreateShipment | undefined;
 
   constructor() {
 		const storedUser = sessionStorage.getItem('user');
@@ -31,9 +33,18 @@ export class SessionService {
 		}
 	}
 
+  setEditableShipment(shipment : CreateShipment) : void {
+    this._editableShipment = shipment;
+    sessionStorage.setItem('editableShipment', JSON.stringify(shipment));
+  }
+
   setToken(token: string) :void {
     this._token = token;
     sessionStorage.setItem('token', token)
+  }
+
+  getToken() : any{
+    return sessionStorage.getItem('token');
   }
 
   setShipments(shipments: Shipment[]): void {
@@ -123,5 +134,9 @@ export class SessionService {
 
   get token(): string | undefined {
 		return this._token;
+	}
+
+  get editableShipment(): CreateShipment | undefined {
+		return this._editableShipment;
 	}
 }
