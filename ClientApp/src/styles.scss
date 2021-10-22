@@ -1,7 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; }
+
+* { 
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+button { 
+  background-color: #DB6E45 !important;
+  color: #000 !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+}
+
+h1 {
+  color: #392F5A !important;
+  font-weight: 700 !important;
+}
 
 .form input {
   display: block;

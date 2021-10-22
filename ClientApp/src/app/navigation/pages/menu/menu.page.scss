@@ -1,3 +1,13 @@
-ul { 
-  list-style-type: none;
+.user {
+  text-align: center;
+}
+
+.nav-list {
+  padding: 2rem 0rem;
+  background-color: #E0805C;
+}
+
+.active-list-item {
+  background-color: #DB6E45;
+  font-weight: 700;
 }

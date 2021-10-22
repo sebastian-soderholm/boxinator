@@ -4,13 +4,13 @@
 	  <mat-label>Search user by name or id</mat-label>
 	  <input matInput [(ngModel)]="searchvalue" required>
 	</mat-form-field>
-	<button (click)="onSearch(searchvalue)" formtarget="_blank" [disabled]="searchvalue === ''">Search</button>
+	<button mat-flat-button (click)="onSearch(searchvalue)" formtarget="_blank" [disabled]="searchvalue === ''">Search</button>
  </div>
 
  <!-- User selection -->
  <mat-nav-list>
 	<mat-list-item *ngFor="let user of users">
-	   <button mat-icon-button (click)="selectUser(user)">{{ user.firstName }} {{ user.lastName }}
+	   <button (click)="selectUser(user)">{{ user.firstName }} {{ user.lastName }}
 	   </button>
 	</mat-list-item>
   </mat-nav-list>

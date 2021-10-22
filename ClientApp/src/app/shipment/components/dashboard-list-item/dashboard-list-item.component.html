@@ -1,42 +1,43 @@
-<mat-card>
-  <mat-card-header>
-    <p>Status: {{this.currentStatus}}</p>
-    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-  </mat-card-header>
-  <mat-card-title>
-    Shipment #{{shipment.id}} to {{shipment.receiverFirstName}} {{shipment.receiverLastName}}, {{shipment.country.name}}
-    {{this.totalWeight}} kg | {{shipment.cost}} €
-  </mat-card-title>
+<mat-card class="card-container">
   <mat-card-content>
+    <p>Status: {{this.currentStatus}}</p>
+    <mat-progress-bar mat-card-image mode="determinate" value="{{this.currentStatusValue}}" class="progress"></mat-progress-bar>
+    <div class="title">
+      Shipment #{{shipment.id}} to {{shipment.receiverFirstName}} {{shipment.receiverLastName}},
+      {{shipment.country.name}}
+      <span>
+        {{this.totalWeight}} kg | {{shipment.cost}} €
+      </span>
+    </div>
     <mat-card-actions>
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-elevation-z0">
         <mat-expansion-panel-header>
           <mat-panel-description>
-           Boxes in the Shipment
+            Boxes in the Shipment
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div class="premium" *ngIf="this.premiumBoxes.length > 0">
-          <p>Premium box</p>
-          <div *ngFor="let box of premiumBoxes">
-            <p [ngStyle]="{'color': box}">BOX</p>
+          <p>Premium box (8 kg)</p>
+          <div *ngFor="let box of premiumBoxes" class="colored-boxes">
+            <div class="box" [ngStyle]="{'background-color': box}"></div>
           </div>
         </div>
         <div class="deluxe" *ngIf="this.deluxeBoxes.length > 0">
-          <p>Deluxe box</p>
-          <div *ngFor="let box of deluxeBoxes">
-            <p [ngStyle]="{'color': box}">BOX</p>
+          <p>Deluxe box (5 kg)</p>
+          <div *ngFor="let box of deluxeBoxes" class="colored-boxes">
+            <div class="box" [ngStyle]="{'background-color': box}"></div>
           </div>
         </div>
         <div class="humble" *ngIf="this.humbleBoxes.length > 0">
-          <p>Humble box</p>
-          <div *ngFor="let box of humbleBoxes">
-            <p [ngStyle]="{'color': box}">BOX</p>
+          <p>Humble box (2 kg)</p>
+          <div *ngFor="let box of humbleBoxes" class="colored-boxes">
+            <div class="box" [ngStyle]="{'background-color': box}"></div>
           </div>
         </div>
         <div class="basic" *ngIf="this.basicBoxes.length > 0">
-          <p>Basic box</p>
-          <div *ngFor="let box of basicBoxes">
-            <p [ngStyle]="{'color': box}">BOX</p>
+          <p>Basic box (1 kg)</p>
+          <div *ngFor="let box of basicBoxes" class="colored-boxes">
+            <div class="box" [ngStyle]="{'background-color': box}"></div>
           </div>
         </div>
       </mat-expansion-panel>
@@ -47,10 +48,9 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div *ngFor="let status of this.shipment.shipmentStatusLogs">
-          <p>{{this.status.status.name}} {{this.status.date}}</p>
+          <p>{{this.status.status.name}}---{{this.status.date | date}}</p>
         </div>
       </mat-expansion-panel>
     </mat-card-actions>
   </mat-card-content>
 </mat-card>
-

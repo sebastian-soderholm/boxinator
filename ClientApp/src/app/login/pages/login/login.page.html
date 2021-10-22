@@ -1,8 +1,10 @@
-<h1>Welcome to Boxinator</h1>
+<div class="content">
+  <h1>Welcome to <span>Boxinator!</span></h1>
+  <button mat-flat-button (click)="googleLogin()">Login with Google</button>
+  <p>Want to do an order without logging in? Order <a routerLink="/guest">here</a>.</p>
+</div>
 
-<button mat-flat-button color="primary" (click)="googleLogin()">Login with Google</button>
 
-<button mat-flat-button color="warn" routerLink="/guest">New Shipment</button>
 
 <!-- 
   Ready made validated form for login information

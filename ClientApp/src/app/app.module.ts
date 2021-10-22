@@ -22,6 +22,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
 
 //Pages
 import { LoginPage } from './login/pages/login/login.page';
@@ -37,15 +45,6 @@ import { environment } from '../environments/environment';
 import { DashboardListComponent } from './shipment/components/dashboard-list/dashboard-list.component';
 import { DashboardListItemComponent } from './shipment/components/dashboard-list-item/dashboard-list-item.component';
 
-//Material form modules
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatListModule } from '@angular/material/list';
-
 //Color picker
 import { ColorPickerModule } from 'ngx-color-picker';
 import { BoxFormComponent } from './shipment/components/box-form/box-form.component';
@@ -57,8 +56,6 @@ import { CountryListComponent } from './admin/components/country-list/country-li
 import { CountryListItemComponent } from './admin/components/country-list-item/country-list-item.component';
 import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.page';
 import { SharedFormComponent } from './shipment/components/shared-form/shared-form.component';
-
-
 
 @NgModule({
   declarations: [
@@ -110,7 +107,8 @@ import { SharedFormComponent } from './shipment/components/shared-form/shared-fo
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatListModule
+    MatListModule,
+    MatIconModule
   ],
   providers: [
     DatePipe
