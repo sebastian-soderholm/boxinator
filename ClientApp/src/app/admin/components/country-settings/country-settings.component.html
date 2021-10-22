@@ -49,7 +49,7 @@
     <!-- Add country form -->
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Add country to {{selectedZone?.name}}</mat-label>
-      <input matInput formControlName="addCountryName" [value]="addCountry?.name" [placeholder]="addCountry!.name">
+      <input matInput formControlName="addCountryName" [value]="addCountry?.name">
 
       <!-- Errors -->
       <mat-error *ngIf="(addCountryForm.controls.addCountryName?.touched || addCountryForm.controls.addCountryName?.dirty) && addCountryForm.controls.addCountryName?.errors?.required">

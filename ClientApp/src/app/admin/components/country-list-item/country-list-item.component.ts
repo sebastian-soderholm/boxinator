@@ -46,7 +46,6 @@ export class CountryListItemComponent implements OnInit {
       name: this.country?.zoneName,
       countryMultiplier: this.country?.countryMultiplier
     }
-    console.log("Selected country zone: ", this._selectedZone)
 
     this._countryForm = new FormGroup({
       countryName: new FormControl(this.country.name, [

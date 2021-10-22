@@ -39,12 +39,14 @@ export class CountrySettingsComponent implements OnInit {
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService
   ) {
-    this.zoneService.fetchZonesToSession(async () => {
-      this.zones = this.sessionService.zones!;
-    });
+
   }
 
   ngOnInit(): void {
+    this.zoneService.fetchZonesToSession(async () => {
+      this.zones = this.sessionService.zones!;
+    });
+
     this.zoneSelectForm = new FormGroup({
       zoneSelectControl: new FormControl([Validators.required]),
       zoneNameControl: new FormControl(this.selectedZone?.name, [
@@ -88,7 +90,6 @@ export class CountrySettingsComponent implements OnInit {
 
   //Event from child components when country data is saved
   countrySaved(country: Country) {
-    console.log("Country posted! Parent country event: ", country)
     //If country zone was changed away from current selected zone, filter out from countries list
     if(country.zoneId !== this.selectedZone?.id) {
       console.log("Removing country from this zone...")
