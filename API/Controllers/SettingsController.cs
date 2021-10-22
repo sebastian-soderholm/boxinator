@@ -42,8 +42,12 @@ namespace boxinator.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<List<CountryReadDTO>>> GetAllCountries()
         {
+
             var countries = await _settingsService.GetAllCountries();
             return _mapper.Map<List<CountryReadDTO>>(countries);
+            
+
+            //return StatusCode(403);
         }
 
         /// <summary>

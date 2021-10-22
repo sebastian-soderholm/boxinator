@@ -26,8 +26,8 @@ export class ShipmentService {
   private _error: string = '';
   private _shipment: CreateShipment | undefined;
 
-  constructor(private readonly http: HttpClient, 
-    private readonly sessionService: SessionService, 
+  constructor(private readonly http: HttpClient,
+    private readonly sessionService: SessionService,
     private readonly extensionService: ExtensionsService) {
   }
 
@@ -45,7 +45,7 @@ export class ShipmentService {
 
   // get shipment observable by id
   public getByIdObservable(shipmentId: number): any {
-    return this.http.get<CreateShipment>(apiUrl + '/shipments/' + shipmentId, this.extensionService.authenticationHeadersFull);
+    return this.http.get<EditShipment>(apiUrl + '/shipments/' + shipmentId, this.extensionService.authenticationHeadersFull);
   }
 
   // get all current shipments
@@ -77,7 +77,7 @@ export class ShipmentService {
 		};
 
     this.http.get<ShipmentTableData[]>(apiUrl + path, { headers: httpOptions.headers, params: params})
-    .subscribe((shipments: ShipmentTableData[]) => { 
+    .subscribe((shipments: ShipmentTableData[]) => {
       console.log(shipments)
       this.sessionService.setShipmentsTableData(shipments);
       onSuccess();

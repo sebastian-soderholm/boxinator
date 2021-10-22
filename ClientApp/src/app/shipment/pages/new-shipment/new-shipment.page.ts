@@ -50,17 +50,17 @@ export class NewShipmentPage implements OnInit {
       senderEmail: new FormControl('', [
         Validators.required,
         //Must be in email format
-        Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
+        Validators.pattern("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"),
       ]),
       receiverFirstName: new FormControl('', [
         Validators.required,
         //Must contain letters
-        Validators.pattern(/[a-z]/gi)
+        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*")
       ]),
       receiverLastName: new FormControl('', [
         Validators.required,
         //Must contain letters
-        Validators.pattern(/[a-z]/gi)
+        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*")
       ]),
       destinationCountryId: new FormControl(1, [
       ]),
@@ -159,7 +159,7 @@ export class NewShipmentPage implements OnInit {
       return country.id == this._newShipmentForm.get('destinationCountryId').value
     })
 
-    this._cost = 0;
+    this._cost = 200;
     // Calculate shipping cost if any boxes present
     if(boxWeightArray.length > 0) {
       boxWeightArray.forEach((weight: number) => {

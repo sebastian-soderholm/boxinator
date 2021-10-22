@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Country } from '../login/models/country.model';
 import { ShipmentTableData } from '../shipment/models/shipment-table.model'
 import { Zone } from '../admin/models/zone.model';
+import { CountryAdd } from '../admin/models/country-add';
 import { CreateShipment } from '../shipment/models/create-shipment.model';
 
 const apiURL = environment.baseURL;

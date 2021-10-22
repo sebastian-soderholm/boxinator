@@ -1,54 +1,93 @@
-<!-- <form [formGroup]="settingsForm">
-  <p>Select zone</p>
-  <select formControlName="zoneSelect" (change)="onChanges()">
-    <option *ngIf="!zones" selected>Loading zones...</option>
-    <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
-  </select>
-
-  <p>Countries in {{selectedZone.name}}</p>
-  <ng-container formArrayName="countriesFormArray">
-    <div *ngFor="let control of countriesFormArray.controls; index as i">
-
-    <form [formGroupName]="i">
-
-      <input type="text" formControlName="countryName" [value]="control.value.countryId"/>
-
-      <p type="text" formControlName="countryName" >{{control.value.countryName}}</p>
-
-      <select formControlName="countryZone">
-        <option *ngFor="let zone of zones" [ngValue]="control.value.zoneId">{{control.value.zoneName}}</option>
-      </select>
-
-      <p>UneditedCountry: {{control.value.countryName}}</p>
-      <p>UneditedCountry: {{settingsForm.controls.countriesFormArray.controls[i].uneditedCountry.zoneId}}</p>
-      <button (click)="countrySave({
-        id: countriesFormArray.at(i).get('uneditedCountry')?.value.id,
-        name: countriesFormArray.at(i).get('countryName')?.value,
-        zoneId: countriesFormArray.at(i).get('countryZone')?.value.id
-      })">Save</button>
-    </form>
-  </div>
-
-</ng-container>
-</form> -->
-
 <p>Select zone</p>
 <form [formGroup]="zoneSelectForm">
-  <select formControlName="zoneSelectControl" (change)='zoneSelected(zoneSelectForm.value.zoneSelectControl)'>
-    <option *ngFor="let zone of zones" [ngValue]="zone" selected>{{zone.name}}</option>
-  </select>
+
+  <mat-form-field class="form-field" appearance="outline">
+    <mat-select formControlName="zoneSelectControl">
+      <mat-option *ngFor="let zone of zones" [value]="zone" selected>{{zone.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+
+  <!-- <ng-container *ngIf="selectedZone"> -->
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Zone name</mat-label>
+      <input matInput formControlName="zoneNameControl" [value]="selectedZone?.name">
+    </mat-form-field>
+
+    <!-- Errors -->
+    <mat-error *ngIf="(zoneSelectForm.controls.zoneNameControl?.touched || zoneSelectForm.controls.zoneNameControl?.dirty) && zoneSelectForm.controls.zoneNameControl?.errors?.required">
+      Zone name is required
+    </mat-error>
+    <!-- Errors -->
+    <mat-error *ngIf="(zoneSelectForm.controls.zoneNameControl?.touched || zoneSelectForm.controls.zoneNameControl?.dirty) && zoneSelectForm.controls.zoneNameControl?.errors?.pattern">
+      Zone name can only contain letters
+    </mat-error>
+
+
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Zone multiplier</mat-label>
+      <input matInput type="number" formControlName="zoneMultiplierControl" [value]="selectedZone?.countryMultiplier">
+    </mat-form-field>
+
+    <!-- Errors -->
+    <mat-error *ngIf="(zoneSelectForm.controls.zoneMultiplierControl?.touched || zoneSelectForm.controls.zoneMultiplierControl?.dirty) && zoneSelectForm.controls.zoneMultiplierControl?.errors?.required">
+      Zone multiplier is required
+    </mat-error>
+
+
+
+    <button mat-raised-button color="primary" (click)="saveZone()"
+    [disabled]="
+    zoneSelectForm.controls['zoneNameControl'].invalid ||
+    zoneSelectForm.controls['zoneMultiplierControl'].invalid
+    ">Save zone</button>
+  <!-- </ng-container> -->
 </form>
 
-<input type="text" [value]="zoneSelectForm.value.zoneSelectControl.name">
-<input type="number" [value]="zoneSelectForm.value.zoneSelectControl.countryMultiplier">
-<button (click)="saveZone(zoneSelectForm.value.zoneSelectControl)">Save zone</button>
-<!-- <form [formGroup]="zoneSelectForm">
-  <select formControlName="zoneSelectControl">
-    <option *ngFor="let zone of states" [ngValue]="state">
-      {{ state.abbrev }}
-    </option>
-  </select>
-</form> -->
+<form [formGroup]="addCountryForm">
+  <ng-container *ngIf="selectedZone">
+    <!-- Add country form -->
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Add country to {{selectedZone?.name}}</mat-label>
+      <input matInput formControlName="addCountryName" [value]="addCountry?.name" [placeholder]="addCountry!.name">
 
-<!-- <p>Form value: {{ zoneSelectForm.value.zoneSelectControl | json}}</p> -->
-<app-country-list [countries]="countries!"></app-country-list>
+      <!-- Errors -->
+      <mat-error *ngIf="(addCountryForm.controls.addCountryName?.touched || addCountryForm.controls.addCountryName?.dirty) && addCountryForm.controls.addCountryName?.errors?.required">
+        Country name is required
+      </mat-error>
+      <mat-error *ngIf="(addCountryForm.controls.addCountryName?.touched || addCountryForm.controls.addCountryName?.dirty) && addCountryForm.controls.addCountryName?.errors?.pattern">
+        Country name must contain only letters
+      </mat-error>
+    </mat-form-field>
+
+    <!-- <ng-container>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>
+          Multiplier: {{selectedCountryZone?.countryMultiplier}}
+        </mat-label>
+        <mat-select formControlName="addCountryZone">
+          <mat-option *ngFor="let zone of zones" [value]="zone">{{zone.name}}</mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="addCountryForm.controls.addCountryZone?.errors?.required">
+          Country zone is required
+        </mat-error>
+        <mat-error *ngIf="addCountryForm.controls.countryName?.errors?.pattern">
+          Country name must contain only letters
+        </mat-error>
+      </mat-form-field>
+    </ng-container> -->
+
+    <button mat-raised-button color="primary" (click)="addCountryToZone()"
+    [disabled]="
+    addCountryForm?.controls['addCountryName'].invalid
+    "
+    >Add country</button>
+  </ng-container>
+</form>
+
+<!-- Message if countries exist in zone -->
+<h3 *ngIf="!(!countries || countries.length === 0)">Countries in {{selectedZone?.name}}</h3>
+
+<app-country-list [countries]=countries! [zones]=zones!></app-country-list>
+
