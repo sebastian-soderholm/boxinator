@@ -79,7 +79,6 @@ export class CountrySettingsComponent implements OnInit {
       );
 
       this.selectedZone = this.zoneSelectForm.get('zoneSelectControl').value
-      console.log("Selected zone: ", this.selectedZone)
     })
 
     //Add country to zone select event listener
