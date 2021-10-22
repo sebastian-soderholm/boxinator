@@ -15,3 +15,16 @@ button {
 p {
   color: #392f5a;
 }
+
+#background {
+  clip-path: polygon(64% 0, 100% 0, 100% 100%, 48% 100%);
+  background-image: url("../../../../assets/images/boxinator-cat.jpg");
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: right;
+  width: 100vw;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
