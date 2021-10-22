@@ -11,6 +11,7 @@ import { EditAccountPage } from './account/pages/edit-account/edit-account.page'
 import { GuestShipmentPage } from './shipment/pages/guest-shipment/guest-shipment.page';
 import { SettingsPage } from './admin/pages/settings/settings.page';
 import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.page';
+import { RoleGuard } from './login/services/role.guard';
 
 const routes: Routes = [
   {
@@ -58,12 +59,12 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsPage,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, RoleGuard],
   },
   {
     path: 'edit-shipment/:id',
     component: EditShipmentPage,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, RoleGuard]
   },
   {path: '**', redirectTo: ''},
 ];
