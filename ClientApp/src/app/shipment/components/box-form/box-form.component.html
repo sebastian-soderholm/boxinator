@@ -1,29 +1,43 @@
 <form [formGroup]="boxForm">
-<ng-container formArrayName="boxFormArray">
-  <p>Add boxes to your shipment</p>
-  <button (click)="clearAllBoxes()">Clear all</button>
-  <!-- boxFormArrayElement represents one box form in formArray -->
-  <div *ngFor="let control of boxFormArray.controls; index as i">
 
-    <form [formGroupName]="i">
-      <p>Select box type</p>
-      <!-- Box type select -->
-      <select formControlName="boxType">
-        <option *ngFor="let box of boxTypes;" [ngValue]="box">{{box.name}} - {{box.weight}} kg</option>
-      </select>
+  <ng-container formArrayName="boxFormArray">
+    <div>
+      <p>Add boxes to your shipment</p>
+      <button mat-raised-button color="secondary" (click)="clearAllBoxes()">Clear all</button>
+    </div>
+    <!-- boxFormArrayElement represents one box form in formArray -->
+    <div *ngFor="let control of boxFormArray.controls; index as i">
 
-      <input readonly formControlName="boxColor" [value]="boxFormArray.at(i).get('boxColor')?.value.color"
-        [style.background]="boxFormArray.at(i).get('boxColor')?.value.color" [cpOutputFormat]="'rgba'"
-        [(colorPicker)]="boxFormArray.at(i).get('boxColor')?.value.color" [cpAlphaChannel]="'disabled'"
-        [style.color]="boxFormArray.at(i).get('boxColor')?.value.color" (colorPickerChange)="colorChanged()" />
+      <form [formGroupName]="i">
+        <!-- Box type select -->
+        <div>
+          <p>Select box type</p>
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="boxType">
+              <mat-option *ngFor="let box of boxTypes;" [value]="box">{{box.name}} - {{box.weight}} kg</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-      <button (click)="removeBox(i);">-</button>
+        <!-- Color picker -->
+        <div>
+          <mat-form-field>
+            <p>Pick box color</p>
+            <input readonly matInput formControlName="boxColor"
+              [value]="boxFormArray.at(i).get('boxColor')?.value.color" [cpSaveClickOutside]="true"
+              [cpCloseClickOutside]="true" [style.background]="boxFormArray.at(i).get('boxColor')?.value.color"
+              [cpOutputFormat]="'rgba'" [(colorPicker)]="boxFormArray.at(i).get('boxColor')?.value.color"
+              [cpAlphaChannel]="'disabled'" [style.color]="boxFormArray.at(i).get('boxColor')?.value.color"
+              (colorPickerChange)="colorChanged()" />
+          </mat-form-field>
+        </div>
 
-    </form>
-  </div>
+        <button mat-raised-button color="secondary" (click)="removeBox(i);">-</button>
+      </form>
+    </div>
 
 
-  <button (click)="addBox()">+</button>
-</ng-container>
+    <button mat-raised-button color="secondary" (click)="addBox()">+</button>
+  </ng-container>
 
 </form>
