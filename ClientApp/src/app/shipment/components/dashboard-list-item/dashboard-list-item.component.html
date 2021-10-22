@@ -1,11 +1,13 @@
 <mat-card>
   <mat-card-header>
     <p>Status: {{this.currentStatus}}</p>
-    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+    <mat-progress-bar mode="determinate" value="{{this.currentStatusValue}}"></mat-progress-bar>
   </mat-card-header>
-  <mat-card-title>
+  <mat-card-title class="title">
     Shipment #{{shipment.id}} to {{shipment.receiverFirstName}} {{shipment.receiverLastName}}, {{shipment.country.name}}
-    {{this.totalWeight}} kg | {{shipment.cost}} €
+    <span>
+      {{this.totalWeight}} kg | {{shipment.cost}} €
+    </span>
   </mat-card-title>
   <mat-card-content>
     <mat-card-actions>

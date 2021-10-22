@@ -1,9 +1,9 @@
 <main>
   <mat-sidenav-container class="container">
-    <mat-sidenav mode="side" opened *ngIf="isLoggedIn">
+    <mat-sidenav mode="side" opened *ngIf="isLoggedIn" class="nav">
       <app-menu></app-menu>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content class="content">
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
