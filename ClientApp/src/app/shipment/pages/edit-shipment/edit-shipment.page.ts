@@ -7,6 +7,7 @@ import { ShipmentTableData } from '../../models/shipment-table.model';
 import { ShipmentService } from '../../services/shipment.service';
 import { CreateShipment } from '../../models/create-shipment.model';
 import { Observable } from 'rxjs';
+import { EditShipment } from '../../models/edit-shipment.model';
 
 @Component({
   selector: 'app-edit-shipment',
@@ -16,7 +17,7 @@ import { Observable } from 'rxjs';
 export class EditShipmentPage implements OnInit, OnChanges {
   shipmentId: number | undefined;
   editForm: FormGroup | null;
-  fetchedShipment: CreateShipment | undefined;
+  fetchedShipment: EditShipment | undefined;
 
   constructor(
     private readonly actRoute: ActivatedRoute,
@@ -32,7 +33,7 @@ export class EditShipmentPage implements OnInit, OnChanges {
 
       this.shipmentId = this.actRoute.snapshot.params.id;
       this.shipmentService.getByIdObservable(Number(this.shipmentId!))
-      .subscribe((result : CreateShipment) => {
+      .subscribe((result : EditShipment) => {
         this.editForm = this.fb.group({
           header: this.sharedFormService.sharedForm(result),
           //additionalField: [null]

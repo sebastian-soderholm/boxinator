@@ -42,7 +42,7 @@ export class ShipmentService {
     })
   }
 
-  // get shipment by id
+  // get shipment observable by id
   public getByIdObservable(shipmentId: number): any {
     return this.http.get<CreateShipment>(apiUrl + '/shipments/' + shipmentId, this.extensionService.authenticationHeadersFull);
   }
