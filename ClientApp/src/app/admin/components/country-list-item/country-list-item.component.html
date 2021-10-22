@@ -7,13 +7,15 @@
   </mat-form-field>
 
     <mat-form-field class="form-field" appearance="outline">
-      <mat-select formControlName="countryZone" (change)='zoneSelected(countryForm.value.countryZone)'>
+      <!-- (change)='zoneSelected(countryForm.value.countryZone)' -->
+      <mat-select formControlName="countryZone" >
         <mat-option *ngFor="let zone of zones" [value]="zone">{{zone.name}}</mat-option>
       </mat-select>
       <mat-label >
         Multiplier: {{selectedZone!.countryMultiplier}}
       </mat-label>
     </mat-form-field>
+
 
 
   <button mat-raised-button color="primary" (click)="saveCountry()">Save</button>
