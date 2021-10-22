@@ -44,7 +44,6 @@ namespace boxinator.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ShipmentReadDTO>>> GetAllCurrent()
         {
-
             DateTime? parsedDateFrom = HttpContext.Request.Query["dateFromFilter"].ToString().ParseDate();
             DateTime? parsedDateTo = HttpContext.Request.Query["dateToFilter"].ToString().ParseDate();
 
