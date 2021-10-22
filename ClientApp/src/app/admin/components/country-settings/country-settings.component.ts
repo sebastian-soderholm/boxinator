@@ -86,7 +86,7 @@ export class CountrySettingsComponent implements OnInit {
     this.countryService.postCountry(this.addCountry, () => {console.log("Country added", this.addCountry)})
   }
   addCountryChanged() {
-    console.log("add country zone selected")
+    this.countryService.postCountry(this.addCountry, () => {})
   }
 
   //Update zone info
@@ -98,7 +98,7 @@ export class CountrySettingsComponent implements OnInit {
     this.editedZone.countryMultiplier = this.zoneSelectForm.get('zoneMultiplierControl').value;
 
     console.log('Saving zone: ', this.editedZone);
-    this.zoneService.updateZone(this.editedZone);
+    this.zoneService.updateZone(this.editedZone, () => this.zones = this.sessionService.zones!);
   }
   onChanges() {}
 

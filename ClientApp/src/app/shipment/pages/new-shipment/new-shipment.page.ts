@@ -159,7 +159,7 @@ export class NewShipmentPage implements OnInit {
       return country.id == this._newShipmentForm.get('destinationCountryId').value
     })
 
-    this._cost = 0;
+    this._cost = 200;
     // Calculate shipping cost if any boxes present
     if(boxWeightArray.length > 0) {
       boxWeightArray.forEach((weight: number) => {

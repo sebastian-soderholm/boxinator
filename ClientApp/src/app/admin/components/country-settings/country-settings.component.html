@@ -1,27 +1,34 @@
 <p>Select zone</p>
 <form [formGroup]="zoneSelectForm">
-  <ng-container>
+
     <select formControlName="zoneSelectControl" (change)='zoneSelected()'>
-      <!-- <option >Select country</option> -->
+      <!-- <option *ngIf="selectedZone === undefined" >Select country</option> -->
       <option *ngFor="let zone of zones" [ngValue]="zone" selected>{{zone.name}}</option>
     </select>
 
-    <ng-container *ngIf="selectedZone">
-      <p>Zone name:</p>
-      <input type="text" formControlName="zoneNameControl" [value]="selectedZone?.name">
+  <ng-container *ngIf="selectedZone">
 
-      <p>Zone multiplier</p>
-      <input type="number" formControlName="zoneMultiplierControl" [value]="selectedZone?.countryMultiplier">
-      <button (click)="saveZone()">Save zone</button>
-    </ng-container>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Zone name</mat-label>
+      <input matInput type="text" formControlName="zoneNameControl" [value]="selectedZone?.name">
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Zone multiplier</mat-label>
+      <input matInput type="number" formControlName="zoneMultiplierControl" [value]="selectedZone?.countryMultiplier">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="saveZone()">Save zone</button>
+
   </ng-container>
+
 
   <ng-container *ngIf="selectedZone">
     <!-- Add country form -->
-    <ng-container>
-      <p>Add country to {{selectedZone?.name}}</p>
-      <input formControlName="addCountryName" [value]="addCountry!.name" [placeholder]="addCountry!.name">
-    </ng-container>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Add country to {{selectedZone?.name}}</mat-label>
+      <input matInput formControlName="addCountryName" [value]="addCountry!.name" [placeholder]="addCountry!.name">
+    </mat-form-field>
 
     <ng-container>
       <select formControlName="addCountryZone" (change)='addCountryChanged()' required>
@@ -29,7 +36,7 @@
       </select>
     </ng-container>
 
-    <button (click)="addCountryToZone()">Add country</button>
+    <button mat-raised-button (click)="addCountryToZone()">Add country</button>
   </ng-container>
 </form>
 

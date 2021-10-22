@@ -1,15 +1,20 @@
 <br>
 <form [formGroup]="countryForm">
+  <mat-form-field class="form-field" appearance="outline">
+    <mat-label> Country:
+    </mat-label>
+    <input matInput formControlName="countryName" [value]="country.name" [placeholder]="country.name">
+  </mat-form-field>
 
-  <input formControlName="countryName" [value]="country.name" [placeholder]="country.name">
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-select formControlName="countryZone" (change)='zoneSelected(countryForm.value.countryZone)'>
+        <mat-option *ngFor="let zone of zones" [value]="zone">{{zone.name}}</mat-option>
+      </mat-select>
+      <mat-label >
+        Multiplier: {{selectedZone!.countryMultiplier}}
+      </mat-label>
+    </mat-form-field>
 
-  <select formControlName="countryZone" (change)='zoneSelected(countryForm.value.countryZone)'>
-    <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
-  </select>
 
-
-  <span> Multiplier: <strong>{{selectedZone?.countryMultiplier}}</strong></span>
+  <button mat-raised-button color="primary" (click)="saveCountry()">Save</button>
 </form>
-
-
-<button (click)="saveCountry()">Save</button>

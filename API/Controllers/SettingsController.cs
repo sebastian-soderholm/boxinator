@@ -42,17 +42,12 @@ namespace boxinator.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<List<CountryReadDTO>>> GetAllCountries()
         {
-            // current user for role check
-            var userEmail = Request.ExtractEmailFromToken();
-            User currentUser = await _accountService.GetUser(userEmail);
 
-            if (currentUser.IsAdmin())
-            {
-                var countries = await _settingsService.GetAllCountries();
-                return _mapper.Map<List<CountryReadDTO>>(countries);
-            }
+            var countries = await _settingsService.GetAllCountries();
+            return _mapper.Map<List<CountryReadDTO>>(countries);
+            
 
-            return StatusCode(403);
+            //return StatusCode(403);
         }
 
         /// <summary>
@@ -63,7 +58,6 @@ namespace boxinator.Controllers
         // POST: /settings/countries
         [HttpPost]
         [Route("/settings/countries")]
-        [AllowAnonymous]
         public async Task<ActionResult<CountryReadDTO>> AddCountry(CountryCreateDTO countryDTO)
         {
             // current user for role check
@@ -88,7 +82,6 @@ namespace boxinator.Controllers
         //PUT: /settings/countries/:id
         [HttpPut]
         [Route("/settings/countries/{countryId}")]
-        [AllowAnonymous]
         public async Task<ActionResult<CountryReadDTO>> UpdateCountry(int countryId, CountryEditDTO countryDTO)
         {
             // current user for role check
@@ -132,7 +125,6 @@ namespace boxinator.Controllers
         //PUT: /settings/zones/{zoneId}
         [HttpPut]
         [Route("/settings/zones/{zoneId}")]
-        [AllowAnonymous]
         public async Task<ActionResult<ZoneReadDTO>> UpdateZone(int zoneId, ZoneEditDTO zoneDTO)
         {            
             // current user for role check

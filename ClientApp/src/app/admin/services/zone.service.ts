@@ -43,10 +43,14 @@ export class ZoneService {
   }
 
   //Update country
-  public updateZone(zone: Zone): void {
+  public updateZone(zone: Zone, onSuccess: () => void): void {
+    console.log(zone)
+    console.log(this._apiUrl + '/settings/zones/' + zone.id, zone, this.extensionService.authenticationHeadersFull)
 
     this.http.put<Zone>(this._apiUrl + '/settings/zones/' + zone.id, zone, this.extensionService.authenticationHeadersFull)
     .subscribe((zone: Zone) => {
+
+
       //Update country in sessionService
       this.sessionService.updateZone(zone)
     },
