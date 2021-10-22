@@ -56,10 +56,10 @@ export class CountrySettingsComponent implements OnInit {
         Validators.required,
         Validators.pattern(/[a-z]/),
       ]),
-      addCountryZone: new FormControl("",[
-        Validators.required,
-        Validators.pattern(/[a-z]/),
-      ]),
+      // addCountryZone: new FormControl("",[
+      //   Validators.required,
+      //   Validators.pattern(/[a-z]/),
+      // ]),
     })
 
     //Select zone event listener, fetch countries every time zone changes
@@ -82,10 +82,10 @@ export class CountrySettingsComponent implements OnInit {
   }
 
   addCountryToZone() {
-    // if(!this.addCountryForm.get("addCountryName").value || !this.addCountryForm.get("addCountryZone").value) return
+    // if(!this.addCountryForm.get("addCountryName").value ) return
 
     this.addCountry.name = this.addCountryForm.get("addCountryName").value
-    this.addCountry.zoneId =  this.addCountryForm.get("addCountryZone").value.id
+    this.addCountry.zoneId =  this.selectedZone!.id
     console.log('Adding country', this.addCountry);
 
     // this.countryService.postCountry(this.addCountry, () => {console.log("Country added", this.addCountry)})
