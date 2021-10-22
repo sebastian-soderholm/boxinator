@@ -1,4 +1,4 @@
-<h1>My Account</h1>
+<h1>My Account<button mat-flat-button routerLink="/my-account/edit">Edit account</button></h1>
 <mat-form-field appearance="standard">
 	<mat-form-field class="full-width" appearance="standard">
 		<input [readonly]="readonly" autocomplete="off" matInput placeholder="First name">{{ userInfo?.firstName }}
@@ -24,8 +24,6 @@
 	<mat-form-field class="full-width" appearance="standard">
 		<input [readonly]="readonly" autocomplete="off" matInput placeholder="Contact number">{{ userInfo?.phoneNumber }}
 	</mat-form-field>
-	<button routerLink="/my-account/edit">Edit account</button>
-
 </mat-form-field>
 
 

@@ -1,3 +1,17 @@
 h1 {
   font-size: 6em;
+  font-weight: 400 !important;
+  line-height: 5rem;
+  span {
+    display: block;
+  }
+}
+
+button {
+  padding: 0.5rem 3rem;
+  margin-bottom:1rem;
+}
+
+p {
+  color: #392f5a;
 }
