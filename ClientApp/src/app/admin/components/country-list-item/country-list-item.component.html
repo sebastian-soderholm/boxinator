@@ -3,16 +3,15 @@
   <mat-form-field class="form-field" appearance="outline">
     <mat-label> Country:
     </mat-label>
-    <input matInput formControlName="countryName" [value]="country.name" [placeholder]="country.name">
+    <input matInput formControlName="countryName" [value]="country.name">
   </mat-form-field>
 
     <mat-form-field class="form-field" appearance="outline">
-      <!-- (change)='zoneSelected(countryForm.value.countryZone)' -->
       <mat-select formControlName="countryZone">
         <mat-option *ngFor="let zone of zones" [value]="zone">{{zone.name}}</mat-option>
       </mat-select>
       <mat-label>
-        Multiplier: {{selectedZone?.countryMultiplier}}
+        Zone Multiplier: {{selectedZone?.countryMultiplier}}
       </mat-label>
     </mat-form-field>
 

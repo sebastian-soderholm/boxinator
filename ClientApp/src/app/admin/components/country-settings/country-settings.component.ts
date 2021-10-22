@@ -15,7 +15,8 @@ import { ZoneService } from '../../services/zone.service';
 export class CountrySettingsComponent implements OnInit {
   zoneSelectForm: FormGroup | any;
   zoneSelectControl: FormControl | undefined;
-  selectedZone: Zone | any;
+  selectedZone: Zone | undefined;
+
   countries: Country[] | undefined;
   zones: Zone[] | undefined;
   editedZone: Zone = {
@@ -40,8 +41,6 @@ export class CountrySettingsComponent implements OnInit {
   ) {
     this.zoneService.fetchZonesToSession(async () => {
       this.zones = this.sessionService.zones!;
-      // this.selectedZone = this.sessionService.zones![0]
-      console.log("Zones fetched", this.zones)
     });
   }
 
@@ -65,24 +64,22 @@ export class CountrySettingsComponent implements OnInit {
 
     //Select zone event listener, fetch countries every time zone changes
     this.zoneSelectForm.get("zoneSelectControl")!.valueChanges.subscribe(() => {
-      this.selectedZone = this.zoneSelectForm.get('zoneSelectControl').value
-
       this.countries = []
-
       this.zoneService.fetchZoneCountriesToSession(
         this.zoneSelectForm.get('zoneSelectControl').value.id, async () => {
           this.countries = this.sessionService.countries;
         }
       );
+
+      this.selectedZone = this.zoneSelectForm.get('zoneSelectControl').value
+      console.log("Selected zone: ", this.selectedZone)
     })
 
     //Add country to zone select event listener
     this.addCountryForm.get("addCountryZone")!.valueChanges.subscribe((zone: Zone) => {
       this.selectedCountryZone = zone
     })
-
   }
-
 
   addCountryToZone() {
     // if(!this.addCountryForm.get("addCountryName").value || !this.addCountryForm.get("addCountryZone").value) return
@@ -93,8 +90,6 @@ export class CountrySettingsComponent implements OnInit {
 
     // this.countryService.postCountry(this.addCountry, () => {console.log("Country added", this.addCountry)})
   }
-
-
 
   //Update zone info
   saveZone() {
