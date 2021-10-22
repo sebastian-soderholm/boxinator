@@ -83,15 +83,22 @@ namespace boxinator.Services
         /// <param name="id"></param>
         /// <param name="shipment"></param>
         /// <returns>Updated shipment</returns>
-        public async Task<Shipment> Update(int id, Shipment shipment)
+        public async Task<Shipment> Update(int shipmentId, Shipment shipment)
         {
-            var resultShipment = await _context.Shipments
-                .Include(s => s.User)
-                .Where(x => x.Id == id).FirstOrDefaultAsync();
+            var resultShipment = await _context.Shipments.Where(x => x.Id == shipmentId)
+                .Include(u => u.User)
+                .FirstOrDefaultAsync();
 
             if (resultShipment != null)
             {
-                resultShipment = shipment;
+                //resultShipment = shipment;
+                resultShipment.FirstName = shipment.FirstName;
+                resultShipment.LastName = shipment.LastName;
+                resultShipment.ZipCode = shipment.ZipCode;
+                resultShipment.Address = shipment.Address;
+                resultShipment.CountryId = shipment.CountryId;
+                resultShipment.User.Email = shipment.User.Email;
+
                 await _context.SaveChangesAsync();
             }
 

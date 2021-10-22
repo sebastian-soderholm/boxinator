@@ -16,7 +16,7 @@ import { Country } from 'src/app/login/models/country.model';
   styleUrls: ['./edit-shipment.page.scss']
 })
 export class EditShipmentPage implements OnInit, OnChanges {
-  shipmentId: number | undefined;
+  shipmentId: number;
   editForm: FormGroup | null;
   fetchedShipment: EditShipment | undefined;
 
@@ -33,6 +33,7 @@ export class EditShipmentPage implements OnInit, OnChanges {
       })
 
       this.shipmentId = this.actRoute.snapshot.params.id;
+
       this.shipmentService.getByIdObservable(Number(this.shipmentId!))
       .subscribe((result : EditShipment) => {
         this.editForm = this.fb.group({
@@ -52,7 +53,9 @@ export class EditShipmentPage implements OnInit, OnChanges {
   onSubmitEditForm(){
     console.log(this.editForm!.value.header)
     //console.log(this.editForm.value.additionalField)
-    console.log("helloop");
+    this.shipmentService.updateShipment(this.shipmentId, this.editForm!.value.header, async ()=> {
+      console.log("updated");
+    })
   }
 
 }

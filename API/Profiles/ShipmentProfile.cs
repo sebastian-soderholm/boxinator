@@ -41,6 +41,15 @@ namespace boxinator.Profiles
                 .ForPath(dto => dto.CountryId, opt => opt.MapFrom(s => s.CountryId))
                 .ReverseMap();
 
+            CreateMap<Shipment, ShipmentEditDTO>()
+                .ForMember(dto => dto.ReceiverFirstName, opt => opt.MapFrom(s => s.FirstName))
+                .ForMember(dto => dto.ReceiverLastName, opt => opt.MapFrom(s => s.LastName))
+                .ForMember(dto => dto.DestinationZipCode, opt => opt.MapFrom(s => s.Address))
+                .ForMember(dto => dto.DestinationAddress, opt => opt.MapFrom(s => s.ZipCode))
+                .ForMember(dto => dto.SenderEmail, opt => opt.MapFrom(s => s.User.Email))
+                .ForPath(dto => dto.DestinationCountryId, opt => opt.MapFrom(s => s.CountryId))
+                .ReverseMap();
+
         }
     }
 }
