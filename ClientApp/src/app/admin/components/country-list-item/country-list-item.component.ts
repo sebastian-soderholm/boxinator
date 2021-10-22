@@ -25,7 +25,6 @@ export class CountryListItemComponent implements OnInit {
     this._zones = zones;
   }
 
-
   private _country: Country | undefined
 
   private _zones: Zone[] = []
@@ -39,24 +38,22 @@ export class CountryListItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this._countryForm = new FormGroup({
       countryName: new FormControl(this.country.name, [
         Validators.required,
-        Validators.pattern(/[a-z]/)
+        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*")
       ]),
       countryZone: new FormControl(this._zones[0], [
         Validators.required,
-        Validators.pattern(/[a-z]/)
       ])
     })
 
-    this.zoneSelected(this._zones[0])
+    this._countryForm.get("countryZone").valueChanges.subscribe((zone: Zone) => {
+      this._selectedZone = zone
+    })
+    this._selectedZone = this._zones[0]
   }
 
-  zoneSelected(selectedZone: Zone) {
-    this._selectedZone = selectedZone;
-  }
   saveCountry() {
 
     this.country.name = this._countryForm.get("countryName").value
