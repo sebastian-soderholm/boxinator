@@ -8,17 +8,13 @@ import { FormGroup, FormBuilder } from "@angular/forms";
   styleUrls: ['./shared-form.component.scss']
 })
 export class SharedFormComponent implements OnInit {
-  @Input() parentGroup: FormGroup;
+  @Input() parentGroup: any;
   @Input() header: any;
 
   constructor(
     private fb: FormBuilder,
     private sharedFormService: SharedFormService
     ) { 
-      this.header = this.sharedFormService.sharedForm();
-      this.parentGroup = this.fb.group({
-        header: this.sharedFormService.sharedForm(),
-      })
   }
 
   ngOnInit(): void {

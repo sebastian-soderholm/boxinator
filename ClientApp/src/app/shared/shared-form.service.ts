@@ -1,32 +1,44 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Input } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { CreateShipment } from "../shipment/models/create-shipment.model";
+import { ShipmentTableData } from "../shipment/models/shipment-table.model";
+import { ShipmentService } from "../shipment/services/shipment.service";
 
 @Injectable({
 	providedIn: 'root'
 })
 
 export class SharedFormService {
-	//email = "uujee@fi.fi";
 
-	constructor(private readonly fb: FormBuilder){}
+	constructor(private readonly fb: FormBuilder, private readonly shipmentService: ShipmentService){
 
-	sharedForm(): FormGroup {
+	}
+
+	sharedForm(shipment: CreateShipment | null): FormGroup {
 		const fg = this.fb.group({
 			senderEmail: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)]],
 			receiverFirstName: ['', [Validators.required, Validators.pattern(/[a-z]/gi)]],
 			receiverLastName: ['', [Validators.required, Validators.pattern(/[a-z]/gi)]],
-			destinationCountryId: [1, []],
+			destinationCountryId: [1, [Validators.required, Validators.min(1)]],
 			destinationZipCode: ['', Validators.required, Validators.minLength(5), Validators.pattern(/^[0-9]*$/)],
 			destinationAddress: ['', Validators.required]
 		})
 
-		//fg.get('senderEmail')?.setValue(this.email);
-		//fg.get('receiverFirstName')?.setValue("testipetteri");
-		//fg.get('receiverLastName')?.setValue("testipetteri2");
-		//fg.get('destinationCountryId')?.setValue(666);
-		//fg.get('destinationZipCode')?.setValue(12312412);
-		//fg.get('destinationAddress')?.setValue("uujeekatu 4");
+		if(shipment != null) {
+			console.log(shipment)
+			fg.get('senderEmail')?.setValue("emptyemail@test.com");
+			fg.get('receiverFirstName')?.setValue(shipment.receiverFirstName);
+			fg.get('receiverLastName')?.setValue(shipment.receiverLastName);
+			fg.get('destinationCountryId')?.setValue(shipment.countryId);
+			//fg.get('destinationZipCode')?.setValue(shipment.receiverZipCode.toString());
+			fg.get('destinationAddress')?.setValue(shipment.receiverAddress);
+
+			//fg.get('destinationCountryId')?.setValue(shipment.countryId);
+			//fg.get('destinationZipCode')?.setValue(shipment.receiverZipCode);
+			//fg.get('destinationAddress')?.setValue(shipment.receiverAddress);
+		}
 
 		return fg;
 	}
+
 }

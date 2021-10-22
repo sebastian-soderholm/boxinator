@@ -23,10 +23,28 @@ const apiUrl = environment.baseURL;
 //Service for getting ongoing/completed shipments and creating shipments for customer/admin and guest
 export class ShipmentService {
   private _error: string = '';
+  private _shipment: CreateShipment | undefined;
 
   constructor(private readonly http: HttpClient, 
     private readonly sessionService: SessionService, 
     private readonly extensionService: ExtensionsService) {
+  }
+
+  // get shipment by id
+  public getById(shipmentId: number, onSuccess: () => void): any {
+    this.http.get<CreateShipment>(apiUrl + '/shipments/' + shipmentId, this.extensionService.authenticationHeadersFull)
+    .subscribe((shipment: CreateShipment) => {
+      this.sessionService.setEditableShipment(shipment);
+      onSuccess();
+    },
+    (error: HttpErrorResponse) => {
+      this._error = error.message;
+    })
+  }
+
+  // get shipment by id
+  public getByIdObservable(shipmentId: number): any {
+    return this.http.get<CreateShipment>(apiUrl + '/shipments/' + shipmentId, this.extensionService.authenticationHeadersFull);
   }
 
   // get all current shipments
@@ -123,6 +141,10 @@ export class ShipmentService {
 
   public getError(): string {
     return this._error;
+  }
+
+  public getFetchedShipment(): CreateShipment {
+    return this._shipment!;
   }
 }
 

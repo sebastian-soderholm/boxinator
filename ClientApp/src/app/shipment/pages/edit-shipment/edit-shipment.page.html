@@ -5,6 +5,9 @@
 	<app-shared-form [header]="editForm?.get('header')!" [parentGroup]="editForm"></app-shared-form>
 	
 	<!-- Non shared -->
+	<button type="submit" mat-raised-button color="accent">Save</button>
+
+	<!--
 	<div [formGroup]="editForm!">
 		<mat-form-field appearance="outline">
 			<mat-label>Additional field</mat-label>
@@ -12,4 +15,5 @@
 		</mat-form-field>
 		<button type="submit" mat-raised-button color="accent">Save</button>
 	</div>
+	-->
 </form>
