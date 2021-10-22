@@ -1,69 +1,90 @@
-<form class="form form-control" [formGroup]="guestShipmentForm">
+<mat-form class="form form-control" [formGroup]="guestShipmentForm">
+
   <!-- Email -->
-  <input class="form-control" formControlName="senderEmail" type="email" placeholder="Email" required>
-  <div *ngIf="senderEmail?.dirty || senderEmail?.touched" class="alert">
-    <div *ngIf="senderEmail?.errors?.required">
-      <p>Email is required</p>
-    </div>
-    <div *ngIf="senderEmail?.errors?.minlength">
-      <p>Email is too short</p>
-    </div>
-    <div *ngIf="senderEmail?.errors?.pattern">
-      <p>Email format is invalid</p>
-    </div>
+  <div>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Your email</mat-label>
+      <input matInput class="form-control" formControlName="senderEmail" type="email" placeholder="Email" required>
+      <mat-error *ngIf="(senderEmail?.dirty || senderEmail?.touched) && senderEmail?.errors?.required" class="alert">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="(senderEmail?.dirty || senderEmail?.touched) && senderEmail?.errors?.minlength">
+        Email is too short
+      </mat-error>
+      <mat-error *ngIf="(senderEmail?.dirty || senderEmail?.touched) && senderEmail?.errors?.pattern">
+        Email format is invalid
+      </mat-error>
+    </mat-form-field>
   </div>
   <!-- Reciever first name -->
-  <input class="form-control" formControlName="receiverFirstName" type="text" placeholder="First name" required>
-  <div *ngIf="receiverFirstName?.dirty || receiverFirstName?.touched" class="alert">
-    <div *ngIf="receiverFirstName?.errors?.required">
-      <p>First name is required</p>
-    </div>
-    <div *ngIf="receiverFirstName?.errors?.pattern">
-      <p>First name can only contain letters</p>
-    </div>
+  <div>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Reciever first name</mat-label>
+      <input matInput class="form-control" formControlName="receiverFirstName" type="text" placeholder="First name"
+        required>
+      <mat-error *ngIf="(receiverFirstName?.dirty || receiverFirstName?.touched) && receiverFirstName?.errors?.required"
+        class="alert">
+        First name is required
+      </mat-error>
+      <mat-error *ngIf="(receiverFirstName?.dirty || receiverFirstName?.touched) && receiverFirstName?.errors?.pattern">
+        First name can only contain letters
+      </mat-error>
+    </mat-form-field>
   </div>
   <!-- Reciever last name -->
-  <input class="form-control" formControlName="receiverLastName" type="text" placeholder="Last name" required>
-  <div *ngIf="receiverLastName?.dirty || receiverLastName?.touched" class="alert">
-    <div *ngIf="receiverLastName?.errors?.required">
-      <p>Last name is required</p>
-    </div>
-    <div *ngIf="receiverLastName?.errors?.pattern">
-      <p>Last name can only contain letters</p>
-    </div>
+  <div>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Reciever last name</mat-label>
+      <input matInput class="form-control" formControlName="receiverLastName" type="text" placeholder="Last name"
+        required>
+      <mat-error *ngIf="(receiverLastName?.dirty || receiverLastName?.touched) && receiverLastName?.errors?.required"
+        class="alert">
+        Last name is required
+      </mat-error>
+      <mat-error *ngIf="(receiverLastName?.dirty || receiverLastName?.touched) && receiverLastName?.errors?.pattern">
+        Last name can only contain letters
+      </mat-error>
+    </mat-form-field>
   </div>
   <!-- Destination country -->
-  <select formControlName="destinationCountryId">
-    <option *ngIf="!countries" value="" selected>Loading countries...</option>
-    <option [ngValue]="country.id" *ngFor="let country of countries">{{country.name}}</option>
-  </select>
-
-  <!-- Destination postal code -->
-  <input formControlName="destinationAddress" type="text" placeholder="Address">
-  <div *ngIf="destinationAddress?.dirty || destinationAddress?.touched" class="alert">
-    <div *ngIf="destinationAddress?.errors?.required">
-      <p>Address is required</p>
-    </div>
+  <div>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-select formControlName="destinationCountryId">
+        <mat-option *ngIf="!countries" value="" selected>Loading countries...</mat-option>
+        <mat-option [value]="country.id" *ngFor="let country of countries">{{country.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
   <!-- Destination postal code -->
-  <input formControlName="destinationZipCode" type="text" placeholder="Postal code">
-  <div *ngIf="destinationZipCode?.dirty || destinationZipCode?.touched" class="alert">
-    <div *ngIf="destinationZipCode?.errors?.minlength">
-      <p>Postal code is too short</p>
-    </div>
-    <div *ngIf="destinationZipCode?.errors?.pattern">
-      <p>Postal code can only contain numbers</p>
-    </div>
+  <div>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Destination address</mat-label>
+      <input matInput formControlName="destinationAddress" type="text" placeholder="Address">
+      <mat-error *ngIf="(destinationAddress?.dirty || destinationAddress?.touched) && destinationAddress?.errors?.required " class="alert">
+          Address is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Destination postal code -->
+  <div>
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Destination postal code</mat-label>
+      <input matInput formControlName="destinationZipCode" type="text" placeholder="Postal code">
+      <mat-error *ngIf="(destinationZipCode?.dirty || destinationZipCode?.touched) && destinationZipCode?.errors?.minlength" class="alert">
+          Postal code is too short
+      </mat-error>
+        <mat-error *ngIf="(destinationZipCode?.dirty || destinationZipCode?.touched) && destinationZipCode?.errors?.pattern">
+          Postal code can only contain numbers
+        </mat-error>
+    </mat-form-field>
   </div>
 
   <p>Shipment cost {{cost}} €</p>
   <app-box-form (formChange)="boxFormChanged($event)"></app-box-form>
 
-
-
-<button type="submit" (click)="createGuestShipment()"
-[disabled]="
+  <button mat-raised-button color="primary" type="submit" (click)="createGuestShipment()" [disabled]="
 guestShipmentForm.controls['senderEmail'].invalid ||
 guestShipmentForm.controls['receiverFirstName'].invalid ||
 guestShipmentForm.controls['receiverLastName'].invalid ||
@@ -71,8 +92,8 @@ guestShipmentForm.controls['destinationCountryId'].invalid ||
 guestShipmentForm.controls['destinationAddress'].invalid ||
 guestShipmentForm.controls['destinationZipCode'].invalid ||
 boxFormIsEmpty
-"
-  >
-  Ship
-</button>
+">
+    Ship
+  </button>
 
+</mat-form>
