@@ -13,6 +13,7 @@ import { SessionService } from 'src/app/shared/session.service';
 import { GuestShipment } from '../models/guest-shipment.model';
 import { CreateShipment } from '../models/create-shipment.model';
 import { ExtensionsService } from 'src/app/shared/extensions.service';
+import { EditShipment } from '../models/edit-shipment.model';
 
 const apiUrl = environment.baseURL;
 
@@ -127,6 +128,21 @@ export class ShipmentService {
 
       this.sessionService.setShipmentsTableData(shipmentTableDataArray!);
 
+      onSuccess();
+    },
+    (error: HttpErrorResponse) => {
+      this._error = error.message;
+      console.table(error)
+    })
+  }
+
+  // update shipment
+  public updateShipment(shipmentId: number, shipment: EditShipment, onSuccess: () => void) : void {
+    const body = shipment;
+
+    this.http.put<EditShipment>(apiUrl + '/shipments/' +shipmentId, body, this.extensionService.authenticationHeadersFull)
+    .subscribe((updatedShipment: EditShipment) => {
+      console.log(updatedShipment);
       onSuccess();
     },
     (error: HttpErrorResponse) => {
