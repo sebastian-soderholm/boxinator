@@ -25,6 +25,7 @@ export class CountrySettingsComponent implements OnInit {
   };
 
   addCountryForm: FormGroup | any;
+
   addCountry: CountryAdd = {
     name: '',
     zoneId: 0,
@@ -45,20 +46,29 @@ export class CountrySettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
     this.zoneSelectForm = new FormGroup({
       zoneSelectControl: new FormControl(this.zones, [Validators.required]),
       zoneNameControl: new FormControl([]),
       zoneMultiplierControl: new FormControl([]),
+    });
 
+    this.addCountryForm = new FormGroup({
       addCountryName: new FormControl(this.addCountry!.name, [
         Validators.required,
         Validators.pattern(/[a-z]/),
       ]),
-      addCountryZone: new FormControl(this.zones, [
+      addCountryZone: new FormControl("",[
         Validators.required,
         Validators.pattern(/[a-z]/),
       ]),
-    });
+    })
+
+    this.addCountryForm.get("addCountryZone")!.valueChanges.subscribe((zone: Zone) => {
+      this.selectedCountryZone = zone
+    })
+
   }
 
   zoneSelected() {
@@ -77,10 +87,10 @@ export class CountrySettingsComponent implements OnInit {
   }
 
   addCountryToZone() {
-    if(!this.zoneSelectForm.get("addCountryName").value || !this.zoneSelectForm.get("addCountryZone").value) return
+    // if(!this.addCountryForm.get("addCountryName").value || !this.addCountryForm.get("addCountryZone").value) return
 
-    this.addCountry.name = this.zoneSelectForm.get("addCountryName").value
-    this.addCountry.zoneId =  this.zoneSelectForm.get("addCountryZone").value.id
+    this.addCountry.name = this.addCountryForm.get("addCountryName").value
+    this.addCountry.zoneId =  this.addCountryForm.get("addCountryZone").value.id
     console.log('Adding country', this.addCountry);
 
     this.countryService.postCountry(this.addCountry, () => {console.log("Country added", this.addCountry)})
@@ -105,4 +115,5 @@ export class CountrySettingsComponent implements OnInit {
   countrySave(editedCountry: any) {}
 
   setCountriesForm() {}
+
 }

@@ -1,10 +1,10 @@
 <p>Select zone</p>
 <form [formGroup]="zoneSelectForm">
 
-    <select formControlName="zoneSelectControl" (change)='zoneSelected()'>
-      <!-- <option *ngIf="selectedZone === undefined" >Select country</option> -->
-      <option *ngFor="let zone of zones" [ngValue]="zone" selected>{{zone.name}}</option>
-    </select>
+  <select formControlName="zoneSelectControl" (change)='zoneSelected()'>
+    <!-- <option *ngIf="selectedZone === undefined" >Select country</option> -->
+    <option *ngFor="let zone of zones" [ngValue]="zone" selected>{{zone.name}}</option>
+  </select>
 
   <ng-container *ngIf="selectedZone">
 
@@ -21,19 +21,25 @@
     <button mat-raised-button color="primary" (click)="saveZone()">Save zone</button>
 
   </ng-container>
+</form>
 
-
+<form [formGroup]="addCountryForm">
   <ng-container *ngIf="selectedZone">
     <!-- Add country form -->
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Add country to {{selectedZone?.name}}</mat-label>
-      <input matInput formControlName="addCountryName" [value]="addCountry!.name" [placeholder]="addCountry!.name">
+      <input matInput formControlName="addCountryName" [value]="addCountry?.name">
     </mat-form-field>
 
     <ng-container>
-      <select formControlName="addCountryZone" (change)='addCountryChanged()' required>
-        <option *ngFor="let zone of zones" [ngValue]="zone">{{zone.name}}</option>
-      </select>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>
+          Multiplier: {{selectedCountryZone?.countryMultiplier}}
+        </mat-label>
+        <mat-select formControlName="addCountryZone">
+          <mat-option *ngFor="let zone of zones" [value]="zone">{{zone.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </ng-container>
 
     <button mat-raised-button (click)="addCountryToZone()">Add country</button>
