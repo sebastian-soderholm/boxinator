@@ -1,13 +1,14 @@
 <p>Select zone</p>
 <form [formGroup]="zoneSelectForm">
 
-  <select formControlName="zoneSelectControl" (change)='zoneSelected()'>
-    <!-- <option *ngIf="selectedZone === undefined" >Select country</option> -->
-    <option *ngFor="let zone of zones" [ngValue]="zone" selected>{{zone.name}}</option>
-  </select>
+  <mat-form-field class="form-field" appearance="outline">
+    <mat-select formControlName="zoneSelectControl">
+      <mat-option *ngFor="let zone of zones" [value]="zone" selected>{{zone.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
 
   <ng-container *ngIf="selectedZone">
-
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Zone name</mat-label>
       <input matInput type="text" formControlName="zoneNameControl" [value]="selectedZone?.name">
@@ -19,7 +20,6 @@
     </mat-form-field>
 
     <button mat-raised-button color="primary" (click)="saveZone()">Save zone</button>
-
   </ng-container>
 </form>
 
@@ -28,7 +28,7 @@
     <!-- Add country form -->
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Add country to {{selectedZone?.name}}</mat-label>
-      <input matInput formControlName="addCountryName" [value]="addCountry?.name">
+      <input matInput formControlName="addCountryName" [value]="addCountry?.name" [placeholder]="addCountry!.name">
     </mat-form-field>
 
     <ng-container>
