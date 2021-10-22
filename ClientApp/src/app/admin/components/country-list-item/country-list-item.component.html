@@ -5,10 +5,10 @@
     </mat-label>
     <input matInput formControlName="countryName" [value]="country.name">
     <!-- error -->
-    <mat-error *ngIf="countryForm.controls.countryName?.errors?.required">
+    <mat-error *ngIf="(countryForm.controls.countryName?.touched || countryForm.controls.countryName?.dirty) && countryForm.controls.countryName?.errors?.required">
       Country name required
     </mat-error>
-    <mat-error *ngIf="countryForm.controls.countryName?.errors?.pattern">
+    <mat-error *ngIf="(countryForm.controls.countryName?.touched || countryForm.controls.countryName?.dirty) && countryForm.controls.countryName?.errors?.pattern">
       Country name must contain only letters
     </mat-error>
 
@@ -22,13 +22,16 @@
       Zone Multiplier: {{selectedZone?.countryMultiplier}}
     </mat-label>
   </mat-form-field>
+  <!-- error -->
+  <mat-error *ngIf="countryForm.controls.countryName?.errors?.required">
+    Country zone required
+  </mat-error>
 
 
 
   <button mat-raised-button color="primary" (click)="saveCountry()"
-  [disabled]="
-  countryForm.controls['countryName'].invalid ||
-  countryForm.controls['countryZone'].invalid
+  [disabled]="(countryForm.controls['countryName'].invalid || countryForm.controls['countryZone'].invalid )
+  && countryForm.controls['countryName'].touched
 "
 
   >Save</button>
