@@ -1,3 +1,7 @@
+.card-container {
+  margin-bottom: 2rem;
+}
+
 .title {
   font-weight: 700;
   font-size: 1.2rem;
@@ -5,3 +9,14 @@
     float: right;
   }
 }
+
+.colored-boxes {
+  display: inline-block;
+  .box{
+    width:25px;
+    height:25px;
+    margin-right: 1rem;
+    border: 2px solid #000;
+  }
+}
+
