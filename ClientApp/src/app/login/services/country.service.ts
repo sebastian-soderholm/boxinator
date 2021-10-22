@@ -43,7 +43,7 @@ export class CountryService {
   //Add new country to DB & sessionService
   public updateCountry(country: Country, onSuccess: () => void): void {
 
-    this.http.put<Country>(this._apiUrl + '/settings/countries', country, this.extensionService.authenticationHeadersFull)
+    this.http.put<Country>(this._apiUrl + '/settings/countries/' + country.id, country, this.extensionService.authenticationHeadersFull)
     .subscribe((country: Country) => {
       //Update country in sessionService
       this.sessionService.updateCountry(country)

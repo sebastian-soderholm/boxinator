@@ -86,6 +86,20 @@ export class CountrySettingsComponent implements OnInit {
     })
   }
 
+  //Event from child components when country data is saved
+  countrySaved(country: Country) {
+    console.log("Country posted! Parent country event: ", country)
+    //If country zone was changed away from current selected zone, filter out from countries list
+    if(country.zoneId !== this.selectedZone?.id) {
+      console.log("Removing country from this zone...")
+      this.countries = this.countries?.filter((c: Country) => {
+        return c.id !== country.id
+      })
+    }
+
+    // this.countries = this.sessionService.countries
+  }
+
   addCountryToZone() {
     // if(!this.addCountryForm.get("addCountryName").value ) return
 
@@ -93,7 +107,7 @@ export class CountrySettingsComponent implements OnInit {
     this.addCountry.zoneId =  this.selectedZone!.id
     console.log('Adding country', this.addCountry);
 
-    // this.countryService.postCountry(this.addCountry, () => {console.log("Country added", this.addCountry)})
+    this.countryService.postCountry(this.addCountry, () => console.log("Country added", this.addCountry))
   }
 
   //Update zone info

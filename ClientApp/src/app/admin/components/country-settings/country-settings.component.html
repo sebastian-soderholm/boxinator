@@ -89,5 +89,5 @@
 <!-- Message if countries exist in zone -->
 <h3 *ngIf="!(!countries || countries.length === 0)">Countries in {{selectedZone?.name}}</h3>
 
-<app-country-list [countries]=countries! [zones]=zones!></app-country-list>
+<app-country-list (countrySavedEvent)="countrySaved($event)"[countries]=countries! [zones]=zones!></app-country-list>
 
