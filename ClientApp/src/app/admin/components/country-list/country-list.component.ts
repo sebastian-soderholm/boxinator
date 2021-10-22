@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Country } from 'src/app/login/models/country.model';
 import { CountryService } from 'src/app/login/services/country.service';
 import { SessionService } from 'src/app/shared/session.service';
@@ -20,6 +20,8 @@ export class CountryListComponent implements OnInit {
     set zones(zones: Zone[]) {
     this._zones = zones;
   }
+  @Output() countrySavedEvent = new EventEmitter<Country>()
+
 
   private _countries: Country[] = []
   private _zones: Zone[] = []
@@ -33,6 +35,9 @@ export class CountryListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  countrySaved(country: Country) {
+    this.countrySavedEvent.emit(country)
+  }
   get countries(){
     return this._countries
   }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Country } from 'src/app/login/models/country.model';
 import { CountryService } from 'src/app/login/services/country.service';
 import { SessionService } from 'src/app/shared/session.service';
@@ -24,11 +24,14 @@ export class CountryListItemComponent implements OnInit {
   set zones(zones: Zone[]) {
     this._zones = zones;
   }
+  @Output() countrySavedEvent = new EventEmitter<Country>()
 
   private _country: Country | undefined
-
   private _zones: Zone[] = []
+
+  //Set selected zone properties based on this country
   private _selectedZone: Zone | undefined;
+
   private _countryForm: FormGroup | any;
 
   constructor(
@@ -38,20 +41,24 @@ export class CountryListItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this._selectedZone = {
+      id: this.country?.zoneId,
+      name: this.country?.zoneName,
+      countryMultiplier: this.country?.countryMultiplier
+    }
+
     this._countryForm = new FormGroup({
       countryName: new FormControl(this.country.name, [
         Validators.required,
         Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*")
       ]),
-      countryZone: new FormControl(this._zones[0], [
+      countryZone: new FormControl(this._selectedZone, [
         Validators.required,
       ])
     })
-
     this._countryForm.get("countryZone").valueChanges.subscribe((zone: Zone) => {
       this._selectedZone = zone
     })
-    this._selectedZone = this._zones[0]
   }
 
   saveCountry() {
@@ -62,7 +69,8 @@ export class CountryListItemComponent implements OnInit {
     this.country.countryMultiplier = this._selectedZone!.countryMultiplier
 
     console.log("Post country: ", this.country)
-    this.countryService.updateCountry(this.country, () => console.log("country saved!"));
+    this.countryService.updateCountry(this.country, () => this.countrySavedEvent.emit(this.country));
+
   }
 
   get countryForm() {

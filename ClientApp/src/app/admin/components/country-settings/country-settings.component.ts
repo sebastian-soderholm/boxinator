@@ -39,12 +39,14 @@ export class CountrySettingsComponent implements OnInit {
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService
   ) {
-    this.zoneService.fetchZonesToSession(async () => {
-      this.zones = this.sessionService.zones!;
-    });
+
   }
 
   ngOnInit(): void {
+    this.zoneService.fetchZonesToSession(async () => {
+      this.zones = this.sessionService.zones!;
+    });
+
     this.zoneSelectForm = new FormGroup({
       zoneSelectControl: new FormControl([Validators.required]),
       zoneNameControl: new FormControl(this.selectedZone?.name, [
@@ -77,13 +79,25 @@ export class CountrySettingsComponent implements OnInit {
       );
 
       this.selectedZone = this.zoneSelectForm.get('zoneSelectControl').value
-      console.log("Selected zone: ", this.selectedZone)
     })
 
     //Add country to zone select event listener
     this.addCountryForm.get("addCountryZone")?.valueChanges.subscribe((zone: Zone) => {
       this.selectedCountryZone = zone
     })
+  }
+
+  //Event from child components when country data is saved
+  countrySaved(country: Country) {
+    //If country zone was changed away from current selected zone, filter out from countries list
+    if(country.zoneId !== this.selectedZone?.id) {
+      console.log("Removing country from this zone...")
+      this.countries = this.countries?.filter((c: Country) => {
+        return c.id !== country.id
+      })
+    }
+
+    // this.countries = this.sessionService.countries
   }
 
   addCountryToZone() {
@@ -93,7 +107,7 @@ export class CountrySettingsComponent implements OnInit {
     this.addCountry.zoneId =  this.selectedZone!.id
     console.log('Adding country', this.addCountry);
 
-    // this.countryService.postCountry(this.addCountry, () => {console.log("Country added", this.addCountry)})
+    this.countryService.postCountry(this.addCountry, () => console.log("Country added", this.addCountry))
   }
 
   //Update zone info

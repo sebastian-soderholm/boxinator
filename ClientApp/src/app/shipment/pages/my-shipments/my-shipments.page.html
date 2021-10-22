@@ -12,7 +12,7 @@
   </mat-select>
 </mat-form-field>
 
-<!-- Date pickers -->
+<!-- Date picker (range) -->
 <mat-form-field appearance="outline">
   <mat-label>Enter a date range</mat-label>
   <mat-date-range-input [rangePicker]="picker">
@@ -22,25 +22,7 @@
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker #picker></mat-date-range-picker>
 </mat-form-field>
-<!--
-<mat-form-field appearance="outline">
-  <mat-label>Choose a date</mat-label>
-  <input matInput [matDatepicker]="fromDate" (dateChange)="setSelectedDate('from', $event)">
-  <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
-  <mat-datepicker #fromDate></mat-datepicker>
-</mat-form-field>
 
-<mat-form-field appearance="outline">
-  <mat-label>Choose a date</mat-label>
-  <input matInput [matDatepicker]="toDate" (dateChange)="setSelectedDate('to', $event)">
-  <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
-  <mat-datepicker #toDate></mat-datepicker>
-</mat-form-field>
--->
-<!--
-<input type="date" placeholder="From" [ngModel]="fromDate" (ngModelChange)="setSelectedFilterOption('from', $event)">
-<input type="date" placeholder="To" [ngModel]="toDate" (ngModelChange)="setSelectedFilterOption('to', $event)">
--->
 <button mat-flat-button color="accent" type="submit" (click)="filterTable()">Filter</button>
 <!-- Column visibility -->
 <h3>Toggle column visibility</h3>
