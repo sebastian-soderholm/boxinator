@@ -105,13 +105,9 @@ export class ShipmentService {
   //post new guest shipment
   public postNewShipment(shipment: CreateShipment, onSuccess: () => void) : void {
     const body = shipment;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
+
     console.log("Sending shipment..." + JSON.stringify(shipment))
-    this.http.post<CreateShipment[]>(apiUrl + '/shipments/', body, httpOptions)
+    this.http.post<CreateShipment[]>(apiUrl + '/shipments/', body, this.extensionService.authenticationHeadersFull)
     .subscribe((createdShipment: any) => {
       onSuccess();
     },

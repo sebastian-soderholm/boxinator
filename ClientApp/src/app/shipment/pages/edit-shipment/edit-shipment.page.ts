@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/shared/session.service';
-import { SharedFormService } from 'src/app/shared/shared-form.service';
+import { SharedShipmentFormService } from 'src/app/shipment/services/shared-form.service';
 import { FormGroup, FormBuilder, NgForm } from "@angular/forms";
 import { ShipmentTableData } from '../../models/shipment-table.model';
 import { ShipmentService } from '../../services/shipment.service';
@@ -23,11 +23,11 @@ export class EditShipmentPage implements OnInit, OnChanges {
     private readonly actRoute: ActivatedRoute,
     private readonly sessionService: SessionService,
     private fb: FormBuilder,
-    private sharedFormService: SharedFormService,
+    private sharedShipmentFormService: SharedShipmentFormService,
     private readonly shipmentService: ShipmentService
     ) {   
       this.editForm = this.fb.group({
-        header: this.sharedFormService.sharedForm(null),
+        header: this.sharedShipmentFormService.sharedForm(null),
         //additionalField: [null]
       })
 
@@ -35,7 +35,7 @@ export class EditShipmentPage implements OnInit, OnChanges {
       this.shipmentService.getByIdObservable(Number(this.shipmentId!))
       .subscribe((result : EditShipment) => {
         this.editForm = this.fb.group({
-          header: this.sharedFormService.sharedForm(result),
+          header: this.sharedShipmentFormService.sharedForm(result),
           //additionalField: [null]
         })
       });

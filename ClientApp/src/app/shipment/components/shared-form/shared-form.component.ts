@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { SharedFormService } from 'src/app/shared/shared-form.service';
+import { SharedShipmentFormService } from 'src/app/shipment/services/shared-form.service';
 import { FormGroup, FormBuilder } from "@angular/forms";
 
 @Component({
@@ -13,7 +13,7 @@ export class SharedFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private sharedFormService: SharedFormService
+    private sharedShipmentFormService: SharedShipmentFormService
     ) { 
   }
 
