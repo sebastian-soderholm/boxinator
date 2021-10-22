@@ -10,6 +10,7 @@ export interface EditShipment {
 	cost: number;
 	boxes: Box[];
 	sender: Sender;
+	countries: Country[];
 }
 
 export interface Country {

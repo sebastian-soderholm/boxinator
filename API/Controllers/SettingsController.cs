@@ -42,17 +42,8 @@ namespace boxinator.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<List<CountryReadDTO>>> GetAllCountries()
         {
-            // current user for role check
-            var userEmail = Request.ExtractEmailFromToken();
-            User currentUser = await _accountService.GetUser(userEmail);
-
-            if (currentUser.IsAdmin())
-            {
-                var countries = await _settingsService.GetAllCountries();
-                return _mapper.Map<List<CountryReadDTO>>(countries);
-            }
-
-            return StatusCode(403);
+            var countries = await _settingsService.GetAllCountries();
+            return _mapper.Map<List<CountryReadDTO>>(countries);
         }
 
         /// <summary>

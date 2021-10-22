@@ -20,11 +20,15 @@
 
 	<div formGroupName="header">
 		<mat-form-field appearance="outline">
-			<mat-label>Destination country id</mat-label>
-			<input matInput placeholder="Destination country id" formControlName="destinationCountryId">
+			<mat-label>Destination country</mat-label>
+			<mat-select formControlName="destinationCountryId">
+				<mat-option *ngFor="let country of countries" [value]="country.id">
+				  {{country.name}}
+				</mat-option>
+			  </mat-select>
 		</mat-form-field>
 	</div>
-	
+
 	<div formGroupName="header">
 		<mat-form-field appearance="outline">
 			<mat-label>Destination zip code</mat-label>
