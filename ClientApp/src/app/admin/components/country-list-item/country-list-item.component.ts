@@ -27,9 +27,11 @@ export class CountryListItemComponent implements OnInit {
   @Output() countrySavedEvent = new EventEmitter<Country>()
 
   private _country: Country | undefined
-
   private _zones: Zone[] = []
+
+  //Set selected zone properties based on this country
   private _selectedZone: Zone | undefined;
+
   private _countryForm: FormGroup | any;
 
   constructor(
@@ -39,20 +41,25 @@ export class CountryListItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this._selectedZone = {
+      id: this.country?.zoneId,
+      name: this.country?.zoneName,
+      countryMultiplier: this.country?.countryMultiplier
+    }
+    console.log("Selected country zone: ", this._selectedZone)
+
     this._countryForm = new FormGroup({
       countryName: new FormControl(this.country.name, [
         Validators.required,
         Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*")
       ]),
-      countryZone: new FormControl(this._zones[0], [
+      countryZone: new FormControl(this._selectedZone, [
         Validators.required,
       ])
     })
-
     this._countryForm.get("countryZone").valueChanges.subscribe((zone: Zone) => {
       this._selectedZone = zone
     })
-    this._selectedZone = this._zones[0]
   }
 
   saveCountry() {
