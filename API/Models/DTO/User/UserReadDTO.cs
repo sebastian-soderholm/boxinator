@@ -15,6 +15,7 @@ namespace boxinator.Models.DTO.User
         public int CountryId { get; set; }
         //public CountryReadDTO Country { get; set; }
         public string ZipCode { get; set; }
+        public string Address { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string PhoneNumber { get; set; }
 
