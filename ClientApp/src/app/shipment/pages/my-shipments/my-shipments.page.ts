@@ -2,15 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ShipmentService } from '../../services/shipment.service';
 //import { SessionService } from '../../services/shipment-session.service';
 import { SessionService } from 'src/app/shared/session.service';
-import { BoxTypes } from 'src/app/shared/box.model';
 import { ShipmentStatusLog, ShipmentTableData, MappedData, ExpandedData, Status, Box } from '../../models/shipment-table.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { Data } from '@angular/router';
 import {Sort} from '@angular/material/sort';
-import { expand, sequenceEqual } from 'rxjs/operators';
-import { TestBed } from '@angular/core/testing';
-import { FormGroup, NgForm, SelectControlValueAccessor } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { LoginService } from 'src/app/login/services/login.service';
 
 @Component({
   selector: 'app-my-shipments',
@@ -44,16 +40,20 @@ export class MyShipmentsPage implements OnInit {
   showEdit: boolean = false;
   cancelledStatus?: Status | null;
   completedStatus?: Status | null;
+  canEdit: boolean = false;
 
   constructor(
     private readonly shipmentService: ShipmentService,
     private readonly sessionService: SessionService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private readonly loginService: LoginService
   ) {
     this.sortedData = this._dataSource.slice();
   }
 
   ngOnInit() {
+    this.canEdit = this.loginService.isAdmin;
+
     this.cancelledStatus = {
       id: 5,
       name: "CANCELLED"
