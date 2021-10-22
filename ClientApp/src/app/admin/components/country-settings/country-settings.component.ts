@@ -47,14 +47,19 @@ export class CountrySettingsComponent implements OnInit {
   ngOnInit(): void {
     this.zoneSelectForm = new FormGroup({
       zoneSelectControl: new FormControl([Validators.required]),
-      zoneNameControl: new FormControl([]),
-      zoneMultiplierControl: new FormControl([]),
+      zoneNameControl: new FormControl(this.selectedZone?.name, [
+        Validators.required,
+        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*"),
+      ]),
+      zoneMultiplierControl: new FormControl([
+        Validators.required
+      ]),
     });
 
     this.addCountryForm = new FormGroup({
       addCountryName: new FormControl(this.addCountry!.name, [
         Validators.required,
-        Validators.pattern(/[a-z]/),
+        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*"),
       ]),
       // addCountryZone: new FormControl("",[
       //   Validators.required,
@@ -76,7 +81,7 @@ export class CountrySettingsComponent implements OnInit {
     })
 
     //Add country to zone select event listener
-    this.addCountryForm.get("addCountryZone")!.valueChanges.subscribe((zone: Zone) => {
+    this.addCountryForm.get("addCountryZone")?.valueChanges.subscribe((zone: Zone) => {
       this.selectedCountryZone = zone
     })
   }

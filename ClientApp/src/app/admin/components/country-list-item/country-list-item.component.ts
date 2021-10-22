@@ -41,11 +41,10 @@ export class CountryListItemComponent implements OnInit {
     this._countryForm = new FormGroup({
       countryName: new FormControl(this.country.name, [
         Validators.required,
-        Validators.pattern(/[a-z]/)
+        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*")
       ]),
       countryZone: new FormControl(this._zones[0], [
         Validators.required,
-        Validators.pattern(/[a-z]/)
       ])
     })
 
