@@ -21,8 +21,10 @@ export class EditAccountPage implements OnInit, OnChanges {
   private _countries: Country[] = [];
   private _editUserForm: any;
   private _confirmPassword: string = '';
+  private _selectedDoB? : string | null;
   @Input() showAdminSelection: boolean = false;
   @Input() incomingUser: User | undefined;
+  date1 = new FormControl(new Date())
 
   constructor(
     private readonly _loginService: LoginService,
@@ -39,6 +41,7 @@ export class EditAccountPage implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this._editUser = this.showAdminSelection == true ? this._sessionService.userForAdmin : this._sessionService.user;
+    console.log(this._editUser)
 
     this._countryService.fetchCountriesToSession(async () => {
       this._countries = this._sessionService.countries!;
@@ -63,7 +66,7 @@ export class EditAccountPage implements OnInit, OnChanges {
             /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
           ),
         ]),
-        dateOfBirth: new FormControl("2021-10-19 12:17:18.6767435", [
+        dateOfBirth: new FormControl(this._editUser!.dateOfBirth/*"2021-10-19 12:17:18.6767435"*/, [
           // Validators.pattern(/a-zA-Z/)
         ]),
         countryId: new FormControl(this._editUser!.countryId, [
@@ -88,11 +91,10 @@ export class EditAccountPage implements OnInit, OnChanges {
   }
 
   updateUser() {
-
     this._editUser!.firstName = this._editUserForm.get('firstName').value;
     this._editUser!.lastName = this._editUserForm.get('lastName').value;
-    this._editUser!.dateOfBirth = this._editUserForm.get('dateOfBirth').value
-    this._editUser!.address = this._editUserForm.get('address').value
+    this._editUser!.dateOfBirth = this._editUserForm.get('dateOfBirth').value;
+    this._editUser!.address = this._editUserForm.get('address').value;
     this._editUser!.countryId = this._editUserForm.get('countryId').value;
     this._editUser!.zipCode = this._editUserForm.get('zipCode').value;
     this._editUser!.phoneNumber = this._editUserForm.get('phoneNumber').value;

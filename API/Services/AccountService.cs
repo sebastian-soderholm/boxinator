@@ -72,11 +72,17 @@ namespace boxinator.Services
         /// <returns>Updated user</returns>
         public async Task<User> Update(int id, User user)
         {
-            var resultUser = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == user.Id);
+            //var resultUser = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == user.Id);
+            var resultUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
 
             if (resultUser != null)
             {
-                _context.Update(user);
+                resultUser.FirstName = user.FirstName;
+                resultUser.LastName = user.LastName;
+                resultUser.DateOfBirth = user.DateOfBirth;
+                resultUser.ZipCode = user.ZipCode;
+                resultUser.Address = user.Address;
+                resultUser.PhoneNumber = user.PhoneNumber;
                 await _context.SaveChangesAsync();
             }
 
