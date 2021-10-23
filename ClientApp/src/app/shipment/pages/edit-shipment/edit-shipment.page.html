@@ -5,7 +5,7 @@
 	<app-shared-form [header]="editForm?.get('header')!" [parentGroup]="editForm"></app-shared-form>
 	
 	<!-- Non shared -->
-	<button type="submit" mat-raised-button color="accent">Save</button>
+	<button type="submit" mat-raised-button color="accent" [disabled]="!editForm.valid">Save</button>
 
 	<!--
 	<div [formGroup]="editForm!">

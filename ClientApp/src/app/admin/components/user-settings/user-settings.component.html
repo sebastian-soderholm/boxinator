@@ -1,11 +1,23 @@
 
-<div class="example-container">
-	<mat-form-field appearance="outline">
-	  <mat-label>Search user by name or id</mat-label>
-	  <input matInput [(ngModel)]="searchvalue" required>
+<mat-form [formGroup]="searchForm">
+	<mat-form-field class="form-field" appearance="outline">
+		<mat-label>Search user by first name, lastname, email or id</mat-label>
+		<input matInput formControlName="searchvalue" [value]="">
+
+		<!-- Errors -->
+		<mat-error
+		  *ngIf="(searchvalue.touched || searchvalue.dirty) && searchvalue.errors?.required">
+		  Value is required
+		</mat-error>
+		<mat-error
+		*ngIf="(searchvalue.touched || searchvalue.dirty) && searchvalue.errors?.pattern">
+		  Can only contain letters
+		</mat-error>
 	</mat-form-field>
-	<button mat-flat-button (click)="onSearch(searchvalue)" formtarget="_blank" [disabled]="searchvalue === ''">Search</button>
- </div>
+	
+	<button mat-raised-button color="primary" (click)="onSearch()" [disabled]="!searchForm.invalid">Search</button>
+</mat-form>
+
 
  <!-- User selection -->
  <mat-nav-list>
