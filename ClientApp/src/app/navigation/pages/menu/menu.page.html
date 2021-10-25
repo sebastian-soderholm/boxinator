@@ -7,7 +7,7 @@
     <a mat-list-item routerLink="/my-shipments" routerLinkActive="active-list-item">My Shipments</a>
     <a mat-list-item routerLink="/new-shipment" routerLinkActive="active-list-item">New Shipment</a>
     <a mat-list-item routerLink="/my-account" routerLinkActive="active-list-item">Account</a>
-    <a mat-list-item routerLink="/settings" routerLinkActive="active-list-item">Settings</a>
+    <a *ngIf="canEdit" mat-list-item routerLink="/settings" routerLinkActive="active-list-item">Settings</a>
     <a mat-list-item (click)="logout()" routerLinkActive="active-list-item">Logout</a>
   </mat-nav-list>
 </div>
