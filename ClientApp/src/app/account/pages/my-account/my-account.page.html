@@ -13,7 +13,7 @@
 		<input [readonly]="readonly" autocomplete="off" matInput placeholder="Date of birth">{{ userInfo?.dateOfBirth | date }}
 	</mat-form-field>
 	<mat-form-field class="full-width" appearance="standard">
-		<input [readonly]="readonly" autocomplete="off" matInput placeholder="Country">{{ userInfo?.countryId }}
+		<input [readonly]="readonly" autocomplete="off" matInput placeholder="Country">{{ userCountry?.name }}
 	</mat-form-field>
   <mat-form-field class="full-width" appearance="standard">
 		<input [readonly]="readonly" autocomplete="off" matInput placeholder="Address">{{ userInfo?.address }}
