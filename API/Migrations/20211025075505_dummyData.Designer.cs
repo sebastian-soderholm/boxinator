@@ -10,8 +10,8 @@ using boxinator.Models;
 namespace boxinator.Migrations
 {
     [DbContext(typeof(BoxinatorDbContext))]
-    [Migration("20211021104844_initial")]
-    partial class initial
+    [Migration("20211025075505_dummyData")]
+    partial class dummyData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -770,224 +770,224 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 954, DateTimeKind.Local).AddTicks(3471),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 902, DateTimeKind.Local).AddTicks(9837),
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4102),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6022),
                             ShipmentId = 1,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4150),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6250),
                             ShipmentId = 2,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4154),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6255),
                             ShipmentId = 2,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 5,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4161),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6259),
                             ShipmentId = 3,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 6,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4164),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6262),
                             ShipmentId = 3,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 7,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4167),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6266),
                             ShipmentId = 3,
                             StatusId = 3
                         },
                         new
                         {
                             Id = 8,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4170),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6269),
                             ShipmentId = 4,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 9,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4174),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6272),
                             ShipmentId = 4,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 10,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4181),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6277),
                             ShipmentId = 5,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 11,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4184),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6280),
                             ShipmentId = 5,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 12,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4187),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6283),
                             ShipmentId = 5,
                             StatusId = 3
                         },
                         new
                         {
                             Id = 13,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4190),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6286),
                             ShipmentId = 5,
                             StatusId = 4
                         },
                         new
                         {
                             Id = 14,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4193),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6289),
                             ShipmentId = 6,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 15,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4196),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6293),
                             ShipmentId = 6,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 16,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4199),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6296),
                             ShipmentId = 7,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 17,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4202),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6299),
                             ShipmentId = 8,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 18,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4205),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6302),
                             ShipmentId = 8,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 19,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4207),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6305),
                             ShipmentId = 9,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 20,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4210),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6307),
                             ShipmentId = 10,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 21,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4213),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6311),
                             ShipmentId = 10,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 22,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4216),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6314),
                             ShipmentId = 10,
                             StatusId = 3
                         },
                         new
                         {
                             Id = 23,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4219),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6318),
                             ShipmentId = 11,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 24,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4222),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6321),
                             ShipmentId = 11,
                             StatusId = 5
                         },
                         new
                         {
                             Id = 25,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4225),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6324),
                             ShipmentId = 12,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 26,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4228),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6331),
                             ShipmentId = 13,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 27,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4231),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6334),
                             ShipmentId = 13,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 28,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4234),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6337),
                             ShipmentId = 13,
                             StatusId = 3
                         },
                         new
                         {
                             Id = 29,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4237),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6340),
                             ShipmentId = 13,
                             StatusId = 4
                         },
                         new
                         {
                             Id = 30,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4239),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6343),
                             ShipmentId = 14,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 31,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4242),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6347),
                             ShipmentId = 14,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 32,
-                            Date = new DateTime(2021, 10, 21, 13, 48, 43, 957, DateTimeKind.Local).AddTicks(4245),
+                            Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6349),
                             ShipmentId = 14,
                             StatusId = 5
                         });
