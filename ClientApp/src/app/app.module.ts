@@ -27,9 +27,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
+
+//Date picker format
+import { MAT_DATE_LOCALE } from '@angular/material/core'
 
 //Pages
 import { LoginPage } from './login/pages/login/login.page';
@@ -56,6 +59,20 @@ import { CountryListComponent } from './admin/components/country-list/country-li
 import { CountryListItemComponent } from './admin/components/country-list-item/country-list-item.component';
 import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.page';
 import { SharedFormComponent } from './shipment/components/shared-form/shared-form.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+const DATE_FORMAT = {
+  parse: {
+    dateInput: 'DD MMMM YYYY',
+  },
+  display: {
+    dateInput: 'DD MMMM YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
 
 @NgModule({
   declarations: [
@@ -108,10 +125,13 @@ import { SharedFormComponent } from './shipment/components/shared-form/shared-fo
     MatDatepickerModule,
     MatNativeDateModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    MatSnackBar,
+    { provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT }
   ],
   bootstrap: [AppComponent]
 })

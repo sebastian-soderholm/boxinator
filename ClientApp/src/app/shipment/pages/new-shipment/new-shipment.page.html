@@ -80,6 +80,8 @@
   </div>
   <mat-label>Shipment cost {{cost}} €</mat-label>
 
+
+
   <app-box-form (formChange)="boxFormChanged($event)"></app-box-form>
 
   <button mat-raised-button color="primary" type="submit" (click)="createNewShipment()" [disabled]="
@@ -92,4 +94,7 @@ boxFormIsEmpty
 ">
     Ship
   </button>
+
+  <p>{{submitMessage}}</p>
 </mat-form>
+

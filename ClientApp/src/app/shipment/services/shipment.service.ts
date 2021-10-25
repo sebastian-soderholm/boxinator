@@ -14,6 +14,7 @@ import { GuestShipment } from '../models/guest-shipment.model';
 import { CreateShipment } from '../models/create-shipment.model';
 import { ExtensionsService } from 'src/app/shared/extensions.service';
 import { EditShipment } from '../models/edit-shipment.model';
+import { Observable } from 'rxjs';
 
 const apiUrl = environment.baseURL;
 
@@ -87,36 +88,20 @@ export class ShipmentService {
     })
   }
   //post new guest shipment
-  public postNewGuestShipment(shipment: GuestShipment, onSuccess: () => void) : void {
+  public postNewGuestShipment(shipment: GuestShipment) {
     const body = shipment;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     };
-    console.log("Sending shipment..." + JSON.stringify(shipment))
-    this.http.post<GuestShipment[]>(apiUrl + '/shipments/guest', body, httpOptions)
-    .subscribe((createdShipment: any) => {
-      onSuccess();
-    },
-    (error: HttpErrorResponse) => {
-      this._error = error.message;
-      console.table(error)
-    })
+
+    return this.http.post<GuestShipment>(apiUrl + '/shipments/guest', shipment, httpOptions)
+
   }
   //post new guest shipment
-  public postNewShipment(shipment: CreateShipment, onSuccess: () => void) : void {
-    const body = shipment;
-
-    console.log("Sending shipment..." + JSON.stringify(shipment))
-    this.http.post<CreateShipment[]>(apiUrl + '/shipments/', body, this.extensionService.authenticationHeadersFull)
-    .subscribe((createdShipment: any) => {
-      onSuccess();
-    },
-    (error: HttpErrorResponse) => {
-      this._error = error.message;
-      console.table(error)
-    })
+  public postNewShipment(shipment: CreateShipment) {
+    return this.http.post<CreateShipment[]>(apiUrl + '/shipments/', shipment, this.extensionService.authenticationHeadersFull)
   }
 
   //add new status

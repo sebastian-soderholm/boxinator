@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 import { SessionService } from 'src/app/shared/session.service';
 import { ExtensionsService } from 'src/app/shared/extensions.service';
+import { EditUser } from '../models/edit-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +19,8 @@ export class AccountService {
     private readonly extensionService: ExtensionsService
   ) { }
 
-  public updateUser(updateUserInfo: User, onSuccess: () => void): void {
-    const body = JSON.stringify(updateUserInfo);
-    this.http.put<User>(this._apiUrl + '/account/' + updateUserInfo.id, body, this.extensionService.authenticationHeadersFull)
-    .subscribe((user: User) => {
-      this.sessionService.setUser(user);
-
-      onSuccess();
-    });
+  public updateUser(updateUserInfo: EditUser) {
+    return this.http.put<User>(this._apiUrl + '/account/' + updateUserInfo.id, updateUserInfo, this.extensionService.authenticationHeadersFull)
   }
 
   // for admin

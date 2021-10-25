@@ -10,6 +10,8 @@ import { SessionService } from 'src/app/shared/session.service';
 import { CountryService } from 'src/app/login/services/country.service';
 import { Country } from 'src/app/login/models/country.model';
 import { DatePipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EditUser } from '../../models/edit-user.model';
 
 @Component({
   selector: 'app-edit-account',
@@ -17,7 +19,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./edit-account.page.scss'],
 })
 export class EditAccountPage implements OnInit, OnChanges {
-  private _editUser: User | undefined;
+  private _editUser: EditUser | undefined;
   private _countries: Country[] = [];
   private _editUserForm: any;
   private _confirmPassword: string = '';
@@ -32,7 +34,8 @@ export class EditAccountPage implements OnInit, OnChanges {
     private readonly _sessionService: SessionService,
     private readonly _router: Router,
     private readonly _countryService: CountryService,
-    private readonly _datepipe: DatePipe
+    private readonly _datepipe: DatePipe,
+    private _snackBar: MatSnackBar
   ) {
 
   }
@@ -101,10 +104,15 @@ export class EditAccountPage implements OnInit, OnChanges {
 
     // this._editUser.country
 
-    console.table(this._editUser)
-    this._accountService.updateUser(this._editUser!, async () => {
-      console.log('User updated successfully!');
-    });
+
+    //Send request
+    this._accountService.updateUser(this._editUser!).subscribe(response => {
+      this._sessionService.editUser(this._editUser!);
+      this._snackBar.open('Account updated!', 'OK');
+    },
+    (error)=> {
+      this._snackBar.open('Could not update account info, please try again.', 'OK');
+    })
   }
   get editUserForm() {
     return this._editUserForm;

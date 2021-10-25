@@ -9,6 +9,7 @@ import { GuestShipment } from '../../models/guest-shipment.model';
 import { ColorPickerComponent } from 'ngx-color-picker';
 import { ShipmentService } from '../../services/shipment.service';
 import { BoxFormComponent } from '../../components/box-form/box-form.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -40,7 +41,8 @@ export class GuestShipmentPage implements OnInit {
     private readonly router: Router,
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService,
-    private readonly shipmentService: ShipmentService
+    private readonly shipmentService: ShipmentService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -133,8 +135,13 @@ export class GuestShipmentPage implements OnInit {
     this._guestShipment.boxes = this._boxes
 
     //Post shipment
-    console.table(this._guestShipment)
-    this.shipmentService.postNewGuestShipment(<GuestShipment>this._guestShipment, () => console.log("hurray!"));
+    this.shipmentService.postNewGuestShipment(this._guestShipment).subscribe(response => {
+      this._snackBar.open('Shipment sent!', 'OK');
+      this._guestShipmentForm.reset()
+    },
+    (error)=> {
+      this._snackBar.open('Could not send shipment, please try again.', 'OK');
+    })
 
   }
   clearFormData() {
