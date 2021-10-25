@@ -29,7 +29,7 @@ export class NewShipmentPage implements OnInit {
   private _countries: Country[] = []
   private _boxes: Box[] = []
   private _boxFormIsEmpty: boolean = false;
-  private _cost: number = 0;
+  private _cost: number = 200;
   private _newShipmentForm: any;
   private _boxFormArray: any;
 

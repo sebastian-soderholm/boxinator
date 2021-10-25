@@ -32,7 +32,7 @@ export class GuestShipmentPage implements OnInit {
   private _countries: Country[] = []
   private _boxes: Box[] = []
   private _boxFormIsEmpty: boolean = false;
-  private _cost: number = 0;
+  private _cost: number = 200;
   private _guestShipmentForm: any;
   private _boxFormArray: any;
 
@@ -158,7 +158,7 @@ export class GuestShipmentPage implements OnInit {
       return country.id == this._guestShipmentForm.get('destinationCountryId').value
     })
 
-    this._cost = 0;
+    this._cost = 200;
     // Calculate shipping cost if any boxes present
     if(boxWeightArray.length > 0) {
       boxWeightArray.forEach((weight: number) => {
