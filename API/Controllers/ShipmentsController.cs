@@ -143,11 +143,9 @@ namespace boxinator.Controllers
                 User userToDB = new User();
                 userToDB.Email = shipmentGuestDTO.Email;
                 userToDB.AccountType = AccountTypes.GUEST.ToString();
-
-                User newUser = _mapper.Map<User>(userToDB);
-                newUser.CountryId = shipmentGuestDTO.CountryId;
+                userToDB.CountryId = shipmentGuestDTO.CountryId;
                 
-                userInDB = await _accountService.Add(newUser);
+                userInDB = await _accountService.Add(userToDB);
             }
 
              

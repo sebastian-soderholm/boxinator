@@ -105,6 +105,14 @@ export class SessionService {
     sessionStorage.removeItem('token');
   }
 
+  setRole(role : string) {
+    sessionStorage.setItem('role', role);
+  }
+
+  get isAdmin(): boolean {
+    return this.user?.accountType == "ADMINISTRATOR" ? true : false;
+  }
+
   get shipments(): Shipment[] | undefined {
     return this._shipments;
   }

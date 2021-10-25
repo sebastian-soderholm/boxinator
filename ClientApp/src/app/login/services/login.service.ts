@@ -14,7 +14,9 @@ export class LoginService {
   private _user: User | undefined;
   private _loggedIn: boolean = false;
   private _apiUrl = environment.baseURL;
-  
+  private _role: string = "";
+
+
   constructor(
     private readonly http: HttpClient,
     private readonly router: Router,
@@ -36,6 +38,7 @@ export class LoginService {
     this._user = user;
     this.sessionService.setUser(user)
     this._loggedIn = true;
+    this._role = user.accountType;
   }
 
   get loggedIn(): boolean {
@@ -44,6 +47,14 @@ export class LoginService {
 
   setLoggedIn(loggedIn: boolean): void {
     this._loggedIn = loggedIn;
+  }
+
+  get role(): string {
+    return this._role;
+  }
+
+  get isAdmin(): boolean {
+    return this.user?.accountType == "ADMINISTRATOR" ? true : false;
   }
 
   async logout() {
