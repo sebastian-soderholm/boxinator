@@ -26,7 +26,7 @@ export class RegisterService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        // 'Authorization': `Bearer ${token}`
       }),
     };
     return this.http.put<User>(this._apiUrl + '/account/' + id, registerUserInfo, httpOptions)

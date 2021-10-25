@@ -81,6 +81,7 @@ namespace boxinator.Services
                 resultUser.LastName = user.LastName;
                 resultUser.DateOfBirth = user.DateOfBirth;
                 resultUser.ZipCode = user.ZipCode;
+                resultUser.CountryId = user.CountryId;
                 resultUser.Address = user.Address;
                 resultUser.PhoneNumber = user.PhoneNumber;
                 await _context.SaveChangesAsync();

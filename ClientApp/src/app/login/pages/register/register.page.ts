@@ -10,11 +10,13 @@ import { SessionService } from '../../../shared/session.service';
 import { passwordsMatch } from './fields-match';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/account/models/user.model';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
+
 })
 export class RegisterPage implements OnInit {
   private _registerUser: RegisterUser = {
@@ -37,7 +39,8 @@ export class RegisterPage implements OnInit {
     private readonly router: Router,
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _adapter: DateAdapter<any>
   ) {}
 
   ngOnInit(): void {
@@ -97,8 +100,10 @@ export class RegisterPage implements OnInit {
     this._registerUser.zipCode = this._registerForm.get('zipCode').value;
     this._registerUser.phoneNumber = this._registerForm.get('phoneNumber').value;
 
+    // Format date
+    this._registerUser.dateOfBirth = this._adapter.format(this._registerUser.dateOfBirth, "DD/MM/YYYY")
 
-
+    console.table(this._registerUser)
     //Send request
     this.registerService.registerUser(this._registerUser!).subscribe((responseUser: User) => {
       this.sessionService.setUser(responseUser);

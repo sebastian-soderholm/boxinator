@@ -17,6 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./new-shipment.page.scss']
 })
 export class NewShipmentPage implements OnInit {
+
   private _newShipment: CreateShipment = {
     senderId: undefined,
     receiverFirstName: "",

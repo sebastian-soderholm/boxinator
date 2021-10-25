@@ -67,6 +67,20 @@ namespace boxinator.Services
                 Shipment = shipment,
                 Date = DateTime.Now
             };
+            //Get shipment destiantion zone
+            var countryQuery = await _context.Countries.AsNoTracking()
+                .Where(c => c.Id == shipment.CountryId)
+                .Include(c => c.Zone)
+                .FirstOrDefaultAsync();
+
+
+            //Calculate shipment costs 200 + box weight * country multiplier
+            var cost = 200;
+            foreach(Box box in shipment.Boxes)
+            {
+                cost += box.BoxType.Weight * countryQuery.Zone.CountryMultiplier;
+            }
+            shipment.Cost = cost;
 
             var resultShipmentStatusLog = await _context.ShipmentStatusLogs.AddAsync(shipmentStatusLog);
             if(resultShipmentStatusLog.Entity != null)
