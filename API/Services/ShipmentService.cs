@@ -180,16 +180,16 @@ namespace boxinator.Services
             if (from != null && to != null)
                 query = query.Where(x => x.Date >= from && x.Date < to);
 
-            // filter by user
-            if (currentUserId != null)
-                query = query.Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId);
-
-            // include additional data
+            // include additional data       
             query = query
                 .Include(s => s.Shipment).ThenInclude(b => b.Boxes).ThenInclude(z => z.BoxType)
                 .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
                 .Include(s => s.Shipment)
                 .Include(s => s.Status);
+
+            // filter by user
+            if (currentUserId != null)
+                query = query.Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId);
 
             // execute query
             var shipmentStausLogList = await query.ToListAsync();
@@ -214,15 +214,15 @@ namespace boxinator.Services
             if (from != null && to != null)
                 query = query.Where(x => x.Date >= from && x.Date < to);
 
-            // filter by user
-            if (currentUserId != null)
-                query = query.Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId);
-
             // include additional data
             query = query
                 .Include(s => s.Shipment).ThenInclude(b => b.Boxes).ThenInclude(b => b.BoxType)
                 .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
                 .Include(s => s.Shipment).Include(s => s.Status);
+
+            // filter by user
+            if (currentUserId != null)
+                query = query.Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId);
 
             // execute query
             var shipmentStausLogList = await query.ToListAsync();
@@ -246,15 +246,15 @@ namespace boxinator.Services
             if (from != null && to != null)
                 query = query.Where(x => x.Date >= from && x.Date < to);
 
-            // filter by user
-            if (currentUserId != null)
-                query = query.Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId);
-
             // include additional data
             query = query
                 .Include(s => s.Shipment).ThenInclude(s => s.Boxes).ThenInclude(b => b.BoxType)
                 .Include(s => s.Shipment).ThenInclude(c => c.Country).ThenInclude(z => z.Zone)
                 .Include(s => s.Shipment).Include(s => s.Status);
+
+            // filter by user
+            if (currentUserId != null)
+                query = query.Include(s => s.Shipment).Where(u => u.Shipment.UserId == currentUserId);
 
             // execute query
             var shipmentStausLogList = await query.ToListAsync();
