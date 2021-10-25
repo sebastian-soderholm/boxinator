@@ -14,7 +14,12 @@ export class RoleGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
+      /*
     if(this.loginService.user?.accountType === "ADMINISTRATOR") {
+      return true;
+    }
+    */
+    if(this.loginService.isAdmin) {
       return true;
     }
     return false;
