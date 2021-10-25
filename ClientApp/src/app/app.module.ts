@@ -63,13 +63,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 const DATE_FORMAT = {
   parse: {
-    dateInput: 'DD MMMM YYYY',
+    dateInput: 'DD/MM/YYYY',
   },
   display: {
-    dateInput: 'DD MMMM YYYY',
-    monthYearLabel: 'MMMM YYYY',
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MM/YYYY',
     dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
+    monthYearA11yLabel: 'MM/YYYY',
   },
 };
 
@@ -131,7 +131,7 @@ const DATE_FORMAT = {
   providers: [
     DatePipe,
     MatSnackBar,
-    { provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT }
+    { provide: MAT_DATE_FORMATS, useValue: 'en-GB' }
   ],
   bootstrap: [AppComponent]
 })

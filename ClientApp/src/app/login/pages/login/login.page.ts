@@ -9,7 +9,7 @@ import { LoginService } from '../../services/login.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  
+
   constructor(
     private readonly loginService: LoginService,
     private readonly sessionService: SessionService,
@@ -19,7 +19,10 @@ export class LoginPage implements OnInit {
 
   ngOnInit(): void {
     if (this.loginService.loggedIn) {
-      this.router.navigate(['dashboard']);
+      //If logged in user is registered or admin, go to dashboard
+      if(this.loginService.user?.accountType !== 'GUEST') this.router.navigate(['dashboard']);
+      //User is a guest, redirect to register
+      else this.router.navigate(['register']);
     }
     /* Form validation
       this._loginForm = new FormGroup({
@@ -30,7 +33,7 @@ export class LoginPage implements OnInit {
       password: new FormControl(this._loginUser.password, [
         Validators.required,
       ]),
-    }); 
+    });
     */
   }
 

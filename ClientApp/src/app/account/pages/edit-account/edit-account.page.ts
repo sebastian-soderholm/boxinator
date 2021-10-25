@@ -102,7 +102,6 @@ export class EditAccountPage implements OnInit, OnChanges {
     this._editUser!.zipCode = this._editUserForm.get('zipCode').value;
     this._editUser!.phoneNumber = this._editUserForm.get('phoneNumber').value;
 
-    // this._editUser.country
 
 
     //Send request

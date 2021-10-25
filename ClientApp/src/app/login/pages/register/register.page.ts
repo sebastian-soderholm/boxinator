@@ -41,7 +41,8 @@ export class RegisterPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.loginService.loggedIn) {
+    //If logged in user is already registered or admin, redirect to dashboard
+    if (this.loginService.loggedIn && this.loginService.user?.accountType !== 'GUEST') {
       this.router.navigate(['dashboard']);
     }
     this.countryService.fetchCountriesToSession(async () => {
@@ -69,6 +70,9 @@ export class RegisterPage implements OnInit {
           //Must contain only letters
           // Validators.pattern(/[a-z]/gi)
         ]),
+        address: new FormControl(this._registerUser!.address, [
+          Validators.required,
+        ]),
         zipCode: new FormControl(this._registerUser.zipCode, [
           //Must be a minimum length
           Validators.minLength(5),
@@ -88,9 +92,12 @@ export class RegisterPage implements OnInit {
     this._registerUser.firstName = this._registerForm.get('firstName').value;
     this._registerUser.lastName = this._registerForm.get('lastName').value;
     this._registerUser.dateOfBirth = this._registerForm.get('dateOfBirth').value;
+    this._registerUser.address = this._registerForm.get('address').value;
     this._registerUser.countryId = this._registerForm.get('countries').value; //Apply countryId only if selected
     this._registerUser.zipCode = this._registerForm.get('zipCode').value;
     this._registerUser.phoneNumber = this._registerForm.get('phoneNumber').value;
+
+
 
     //Send request
     this.registerService.registerUser(this._registerUser!).subscribe((responseUser: User) => {
@@ -126,6 +133,9 @@ export class RegisterPage implements OnInit {
   }
   get countries() {
     return this._countries;
+  }
+  get address() {
+    return this._registerForm.get('address')
   }
   get zipCode() {
     return this._registerForm.get('zipCode');
