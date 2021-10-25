@@ -1,11 +1,10 @@
 .form-field {
-  width: 90%;
+  width:100%;
   max-width: 300px;
 }
 button {
-  width: 90%;
+  width: 100%;
   max-width: 300px;
-  width: 300px;
   padding: 0.5rem 3rem;
 }
 
@@ -20,4 +19,10 @@ button {
   position: absolute;
   top: 0;
   z-index: -1;
+}
+
+@media (max-width: 768px) {
+  #background {
+    display: none;
+  }
 }
