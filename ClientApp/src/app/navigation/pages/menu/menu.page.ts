@@ -11,6 +11,7 @@ import { SessionService } from 'src/app/shared/session.service';
 })
 export class MenuPage implements OnInit {
   user: User = this.sessionService.user!;
+  title: string = "Customer"
   canEdit: boolean = false;
 
   constructor(
@@ -21,6 +22,9 @@ export class MenuPage implements OnInit {
 
   ngOnInit(): void {
     this.canEdit = this.loginService.isAdmin;
+    if(this.user.accountType === "ADMINISTRATOR") {
+      this.title = "Admin"
+    }
   }
 
   logout() {
