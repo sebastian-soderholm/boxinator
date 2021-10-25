@@ -1,5 +1,6 @@
 <mat-form class="form form-control" [formGroup]="guestShipmentForm">
 
+  <p>Please note that in order to register as a Boxinator user You nees to login with a <strong>gmail account</strong>.</p>
   <!-- Email -->
   <div>
     <mat-form-field class="form-field" appearance="outline">
@@ -16,10 +17,10 @@
       </mat-error>
     </mat-form-field>
   </div>
-  <!-- Reciever first name -->
+  <!-- Receiver first name -->
   <div>
     <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Reciever first name</mat-label>
+      <mat-label>Receiver first name</mat-label>
       <input matInput class="form-control" formControlName="receiverFirstName" type="text" placeholder="First name"
         required>
       <mat-error *ngIf="(receiverFirstName?.dirty || receiverFirstName?.touched) && receiverFirstName?.errors?.required"
@@ -31,10 +32,10 @@
       </mat-error>
     </mat-form-field>
   </div>
-  <!-- Reciever last name -->
+  <!-- Receivier last name -->
   <div>
     <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Reciever last name</mat-label>
+      <mat-label>Receiver last name</mat-label>
       <input matInput class="form-control" formControlName="receiverLastName" type="text" placeholder="Last name"
         required>
       <mat-error *ngIf="(receiverLastName?.dirty || receiverLastName?.touched) && receiverLastName?.errors?.required"
