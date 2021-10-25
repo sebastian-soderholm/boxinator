@@ -2,4 +2,5 @@
   <h1>Your Recent Shipments<button mat-flat-button routerLink="/new-shipment">CREATE A NEW SHIPMENT</button></h1>
 </header>
 
+<h3 *ngIf="this.sortedData.length < 1">You don't have any orders yet.</h3>
 <app-dashboard-list [shipments]="shipments"></app-dashboard-list>
