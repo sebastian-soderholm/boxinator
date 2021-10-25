@@ -1,81 +1,85 @@
-<h1>Register to Boxinator</h1>
-<form class="form" [formGroup]="registerForm">
-  <!-- First name -->
-  <div>
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>First name</mat-label>
-      <input matInput class="form-control" formControlName="firstName" type="text" placeholder="First name" required>
-      <mat-error *ngIf="(firstName.dirty || firstName.touched) && firstName.errors?.required" class="alert">
-        First name is required
-      </mat-error>
-      <mat-error *ngIf="(firstName.dirty || firstName.touched) && firstName.errors?.pattern">
-        First name can only contain letters
-      </mat-error>
-    </mat-form-field>
-  </div>
-  <!-- Last name -->
-  <div>
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Last name</mat-label>
-      <input matInput class="form-control" formControlName="lastName" type="text" placeholder="Last name" required>
-      <mat-error *ngIf="(lastName.dirty || lastName.touched) && lastName.errors?.required" class="alert">
-        Last name is required
-      </mat-error>
-      <mat-error *ngIf="(lastName.dirty || lastName.touched) && lastName.errors?.pattern">
-        Last name can only contain letters
-      </mat-error>
-    </mat-form-field>
-  </div>
-  <!-- Date -->
-  <div>
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Date of birth</mat-label>
-      <input matInput formControlName="dateOfBirth" type="date" placeholder="Date of birth" max="2021-10-11">
-    </mat-form-field>
-  </div>
-  <!-- Countries -->
-  <div>
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Select country</mat-label>
-      <mat-select formControlName="countries">
-        <mat-option [value]="country.id" *ngFor="let country of countries" selected>{{country.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <!-- Postal code -->
-  <div>
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Postal code</mat-label>
-      <input matInput formControlName="zipCode" type="text" placeholder="Postal code">
-      <mat-error *ngIf="(zipCode.dirty || zipCode.touched) && zipCode.errors?.minlength" class="alert">
-        Postal code is too short
-      </mat-error>
-      <mat-error *ngIf="(zipCode.dirty || zipCode.touched) && zipCode.errors?.pattern">
-        Postal code can only contain numbers
-      </mat-error>
-    </mat-form-field>
-  </div>
-  <!-- Contact Number -->
-  <div>
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label>Phone number</mat-label>
-      <input matInput formControlName="phoneNumber" type="text" placeholder="Contact number">
-      <mat-error *ngIf="(phoneNumber.dirty || phoneNumber.touched) && phoneNumber.errors?.pattern" class="alert">
-        Format invalid
-      </mat-error>
-    </mat-form-field>
-  </div>
-  <!-- Submit button -->
-  <button mat-raised-button color="primary" type="submit" (click)="register()" [disabled]="
-  registerForm.controls['firstName'].invalid ||
-  registerForm.controls['lastName'].invalid  ||
-  registerForm.controls['dateOfBirth'].invalid ||
-  registerForm.controls['zipCode'].invalid ||
-  registerForm.controls['phoneNumber'].invalid
-  ">
-    Submit
-  </button>
-</form>
+<div id="background"></div>
+<div class="content">
+  <h1>Register to Boxinator</h1>
+  <form class="form" [formGroup]="registerForm">
+    <!-- First name -->
+    <div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>First name</mat-label>
+        <input matInput class="form-control" formControlName="firstName" type="text" required>
+        <mat-error *ngIf="(firstName.dirty || firstName.touched) && firstName.errors?.required" class="alert">
+          First name is required
+        </mat-error>
+        <mat-error *ngIf="(firstName.dirty || firstName.touched) && firstName.errors?.pattern">
+          First name can only contain letters
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <!-- Last name -->
+    <div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Last name</mat-label>
+        <input matInput class="form-control" formControlName="lastName" type="text" required>
+        <mat-error *ngIf="(lastName.dirty || lastName.touched) && lastName.errors?.required" class="alert">
+          Last name is required
+        </mat-error>
+        <mat-error *ngIf="(lastName.dirty || lastName.touched) && lastName.errors?.pattern">
+          Last name can only contain letters
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <!-- Date -->
+    <div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Date of birth</mat-label>
+        <input matInput formControlName="dateOfBirth" type="date" max="2021-10-11">
+      </mat-form-field>
+    </div>
+    <!-- Countries -->
+    <div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Select country</mat-label>
+        <mat-select formControlName="countries">
+          <mat-option [value]="country.id" *ngFor="let country of countries" selected>{{country.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- Postal code -->
+    <div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Postal code</mat-label>
+        <input matInput formControlName="zipCode" type="text">
+        <mat-error *ngIf="(zipCode.dirty || zipCode.touched) && zipCode.errors?.minlength" class="alert">
+          Postal code is too short
+        </mat-error>
+        <mat-error *ngIf="(zipCode.dirty || zipCode.touched) && zipCode.errors?.pattern">
+          Postal code can only contain numbers
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <!-- Contact Number -->
+    <div>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Phone number</mat-label>
+        <input matInput formControlName="phoneNumber" type="text">
+        <mat-error *ngIf="(phoneNumber.dirty || phoneNumber.touched) && phoneNumber.errors?.pattern" class="alert">
+          Format invalid
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <!-- Submit button -->
+    <button mat-raised-button color="primary" type="submit" (click)="register()" [disabled]="
+    registerForm.controls['firstName'].invalid ||
+    registerForm.controls['lastName'].invalid  ||
+    registerForm.controls['dateOfBirth'].invalid ||
+    registerForm.controls['zipCode'].invalid ||
+    registerForm.controls['phoneNumber'].invalid
+    ">
+      Register
+    </button>
+  </form>
+</div>
+
 
 
 <!--

@@ -1,20 +1,25 @@
-h1 {
-  font-size: 6em;
-  font-weight: 400 !important;
-  line-height: 5rem;
-  span {
-    display: block;
+.content {
+  position: absolute;
+  top: 42%;
+  left: 13%;
+  transform: translateY(-50%);
+  h1 {
+    font-size: 6em;
+    font-weight: 400 !important;
+    line-height: 5rem;
+    span {
+      display: block;
+    }
+  }
+  button {
+    padding: 0.5rem 3rem;
+    margin-bottom:1rem;
+  }
+  p {
+    color: #392f5a;
   }
 }
 
-button {
-  padding: 0.5rem 3rem;
-  margin-bottom:1rem;
-}
-
-p {
-  color: #392f5a;
-}
 
 #background {
   clip-path: polygon(64% 0, 100% 0, 100% 100%, 48% 100%);
