@@ -1,13 +1,17 @@
+@use '../../../../assets/styles/_variables' as *;
+
 .user {
   text-align: center;
+  margin-top: 30%;
 }
 
 .nav-list {
+  margin-top: 40%;
   padding: 2rem 0rem;
   background-color: #E0805C;
 }
 
 .active-list-item {
-  background-color: #DB6E45;
+  background-color: $primary-color;
   font-weight: 700;
 }

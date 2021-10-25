@@ -1,13 +1,16 @@
+@use '../assets/styles/_variables' as *;
+
 .container {
   height: 100vh;
+  padding-bottom: 4rem;
 }
 
 .content {
-  height: 100%;
-  padding: 2rem;
+  padding:2rem;
 }
 
 .nav {
-  background-color: #DB6E45;
+  background-color: $primary-color;
   width: 15%;
+  display: inline-flex;
 }

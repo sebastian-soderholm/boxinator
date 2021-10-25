@@ -48,7 +48,7 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div *ngFor="let status of this.shipment.shipmentStatusLogs">
-          <p>{{this.status.status.name}}---{{this.status.date | date}}</p>
+          <p>{{this.status.status.name}}&emsp;{{this.status.date | date}}</p>
         </div>
       </mat-expansion-panel>
     </mat-card-actions>
