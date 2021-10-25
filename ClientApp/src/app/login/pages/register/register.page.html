@@ -3,6 +3,7 @@
   <!-- First name -->
   <div>
     <mat-form-field class="form-field" appearance="outline">
+      <mat-label>First name</mat-label>
       <input matInput class="form-control" formControlName="firstName" type="text" placeholder="First name" required>
       <mat-error *ngIf="(firstName.dirty || firstName.touched) && firstName.errors?.required" class="alert">
         First name is required
@@ -15,6 +16,7 @@
   <!-- Last name -->
   <div>
     <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Last name</mat-label>
       <input matInput class="form-control" formControlName="lastName" type="text" placeholder="Last name" required>
       <mat-error *ngIf="(lastName.dirty || lastName.touched) && lastName.errors?.required" class="alert">
         Last name is required
@@ -27,21 +29,23 @@
   <!-- Date -->
   <div>
     <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Date of birth</mat-label>
       <input matInput formControlName="dateOfBirth" type="date" placeholder="Date of birth" max="2021-10-11">
     </mat-form-field>
   </div>
   <!-- Countries -->
   <div>
     <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Select country</mat-label>
       <mat-select formControlName="countries">
-        <mat-option value="" selected>Choose your country</mat-option>
-        <mat-option [value]="country.id" *ngFor="let country of countries">{{country.name}}</mat-option>
+        <mat-option [value]="country.id" *ngFor="let country of countries" selected>{{country.name}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
   <!-- Postal code -->
   <div>
     <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Postal code</mat-label>
       <input matInput formControlName="zipCode" type="text" placeholder="Postal code">
       <mat-error *ngIf="(zipCode.dirty || zipCode.touched) && zipCode.errors?.minlength" class="alert">
         Postal code is too short
@@ -54,6 +58,7 @@
   <!-- Contact Number -->
   <div>
     <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Phone number</mat-label>
       <input matInput formControlName="phoneNumber" type="text" placeholder="Contact number">
       <mat-error *ngIf="(phoneNumber.dirty || phoneNumber.touched) && phoneNumber.errors?.pattern" class="alert">
         Format invalid

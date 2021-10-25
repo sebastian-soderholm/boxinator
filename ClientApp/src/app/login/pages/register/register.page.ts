@@ -43,7 +43,7 @@ export class RegisterPage implements OnInit {
     }
     this.countryService.fetchCountriesToSession(async () => {
       this._countries = this.sessionService.countries!;
-      console.log(this.sessionService.countries);
+
     });
 
     this._registerForm = new FormGroup(
@@ -62,6 +62,7 @@ export class RegisterPage implements OnInit {
           // Validators.pattern(/a-zA-Z/)
         ]),
         countries: new FormControl(this._registerUser.countryId, [
+          Validators.required
           //Must contain only letters
           // Validators.pattern(/[a-z]/gi)
         ]),
