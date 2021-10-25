@@ -20,7 +20,7 @@
 
 
  <!-- User selection -->
- <mat-nav-list>
+ <mat-nav-list *ngIf="loadComponent == false">
 	<mat-list-item *ngFor="let user of users">
 	   <button (click)="selectUser(user)">{{ user.firstName }} {{ user.lastName }}
 	   </button>

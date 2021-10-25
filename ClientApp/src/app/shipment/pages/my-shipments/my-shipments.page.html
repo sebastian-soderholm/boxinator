@@ -7,7 +7,7 @@
 <mat-form-field appearance="outline">
   <mat-label>Status option</mat-label>
   <mat-select [ngModel]="statusOptions" (ngModelChange)="setSelectedStatus($event)">
-    <mat-option value="" selected>Status options</mat-option>
+    <mat-option value="" selected disabled>Status options</mat-option>
     <mat-option [value]="status.id" *ngFor="let status of statusOptions">{{status.name}}</mat-option>
   </mat-select>
 </mat-form-field>
@@ -48,11 +48,9 @@
         <div class="example-element-diagram">
           <div class="example-element-color">
             <h2>Boxes</h2>
-            <ul class="element.boxes">
-              <li *ngFor="let box of shipmentTableData.expandedData.boxes">
-                <p [ngStyle]="{'color': box.color}">BOX</p>
-              </li>
-            </ul>
+            <div *ngFor="let box of shipmentTableData.expandedData.boxes" class="element.boxes boxes">
+              <span id="box" [ngStyle]="{'color': box.color}" class="material-icons">inventory_2</span>
+            </div>
           </div>
         </div>    
         <div class="example-element-diagram">
@@ -65,7 +63,7 @@
             </ul>
           </div>
         </div>  
-        <div class="example-element-diagram" *ngIf="shipmentTableData.status != 'CANCELLED' && shipmentTableData.status != 'COMPLETED' && canEdit">
+        <div class="example-element-diagram edit" *ngIf="shipmentTableData.status != 'CANCELLED' && shipmentTableData.status != 'COMPLETED' && canEdit">
           <div class="example-element-color">
             <h2>Edit</h2>
             <div>

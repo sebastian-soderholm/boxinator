@@ -12,6 +12,11 @@ namespace boxinator.Models
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Create list of Shipments from list of ShipmentStatusLogs
+        /// </summary>
+        /// <param name="shipmentStatusLogList"></param>
+        /// <returns>List of shipments</returns>
         public static List<Shipment> ToFilteredShipmentList(this List<ShipmentStatusLog> shipmentStatusLogList)
         {
             List<Shipment> shipmentListFiltered = new List<Shipment>();
