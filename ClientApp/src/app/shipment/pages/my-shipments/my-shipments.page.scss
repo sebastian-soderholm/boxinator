@@ -1,6 +1,14 @@
 header {
+  margin-bottom: 2rem;
   button {
     float: right;
+  }
+}
+.boxes{
+  display: inline-block;
+  #box {
+    font-size: 1.2rem;
+    margin-right: 0.3rem;
   }
 }
 
@@ -31,6 +39,9 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-detail {
   overflow: hidden;
   display: flex;
+  .edit {
+    float: right;
+  }
 }
 
 .example-element-diagram {

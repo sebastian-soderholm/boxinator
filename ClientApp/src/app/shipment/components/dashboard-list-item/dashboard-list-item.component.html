@@ -19,25 +19,25 @@
         <div class="premium" *ngIf="this.premiumBoxes.length > 0">
           <p>Premium box (8 kg)</p>
           <div *ngFor="let box of premiumBoxes" class="colored-boxes">
-            <div class="box" [ngStyle]="{'background-color': box}"></div>
+            <span [ngStyle]="{'color': box}" class="material-icons">inventory_2</span>
           </div>
         </div>
         <div class="deluxe" *ngIf="this.deluxeBoxes.length > 0">
           <p>Deluxe box (5 kg)</p>
           <div *ngFor="let box of deluxeBoxes" class="colored-boxes">
-            <div class="box" [ngStyle]="{'background-color': box}"></div>
+            <span [ngStyle]="{'color': box}" class="material-icons">inventory_2</span>
           </div>
         </div>
         <div class="humble" *ngIf="this.humbleBoxes.length > 0">
           <p>Humble box (2 kg)</p>
           <div *ngFor="let box of humbleBoxes" class="colored-boxes">
-            <div class="box" [ngStyle]="{'background-color': box}"></div>
+            <span [ngStyle]="{'color': box}" class="material-icons">inventory_2</span>
           </div>
         </div>
         <div class="basic" *ngIf="this.basicBoxes.length > 0">
           <p>Basic box (1 kg)</p>
           <div *ngFor="let box of basicBoxes" class="colored-boxes">
-            <div class="box" [ngStyle]="{'background-color': box}"></div>
+            <span [ngStyle]="{'color': box}" class="material-icons">inventory_2</span>
           </div>
         </div>
       </mat-expansion-panel>
@@ -48,7 +48,7 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div *ngFor="let status of this.shipment.shipmentStatusLogs">
-          <p>{{this.status.status.name}}&emsp;{{this.status.date | date}}</p>
+          <p>{{this.status.status.name}} - {{this.status.date | date}}</p>
         </div>
       </mat-expansion-panel>
     </mat-card-actions>
