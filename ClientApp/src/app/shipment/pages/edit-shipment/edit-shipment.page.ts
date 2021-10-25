@@ -17,7 +17,7 @@ import { Country } from 'src/app/login/models/country.model';
 })
 export class EditShipmentPage implements OnInit, OnChanges {
   shipmentId: number;
-  editForm: FormGroup | null;
+  editForm: FormGroup;
   fetchedShipment: EditShipment | undefined;
 
   constructor(

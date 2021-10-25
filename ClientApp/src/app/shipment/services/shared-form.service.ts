@@ -10,6 +10,8 @@ import { EditShipment } from "../models/edit-shipment.model";
 })
 
 export class SharedShipmentFormService {
+	validStrPattern: string = '[a-zA-ZÆæØøßÅÄÖåäö]*';
+	validAddressPattern: string = '^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _][a-zA-ZÆæØøßÅÄÖåäö]*$';
 
 	constructor(private readonly fb: FormBuilder, private readonly shipmentService: ShipmentService){
 	}
@@ -33,11 +35,11 @@ export class SharedShipmentFormService {
 	baseFormValidations() {
 		return this.fb.group({
 			senderEmail: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)]],
-			receiverFirstName: ['', [Validators.required, Validators.pattern(/[a-z]/gi)]],
-			receiverLastName: ['', [Validators.required, Validators.pattern(/[a-z]/gi)]],
+			receiverFirstName: ['', [Validators.required, Validators.pattern(this.validStrPattern)]],
+			receiverLastName: ['', [Validators.required, Validators.pattern(this.validStrPattern)]],
 			destinationCountryId: [1, [Validators.required, Validators.min(1)]],
 			destinationZipCode: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^[0-9]*$/)]],
-			destinationAddress: ['', [Validators.required]]
+			destinationAddress: ['', [Validators.required, Validators.pattern(this.validAddressPattern)]]
 		})
 	}
 
