@@ -70,7 +70,7 @@ namespace boxinator.Models
                 {
                     Id = 1,
                     Name = "Source Zone",
-                    CountryMultiplier = 0,
+                    CountryMultiplier = 1,
                 },
                 new Zone()
                 {
@@ -150,7 +150,7 @@ namespace boxinator.Models
                 new Country()
                 {
                     Id = 9,
-                    Name = "Brazilia",
+                    Name = "Brazil",
                     ZoneId = 4
                 }
             );
