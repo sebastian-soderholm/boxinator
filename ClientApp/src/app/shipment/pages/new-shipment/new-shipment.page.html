@@ -59,7 +59,7 @@
   <!-- Destination postal code -->
   <div>
     <mat-form-field appearance="outline">
-      <mat-label>Reciever first name</mat-label>
+      <mat-label>Postal code</mat-label>
       <input matInput formControlName="destinationZipCode" type="text" placeholder="Postal code">
       <mat-error *ngIf="(destinationZipCode?.dirty || destinationZipCode?.touched) && destinationZipCode?.errors?.minlength" class="alert">
         Postal code is too short

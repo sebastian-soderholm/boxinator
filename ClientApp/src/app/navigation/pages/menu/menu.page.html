@@ -1,11 +1,13 @@
-<div class="user">
-  <h2>{{this.user.firstName}} {{this.user.lastName}}</h2>
+<div class="container">
+  <div class="user">
+    <h2>{{this.user.firstName}} {{this.user.lastName}}</h2>
+  </div>
+  <mat-nav-list class="nav-list">
+    <a mat-list-item routerLink="/dashboard" routerLinkActive="active-list-item">Home</a>
+    <a mat-list-item routerLink="/my-shipments" routerLinkActive="active-list-item">My Shipments</a>
+    <a mat-list-item routerLink="/new-shipment" routerLinkActive="active-list-item">New Shipment</a>
+    <a mat-list-item routerLink="/my-account" routerLinkActive="active-list-item">Account</a>
+    <a mat-list-item routerLink="/settings" routerLinkActive="active-list-item">Settings</a>
+    <a mat-list-item (click)="logout()" routerLinkActive="active-list-item">Logout</a>
+  </mat-nav-list>
 </div>
-<mat-nav-list class="nav-list">
-  <a mat-list-item routerLink="/dashboard" routerLinkActive="active-list-item">Home</a>
-  <a mat-list-item routerLink="/my-shipments" routerLinkActive="active-list-item">My Shipments</a>
-  <a mat-list-item routerLink="/new-shipment" routerLinkActive="active-list-item">New Shipment</a>
-  <a mat-list-item routerLink="/my-account" routerLinkActive="active-list-item">Account</a>
-  <a *ngIf="canEdit" mat-list-item routerLink="/settings" routerLinkActive="active-list-item">Settings</a>
-  <a mat-list-item (click)="logout()" routerLinkActive="active-list-item">Logout</a>
-</mat-nav-list>
