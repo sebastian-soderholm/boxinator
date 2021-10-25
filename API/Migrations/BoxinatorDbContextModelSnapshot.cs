@@ -768,224 +768,352 @@ namespace boxinator.Migrations
                         new
                         {
                             Id = 1,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 902, DateTimeKind.Local).AddTicks(9837),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 718, DateTimeKind.Local).AddTicks(9956),
+>>>>>>> jani
                             ShipmentId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 2,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6022),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6168),
+>>>>>>> jani
                             ShipmentId = 1,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 3,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6250),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6202),
+>>>>>>> jani
                             ShipmentId = 2,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 4,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6255),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6206),
+>>>>>>> jani
                             ShipmentId = 2,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 5,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6259),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6209),
+>>>>>>> jani
                             ShipmentId = 3,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 6,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6262),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6212),
+>>>>>>> jani
                             ShipmentId = 3,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 7,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6266),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6215),
+>>>>>>> jani
                             ShipmentId = 3,
                             StatusId = 3
                         },
                         new
                         {
                             Id = 8,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6269),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6218),
+>>>>>>> jani
                             ShipmentId = 4,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 9,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6272),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6220),
+>>>>>>> jani
                             ShipmentId = 4,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 10,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6277),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6223),
+>>>>>>> jani
                             ShipmentId = 5,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 11,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6280),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6226),
+>>>>>>> jani
                             ShipmentId = 5,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 12,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6283),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6229),
+>>>>>>> jani
                             ShipmentId = 5,
                             StatusId = 3
                         },
                         new
                         {
                             Id = 13,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6286),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6232),
+>>>>>>> jani
                             ShipmentId = 5,
                             StatusId = 4
                         },
                         new
                         {
                             Id = 14,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6289),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6235),
+>>>>>>> jani
                             ShipmentId = 6,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 15,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6293),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6237),
+>>>>>>> jani
                             ShipmentId = 6,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 16,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6296),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6240),
+>>>>>>> jani
                             ShipmentId = 7,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 17,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6299),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6243),
+>>>>>>> jani
                             ShipmentId = 8,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 18,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6302),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6246),
+>>>>>>> jani
                             ShipmentId = 8,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 19,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6305),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6249),
+>>>>>>> jani
                             ShipmentId = 9,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 20,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6307),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6251),
+>>>>>>> jani
                             ShipmentId = 10,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 21,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6311),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6254),
+>>>>>>> jani
                             ShipmentId = 10,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 22,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6314),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6257),
+>>>>>>> jani
                             ShipmentId = 10,
                             StatusId = 3
                         },
                         new
                         {
                             Id = 23,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6318),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6260),
+>>>>>>> jani
                             ShipmentId = 11,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 24,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6321),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6263),
+>>>>>>> jani
                             ShipmentId = 11,
                             StatusId = 5
                         },
                         new
                         {
                             Id = 25,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6324),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6266),
+>>>>>>> jani
                             ShipmentId = 12,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 26,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6331),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6269),
+>>>>>>> jani
                             ShipmentId = 13,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 27,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6334),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6272),
+>>>>>>> jani
                             ShipmentId = 13,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 28,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6337),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6275),
+>>>>>>> jani
                             ShipmentId = 13,
                             StatusId = 3
                         },
                         new
                         {
                             Id = 29,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6340),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6278),
+>>>>>>> jani
                             ShipmentId = 13,
                             StatusId = 4
                         },
                         new
                         {
                             Id = 30,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6343),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6281),
+>>>>>>> jani
                             ShipmentId = 14,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 31,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6347),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6283),
+>>>>>>> jani
                             ShipmentId = 14,
                             StatusId = 2
                         },
                         new
                         {
                             Id = 32,
+<<<<<<< HEAD
                             Date = new DateTime(2021, 10, 25, 10, 55, 4, 906, DateTimeKind.Local).AddTicks(6349),
+=======
+                            Date = new DateTime(2021, 10, 25, 10, 53, 40, 721, DateTimeKind.Local).AddTicks(6286),
+>>>>>>> jani
                             ShipmentId = 14,
                             StatusId = 5
                         });
