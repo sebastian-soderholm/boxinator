@@ -8,6 +8,8 @@ import { LoginService } from '../../services/login.service';
 import { RegisterService } from '../../services/register.service';
 import { SessionService } from '../../../shared/session.service';
 import { passwordsMatch } from './fields-match';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from 'src/app/account/models/user.model';
 
 @Component({
   selector: 'app-register',
@@ -34,7 +36,8 @@ export class RegisterPage implements OnInit {
     private readonly registerService: RegisterService,
     private readonly router: Router,
     private readonly countryService: CountryService,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -51,12 +54,12 @@ export class RegisterPage implements OnInit {
         firstName: new FormControl(this._registerUser.firstName, [
           Validators.required,
           //Must contain letters
-          Validators.pattern(/[a-z]/gi),
+          Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö ]*"),
         ]),
         lastName: new FormControl(this._registerUser.lastName, [
           Validators.required,
           //Must contain letters
-          Validators.pattern(/[a-z]/gi),
+          Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö ]*"),
         ]),
         dateOfBirth: new FormControl(this._registerUser.dateOfBirth, [
           // Validators.pattern(/a-zA-Z/)
@@ -88,8 +91,18 @@ export class RegisterPage implements OnInit {
     this._registerUser.countryId = this._registerForm.get('countries').value; //Apply countryId only if selected
     this._registerUser.zipCode = this._registerForm.get('zipCode').value;
     this._registerUser.phoneNumber = this._registerForm.get('phoneNumber').value;
-    this.registerService.registerUser(this._registerUser, function(){
-       console.log("User registered successfully!")
+
+    //Send request
+    this.registerService.registerUser(this._registerUser!).subscribe((responseUser: User) => {
+      this.sessionService.setUser(responseUser);
+      this.loginService.setLoggedIn(true);
+      this.router.navigate(['/dashboard']);
+      this._snackBar.open('Thank you for registering, welcome to Boxinator!', '', {
+        duration: 3000
+      });
+    },
+    (error)=> {
+      this._snackBar.open('Could not register, please try again.', 'OK');
     })
   }
   get registerForm() {

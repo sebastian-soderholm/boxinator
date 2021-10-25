@@ -20,7 +20,7 @@ export class RegisterService {
     private readonly loginService: LoginService
   ) {}
 
-  public registerUser(registerUserInfo: RegisterUser, onSuccess: () => void): void {
+  public registerUser(registerUserInfo: RegisterUser) {
     const token = this.sessionService.token;
     const id = this.sessionService.user!.id;
     const httpOptions = {
@@ -29,14 +29,7 @@ export class RegisterService {
         'Authorization': `Bearer ${token}`
       }),
     };
-    const body = JSON.stringify(registerUserInfo);
-    this.http.put<User>(this._apiUrl + '/account/' + id, body, httpOptions)
-    .subscribe((user: User) => {
-      this.sessionService.setUser(user);
-      this.loginService.setLoggedIn(true);
-      this.router.navigate(['/dashboard']);
-      onSuccess();
-    });
+    return this.http.put<User>(this._apiUrl + '/account/' + id, registerUserInfo, httpOptions)
   }
 }
 

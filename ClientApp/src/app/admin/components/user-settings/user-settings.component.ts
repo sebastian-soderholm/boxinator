@@ -27,7 +27,7 @@ export class UserSettingsComponent implements OnInit {
     this.searchForm = new FormGroup({
       searchvalue: new FormControl('', [
         Validators.required,
-        Validators.pattern("[a-zA-Z0-9-ZÆæØøßÅÄÖåäö]*"),
+        Validators.pattern("[a-zA-Z0-9-ZÆæØøßÅÄÖåäö ]*"),
       ])
     });
   }
@@ -41,7 +41,7 @@ export class UserSettingsComponent implements OnInit {
   public onSearch(): void {
     const searchInput = this.searchForm.get('searchvalue').value;
     this.loadComponent = false;
-    
+
     if(Number(searchInput)) {
       this._accountService.getUserById(Number(searchInput), async () => {
         await console.log("success"), this.loadComponent = true;

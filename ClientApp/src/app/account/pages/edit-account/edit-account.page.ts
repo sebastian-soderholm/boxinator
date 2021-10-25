@@ -57,12 +57,12 @@ export class EditAccountPage implements OnInit, OnChanges {
         firstName: new FormControl(this._editUser!.firstName, [
           Validators.required,
           //Must contain letters
-          Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*"),
+          Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö ]*"),
         ]),
         lastName: new FormControl(this._editUser!.lastName, [
           Validators.required,
           //Must contain letters
-          Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*"),
+          Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö ]*"),
         ]),
         email: new FormControl(this._editUser!.email, [
           Validators.required,

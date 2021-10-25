@@ -59,12 +59,12 @@ export class NewShipmentPage implements OnInit {
       receiverFirstName: new FormControl('', [
         Validators.required,
         //Must contain letters
-        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*")
+        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö ]*")
       ]),
       receiverLastName: new FormControl('', [
         Validators.required,
         //Must contain letters
-        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*")
+        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö ]*")
       ]),
       destinationCountryId: new FormControl(1, [
       ]),

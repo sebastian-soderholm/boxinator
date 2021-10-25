@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Country } from 'src/app/login/models/country.model';
 import { CountryService } from 'src/app/login/services/country.service';
 import { SessionService } from 'src/app/shared/session.service';
@@ -37,7 +38,8 @@ export class CountrySettingsComponent implements OnInit {
   constructor(
     private readonly zoneService: ZoneService,
     private readonly countryService: CountryService,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private _snackBar: MatSnackBar
   ) {
 
   }
@@ -51,7 +53,7 @@ export class CountrySettingsComponent implements OnInit {
       zoneSelectControl: new FormControl([Validators.required]),
       zoneNameControl: new FormControl(this.selectedZone?.name, [
         Validators.required,
-        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*"),
+        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö ]*"),
       ]),
       zoneMultiplierControl: new FormControl([
         Validators.required
@@ -61,7 +63,7 @@ export class CountrySettingsComponent implements OnInit {
     this.addCountryForm = new FormGroup({
       addCountryName: new FormControl(this.addCountry!.name, [
         Validators.required,
-        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*"),
+        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö ]*"),
       ]),
       // addCountryZone: new FormControl("",[
       //   Validators.required,
@@ -101,13 +103,28 @@ export class CountrySettingsComponent implements OnInit {
   }
 
   addCountryToZone() {
-    // if(!this.addCountryForm.get("addCountryName").value ) return
-
     this.addCountry.name = this.addCountryForm.get("addCountryName").value
     this.addCountry.zoneId =  this.selectedZone!.id
-    console.log('Adding country', this.addCountry);
 
-    this.countryService.postCountry(this.addCountry, () => console.log("Country added", this.addCountry))
+    this.countryService.postCountry(this.addCountry).subscribe((responseCountry: Country) => {
+      //Get zone name info for country
+      this.zones?.forEach((zone: Zone) => {
+        if(zone.id === responseCountry.zoneId) {
+          responseCountry.zoneId = zone.id;
+          responseCountry.zoneName = zone.name;
+          responseCountry.countryMultiplier = zone.countryMultiplier
+        }
+      })
+      //Add country to sessionService & countries array
+      this.sessionService.addCountry(responseCountry)
+
+      this._snackBar.open('Country added!', 'OK', {
+        duration: 1500
+      });
+    },
+    (error)=> {
+      this._snackBar.open('Could not add country, please try again.', 'OK');
+    })
   }
 
   //Update zone info
@@ -118,8 +135,19 @@ export class CountrySettingsComponent implements OnInit {
     this.editedZone.name = this.zoneSelectForm.get('zoneNameControl').value;
     this.editedZone.countryMultiplier = this.zoneSelectForm.get('zoneMultiplierControl').value;
 
-    console.log('Saving zone: ', this.editedZone);
-    this.zoneService.updateZone(this.editedZone, () => this.zones = this.sessionService.zones!);
+    this.zoneService.updateZone(this.editedZone).subscribe((responseZone: Zone) => {
+      //Add country to sessionService & countries array
+      this.sessionService.updateZone(responseZone)
+      this.zones = this.sessionService.zones;
+
+      this._snackBar.open('Zone updated!', 'OK', {
+        duration: 1500
+      });
+    },
+    (error)=> {
+      this._snackBar.open('Could not update zone, please try again.', 'OK');
+    })
+
   }
   onChanges() {}
 
