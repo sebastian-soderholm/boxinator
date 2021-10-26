@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { passwordsMatch } from 'src/app/login/pages/register/fields-match';
 import { LoginService } from 'src/app/login/services/login.service';
-import { RegisterService } from 'src/app/login/services/register.service';
 import { User } from '../../models/user.model';
 import { AccountService } from '../../services/account.service';
 import { SessionService } from 'src/app/shared/session.service';

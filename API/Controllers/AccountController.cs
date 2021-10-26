@@ -74,6 +74,31 @@ namespace boxinator.Controllers
         }
 
         /// <summary>
+        /// Update specific user
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <param name="userDTO"></param>
+        /// <returns>Updated user or 403</returns>
+        // PUT: /account/register/:account_id
+        [HttpPut("/account/register/{accountId}")]
+        public async Task<ActionResult<UserReadDTO>> Register(int accountId, UserEditDTO userDTO)
+        {
+            // current user for role check
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _service.GetUser(userEmail);
+
+            if (currentUser.Id == accountId)
+            {
+                User updatedUser = _mapper.Map<User>(userDTO);
+                User resultUser = await _service.Register(accountId, updatedUser);
+                return _mapper.Map<UserReadDTO>(resultUser);
+            }
+
+            return StatusCode(403);
+
+        }
+
+        /// <summary>
         /// Add new user
         /// </summary>
         /// <param name="userDTO"></param>

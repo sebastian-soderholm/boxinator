@@ -5,12 +5,12 @@ import { CountryService } from '../../services/country.service';
 import { Country } from '../../models/country.model';
 import { RegisterUser } from '../../models/register-user.model';
 import { LoginService } from '../../services/login.service';
-import { RegisterService } from '../../services/register.service';
 import { SessionService } from '../../../shared/session.service';
 import { passwordsMatch } from './fields-match';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/account/models/user.model';
 import { DateAdapter } from '@angular/material/core';
+import { AccountService } from 'src/app/account/services/account.service';
 
 @Component({
   selector: 'app-register',
@@ -35,7 +35,7 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private readonly loginService: LoginService,
-    private readonly registerService: RegisterService,
+    private readonly accountService: AccountService,
     private readonly router: Router,
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService,
@@ -101,11 +101,11 @@ export class RegisterPage implements OnInit {
     this._registerUser.phoneNumber = this._registerForm.get('phoneNumber').value;
 
     // Format date
-    this._registerUser.dateOfBirth = this._adapter.format(this._registerUser.dateOfBirth, "DD/MM/YYYY")
+    // this._registerUser.dateOfBirth = this._adapter.format(this._registerUser.dateOfBirth, "DD/MM/YYYY")
 
     console.table(this._registerUser)
     //Send request
-    this.registerService.registerUser(this._registerUser!).subscribe((responseUser: User) => {
+    this.accountService.registerUser(this._registerUser!).subscribe((responseUser: User) => {
       this.sessionService.setUser(responseUser);
       this.loginService.setLoggedIn(true);
       this.router.navigate(['/dashboard']);
