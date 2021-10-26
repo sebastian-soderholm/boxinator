@@ -46,8 +46,6 @@ namespace boxinator.Controllers
             var countries = await _settingsService.GetAllCountries();
             return _mapper.Map<List<CountryReadDTO>>(countries);
             
-
-            //return StatusCode(403);
         }
 
         /// <summary>

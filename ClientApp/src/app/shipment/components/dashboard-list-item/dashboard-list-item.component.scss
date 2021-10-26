@@ -22,7 +22,6 @@
 
 .progress {
   width: 100%;
-  
 }
 
 ::ng-deep .mat-progress-bar-fill::after {
@@ -35,4 +34,12 @@
 
 ::ng-deep .mat-progress-bar {
   border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .title {
+    span {
+      display: none;
+    }
+  }
 }

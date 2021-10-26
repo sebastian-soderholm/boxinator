@@ -27,9 +27,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
+import {MatChipsModule} from '@angular/material/chips';
 
 //Date picker format
 import { MAT_DATE_LOCALE } from '@angular/material/core'
@@ -60,16 +61,17 @@ import { CountryListItemComponent } from './admin/components/country-list-item/c
 import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.page';
 import { SharedFormComponent } from './shipment/components/shared-form/shared-form.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
 const DATE_FORMAT = {
   parse: {
-    dateInput: 'DD MMMM YYYY',
+    dateInput: 'DD/MM/YYYY',
   },
   display: {
-    dateInput: 'DD MMMM YYYY',
-    monthYearLabel: 'MMMM YYYY',
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MM/YYYY',
     dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
+    monthYearA11yLabel: 'MM/YYYY',
   },
 };
 
@@ -124,14 +126,21 @@ const DATE_FORMAT = {
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatMomentDateModule,
     MatListModule,
     MatIconModule,
-
+    MatChipsModule
   ],
   providers: [
     DatePipe,
     MatSnackBar,
-    { provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT }
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
   ],
   bootstrap: [AppComponent]
 })

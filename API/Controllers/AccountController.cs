@@ -62,7 +62,7 @@ namespace boxinator.Controllers
             var userEmail = Request.ExtractEmailFromToken();
             User currentUser = await _service.GetUser(userEmail);
 
-            if(currentUser.IsAdmin() || currentUser.Id == accountId)
+            if( currentUser.Id == accountId)
             {
                 User updatedUser = _mapper.Map<User>(userDTO);
                 User resultUser = await _service.Update(accountId, updatedUser);

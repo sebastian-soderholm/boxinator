@@ -14,7 +14,7 @@
 		  Can only contain letters
 		</mat-error>
 	</mat-form-field>
-	
+
 	<button mat-raised-button color="primary" (click)="onSearch()" [disabled]="!searchForm.valid">Search</button>
 </mat-form>
 
@@ -28,4 +28,5 @@
   </mat-nav-list>
 
 
-<app-edit-account *ngIf="loadComponent == true" [showAdminSelection]=true [incomingUser]=selectedUser></app-edit-account>
+  <app-edit-account *ngIf="loadComponent == true" [showAdminSelection]=true [incomingUser]=selectedUser></app-edit-account>
+  <button mat-raised-button color="primary" *ngIf="loadComponent == true && selectedUser" (click)="deleteUser(selectedUser)">Delete user</button>

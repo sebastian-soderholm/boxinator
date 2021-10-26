@@ -5,6 +5,7 @@ import { SessionService } from 'src/app/shared/session.service';
 import { ZoneService } from '../../services/zone.service';
 import { Zone } from '../../models/zone.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class CountryListItemComponent implements OnInit {
   constructor(
     private readonly sessionService: SessionService,
     private readonly countryService: CountryService,
-    private readonly zoneService: ZoneService
+    private readonly zoneService: ZoneService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -68,9 +70,21 @@ export class CountryListItemComponent implements OnInit {
     this.country.zoneName = this._selectedZone!.name
     this.country.countryMultiplier = this._selectedZone!.countryMultiplier
 
-    console.log("Post country: ", this.country)
-    this.countryService.updateCountry(this.country, () => this.countrySavedEvent.emit(this.country));
+    this.countryService.updateCountry(this.country);
 
+    //Update countries in sessionStorage
+    this.countryService.updateCountry(this.country).subscribe(response => {
+      this.sessionService.updateCountry(this.country)
+      this.countrySavedEvent.emit(this.country)
+      this._snackBar.open('Country updated!', 'OK', {
+        duration: 1500
+      });
+    },
+    (error)=> {
+      this._snackBar.open('Could not update country, please try again.', 'OK', {
+        duration: 1500
+      });
+    })
   }
 
   get countryForm() {
