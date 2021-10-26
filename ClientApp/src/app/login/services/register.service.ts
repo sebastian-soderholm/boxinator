@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/account/models/user.model';
+import { ExtensionsService } from 'src/app/shared/extensions.service';
 import { SessionService } from 'src/app/shared/session.service';
 import { environment } from 'src/environments/environment';
 import { RegisterUser } from '../models/register-user.model';
@@ -17,10 +18,11 @@ export class RegisterService {
     private readonly http: HttpClient,
     private readonly router: Router,
     private readonly sessionService: SessionService,
-    private readonly loginService: LoginService
+    private readonly loginService: LoginService,
+    private readonly extensionService: ExtensionsService
   ) {}
 
-  public registerUser(registerUserInfo: RegisterUser, onSuccess: () => void): void {
+  public registerUser(registerUserInfo: RegisterUser) {
     const token = this.sessionService.token;
     const id = this.sessionService.user!.id;
     const httpOptions = {
@@ -29,14 +31,8 @@ export class RegisterService {
         'Authorization': `Bearer ${token}`
       }),
     };
-    const body = JSON.stringify(registerUserInfo);
-    this.http.put<User>(this._apiUrl + '/account/' + id, body, httpOptions)
-    .subscribe((user: User) => {
-      this.sessionService.setUser(user);
-      this.loginService.setLoggedIn(true);
-      this.router.navigate(['/dashboard']);
-      onSuccess();
-    });
+    console.log("Sending request: ", this._apiUrl + '/account/' + id, registerUserInfo, this.extensionService.authenticationHeadersFull)
+    return this.http.put<User>(this._apiUrl + '/account/' + id, registerUserInfo, this.extensionService.authenticationHeadersFull)
   }
 }
 
