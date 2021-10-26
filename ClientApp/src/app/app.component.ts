@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginService } from './login/services/login.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class AppComponent {
 
   constructor(
     private readonly loginService: LoginService,
+    private readonly router: Router,
     ) {
     if(this.window > 768) {
       this.disableClose=true;
@@ -22,6 +24,12 @@ export class AppComponent {
       this.disableClose=false;
       this.opened = false;
     }
+    // If routing changes, close the side nav in mobile view
+    this.router.events.subscribe(event => {
+      if(!this.disableClose) {
+        this.opened = false;
+      }
+    });
     }
 
   get isLoggedIn(): boolean {
