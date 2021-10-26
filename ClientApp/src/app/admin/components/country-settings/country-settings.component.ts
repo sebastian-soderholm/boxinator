@@ -55,7 +55,7 @@ export class CountrySettingsComponent implements OnInit {
         Validators.required,
         Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö ]*"),
       ]),
-      zoneMultiplierControl: new FormControl([
+      zoneMultiplierControl: new FormControl(this.selectedZone?.countryMultiplier, [
         Validators.required
       ]),
     });
@@ -81,6 +81,7 @@ export class CountrySettingsComponent implements OnInit {
       );
 
       this.selectedZone = this.zoneSelectForm.get('zoneSelectControl').value
+      console.log("Zone selected: ", this.selectedZone)
     })
 
     //Add country to zone select event listener
@@ -129,12 +130,14 @@ export class CountrySettingsComponent implements OnInit {
 
   //Update zone info
   saveZone() {
-    // if (this.editedZone.id === 0) return;
+    if (!this.selectedZone) return;
 
-    this.editedZone.id = this.selectedZone?.id!;
+    //Get zone Id from selectedZone, rest of data from form
+    this.editedZone.id = this.selectedZone!.id;
     this.editedZone.name = this.zoneSelectForm.get('zoneNameControl').value;
     this.editedZone.countryMultiplier = this.zoneSelectForm.get('zoneMultiplierControl').value;
 
+    console.log("Updating zone: ", this.editedZone)
     this.zoneService.updateZone(this.editedZone).subscribe((responseZone: Zone) => {
       //Add country to sessionService & countries array
       this.sessionService.updateZone(responseZone)

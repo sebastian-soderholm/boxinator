@@ -7,10 +7,11 @@
   </mat-form-field>
   <br>
 
-  <!-- <ng-container *ngIf="selectedZone"> -->
+  <ng-container *ngIf="selectedZone">
+  <p>Update zone: {{selectedZone.name}}</p>
   <mat-form-field class="form-field" appearance="outline">
     <mat-label>Zone name</mat-label>
-    <input matInput formControlName="zoneNameControl" [value]="selectedZone?.name">
+    <input matInput formControlName="zoneNameControl" required>
     <!-- Errors -->
     <mat-error
       *ngIf="(zoneSelectForm.controls.zoneNameControl?.touched || zoneSelectForm.controls.zoneNameControl?.dirty) && zoneSelectForm.controls.zoneNameControl?.errors?.required">
@@ -25,7 +26,7 @@
   <!-- Zone multiplier -->
   <mat-form-field class="form-field" appearance="outline">
     <mat-label>Zone multiplier</mat-label>
-    <input matInput type="number" formControlName="zoneMultiplierControl" [value]="selectedZone?.countryMultiplier">
+    <input matInput type="number" formControlName="zoneMultiplierControl" required>
     <!-- Errors -->
     <mat-error
       *ngIf="(zoneSelectForm.controls.zoneMultiplierControl?.touched || zoneSelectForm.controls.zoneMultiplierControl?.dirty) && zoneSelectForm.controls.zoneMultiplierControl?.errors?.required">
@@ -36,8 +37,8 @@
   <button mat-raised-button color="primary" (click)="saveZone()" [disabled]="
     zoneSelectForm.controls['zoneNameControl'].invalid ||
     zoneSelectForm.controls['zoneMultiplierControl'].invalid
-    ">Save zone</button>
-  <!-- </ng-container> -->
+    ">Update zone</button>
+  </ng-container>
 </mat-form>
 <br>
 
