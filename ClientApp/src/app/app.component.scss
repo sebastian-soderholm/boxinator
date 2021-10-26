@@ -13,7 +13,12 @@
 .nav {
   background-color: $primary-color;
   width: 15%;
+  min-width: 200px;
   display: inline-flex;
+}
+
+.mobile {
+  width: 100%;
 }
 
 @media (max-width: 768px) {

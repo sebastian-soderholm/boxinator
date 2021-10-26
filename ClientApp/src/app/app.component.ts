@@ -9,12 +9,26 @@ import { LoginService } from './login/services/login.service';
 })
 export class AppComponent {
   title = 'Boxinator';
+  window = window.innerWidth;
+  disableClose = false;
+  opened = true;
 
   constructor(
     private readonly loginService: LoginService,
-    ) { }
+    ) {
+    if(this.window > 768) {
+      this.disableClose=true;
+      this.opened = false;
+    } else {
+      this.disableClose=false;
+    }
+    }
 
   get isLoggedIn(): boolean {
     return this.loginService.loggedIn
+  }
+
+  public toggleSidenav(): void {
+    this.opened = !this.opened;
   }
 }

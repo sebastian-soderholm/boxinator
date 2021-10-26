@@ -30,6 +30,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
+import {MatChipsModule} from '@angular/material/chips';
 
 //Date picker format
 import { MAT_DATE_LOCALE } from '@angular/material/core'
@@ -126,7 +127,7 @@ const DATE_FORMAT = {
     MatNativeDateModule,
     MatListModule,
     MatIconModule,
-
+    MatChipsModule
   ],
   providers: [
     DatePipe,
