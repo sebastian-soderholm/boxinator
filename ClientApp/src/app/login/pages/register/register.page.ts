@@ -19,6 +19,8 @@ import { AccountService } from 'src/app/account/services/account.service';
 
 })
 export class RegisterPage implements OnInit {
+  minDate = new Date(1900, 1, 1);
+  maxDate = new Date(); // Today
   private _registerUser: RegisterUser = {
     id: this.sessionService.user!.id,
     firstName: '',

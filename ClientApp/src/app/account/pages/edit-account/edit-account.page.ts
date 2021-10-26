@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { passwordsMatch } from 'src/app/login/pages/register/fields-match';
@@ -18,6 +18,8 @@ import { EditUser } from '../../models/edit-user.model';
   styleUrls: ['./edit-account.page.scss'],
 })
 export class EditAccountPage implements OnInit, OnChanges {
+  minDate = new Date(1900, 1, 1);
+  maxDate = new Date(); // Today
   private _editUser: EditUser | undefined;
   private _countries: Country[] = [];
   private _editUserForm: any;
@@ -25,7 +27,9 @@ export class EditAccountPage implements OnInit, OnChanges {
   private _selectedDoB? : string | null;
   @Input() showAdminSelection: boolean = false;
   @Input() incomingUser: User | undefined;
-  date1 = new FormControl(new Date())
+  date1 = new FormControl(new Date());
+  @Output()
+  formSubmit: EventEmitter<EditUser> = new EventEmitter();
 
   constructor(
     private readonly _loginService: LoginService,
@@ -101,6 +105,8 @@ export class EditAccountPage implements OnInit, OnChanges {
     this._editUser!.zipCode = this._editUserForm.get('zipCode').value;
     this._editUser!.phoneNumber = this._editUserForm.get('phoneNumber').value;
 
+    //Emit event for parents
+    this.formSubmit.emit(this._editUser);
 
 
     //Send request
