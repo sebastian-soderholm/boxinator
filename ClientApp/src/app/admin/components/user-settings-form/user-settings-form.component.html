@@ -1,0 +1,101 @@
+<h1>Edit account</h1>
+<form [formGroup]="editUserForm">
+  <div>
+    <!-- First name -->
+    <mat-form-field appearance="outline">
+      <mat-label>First name</mat-label>
+      <input matInput formControlName="firstName" type="text" placeholder="First name" required>
+      <!-- Errors -->
+      <mat-error *ngIf="(firstName.dirty || firstName.touched) && firstName.errors?.required" class="alert">
+        First name is required
+      </mat-error>
+      <mat-error *ngIf="(firstName.dirty || firstName.touched) && firstName.errors?.pattern">
+        First name can only contain letters
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Last name -->
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Last name</mat-label>
+      <input matInput formControlName="lastName" type="text" placeholder="Last name" required>
+      <!-- Errors -->
+      <mat-error *ngIf="(lastName.dirty || lastName.touched) && lastName.errors?.required" class="alert">
+        Last name is required
+      </mat-error>
+      <mat-error *ngIf="(lastName.dirty || lastName.touched) && lastName.errors?.pattern">
+        Last name can only contain letters
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Date -->
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Date of birth</mat-label>
+      <input matInput [matDatepicker]="picker" [formControl]="dateOfBirth" [min]="minDate" [max]="maxDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <!-- user country -->
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-select appearance="outline" formControlName="countryId">
+        <mat-option *ngIf="!countries" selected>Loading countries...</mat-option>
+        <mat-option [value]="country.id" *ngFor="let country of countries">{{country.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Postal code -->
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Postal code</mat-label>
+      <input matInput formControlName="zipCode" type="text" placeholder="Postal code">
+      <mat-error *ngIf="(zipCode.dirty || zipCode.touched) && zipCode.errors?.minlength" class="alert">
+        Postal code is too short
+      </mat-error>
+      <mat-error *ngIf="(zipCode.dirty || zipCode.touched) && zipCode.errors?.pattern">
+        Postal code can only contain numbers
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Address -->
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="address" type="text" placeholder="Address">
+      <mat-error *ngIf="(address.dirty || address.touched) && address.errors?.pattern" class="alert">
+        Postal code can only contain numbers
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+
+  <!-- Phone Number -->
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Phone number</mat-label>
+      <input matInput formControlName="phoneNumber" type="text" placeholder="Contact number">
+      <mat-error *ngIf="(phoneNumber.dirty || phoneNumber.touched) && phoneNumber.errors?.pattern" class="alert">
+        Format invalid
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- <button (click)="register()">Register</button> -->
+  <button mat-raised-button color="primary" type="submit" (click)="updateUser()" [disabled]="
+  editUserForm.controls['firstName'].invalid ||
+  editUserForm.controls['lastName'].invalid  ||
+  editUserForm.controls['dateOfBirth'].invalid ||
+  editUserForm.controls['countryId'].invalid ||
+  editUserForm.controls['zipCode'].invalid ||
+  editUserForm.controls['phoneNumber'].invalid
+  ">
+    Submit
+  </button>
+</form>
