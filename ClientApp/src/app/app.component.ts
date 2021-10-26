@@ -39,4 +39,15 @@ export class AppComponent {
   public toggleSidenav(): void {
     this.opened = !this.opened;
   }
+
+  // Detects window size change and changes layout id need to
+  onResize(event: any) {
+    if(event.target.innerWidth > 768) {
+      this.disableClose=true;
+      this.opened = true;
+    } else {
+      this.disableClose=false;
+      this.opened = false;
+    }
+  }
 }
