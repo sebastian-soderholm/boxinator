@@ -13,7 +13,17 @@
 .nav {
   background-color: $primary-color;
   width: 15%;
+  min-width: 200px;
   display: inline-flex;
+}
+
+.mobile {
+  width: 100%;
+}
+
+.menu-btn {
+  background-color: transparent !important;
+  float: right;
 }
 
 @media (max-width: 768px) {
@@ -24,4 +34,5 @@
   .content {
     padding: 1.5rem 2rem;
   }
+
 }

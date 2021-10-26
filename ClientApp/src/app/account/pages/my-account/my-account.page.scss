@@ -8,3 +8,14 @@ h1 {
   width: 90%;
   max-width: 300px;
 }
+
+@media (max-width: 768px) {
+  h1 {
+    display: block;
+    margin-bottom: 1rem;
+    button {
+      float: left;
+      margin-top: 1rem;
+    }
+  }
+}
