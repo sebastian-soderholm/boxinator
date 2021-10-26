@@ -18,9 +18,9 @@ export class AppComponent {
     ) {
     if(this.window > 768) {
       this.disableClose=true;
-      this.opened = false;
     } else {
       this.disableClose=false;
+      this.opened = false;
     }
     }
 
