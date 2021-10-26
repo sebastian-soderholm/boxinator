@@ -16,7 +16,7 @@ export class UserService {
     private readonly extensionService: ExtensionsService) {
   }
 
-  //delete shipment
+  //delete user
   public deleteUser(userId: number) {
     return this.http.delete<boolean>(apiUrl + '/account/' + userId, this.extensionService.authenticationHeadersFull)
   }

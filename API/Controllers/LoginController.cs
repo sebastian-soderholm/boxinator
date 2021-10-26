@@ -20,7 +20,7 @@ namespace boxinator.Controllers
 {
     [ApiController]
     [Route("login")]
-    [AllowAnonymous]
+    [Authorize]
     public class LoginController : ControllerBase
     {
         private readonly IAccountService _service;
@@ -65,5 +65,6 @@ namespace boxinator.Controllers
 
             return BadRequest();
         }
+
     }
 }
