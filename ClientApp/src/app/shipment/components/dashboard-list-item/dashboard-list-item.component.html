@@ -1,7 +1,7 @@
 <mat-card class="card-container">
   <mat-card-content>
     <p>Status: {{this.currentStatus}}</p>
-    <mat-progress-bar mat-card-image mode="determinate" value="{{this.currentStatusValue}}" class="progress"></mat-progress-bar>
+    <mat-progress-bar mode="determinate" value="{{this.currentStatusValue}}" class="progress"></mat-progress-bar>
     <div class="title">
       Shipment #{{shipment.id}} to {{shipment.receiverFirstName}} {{shipment.receiverLastName}},
       {{shipment.country.name}}
