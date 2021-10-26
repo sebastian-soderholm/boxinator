@@ -1,4 +1,7 @@
-<h1>New Boxinator Order</h1>
+<header>
+  <h1>New Boxinator Order<button mat-flat-button routerLink="/new-shipment">Back to the Login page</button></h1>
+</header>
+
 <mat-form class="form form-control" [formGroup]="guestShipmentForm">
   <p>Please note that in order to register as a Boxinator user You need to login with a <strong>Gmail account</strong>.
   </p>
@@ -91,7 +94,7 @@
   <p>Shipment cost {{cost}} €</p>
   <app-box-form (formChange)="boxFormChanged($event)"></app-box-form>
 
-  <button mat-raised-button color="primary" type="submit" (click)="createGuestShipment()" [disabled]="
+  <button class="submit-btn" mat-raised-button color="primary" type="submit" (click)="createGuestShipment()" [disabled]="
   guestShipmentForm.controls['senderEmail'].invalid ||
   guestShipmentForm.controls['receiverFirstName'].invalid ||
   guestShipmentForm.controls['receiverLastName'].invalid ||

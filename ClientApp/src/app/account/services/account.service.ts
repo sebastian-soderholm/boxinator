@@ -55,4 +55,13 @@ export class AccountService {
       }
     });
   }
+
+  //Delete user
+  public deleteUser(userId: number) {
+    return this.http.delete<boolean>(this._apiUrl + '/account/' + userId, this.extensionService.authenticationHeadersFull)
+  }
+  //Update another user's account. Only accessible for admin
+  public updateUserAsAdmin(updateUserInfo: EditUser) {
+    return this.http.put<User>(this._apiUrl + '/settings/account/' + updateUserInfo.id, updateUserInfo, this.extensionService.authenticationHeadersFull)
+  }
 }

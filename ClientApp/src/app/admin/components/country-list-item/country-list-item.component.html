@@ -29,10 +29,10 @@
 
 
 
-  <button mat-raised-button color="primary" (click)="saveCountry()"
+  <button mat-raised-button (click)="saveCountry()"
   [disabled]="(countryForm.controls['countryName'].invalid || countryForm.controls['countryZone'].invalid )
   && countryForm.controls['countryName'].touched
 "
 
-  >Save</button>
+  >Save Country</button>
 </form>

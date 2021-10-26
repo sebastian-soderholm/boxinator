@@ -3,6 +3,7 @@ using boxinator.Models;
 using boxinator.Models.Domain;
 using boxinator.Models.DTO.Country;
 using boxinator.Models.DTO.Status;
+using boxinator.Models.DTO.User;
 using boxinator.Models.DTO.Zone;
 using boxinator.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -30,6 +31,31 @@ namespace boxinator.Controllers
             _settingsService = settingsService;
             _accountService = accountService;
             _mapper = mapper;
+        }
+
+        /// <summary>
+        /// Update specific user
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <param name="userDTO"></param>
+        /// <returns>Updated user or 403</returns>
+        // PUT: /settings/account/:account_id
+        [HttpPut("/settings/account/{accountId}")]
+        public async Task<ActionResult<UserReadDTO>> Update(int accountId, UserEditDTO userDTO)
+        {
+            // current user for role check
+            var userEmail = Request.ExtractEmailFromToken();
+            User currentUser = await _accountService.GetUser(userEmail);
+
+            if (currentUser.IsAdmin())
+            {
+                User updatedUser = _mapper.Map<User>(userDTO);
+                User resultUser = await _accountService.Update(accountId, updatedUser);
+                return _mapper.Map<UserReadDTO>(resultUser);
+            }
+
+            return StatusCode(403);
+
         }
 
         /// <summary>

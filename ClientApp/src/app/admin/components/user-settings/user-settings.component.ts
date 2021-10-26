@@ -6,6 +6,7 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+
 @Component({
   selector: 'app-user-settings',
   templateUrl: './user-settings.component.html',
@@ -23,7 +24,6 @@ export class UserSettingsComponent implements OnInit {
   constructor(
     private readonly _accountService: AccountService,
     private readonly _sessionService: SessionService,
-    private readonly _userService: UserService,
     private _snackBar: MatSnackBar
   ) {}
 
@@ -44,7 +44,7 @@ export class UserSettingsComponent implements OnInit {
 
   deleteUser(user: User) {
     //Delete user
-    this._userService.deleteUser(user.id).subscribe(response => {
+    this._accountService.deleteUser(user.id).subscribe(response => {
       this._snackBar.open('User deleted!', 'OK');
       //Delete user from list
       this.users = this.users?.filter((findUser: User) => {
@@ -53,6 +53,21 @@ export class UserSettingsComponent implements OnInit {
     },
     (error)=> {
       this._snackBar.open('Could not delete user, please try again.', 'OK');
+    })
+  }
+
+  updateUser(user: User) {
+    console.table(user)
+
+    this._accountService.updateUserAsAdmin(user).subscribe(response => {
+      this._snackBar.open('User updated!', 'OK');
+      //Update userlist with new user
+      this.users!.forEach((findUser: User) => {
+        if(findUser.id === user.id) findUser = user
+      })
+    },
+    (error) => {
+      this._snackBar.open('Could not update user, please try again.', 'OK');
     })
   }
 
