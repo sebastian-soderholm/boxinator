@@ -39,10 +39,11 @@ namespace boxinator.Services
         {
             var user = await _context.Users.FindAsync(id);
 
-            if (user == null /*|| user.UserId != currentUSer*/)
+            if (user == null)
                 return false;
 
             _context.Users.Remove(user);
+            _context.Entry(user).State = EntityState.Modified;
             var rows = await _context.SaveChangesAsync();
 
             if (rows > 0)

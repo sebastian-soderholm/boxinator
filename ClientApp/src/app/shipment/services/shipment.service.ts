@@ -63,7 +63,6 @@ export class ShipmentService {
 
   // get filtered shipments
   public getFilteredShipments(path: string | null, dateFromFilter: string, dateToFilter: string, onSuccess: () => void): void {
-    console.log(dateToFilter)
     const params = new HttpParams()
     .set("dateFromFilter", dateFromFilter != null ? dateFromFilter.toString() : "")
     .set("dateToFilter", dateToFilter != null ? dateToFilter.toString() : "")
@@ -135,6 +134,11 @@ export class ShipmentService {
       this._error = error.message;
       console.table(error)
     })
+  }
+
+  //delete shipment
+  public deleteShipment(shipmentId: number) {
+    return this.http.delete<boolean>(apiUrl + '/shipments/' + shipmentId, this.extensionService.authenticationHeadersFull)
   }
 
   public getError(): string {
