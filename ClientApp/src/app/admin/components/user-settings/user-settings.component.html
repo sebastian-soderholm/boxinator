@@ -15,17 +15,14 @@
 		</mat-error>
 	</mat-form-field>
 	
-	<button mat-raised-button color="primary" (click)="onSearch()" [disabled]="!searchForm.valid">Search</button>
+	<button mat-raised-button (click)="onSearch()" [disabled]="!searchForm.valid">Search</button>
 </mat-form>
-
 
  <!-- User selection -->
  <mat-nav-list *ngIf="loadComponent == false">
 	<mat-list-item *ngFor="let user of users">
-	   <button (click)="selectUser(user)">{{ user.firstName }} {{ user.lastName }}
-	   </button>
+	   <button mat-raised-button class="name-btn" (click)="selectUser(user)" *ngIf="user.firstName !== null">{{ user.firstName }} {{ user.lastName }}</button>
 	</mat-list-item>
   </mat-nav-list>
-
 
 <app-edit-account *ngIf="loadComponent == true" [showAdminSelection]=true [incomingUser]=selectedUser></app-edit-account>
