@@ -27,10 +27,7 @@ export class DashboardPage implements OnInit {
         this.sessionService.shipmentTableData!
       );
       this.sortedData = mappedData;
-      console.log(this.sortedData);
     });
-
-    console.log(this.shipmentService.getError());
   }
 
   get shipments(): ShipmentTableData[] {

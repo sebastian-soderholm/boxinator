@@ -105,7 +105,6 @@ export class RegisterPage implements OnInit {
     // Format date
     // this._registerUser.dateOfBirth = this._adapter.format(this._registerUser.dateOfBirth, "DD/MM/YYYY")
 
-    console.table(this._registerUser)
     //Send request
     await this.accountService.registerUser(this._registerUser!).subscribe(async (responseUser: User) => {
       await this.sessionService.setUser(responseUser);

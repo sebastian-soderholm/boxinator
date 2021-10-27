@@ -78,7 +78,6 @@ export class ShipmentService {
 
     this.http.get<ShipmentTableData[]>(apiUrl + path, { headers: httpOptions.headers, params: params})
     .subscribe((shipments: ShipmentTableData[]) => {
-      console.log(shipments)
       this.sessionService.setShipmentsTableData(shipments);
       onSuccess();
 
@@ -127,7 +126,6 @@ export class ShipmentService {
 
     this.http.put<EditShipment>(apiUrl + '/shipments/' +shipmentId, body, this.extensionService.authenticationHeadersFull)
     .subscribe((updatedShipment: EditShipment) => {
-      console.log(updatedShipment);
       onSuccess();
     },
     (error: HttpErrorResponse) => {
@@ -140,7 +138,6 @@ export class ShipmentService {
   public cancelShipment(shipmentId: number, onSuccess: () => void) : void {
     this.http.get<ShipmentStatusLog>(apiUrl + '/shipments/cancel/' +shipmentId, this.extensionService.authenticationHeadersFull)
     .subscribe((newStatusLog: ShipmentStatusLog) => {
-      console.log(newStatusLog)
       onSuccess();
     },
     (error: HttpErrorResponse) => {

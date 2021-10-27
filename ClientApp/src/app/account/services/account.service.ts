@@ -53,7 +53,6 @@ export class AccountService {
 
     this.http.get<User[]>(this._apiUrl + '/account', { headers: httpOptions.headers, params: params})
     .subscribe((users: User[]) => {
-      console.log(users)
       if(users.length > 0){
         this.sessionService.setFetchedUsersInfo(users);
         onSuccess();

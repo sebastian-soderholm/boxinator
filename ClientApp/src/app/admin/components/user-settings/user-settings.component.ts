@@ -45,7 +45,6 @@ export class UserSettingsComponent implements OnInit {
   deleteUser(user: User) {
     //Delete user
     this._accountService.deleteUser(user.id).subscribe(response => {
-      console.log("Deleting user: ", user)
       this._snackBar.open('User deleted!', 'OK');
       //Delete user from list
       this.users = this.users?.filter((findUser: User) => {
@@ -58,8 +57,6 @@ export class UserSettingsComponent implements OnInit {
   }
 
   updateUser(user: any) {
-    console.table(user)
-
     this._accountService.updateUserAsAdmin(user).subscribe(response => {
       this._snackBar.open('User updated!', 'OK');
       //Update userlist with new user
