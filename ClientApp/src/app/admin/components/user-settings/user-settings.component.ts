@@ -3,6 +3,9 @@ import { AccountService } from 'src/app/account/services/account.service';
 import { SessionService } from 'src/app/shared/session.service';
 import { User } from '../../../account/models/user.model';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { UserService } from '../../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-user-settings',
@@ -21,13 +24,14 @@ export class UserSettingsComponent implements OnInit {
   constructor(
     private readonly _accountService: AccountService,
     private readonly _sessionService: SessionService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.searchForm = new FormGroup({
       searchvalue: new FormControl('', [
         Validators.required,
-        Validators.pattern("[a-zA-Z0-9-ZÆæØøßÅÄÖåäö]*"),
+        Validators.pattern("[a-zA-Z0-9-ZÆæØøßÅÄÖåäö ]*"),
       ])
     });
   }
@@ -38,10 +42,39 @@ export class UserSettingsComponent implements OnInit {
     this._sessionService.setFetchedUserInfo(user)
   }
 
+  deleteUser(user: User) {
+    //Delete user
+    this._accountService.deleteUser(user.id).subscribe(response => {
+      this._snackBar.open('User deleted!', 'OK');
+      //Delete user from list
+      this.users = this.users?.filter((findUser: User) => {
+        return findUser.id !== user.id
+      })
+    },
+    (error)=> {
+      this._snackBar.open('Could not delete user, please try again.', 'OK');
+    })
+  }
+
+  updateUser(user: any) {
+    console.table(user)
+
+    this._accountService.updateUserAsAdmin(user).subscribe(response => {
+      this._snackBar.open('User updated!', 'OK');
+      //Update userlist with new user
+      this.users!.forEach((findUser: User) => {
+        if(findUser.id === user.id) findUser = user
+      })
+    },
+    (error) => {
+      this._snackBar.open('Could not update user, please try again.', 'OK');
+    })
+  }
+
   public onSearch(): void {
     const searchInput = this.searchForm.get('searchvalue').value;
     this.loadComponent = false;
-    
+
     if(Number(searchInput)) {
       this._accountService.getUserById(Number(searchInput), async () => {
         await console.log("success"), this.loadComponent = true;

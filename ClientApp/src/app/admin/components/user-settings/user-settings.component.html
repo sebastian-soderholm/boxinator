@@ -1,31 +1,31 @@
-
 <mat-form [formGroup]="searchForm">
 	<mat-form-field class="form-field" appearance="outline">
 		<mat-label>Search user by first name, lastname, email or id</mat-label>
 		<input matInput formControlName="searchvalue" [value]="">
 
 		<!-- Errors -->
-		<mat-error
-		  *ngIf="(searchvalue.touched || searchvalue.dirty) && searchvalue.errors?.required">
-		  Value is required
+		<mat-error *ngIf="(searchvalue.touched || searchvalue.dirty) && searchvalue.errors?.required">
+			Value is required
 		</mat-error>
-		<mat-error
-		*ngIf="(searchvalue.touched || searchvalue.dirty) && searchvalue.errors?.pattern">
-		  Can only contain letters
+		<mat-error *ngIf="(searchvalue.touched || searchvalue.dirty) && searchvalue.errors?.pattern">
+			Can only contain letters
 		</mat-error>
 	</mat-form-field>
-	
-	<button mat-raised-button color="primary" (click)="onSearch()" [disabled]="!searchForm.valid">Search</button>
+	<button mat-raised-button (click)="onSearch()" [disabled]="!searchForm.valid">Search</button>
 </mat-form>
 
-
- <!-- User selection -->
- <mat-nav-list *ngIf="loadComponent == false">
+<!-- User selection -->
+<mat-nav-list *ngIf="loadComponent == false">
 	<mat-list-item *ngFor="let user of users">
-	   <button (click)="selectUser(user)">{{ user.firstName }} {{ user.lastName }}
-	   </button>
+		<button mat-raised-button class="name-btn" (click)="selectUser(user)" *ngIf="user.firstName !== null">{{
+			user.firstName }} {{ user.lastName }}</button>
 	</mat-list-item>
-  </mat-nav-list>
+</mat-nav-list>
 
+<app-user-settings-form *ngIf="loadComponent == true" (formSubmit)="updateUser($event)" [showAdminSelection]=true [incomingUser]=selectedUser></app-user-settings-form>
 
-<app-edit-account *ngIf="loadComponent == true" [showAdminSelection]=true [incomingUser]=selectedUser></app-edit-account>
+<!-- <button mat-raised-button color="primary" *ngIf="loadComponent == true && selectedUser"
+	(click)="updateUser(selectedUser)">Update user</button> -->
+
+<button mat-raised-button color="primary" *ngIf="loadComponent == true && selectedUser"
+	(click)="deleteUser(selectedUser)">Delete user</button>

@@ -1,15 +1,38 @@
+@use '../../../../assets/styles/variables' as *;
+
 header {
+  margin-bottom: 2rem;
   button {
     float: right;
   }
 }
 
-table {
-	width: 100%;
+.filters {
+  margin-right: 1rem;
 }
 
-button {
-margin: 16px 8px;
+.filter-btn {
+  padding: 0.4rem;
+}
+
+.mat-button-toggle{
+  border: 3px solid #fff;
+  padding: 0rem !important;
+}
+.mat-button-toggle-checked {
+  border: 3px solid $secondary-color;
+}
+
+.boxes{
+  display: inline-block;
+  #box {
+    font-size: 1.2rem;
+    margin-right: 0.3rem;
+  }
+}
+
+table {
+	width: 100%;
 }
 
 tr.example-detail-row {
@@ -30,16 +53,19 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-detail {
   overflow: hidden;
+  width: 100%;
   display: flex;
+  .edit {
+    float: right;
+  }
 }
 
 .example-element-diagram {
-  min-width: 80px;
-  border: 2px solid black;
-  padding: 8px;
-  font-weight: lighter;
-  margin: 8px 0;
-  height: 104px;
+  width: 100%;
+  border: 2px solid #efefef;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  min-height: 104px;
 }
 
 .example-element-symbol {
@@ -58,4 +84,20 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 ul {
   list-style-type: none;
+  margin: 0; 
+  padding: 0;
+}
+
+.edit-btn {
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  header {
+    margin-bottom: 2rem;
+    button {
+      display: none;
+    }
+  }
 }

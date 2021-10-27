@@ -5,16 +5,22 @@ import { CountryService } from '../../services/country.service';
 import { Country } from '../../models/country.model';
 import { RegisterUser } from '../../models/register-user.model';
 import { LoginService } from '../../services/login.service';
-import { RegisterService } from '../../services/register.service';
 import { SessionService } from '../../../shared/session.service';
 import { passwordsMatch } from './fields-match';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from 'src/app/account/models/user.model';
+import { DateAdapter } from '@angular/material/core';
+import { AccountService } from 'src/app/account/services/account.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
+
 })
 export class RegisterPage implements OnInit {
+  minDate = new Date(1900, 1, 1);
+  maxDate = new Date(); // Today
   private _registerUser: RegisterUser = {
     id: this.sessionService.user!.id,
     firstName: '',
@@ -31,14 +37,17 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private readonly loginService: LoginService,
-    private readonly registerService: RegisterService,
+    private readonly accountService: AccountService,
     private readonly router: Router,
     private readonly countryService: CountryService,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private _snackBar: MatSnackBar,
+    private _adapter: DateAdapter<any>
   ) {}
 
   ngOnInit(): void {
-    if (this.loginService.loggedIn) {
+    //If logged in user is already registered or admin, redirect to dashboard
+    if (this.loginService.loggedIn && this.loginService.user?.accountType !== 'GUEST') {
       this.router.navigate(['dashboard']);
     }
     this.countryService.fetchCountriesToSession(async () => {
@@ -51,12 +60,12 @@ export class RegisterPage implements OnInit {
         firstName: new FormControl(this._registerUser.firstName, [
           Validators.required,
           //Must contain letters
-          Validators.pattern(/[a-z]/gi),
+          Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö ]*"),
         ]),
         lastName: new FormControl(this._registerUser.lastName, [
           Validators.required,
           //Must contain letters
-          Validators.pattern(/[a-z]/gi),
+          Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö ]*"),
         ]),
         dateOfBirth: new FormControl(this._registerUser.dateOfBirth, [
           // Validators.pattern(/a-zA-Z/)
@@ -65,6 +74,9 @@ export class RegisterPage implements OnInit {
           Validators.required
           //Must contain only letters
           // Validators.pattern(/[a-z]/gi)
+        ]),
+        address: new FormControl(this._registerUser!.address, [
+          Validators.required,
         ]),
         zipCode: new FormControl(this._registerUser.zipCode, [
           //Must be a minimum length
@@ -85,11 +97,26 @@ export class RegisterPage implements OnInit {
     this._registerUser.firstName = this._registerForm.get('firstName').value;
     this._registerUser.lastName = this._registerForm.get('lastName').value;
     this._registerUser.dateOfBirth = this._registerForm.get('dateOfBirth').value;
+    this._registerUser.address = this._registerForm.get('address').value;
     this._registerUser.countryId = this._registerForm.get('countries').value; //Apply countryId only if selected
     this._registerUser.zipCode = this._registerForm.get('zipCode').value;
     this._registerUser.phoneNumber = this._registerForm.get('phoneNumber').value;
-    this.registerService.registerUser(this._registerUser, function(){
-       console.log("User registered successfully!")
+
+    // Format date
+    // this._registerUser.dateOfBirth = this._adapter.format(this._registerUser.dateOfBirth, "DD/MM/YYYY")
+
+    console.table(this._registerUser)
+    //Send request
+    this.accountService.registerUser(this._registerUser!).subscribe((responseUser: User) => {
+      this.sessionService.setUser(responseUser);
+      this.loginService.setLoggedIn(true);
+      this.router.navigate(['/dashboard']);
+      this._snackBar.open('Thank you for registering, welcome to Boxinator!', '', {
+        duration: 3000
+      });
+    },
+    (error)=> {
+      this._snackBar.open('Could not register, please try again.', 'OK');
     })
   }
   get registerForm() {
@@ -113,6 +140,9 @@ export class RegisterPage implements OnInit {
   }
   get countries() {
     return this._countries;
+  }
+  get address() {
+    return this._registerForm.get('address')
   }
   get zipCode() {
     return this._registerForm.get('zipCode');

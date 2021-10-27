@@ -115,6 +115,20 @@ namespace boxinator.Services
                 Date = DateTime.Now
             };
 
+            //Get shipment destiantion zone info for multiplier
+            var countryQuery = await _context.Countries.AsNoTracking()
+                .Where(c => c.Id == shipment.CountryId)
+                .Include(c => c.Zone)
+                .FirstOrDefaultAsync();
+
+            //Calculate shipment costs 200 + box weight * country multiplier
+            var cost = 200;
+            foreach(Box box in shipment.Boxes)
+            {
+                cost += box.BoxType.Weight * countryQuery.Zone.CountryMultiplier;
+            }
+            shipment.Cost = cost;
+
             var resultShipmentStatusLog = await _context.ShipmentStatusLogs.AddAsync(shipmentStatusLog);
             if(resultShipmentStatusLog.Entity != null)
             {
@@ -161,7 +175,7 @@ namespace boxinator.Services
         {
             var shipment = await _context.Shipments.FindAsync(id);
 
-            if(shipment == null /*|| shipment.UserId != currentUSer*/)
+            if(shipment == null)
                 return false;
 
             _context.Shipments.Remove(shipment);

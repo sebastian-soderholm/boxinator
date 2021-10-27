@@ -7,6 +7,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Sort} from '@angular/material/sort';
 import { DatePipe } from '@angular/common';
 import { LoginService } from 'src/app/login/services/login.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-my-shipments',
@@ -46,7 +47,8 @@ export class MyShipmentsPage implements OnInit {
     private readonly shipmentService: ShipmentService,
     private readonly sessionService: SessionService,
     private datePipe: DatePipe,
-    private readonly loginService: LoginService
+    private readonly loginService: LoginService,
+    private _snackBar: MatSnackBar
   ) {
     this.sortedData = this._dataSource.slice();
   }
@@ -76,7 +78,7 @@ export class MyShipmentsPage implements OnInit {
     if(this.selectedStatus == null && this.selectedFromDate == null && this.selectedToDate == null) {
       console.log("no filters selected");
     }
-    else { 
+    else {
       let path = "/shipments";
 
       if(this.selectedStatus == 1){ // Current
@@ -88,13 +90,13 @@ export class MyShipmentsPage implements OnInit {
       if(this.selectedStatus == 3){ // Completed
         path = "/shipments/cancelled";
       }
-      
+
       // fetch data by filters
       this.shipmentService.getFilteredShipments(path, this.selectedFromDate!, this.selectedToDate!, async () => {
         const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
         this.sortedData = mappedData;
       });
-      
+
     }
   }
 
@@ -121,6 +123,25 @@ export class MyShipmentsPage implements OnInit {
     if(type == 'to'){
       this.selectedToDate = formattedDate!;
     }
+  }
+
+  deleteShipment(shipmentId: number) {
+    this.shipmentService.deleteShipment(shipmentId).subscribe(response => {
+      this._snackBar.open('Shipment deleted!', 'OK', {
+        duration: 2000
+      });
+      //remove shipment from frontend
+      this.sortedData = this.sortedData.filter((data: MappedData) => {
+        return data.id !== shipmentId
+      })
+      // this.sessionService.setShipmentsTableData(this.sortedData);
+    },
+    (error) => {
+      this._snackBar.open('Shipment could not be deleted, please try again.', 'OK', {
+        duration: 2000
+      });
+    }
+    )
   }
   // toggling columns
   onValChange(selection: any, state : any){
@@ -158,7 +179,7 @@ export class MyShipmentsPage implements OnInit {
 
   // mapping incoming data
   mapShipments(shipments: ShipmentTableData[]) {
-    
+
 		return shipments.map((obj) => {
       const boxesInShipment = this.mapBoxes(obj.boxes)
       const expandedData = this.createExpandedData(obj.id, boxesInShipment, obj.shipmentStatusLogs)
@@ -223,8 +244,8 @@ export class MyShipmentsPage implements OnInit {
   }
 
   getCombinedWeight(boxes: Box[]) {
-    let sum = 0; 
-    
+    let sum = 0;
+
     boxes.forEach(box => {
       for (const property in box) {
         if(property === "weight"){

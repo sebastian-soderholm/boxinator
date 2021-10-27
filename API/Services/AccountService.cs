@@ -39,10 +39,11 @@ namespace boxinator.Services
         {
             var user = await _context.Users.FindAsync(id);
 
-            if (user == null /*|| user.UserId != currentUSer*/)
+            if (user == null)
                 return false;
 
             _context.Users.Remove(user);
+            _context.Entry(user).State = EntityState.Modified;
             var rows = await _context.SaveChangesAsync();
 
             if (rows > 0)
@@ -81,8 +82,36 @@ namespace boxinator.Services
                 resultUser.LastName = user.LastName;
                 resultUser.DateOfBirth = user.DateOfBirth;
                 resultUser.ZipCode = user.ZipCode;
+                resultUser.CountryId = user.CountryId;
                 resultUser.Address = user.Address;
                 resultUser.PhoneNumber = user.PhoneNumber;
+                await _context.SaveChangesAsync();
+            }
+
+            return user;
+        }
+
+        /// <summary>
+        /// Update user by id and add account type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="user"></param>
+        /// <returns>Updated user</returns>
+        public async Task<User> Register(int id, User user)
+        {
+            //var resultUser = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == user.Id);
+            var resultUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
+
+            if (resultUser != null)
+            {
+                resultUser.FirstName = user.FirstName;
+                resultUser.LastName = user.LastName;
+                resultUser.DateOfBirth = user.DateOfBirth;
+                resultUser.ZipCode = user.ZipCode;
+                resultUser.CountryId = user.CountryId;
+                resultUser.Address = user.Address;
+                resultUser.PhoneNumber = user.PhoneNumber;
+                resultUser.AccountType = "REGISTERED_USER";
                 await _context.SaveChangesAsync();
             }
 

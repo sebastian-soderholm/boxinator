@@ -14,17 +14,14 @@
 
 .colored-boxes {
   display: inline-block;
-  .box{
-    width:25px;
-    height:25px;
+  span{
+    font-size: 2rem;
     margin-right: 1rem;
-    border: 2px solid #000;
   }
 }
 
 .progress {
   width: 100%;
-  
 }
 
 ::ng-deep .mat-progress-bar-fill::after {
@@ -37,4 +34,12 @@
 
 ::ng-deep .mat-progress-bar {
   border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .title {
+    span {
+      display: none;
+    }
+  }
 }

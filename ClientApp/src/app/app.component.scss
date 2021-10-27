@@ -2,15 +2,37 @@
 
 .container {
   height: 100vh;
-  padding-bottom: 4rem;
+  padding-bottom: 5rem;
 }
 
 .content {
-  padding:2rem;
+  padding: 3rem 4rem;
+  position: relative;
 }
 
 .nav {
   background-color: $primary-color;
   width: 15%;
+  min-width: 200px;
   display: inline-flex;
+}
+
+.mobile {
+  width: 100%;
+}
+
+.menu-btn {
+  background-color: transparent !important;
+  float: right;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-bottom: 3rem;
+  }
+
+  .content {
+    padding: 1.5rem 2rem;
+  }
+
 }

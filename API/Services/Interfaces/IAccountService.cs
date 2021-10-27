@@ -14,6 +14,7 @@ namespace boxinator.Services.Interfaces
         public Task<bool> Delete(int id);
         public Task<User> GetUser(string email);
         public Task<List<User>> Search(string term);
+        public Task<User> Register(int id, User user);
 
     }
 }

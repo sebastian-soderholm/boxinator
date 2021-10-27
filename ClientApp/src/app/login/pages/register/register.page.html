@@ -28,9 +28,11 @@
   </div>
   <!-- Date -->
   <div>
-    <mat-form-field class="form-field" appearance="outline">
+    <mat-form-field appearance="outline">
       <mat-label>Date of birth</mat-label>
-      <input matInput formControlName="dateOfBirth" type="date" placeholder="Date of birth" max="2021-10-11">
+      <input matInput [matDatepicker]="picker" [formControl]="dateOfBirth" [min]="minDate" [max]="maxDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
   </div>
   <!-- Countries -->
@@ -40,6 +42,16 @@
       <mat-select formControlName="countries">
         <mat-option [value]="country.id" *ngFor="let country of countries" selected>{{country.name}}</mat-option>
       </mat-select>
+    </mat-form-field>
+  </div>
+  <!-- Address -->
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="address" type="text" placeholder="Address">
+      <mat-error *ngIf="(address.dirty || address.touched) && address.errors?.pattern" class="alert">
+        Postal code can only contain numbers
+      </mat-error>
     </mat-form-field>
   </div>
   <!-- Postal code -->

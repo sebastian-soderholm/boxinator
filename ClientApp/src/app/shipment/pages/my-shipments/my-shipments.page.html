@@ -4,16 +4,16 @@
 </header>
 
 <!-- Filtering options -->
-<mat-form-field appearance="outline">
+<mat-form-field appearance="outline" class="filters">
   <mat-label>Status option</mat-label>
   <mat-select [ngModel]="statusOptions" (ngModelChange)="setSelectedStatus($event)">
-    <mat-option value="" selected>Status options</mat-option>
+    <mat-option value="" selected disabled>Status options</mat-option>
     <mat-option [value]="status.id" *ngFor="let status of statusOptions">{{status.name}}</mat-option>
   </mat-select>
 </mat-form-field>
 
 <!-- Date picker (range) -->
-<mat-form-field appearance="outline">
+<mat-form-field appearance="outline" class="filters">
   <mat-label>Enter a date range</mat-label>
   <mat-date-range-input [rangePicker]="picker">
     <input matStartDate placeholder="Start date" (dateChange)="setSelectedDate('from', $event)">
@@ -23,7 +23,7 @@
   <mat-date-range-picker #picker></mat-date-range-picker>
 </mat-form-field>
 
-<button mat-flat-button color="accent" type="submit" (click)="filterTable()">Filter</button>
+<button mat-flat-button color="accent" type="submit" class="filter-btn" (click)="filterTable()">Filter</button>
 <!-- Column visibility -->
 <h3>Toggle column visibility</h3>
 <mat-button-toggle-group name="selectedColumns" aria-label="selectedColumns" multiple>
@@ -48,32 +48,31 @@
         <div class="example-element-diagram">
           <div class="example-element-color">
             <h2>Boxes</h2>
-            <ul class="element.boxes">
-              <li *ngFor="let box of shipmentTableData.expandedData.boxes">
-                <p [ngStyle]="{'color': box.color}">BOX</p>
-              </li>
-            </ul>
+            <div *ngFor="let box of shipmentTableData.expandedData.boxes" class="element.boxes boxes">
+              <span id="box" [ngStyle]="{'color': box.color}" class="material-icons">inventory_2</span>
+            </div>
           </div>
-        </div>    
+        </div>
         <div class="example-element-diagram">
           <div class="example-element-color">
             <h2>Info</h2>
             <ul class="element.boxes">
               <li *ngFor="let log of shipmentTableData.expandedData.shipmentStatusLogs">
-                {{log.date | date}}---{{log.status.name}}
+                {{log.date | date}} - {{log.status.name}}
               </li>
             </ul>
           </div>
-        </div>  
-        <div class="example-element-diagram" *ngIf="shipmentTableData.status != 'CANCELLED' && shipmentTableData.status != 'COMPLETED' && canEdit">
+        </div>
+        <div class="example-element-diagram edit" *ngIf="canEdit">
           <div class="example-element-color">
             <h2>Edit</h2>
             <div>
-              <button mat-flat-button color="accent" (click)="addNewStatus(shipmentTableData.id)">Update status</button>
-              <button mat-flat-button color="accent" [routerLink]="['/edit-shipment/', shipmentTableData.id]">Edit</button>
+              <button mat-flat-button class="edit-btn" (click)="addNewStatus(shipmentTableData.id)">Update status</button>
+              <button mat-flat-button class="edit-btn" [routerLink]="['/edit-shipment/', shipmentTableData.id]">Edit</button>
+              <button mat-flat-button class="edit-btn" (click)="deleteShipment(shipmentTableData.id)">Delete</button>
             </div>
           </div>
-        </div> 
+        </div>
       </div>
     </td>
   </ng-container>

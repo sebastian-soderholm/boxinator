@@ -27,9 +27,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
+import {MatChipsModule} from '@angular/material/chips';
+
+//Date picker format
+import { MAT_DATE_LOCALE } from '@angular/material/core'
 
 //Pages
 import { LoginPage } from './login/pages/login/login.page';
@@ -56,6 +60,22 @@ import { CountryListComponent } from './admin/components/country-list/country-li
 import { CountryListItemComponent } from './admin/components/country-list-item/country-list-item.component';
 import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.page';
 import { SharedFormComponent } from './shipment/components/shared-form/shared-form.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { UserSettingsFormComponent } from './admin/components/user-settings-form/user-settings-form.component';
+
+const DATE_FORMAT = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MM/YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MM/YYYY',
+  },
+};
+
 
 @NgModule({
   declarations: [
@@ -78,7 +98,8 @@ import { SharedFormComponent } from './shipment/components/shared-form/shared-fo
     EditShipmentPage,
     CountryListComponent,
     CountryListItemComponent,
-    SharedFormComponent
+    SharedFormComponent,
+    UserSettingsFormComponent
   ],
   imports: [
     BrowserModule,
@@ -107,11 +128,21 @@ import { SharedFormComponent } from './shipment/components/shared-form/shared-fo
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatMomentDateModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatChipsModule
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    MatSnackBar,
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
   ],
   bootstrap: [AppComponent]
 })

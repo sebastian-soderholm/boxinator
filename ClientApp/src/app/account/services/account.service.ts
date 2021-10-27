@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 import { SessionService } from 'src/app/shared/session.service';
 import { ExtensionsService } from 'src/app/shared/extensions.service';
+import { EditUser } from '../models/edit-user.model';
+import { RegisterUser } from 'src/app/login/models/register-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +20,12 @@ export class AccountService {
     private readonly extensionService: ExtensionsService
   ) { }
 
-  public updateUser(updateUserInfo: User, onSuccess: () => void): void {
-    const body = JSON.stringify(updateUserInfo);
-    this.http.put<User>(this._apiUrl + '/account/' + updateUserInfo.id, body, this.extensionService.authenticationHeadersFull)
-    .subscribe((user: User) => {
-      this.sessionService.setUser(user);
+  public registerUser(registerUserInfo: RegisterUser) {
+    return this.http.put<User>(this._apiUrl + '/account/register/' + registerUserInfo.id, registerUserInfo, this.extensionService.authenticationHeadersFull)
+  }
 
-      onSuccess();
-    });
+  public updateUser(updateUserInfo: EditUser) {
+    return this.http.put<User>(this._apiUrl + '/account/' + updateUserInfo.id, updateUserInfo, this.extensionService.authenticationHeadersFull)
   }
 
   // for admin
@@ -59,5 +59,14 @@ export class AccountService {
         onSuccess();
       }
     });
+  }
+
+  //Delete user
+  public deleteUser(userId: number) {
+    return this.http.delete<boolean>(this._apiUrl + '/account/' + userId, this.extensionService.authenticationHeadersFull)
+  }
+  //Update another user's account. Only accessible for admin
+  public updateUserAsAdmin(updateUserInfo: EditUser) {
+    return this.http.put<User>(this._apiUrl + '/settings/account/' + updateUserInfo.id, updateUserInfo, this.extensionService.authenticationHeadersFull)
   }
 }

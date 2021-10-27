@@ -20,7 +20,7 @@ namespace boxinator.Controllers
 {
     [ApiController]
     [Route("login")]
-    [AllowAnonymous]
+    [Authorize]
     public class LoginController : ControllerBase
     {
         private readonly IAccountService _service;
@@ -55,7 +55,7 @@ namespace boxinator.Controllers
                 User newUser = _mapper.Map<User>(new User()
                 {
                     Email = userEmail,
-                    AccountType = "REGISTERED_USER",
+                    AccountType = "GUEST",
                     CountryId = 1
                 });
                 
@@ -65,5 +65,6 @@ namespace boxinator.Controllers
 
             return BadRequest();
         }
+
     }
 }

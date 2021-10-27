@@ -1,0 +1,27 @@
+header {
+  margin-bottom: 2rem;
+  button {
+    float: right;
+  }
+}
+
+.form-field {
+  width: 100%;
+  max-width: 300px;
+}
+.submit-btn {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  header {
+    display: flex;
+    margin-bottom: 1rem;
+    button {
+      float: left;
+      margin-top: 1rem;
+    }
+  }
+}

@@ -9,6 +9,7 @@ import { ShipmentTableData } from '../shipment/models/shipment-table.model'
 import { Zone } from '../admin/models/zone.model';
 import { CountryAdd } from '../admin/models/country-add';
 import { CreateShipment } from '../shipment/models/create-shipment.model';
+import { EditUser } from '../account/models/edit-user.model';
 
 const apiURL = environment.baseURL;
 
@@ -80,6 +81,18 @@ export class SessionService {
   }
   setUser(user: User): void {
 		this._user = user;
+		sessionStorage.setItem('user', JSON.stringify(user))
+	}
+  editUser(user: EditUser): void {
+    this._user!.id = user.id
+    this._user!.firstName = user.firstName;
+    this._user!.lastName = user.lastName;
+    this._user!.email = user.email;
+    this._user!.address = user.address;
+    this._user!.countryId = user.countryId;
+    this._user!.dateOfBirth = user.dateOfBirth;
+    this._user!.phoneNumber = user.phoneNumber;
+    this._user!.zipCode = user.zipCode;
 		sessionStorage.setItem('user', JSON.stringify(user))
 	}
   updateZone(zone: Zone) {

@@ -8,6 +8,8 @@ import { Box, BoxTypes } from '../../../shared/box.model';
 import { ShipmentService } from '../../services/shipment.service';
 import { CreateShipment } from '../../models/create-shipment.model';
 import { LoginService } from 'src/app/login/services/login.service';
+import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-new-shipment',
@@ -15,6 +17,7 @@ import { LoginService } from 'src/app/login/services/login.service';
   styleUrls: ['./new-shipment.page.scss']
 })
 export class NewShipmentPage implements OnInit {
+
   private _newShipment: CreateShipment = {
     senderId: undefined,
     receiverFirstName: "",
@@ -29,16 +32,18 @@ export class NewShipmentPage implements OnInit {
   private _countries: Country[] = []
   private _boxes: Box[] = []
   private _boxFormIsEmpty: boolean = false;
-  private _cost: number = 0;
+  private _cost: number = 200;
   private _newShipmentForm: any;
   private _boxFormArray: any;
+  private _submitMessage: string | undefined;
 
   constructor(
     private readonly router: Router,
     private readonly countryService: CountryService,
     private readonly sessionService: SessionService,
     private readonly shipmentService: ShipmentService,
-    private readonly loginService: LoginService
+    private readonly loginService: LoginService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -55,12 +60,12 @@ export class NewShipmentPage implements OnInit {
       receiverFirstName: new FormControl('', [
         Validators.required,
         //Must contain letters
-        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*")
+        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö ]*")
       ]),
       receiverLastName: new FormControl('', [
         Validators.required,
         //Must contain letters
-        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö]*")
+        Validators.pattern("[a-zA-ZÆæØøßÅÄÖåäö ]*")
       ]),
       destinationCountryId: new FormControl(1, [
       ]),
@@ -109,9 +114,7 @@ export class NewShipmentPage implements OnInit {
     this.getFormData()
     this.clearFormData();
   }
-  get newShipmentForm() {
-    return this._newShipmentForm
-  }
+
 
   getFormData() {
     this.calculateCost()
@@ -135,9 +138,15 @@ export class NewShipmentPage implements OnInit {
     this._newShipment.cost = this.cost
 
     //Post shipment
-    this.shipmentService.postNewShipment(<CreateShipment>this._newShipment, () => console.log("hurray!"));
-
+    this.shipmentService.postNewShipment(this._newShipment).subscribe(response => {
+      this._snackBar.open('Shipment sent!', 'OK');
+      this._newShipmentForm.reset()
+    },
+    (error)=> {
+      this._snackBar.open('Could not send shipment, please try again.', 'OK');
+    })
   }
+
   clearFormData() {
     this._newShipment = {
       senderId: undefined,
@@ -168,6 +177,9 @@ export class NewShipmentPage implements OnInit {
     }
   }
 
+  get newShipmentForm() {
+    return this._newShipmentForm
+  }
   //Form fields
   get senderEmail() {
     return this._newShipmentForm.get('senderEmail')
@@ -202,6 +214,10 @@ export class NewShipmentPage implements OnInit {
   //All available countries
   get countries() {
     return this._countries;
+  }
+
+  get submitMessage() {
+    return this._submitMessage;
   }
 
 }

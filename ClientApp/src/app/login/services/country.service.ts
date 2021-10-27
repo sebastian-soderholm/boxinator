@@ -29,29 +29,12 @@ export class CountryService {
     })
   }
   //Add new country to DB & sessionService
-  public postCountry(country: CountryAdd, onSuccess: () => void): void {
-    this.http.post<CountryAdd>(this._apiUrl + '/settings/countries', country, this.extensionService.authenticationHeadersFull)
-    .subscribe((country: any) => {
-      //Set country to session service on success
-      this.sessionService.addCountry(country)
-      onSuccess()
-    },
-    (error: HttpErrorResponse) => {
-      this._error = error.message;
-    })
+  public postCountry(country: CountryAdd) {
+    return this.http.post<Country>(this._apiUrl + '/settings/countries', country, this.extensionService.authenticationHeadersFull)
   }
   //Add new country to DB & sessionService
-  public updateCountry(country: Country, onSuccess: () => void): void {
-
-    this.http.put<Country>(this._apiUrl + '/settings/countries/' + country.id, country, this.extensionService.authenticationHeadersFull)
-    .subscribe((country: Country) => {
-      //Update country in sessionService
-      this.sessionService.updateCountry(country)
-      onSuccess()
-    },
-    (error: HttpErrorResponse) => {
-      this._error = error.message;
-    })
+  public updateCountry(country: Country) {
+    return this.http.put<Country>(this._apiUrl + '/settings/countries/' + country.id, country, this.extensionService.authenticationHeadersFull)
   }
 
 

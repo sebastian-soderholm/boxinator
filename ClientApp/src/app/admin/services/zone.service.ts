@@ -42,15 +42,8 @@ export class ZoneService {
     })
   }
 
-  //Update country
-  public updateZone(zone: Zone, onSuccess: () => void): void {
-    this.http.put<Zone>(this._apiUrl + '/settings/zones/' + zone.id, zone, this.extensionService.authenticationHeadersFull)
-    .subscribe((zone: Zone) => {
-      //Update country in sessionService
-      this.sessionService.updateZone(zone)
-    },
-    (error: HttpErrorResponse) => {
-      this._error = error.message;
-    })
+  //Update zone
+  public updateZone(zone: Zone) {
+    return this.http.put<Zone>(this._apiUrl + '/settings/zones/' + zone.id, zone, this.extensionService.authenticationHeadersFull)
   }
 }

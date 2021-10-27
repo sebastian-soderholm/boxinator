@@ -1,11 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 @use './assets/styles/_variables' as *;
+@import '~@angular/material/theming';
+
+$custom-typography: mat-typography-config($font-family: '"Montserrat", sans-serif');
+@include mat-core($custom-typography);
 
 html, body { height: 100%; }
 body { margin: 0; }
 
 * { 
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: 'Montserrat', sans-serif;
 }
 
 button { 
@@ -13,6 +17,14 @@ button {
   color: #000 !important;
   text-transform: uppercase !important;
   font-weight: 700 !important;
+  &:hover {
+    background-color: $secondary-color !important;
+    color: #fff !important;
+  }
+  &:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+  }
 }
 
 h1 {
