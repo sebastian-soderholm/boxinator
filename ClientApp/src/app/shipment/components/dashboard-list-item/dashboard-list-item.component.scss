@@ -20,8 +20,9 @@
   }
 }
 
-.progress {
-  width: 100%;
+mat-progress-bar {
+  width: 100% !important;
+  margin: 1rem 0rem;
 }
 
 ::ng-deep .mat-progress-bar-fill::after {

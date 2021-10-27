@@ -38,7 +38,6 @@ export class EditShipmentPage implements OnInit, OnChanges {
 
       this.shipmentService.getByIdObservable(Number(this.shipmentId!))
       .subscribe((result : EditShipment) => {
-        console.log(result)
         this.editForm = this.fb.group({
           header: this.sharedShipmentFormService.sharedForm(result),
           //additionalField: [null]
@@ -54,8 +53,6 @@ export class EditShipmentPage implements OnInit, OnChanges {
   }
 
   onSubmitEditForm(){
-    console.log(this.editForm!.value.header)
-    //console.log(this.editForm.value.additionalField)
     this.shipmentService.updateShipment(this.shipmentId, this.editForm!.value.header, async ()=> {
       console.log("updated");
     })
@@ -63,7 +60,6 @@ export class EditShipmentPage implements OnInit, OnChanges {
 
   cancelShipment() {
     this.shipmentService.cancelShipment(this.shipmentId, async ()=> {
-      console.log("cancelled shipment");
       this._snackBar.open('Shipment cancelled!', 'OK');
     })
   }

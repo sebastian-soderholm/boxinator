@@ -79,9 +79,7 @@ export class CountrySettingsComponent implements OnInit {
           this.countries = this.sessionService.countries;
         }
       );
-
       this.selectedZone = this.zoneSelectForm.get('zoneSelectControl').value
-      console.log("Zone selected: ", this.selectedZone)
     })
 
     //Add country to zone select event listener
@@ -94,7 +92,6 @@ export class CountrySettingsComponent implements OnInit {
   countrySaved(country: Country) {
     //If country zone was changed away from current selected zone, filter out from countries list
     if(country.zoneId !== this.selectedZone?.id) {
-      console.log("Removing country from this zone...")
       this.countries = this.countries?.filter((c: Country) => {
         return c.id !== country.id
       })
@@ -137,7 +134,6 @@ export class CountrySettingsComponent implements OnInit {
     this.editedZone.name = this.zoneSelectForm.get('zoneNameControl').value;
     this.editedZone.countryMultiplier = this.zoneSelectForm.get('zoneMultiplierControl').value;
 
-    console.log("Updating zone: ", this.editedZone)
     this.zoneService.updateZone(this.editedZone).subscribe((responseZone: Zone) => {
       //Add country to sessionService & countries array
       this.sessionService.updateZone(responseZone)

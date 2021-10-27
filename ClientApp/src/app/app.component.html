@@ -1,6 +1,6 @@
 <main (window:resize)="onResize($event)">
   <mat-sidenav-container class="container">
-    <mat-sidenav #sidenav mode="side" [(opened)]="opened" [disableClose]="this.disableClose" *ngIf="isLoggedIn" class="nav" [ngClass]="{'mobile': !this.disableClose}">
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened" [disableClose]="this.disableClose" *ngIf="isLoggedIn && isRegistered" class="nav" [ngClass]="{'mobile': !this.disableClose}">
       <button class="menu-btn" mat-icon-button (click)="toggleSidenav()" *ngIf="opened && !this.disableClose">
         <span class="material-icons">close</span>
       </button>

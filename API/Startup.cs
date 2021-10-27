@@ -11,7 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace boxinator
 {
@@ -69,7 +71,22 @@ namespace boxinator
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Boxinator", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Boxinator",
+                    Version = "v1",
+                    Description = "ASP.NET Core Web API with CRUD functionality for Users, Shipments and Settings",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Jani Vihervuori, Sebastian Soderholm & Peppi Makela",
+                        Email = "jani.vihervuori@fi.experis.com, sebastian.soderholm@fi.experis.com & peppi.makela@fi.experis.com",
+                        Url = new Uri("https://sebastian-soderholm.github.io/boxinator/"),
+                    }
+                });
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
