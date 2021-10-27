@@ -271,7 +271,16 @@ namespace boxinator.Services
         public async Task<List<Shipment>> GetAllComplete(DateTime? from, DateTime? to, int? currentUserId)
         {
             // set up query
-            var query = _context.ShipmentStatusLogs.Where(x => x.Status.Id == (int)StatusCodes.COMPELED);
+            //var query = _context.ShipmentStatusLogs.Where(x => x.Status.Id == (int)StatusCodes.COMPELED);
+
+            // group statuslogs by shipmentId, get newest from each group
+            var newestShipmentIds = _context.ShipmentStatusLogs.AsEnumerable()
+                    .GroupBy(x => x.ShipmentId)
+                    .Select(x => x.OrderByDescending(y => y.Date).Distinct().FirstOrDefault())
+                    .Where(s => s.StatusId == (int)StatusCodes.COMPELED).Select(x => x.ShipmentId).ToList();
+
+            // retrieve matching logs
+            var query = _context.ShipmentStatusLogs.Where(x => newestShipmentIds.Contains(x.ShipmentId));
 
             // filter by dates
             if (from != null && to != null)
@@ -303,7 +312,16 @@ namespace boxinator.Services
         public async Task<List<Shipment>> GetAllCancelled(DateTime? from, DateTime? to, int? currentUserId)
         {
             // set up query
-            var query = _context.ShipmentStatusLogs.Where(x => x.Status.Id == (int)StatusCodes.CANCELLED);
+            //var query = _context.ShipmentStatusLogs.Where(x => x.Status.Id == (int)StatusCodes.CANCELLED);
+
+            // group statuslogs by shipmentId, get newest from each group
+            var newestShipmentIds = _context.ShipmentStatusLogs.AsEnumerable()
+                    .GroupBy(x => x.ShipmentId)
+                    .Select(x => x.OrderByDescending(y => y.Date).Distinct().FirstOrDefault())
+                    .Where(s => s.StatusId == (int)StatusCodes.CANCELLED).Select(x => x.ShipmentId).ToList();
+
+            // retrieve matching logs
+            var query = _context.ShipmentStatusLogs.Where(x => newestShipmentIds.Contains(x.ShipmentId));
 
             // filter by dates
             if (from != null && to != null)
