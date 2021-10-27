@@ -3,7 +3,7 @@
 1. To install all required packages, run 
 `npm install`
 
-2. To run front end application in development environment execute
+2. To run this front end application in development environment execute
 `ng serve` and navigate to `http://localhost:4200/`
 
 3. Create firebase account for authentication
