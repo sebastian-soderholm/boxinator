@@ -1,4 +1,4 @@
-# ClientApp
+# Installation instructions for [ClientApp](https://github.com/sebastian-soderholm/boxinator/tree/master/ClientApp)
 
 1. To install all required packages, run 
 `npm install`
@@ -8,6 +8,6 @@
 
 3. Create firebase account for authentication
 
-4. Environmental variables
-  - Update environments/environment.ts file with your firebase settings
+4. Environmental variables (environments/environment.ts)
+  - Update your firebase settings
   - Update baseURL with your API's address
