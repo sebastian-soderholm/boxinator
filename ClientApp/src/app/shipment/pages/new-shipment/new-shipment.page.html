@@ -3,7 +3,7 @@
   <!-- Reciever first name -->
   <div>
     <mat-form-field appearance="outline">
-      <mat-label>Reciever first name</mat-label>
+      <mat-label>Receiver first name</mat-label>
       <input matInput class="form-control" formControlName="receiverFirstName" type="text" placeholder="First name"
         required>
       <!-- Errors -->
@@ -19,7 +19,7 @@
   <!-- Reciever last name -->
   <div>
     <mat-form-field appearance="outline">
-      <mat-label>Reciever last name</mat-label>
+      <mat-label>Receiver last name</mat-label>
       <input matInput class="form-control" formControlName="receiverLastName" type="text" placeholder="Last name" required>
       <mat-error *ngIf="(receiverLastName?.dirty || receiverLastName?.touched) && receiverLastName?.errors?.required" class="alert">
           Last name is required
