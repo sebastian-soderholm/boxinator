@@ -8,12 +8,10 @@
     A mystery box web store / postal service
     <br />
     <a href="https://sebastian-soderholm.github.io/boxinator/#/login"><strong>View app</strong></a>
-    .
+    ·
     <a href="https://github.com/sebastian-soderholm/boxinator/blob/master/Documentation/swagger.json">Swagger json</a>
-    .
+    ·
     <a href="https://github.com/sebastian-soderholm/boxinator/blob/master/Documentation/Boxinator-Prototype.pdf">Prototype</a>
-    <br />
-    <br />
   </p>
 </div>
 
