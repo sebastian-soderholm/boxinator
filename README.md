@@ -20,17 +20,8 @@
 `add-migration Initial` and then 
 `update-database`
 
-4. ClientApp folder: To install all required packages, run 
-`npm install`
+4. Continue with ClientApp setup [here](https://github.com/sebastian-soderholm/boxinator/blob/master/ClientApp/README.md)
 
-5. To run front end application in development environment execute
-`ng serve`
-
-6. Create account for firebase authentication
-
-7. Environmental variables (ClientApp)
-  - Update environments/environment.prod.ts and environment.ts files in ClientApp with your firebase settings
-  - Update baseURL with your API:s address
 
 
 
