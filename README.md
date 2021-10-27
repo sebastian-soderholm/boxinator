@@ -1,6 +1,6 @@
 <br />
 <div align="center">
-  <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <img src="https://github.com/sebastian-soderholm/boxinator/blob/master/ClientApp/src/assets/images/boxinator-cat-logo.jpg" alt="Logo" width="80" height="80">
 
   <h3 align="center">Boxinator</h3>
 
@@ -8,8 +8,10 @@
     A mystery box web store / postal service
     <br />
     <a href="https://sebastian-soderholm.github.io/boxinator/#/login"><strong>View app</strong></a>
-    <br />
-    <br />
+    ·
+    <a href="https://github.com/sebastian-soderholm/boxinator/blob/master/Documentation/swagger.json">Swagger json</a>
+    ·
+    <a href="https://github.com/sebastian-soderholm/boxinator/blob/master/Documentation/Boxinator-Prototype.pdf">Prototype</a>
   </p>
 </div>
 
@@ -105,8 +107,20 @@ To start, clone repo using `git clone https://github.com/sebastian-soderholm/box
 `add-migration Initial` and then 
 `update-database`
 
-3. Continue with ClientApp setup [here](https://github.com/sebastian-soderholm/boxinator/blob/master/ClientApp/README.md)
 
+### Installation instructions for [ClientApp](https://github.com/sebastian-soderholm/boxinator/tree/master/ClientApp)
+
+1. To install all required packages, run 
+`npm install`
+
+2. To run this front end application in development environment execute
+`ng serve` and navigate to `http://localhost:4200/`
+
+3. Create firebase account for authentication
+
+4. Environmental variables (environments/environment.ts)
+    - Update your firebase settings
+    - Update baseURL with your API's address
 
 
 
