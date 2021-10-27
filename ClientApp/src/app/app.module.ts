@@ -62,6 +62,7 @@ import { EditShipmentPage } from './shipment/pages/edit-shipment/edit-shipment.p
 import { SharedFormComponent } from './shipment/components/shared-form/shared-form.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { UserSettingsFormComponent } from './admin/components/user-settings-form/user-settings-form.component';
 
 const DATE_FORMAT = {
   parse: {
@@ -97,7 +98,8 @@ const DATE_FORMAT = {
     EditShipmentPage,
     CountryListComponent,
     CountryListItemComponent,
-    SharedFormComponent
+    SharedFormComponent,
+    UserSettingsFormComponent
   ],
   imports: [
     BrowserModule,

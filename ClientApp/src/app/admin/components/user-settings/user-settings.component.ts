@@ -56,7 +56,7 @@ export class UserSettingsComponent implements OnInit {
     })
   }
 
-  updateUser(user: User) {
+  updateUser(user: any) {
     console.table(user)
 
     this._accountService.updateUserAsAdmin(user).subscribe(response => {

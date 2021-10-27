@@ -1,23 +1,23 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { passwordsMatch } from 'src/app/login/pages/register/fields-match';
-import { LoginService } from 'src/app/login/services/login.service';
-import { User } from '../../models/user.model';
-import { AccountService } from '../../services/account.service';
-import { SessionService } from 'src/app/shared/session.service';
-import { CountryService } from 'src/app/login/services/country.service';
-import { Country } from 'src/app/login/models/country.model';
 import { DatePipe } from '@angular/common';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EditUser } from '../../models/edit-user.model';
+import { Router } from '@angular/router';
+import { EditUser } from 'src/app/account/models/edit-user.model';
+import { User } from 'src/app/account/models/user.model';
+import { AccountService } from 'src/app/account/services/account.service';
+import { Country } from 'src/app/login/models/country.model';
+import { passwordsMatch } from 'src/app/login/pages/register/fields-match';
+import { CountryService } from 'src/app/login/services/country.service';
+import { LoginService } from 'src/app/login/services/login.service';
+import { SessionService } from 'src/app/shared/session.service';
 
 @Component({
-  selector: 'app-edit-account',
-  templateUrl: './edit-account.page.html',
-  styleUrls: ['./edit-account.page.scss'],
+  selector: 'app-user-settings-form',
+  templateUrl: './user-settings-form.component.html',
+  styleUrls: ['./user-settings-form.component.scss']
 })
-export class EditAccountPage implements OnInit, OnChanges {
+export class UserSettingsFormComponent implements OnInit, OnChanges  {
   minDate = new Date(1900, 1, 1);
   maxDate = new Date(); // Today
   private _editUser: EditUser | undefined;
@@ -28,6 +28,8 @@ export class EditAccountPage implements OnInit, OnChanges {
   @Input() showAdminSelection: boolean = false;
   @Input() incomingUser: User | undefined;
   date1 = new FormControl(new Date());
+  @Output()
+  formSubmit: EventEmitter<EditUser> = new EventEmitter();
 
   constructor(
     private readonly _loginService: LoginService,
@@ -103,14 +105,8 @@ export class EditAccountPage implements OnInit, OnChanges {
     this._editUser!.zipCode = this._editUserForm.get('zipCode').value;
     this._editUser!.phoneNumber = this._editUserForm.get('phoneNumber').value;
 
-    //Send request
-    this._accountService.updateUser(this._editUser!).subscribe(response => {
-      this._sessionService.editUser(this._editUser!);
-      this._snackBar.open('Account updated!', 'OK');
-    },
-    (error)=> {
-      this._snackBar.open('Could not update account info, please try again.', 'OK');
-    })
+    //Emit event for parents
+    this.formSubmit.emit(this._editUser);
   }
   get editUserForm() {
     return this._editUserForm;
@@ -149,4 +145,5 @@ export class EditAccountPage implements OnInit, OnChanges {
   get userDateOfBirth() {
     return this._editUser?.dateOfBirth
   }
+
 }
