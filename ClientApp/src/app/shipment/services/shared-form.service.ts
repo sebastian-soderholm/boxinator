@@ -20,7 +20,6 @@ export class SharedShipmentFormService {
 		const fg = this.baseFormValidations();
 
 		if(shipment != null) {
-			console.log(shipment)
 			fg.get('senderEmail')?.setValue(shipment.sender.email);
 			fg.get('receiverFirstName')?.setValue(shipment.receiverFirstName);
 			fg.get('receiverLastName')?.setValue(shipment.receiverLastName);

@@ -114,9 +114,8 @@ export class SessionService {
   }
 
   logout(): void {
-    sessionStorage.removeItem('user');
-    sessionStorage.removeItem('token');
-  }
+    window.sessionStorage.clear(); 
+  } 
 
   setRole(role : string) {
     sessionStorage.setItem('role', role);

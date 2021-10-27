@@ -14,6 +14,7 @@ using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -21,6 +22,8 @@ namespace boxinator.Controllers
 {
     [ApiController]
     [Route("shipments")]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
     [EnableCors("_myAllowSpecificOrigins")]
     [Authorize]
     public class ShipmentsController : ControllerBase
@@ -146,9 +149,7 @@ namespace boxinator.Controllers
                 userToDB.CountryId = shipmentGuestDTO.CountryId;
                 
                 userInDB = await _accountService.Add(userToDB);
-            }
-
-             
+            }             
             Shipment newShipment = _mapper.Map<Shipment>(shipmentGuestDTO);
 
             //Link user to shipment and save to DB
@@ -160,7 +161,7 @@ namespace boxinator.Controllers
         /// <summary>
         /// Get shipment by id
         /// </summary>
-        /// <param name="shipmentId"></param>
+        /// <param name="shipmentId">Shipment's id</param>
         /// <returns>Found shipment</returns>
         // GET: /shipments/:shipment_id
         [HttpGet("/shipments/{shipmentId}")]
@@ -181,9 +182,10 @@ namespace boxinator.Controllers
         /// <summary>
         /// Get shipments by user id
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="userId">User's id</param>
         /// <returns>List of shipments or 403</returns>
         // GET: /shipments/customer/:customer_id
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden)]
         [HttpGet("/shipments/customer/{userId}")]
         public async Task<ActionResult<List<ShipmentReadDTO>>> GetByUser(int userId)
         {            
@@ -197,7 +199,7 @@ namespace boxinator.Controllers
                 var shipments = await _shipmentService.GetByUser(userId);
                 return _mapper.Map<List<ShipmentReadDTO>>(shipments);
             }
-
+            // not authorized
             return StatusCode(403);
         }
 
@@ -208,6 +210,7 @@ namespace boxinator.Controllers
         /// <param name="shipmentDto"></param>
         /// <returns>Updated shipment or 403</returns>
         //PUT: /shipments/:shipment_id
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden)]
         [HttpPut("/shipments/{shipmentId}")]
         public async Task<ActionResult<ShipmentReadDTO>> Update(int shipmentId, ShipmentEditDTO shipmentDto)
         {
@@ -221,10 +224,8 @@ namespace boxinator.Controllers
                 var resultShipment = await _shipmentService.Update(shipmentId, updatedShipment);
                 return _mapper.Map<ShipmentReadDTO>(resultShipment);
             }
-
             // not authorized
             return StatusCode(403);
-
         }
 
         /// <summary>

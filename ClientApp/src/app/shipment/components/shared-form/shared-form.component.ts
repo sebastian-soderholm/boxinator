@@ -24,7 +24,6 @@ export class SharedFormComponent implements OnInit {
 
     ) { 
       this.countryService.fetchCountriesToSession(() =>{
-        console.log("countries fetched");
         this.countries = this.sessionService!.countries;
       })
   }

@@ -47,7 +47,6 @@ export class EditAccountPage implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this._editUser = this.showAdminSelection == true ? this._sessionService.userForAdmin : this._sessionService.user;
-    console.log(this._editUser)
 
     this._countryService.fetchCountriesToSession(async () => {
       this._countries = this._sessionService.countries!;

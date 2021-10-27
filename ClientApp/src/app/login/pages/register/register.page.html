@@ -28,7 +28,7 @@
   </div>
   <!-- Date -->
   <div>
-    <mat-form-field appearance="outline">
+    <mat-form-field class="form-field" appearance="outline">
       <mat-label>Date of birth</mat-label>
       <input matInput [matDatepicker]="picker" [formControl]="dateOfBirth" [min]="minDate" [max]="maxDate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -46,7 +46,7 @@
   </div>
   <!-- Address -->
   <div>
-    <mat-form-field appearance="outline">
+    <mat-form-field class="form-field" appearance="outline">
       <mat-label>Address</mat-label>
       <input matInput formControlName="address" type="text" placeholder="Address">
       <mat-error *ngIf="(address.dirty || address.touched) && address.errors?.pattern" class="alert">
