@@ -136,6 +136,19 @@ export class ShipmentService {
     })
   }
 
+  //add cancel status
+  public cancelShipment(shipmentId: number, onSuccess: () => void) : void {
+    this.http.get<ShipmentStatusLog>(apiUrl + '/shipments/cancel/' +shipmentId, this.extensionService.authenticationHeadersFull)
+    .subscribe((newStatusLog: ShipmentStatusLog) => {
+      console.log(newStatusLog)
+      onSuccess();
+    },
+    (error: HttpErrorResponse) => {
+      this._error = error.message;
+      console.table(error)
+    })
+  }
+
   //delete shipment
   public deleteShipment(shipmentId: number) {
     return this.http.delete<boolean>(apiUrl + '/shipments/' + shipmentId, this.extensionService.authenticationHeadersFull)

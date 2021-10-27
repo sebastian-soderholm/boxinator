@@ -9,6 +9,7 @@ import { CreateShipment } from '../../models/create-shipment.model';
 import { Observable } from 'rxjs';
 import { EditShipment } from '../../models/edit-shipment.model';
 import { Country } from 'src/app/login/models/country.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-shipment',
@@ -25,7 +26,8 @@ export class EditShipmentPage implements OnInit, OnChanges {
     private readonly sessionService: SessionService,
     private fb: FormBuilder,
     private sharedShipmentFormService: SharedShipmentFormService,
-    private readonly shipmentService: ShipmentService
+    private readonly shipmentService: ShipmentService,
+    private _snackBar: MatSnackBar
     ) {   
       this.editForm = this.fb.group({
         header: this.sharedShipmentFormService.sharedForm(null),
@@ -56,6 +58,13 @@ export class EditShipmentPage implements OnInit, OnChanges {
     //console.log(this.editForm.value.additionalField)
     this.shipmentService.updateShipment(this.shipmentId, this.editForm!.value.header, async ()=> {
       console.log("updated");
+    })
+  }
+
+  cancelShipment() {
+    this.shipmentService.cancelShipment(this.shipmentId, async ()=> {
+      console.log("cancelled shipment");
+      this._snackBar.open('Shipment cancelled!', 'OK');
     })
   }
 

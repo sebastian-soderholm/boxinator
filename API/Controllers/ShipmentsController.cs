@@ -258,7 +258,7 @@ namespace boxinator.Controllers
         /// <param name="shipmentId"></param>
         /// <returns>Cancelled statusLog</returns>
         /// // GET: /shipments/log/:shipment_id
-        [HttpGet("/shipments/log/{shipmentId}")]
+        [HttpGet("/shipments/cancel/{shipmentId}")]
         public async Task<ActionResult<ShipmentStatusLogReadDTO>> CancelStatus(int shipmentId)
         {
             ShipmentStatusLog cancelledLog = await _shipmentService.AddCancelledStatus(shipmentId);
