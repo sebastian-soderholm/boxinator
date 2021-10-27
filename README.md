@@ -6,7 +6,7 @@
 
 ## Installation
 1. Clone repo using `git clone https://github.com/sebastian-soderholm/boxinator.git`
-2. Environmental variables (API): Add connection string to your database into appsettings.json in following format
+2. Add connection string to your database into appsettings.json in following format
 
 ```
 {
