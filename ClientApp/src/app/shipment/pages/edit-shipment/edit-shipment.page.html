@@ -5,9 +5,7 @@
 	<app-shared-form [header]="editForm?.get('header')!" [parentGroup]="editForm"></app-shared-form>
 
 	<!-- Non shared -->
-	<button type="submit" mat-raised-button color="accent" [disabled]="!editForm.valid">Save</button>
+	<button type="submit" mat-raised-button color="accent" [disabled]="!editForm.valid">Save</button><br />
+	<button mat-flat-button class="edit-btn" (click)="cancelShipment()">Cancel status</button>
 
 </form>
-<div>
-	<button mat-raised-button color="accent" (click)="cancelShipment()">Cancel shipment</button>
-</div>
