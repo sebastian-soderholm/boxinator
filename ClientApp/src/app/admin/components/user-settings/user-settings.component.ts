@@ -45,6 +45,7 @@ export class UserSettingsComponent implements OnInit {
   deleteUser(user: User) {
     //Delete user
     this._accountService.deleteUser(user.id).subscribe(response => {
+      console.log("Deleting user: ", user)
       this._snackBar.open('User deleted!', 'OK');
       //Delete user from list
       this.users = this.users?.filter((findUser: User) => {
