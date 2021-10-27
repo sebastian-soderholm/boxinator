@@ -93,7 +93,7 @@ export class RegisterPage implements OnInit {
     );
   }
 
-  register(): void {
+  async register() {
     this._registerUser.firstName = this._registerForm.get('firstName').value;
     this._registerUser.lastName = this._registerForm.get('lastName').value;
     this._registerUser.dateOfBirth = this._registerForm.get('dateOfBirth').value;
@@ -107,9 +107,9 @@ export class RegisterPage implements OnInit {
 
     console.table(this._registerUser)
     //Send request
-    this.accountService.registerUser(this._registerUser!).subscribe((responseUser: User) => {
-      this.sessionService.setUser(responseUser);
-      this.loginService.setLoggedIn(true);
+    await this.accountService.registerUser(this._registerUser!).subscribe(async (responseUser: User) => {
+      await this.sessionService.setUser(responseUser);
+      await this.loginService.setLoggedIn(true)
       this.router.navigate(['/dashboard']);
       this._snackBar.open('Thank you for registering, welcome to Boxinator!', '', {
         duration: 3000
@@ -117,7 +117,8 @@ export class RegisterPage implements OnInit {
     },
     (error)=> {
       this._snackBar.open('Could not register, please try again.', 'OK');
-    })
+    },
+    )
   }
   get registerForm() {
     return this._registerForm;
