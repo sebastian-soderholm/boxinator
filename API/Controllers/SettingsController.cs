@@ -12,12 +12,15 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace boxinator.Controllers
 {
     [ApiController]
     [Route("settings")]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
     [EnableCors("_myAllowSpecificOrigins")]
     [Authorize]
     public class SettingsController : ControllerBase
@@ -34,12 +37,13 @@ namespace boxinator.Controllers
         }
 
         /// <summary>
-        /// Update specific user
+        /// Update specific user by id
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="accountId">Users id</param>
         /// <param name="userDTO"></param>
         /// <returns>Updated user or 403</returns>
         // PUT: /settings/account/:account_id
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden)]
         [HttpPut("/settings/account/{accountId}")]
         public async Task<ActionResult<UserReadDTO>> Update(int accountId, UserEditDTO userDTO)
         {
@@ -53,13 +57,11 @@ namespace boxinator.Controllers
                 User resultUser = await _accountService.Update(accountId, updatedUser);
                 return _mapper.Map<UserReadDTO>(resultUser);
             }
-
             return StatusCode(403);
-
         }
 
         /// <summary>
-        /// Get countries with multipliers
+        /// Get all countries with multipliers
         /// </summary>
         /// <returns>List of countries with multipliers</returns>
         // GET: /settings/countries
@@ -68,18 +70,17 @@ namespace boxinator.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<List<CountryReadDTO>>> GetAllCountries()
         {
-
             var countries = await _settingsService.GetAllCountries();
             return _mapper.Map<List<CountryReadDTO>>(countries);
-            
         }
 
         /// <summary>
         /// Add new country
         /// </summary>
         /// <param name="countryDTO"></param>
-        /// <returns>Added country</returns>
+        /// <returns>Added country or 403</returns>
         // POST: /settings/countries
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden)]
         [HttpPost]
         [Route("/settings/countries")]
         public async Task<ActionResult<CountryReadDTO>> AddCountry(CountryCreateDTO countryDTO)
@@ -93,17 +94,17 @@ namespace boxinator.Controllers
                 var resultCountry = await _settingsService.AddCountry(countryDTO);
                 return _mapper.Map<CountryReadDTO>(resultCountry);
             }
-
             return StatusCode(403);
         }
 
         /// <summary>
         /// Update country by id
         /// </summary>
-        /// <param name="countryId"></param>
+        /// <param name="countryId">Country's id</param>
         /// <param name="countryDTO"></param>
-        /// <returns>Updated country</returns>
+        /// <returns>Updated country or 403</returns>
         //PUT: /settings/countries/:id
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden)]
         [HttpPut]
         [Route("/settings/countries/{countryId}")]
         public async Task<ActionResult<CountryReadDTO>> UpdateCountry(int countryId, CountryEditDTO countryDTO)
@@ -117,10 +118,13 @@ namespace boxinator.Controllers
                 var resultCountry = await _settingsService.UpdateCountry(countryId, countryDTO);
                 return _mapper.Map<CountryReadDTO>(resultCountry);
             }
-
             return StatusCode(403);
         }
 
+        /// <summary>
+        /// Gets all the zones
+        /// </summary>
+        /// <returns>List of zones</returns>
         //GET: /settings/zones
         [HttpGet]
         [Route("/settings/zones")]
@@ -131,6 +135,11 @@ namespace boxinator.Controllers
             return _mapper.Map<List<ZoneReadDTO>>(zones);
         }
 
+        /// <summary>
+        /// Gets all countrys in zone by id
+        /// </summary>
+        /// <param name="zoneId">Zone's id</param>
+        /// <returns>List of countries in zone</returns>
         //GET: /settings/zones/{zoneId}
         [HttpGet("/settings/zones/{zoneId}")]
         [AllowAnonymous]
@@ -143,10 +152,11 @@ namespace boxinator.Controllers
         /// <summary>
         /// Edit zone info
         /// </summary>
-        /// <param name="zoneId"></param>
+        /// <param name="zoneId">Zone's id</param>
         /// <param name="zoneDTO"></param>
-        /// <returns></returns>
+        /// <returns>Updated zone or 403</returns>
         //PUT: /settings/zones/{zoneId}
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden)]
         [HttpPut]
         [Route("/settings/zones/{zoneId}")]
         public async Task<ActionResult<ZoneReadDTO>> UpdateZone(int zoneId, ZoneEditDTO zoneDTO)
@@ -160,15 +170,15 @@ namespace boxinator.Controllers
                 var resultZone = await _settingsService.UpdateZone(zoneId, zoneDTO);
                 return _mapper.Map<ZoneReadDTO>(resultZone);
             }
-
             return StatusCode(403);
         }
 
         /// <summary>
-        /// Add zone
+        /// Add a new zone
         /// </summary>
         /// <param name="zoneDTO"></param>
-        /// <returns></returns>
+        /// <returns>New zone or 403</returns>
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden)]
         [HttpPost]
         [Route("/settings/zones")]
         public async Task<ActionResult<ZoneReadDTO>> Add(ZoneCreateDTO zoneDTO)
@@ -182,16 +192,15 @@ namespace boxinator.Controllers
                 var resultZone = await _settingsService.AddZone(zoneDTO);
                 return _mapper.Map<ZoneReadDTO>(resultZone);
             }
-
             return StatusCode(403);
-
         }
 
         /// <summary>
         /// Get all statuses
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of statuses or 403</returns>
         //GET: /settings/statuses
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden)]
         [HttpGet]
         [Route("/settings/statuses")]
         public async Task<ActionResult<List<StatusReadDTO>>> GetAllStatuses()
@@ -205,7 +214,6 @@ namespace boxinator.Controllers
                 var resultStatuses = await _settingsService.GetAllStatuses();
                 return _mapper.Map<List<StatusReadDTO>>(resultStatuses);
             }
-
             return StatusCode(403);
         }
 
@@ -213,8 +221,9 @@ namespace boxinator.Controllers
         /// Update existing status
         /// </summary>
         /// <param name="statusDTO"></param>
-        /// <returns></returns>
+        /// <returns>Updated status or 403</returns>
         //PUT: /settings/statuses
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden)]
         [HttpPut]
         [Route("/settings/statuses")]
         public async Task<ActionResult<StatusReadDTO>> UpdateStatus(StatusEditDTO statusDTO)
@@ -228,17 +237,17 @@ namespace boxinator.Controllers
                 var resultStatus = await _settingsService.UpdateStatus(statusDTO);
                 return _mapper.Map<StatusReadDTO>(resultStatus);
             }
-
             // not authorized
             return StatusCode(403);
         }
 
         /// <summary>
-        /// Add status
+        /// Add a new status
         /// </summary>
         /// <param name="statusDTO"></param>
-        /// <returns></returns>
+        /// <returns>New status or 403</returns>
         //POST: /settings/statuses
+        [ProducesResponseType(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden)]
         [HttpPost]
         [Route("/settings/statuses")]
         public async Task<ActionResult<StatusReadDTO>> AddStatus(StatusCreateDTO statusDTO)
@@ -252,11 +261,8 @@ namespace boxinator.Controllers
                 var resultStatus = await _settingsService.AddStatus(statusDTO);
                 return _mapper.Map<StatusReadDTO>(resultStatus);
             }
-
             // not authorized
             return StatusCode(403);
         }
-
-
     }
 }
