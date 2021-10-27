@@ -1,7 +1,5 @@
 # ClientApp
 
-## Development server
-
 1. To install all required packages, run 
 `npm install`
 
@@ -11,5 +9,5 @@
 3. Create firebase account for authentication
 
 4. Environmental variables
-  - Update environments/environment.prod.ts and environment.ts files with your firebase settings
+  - Update environments/environment.ts file with your firebase settings
   - Update baseURL with your API's address
