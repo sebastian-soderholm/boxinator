@@ -1,27 +1,43 @@
 # Boxinator
 A mystery box web store / postal service
 
-### Overview
+## Overview
 This project consists of front end Angular application with Firebase authentication, .NET API and Entity Framework with database migrations. The application allows users to order mystery boxes to be shipped around the world.
 
 ## Functionalities
-- Three types of accounts (guest/registered user/admin)
-  - Guest access:
+###Pages:  
+Dashboard  
+  - View current shipments  
+New shipment  
+  - Select multiple boxes for shipping from multiple tiers with user defined colours  
+  - Shipment status management (admin)  
+My shipments  
+  - View all shipments, order and filter by status and date range  
+Account  
+  - Edit own account data 
+Settings (admin)  
+  - Edit users' accounts  
+  - Edit countries and zones  
+
+Login using Google account as one of the following
+  - Guest
     - Able to create shipment without registering
     - Claim shipment by registering
-  - Registered user access:
+  - Registered user
     - Dashboard: View current shipments
+    - New shipment: Create new shipments
     - My shipments: View all shipments, order and filter by status and date range
     - Account: Edit their own account information
-  - Admin access:
+  - Admin
     - Dashboard: View all users' current shipments
+    - New shipment: Create new shipments
     - My shipments:
-        - View all users' shipments, order and filter by status and date range
-        - Set next status
-        - Edit, delete and cancel shipments
+      - View all users' shipments, order and filter by status and date range
+      - Set next status
+      - Edit, delete and cancel shipments
     - Account: 
-        - Edit all users' account information
-        - Edit countries and zones
+      - Edit all users' account information
+      - Edit countries and zones  
 
 
 ### Group
