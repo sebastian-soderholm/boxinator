@@ -9,9 +9,11 @@
     <br />
     <a href="https://sebastian-soderholm.github.io/boxinator/#/login"><strong>View app</strong></a>
     ·
-    <a href="https://github.com/sebastian-soderholm/boxinator/blob/master/Documentation/swagger.json">Swagger json</a>
+    <a href="https://github.com/sebastian-soderholm/boxinator/blob/master/Documentation/swagger.json">Swagger</a>
     ·
     <a href="https://github.com/sebastian-soderholm/boxinator/blob/master/Documentation/Boxinator-Prototype.pdf">Prototype</a>
+    ·
+    <a href="https://github.com/sebastian-soderholm/boxinator/blob/master/Documentation/boxinator-database-diagram.PNG">Database diagram</a>
   </p>
 </div>
 
