@@ -106,11 +106,13 @@ export class ShipmentService {
   public addNewStatusLog(shipmentId: number, onSuccess: () => void) : void {
     this.http.get<ShipmentStatusLog>(apiUrl + '/shipments/log/' +shipmentId, this.extensionService.authenticationHeadersFull)
     .subscribe((newStatusLog: ShipmentStatusLog) => {
-      let shipmentTableDataArray = this.sessionService!.shipmentTableData;
-      let shipment = shipmentTableDataArray!.find(l => l.id == newStatusLog.shipmentId);
-      shipment?.shipmentStatusLogs.push(newStatusLog);
-
-      this.sessionService.setShipmentsTableData(shipmentTableDataArray!);
+      if(newStatusLog != null){
+        let shipmentTableDataArray = this.sessionService!.shipmentTableData;
+        let shipment = shipmentTableDataArray!.find(l => l.id == newStatusLog.shipmentId);
+        shipment?.shipmentStatusLogs.push(newStatusLog);
+  
+        this.sessionService.setShipmentsTableData(shipmentTableDataArray!);  
+      }
 
       onSuccess();
     },

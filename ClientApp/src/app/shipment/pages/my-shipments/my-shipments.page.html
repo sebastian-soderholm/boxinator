@@ -67,8 +67,8 @@
           <div class="example-element-color">
             <h2>Edit</h2>
             <div>
-              <button mat-flat-button class="edit-btn" (click)="addNewStatus(shipmentTableData.id)">Update status</button>
-              <button mat-flat-button class="edit-btn" [routerLink]="['/edit-shipment/', shipmentTableData.id]">Edit</button>
+              <button mat-flat-button class="edit-btn" *ngIf="shipmentTableData['status'] != 'COMPLETED' && shipmentTableData['status'] != 'CANCELLED'" (click)="addNewStatus(shipmentTableData.id)">Update status</button>
+              <button mat-flat-button class="edit-btn" *ngIf="shipmentTableData['status'] != 'COMPLETED' && shipmentTableData['status'] != 'CANCELLED'" [routerLink]="['/edit-shipment/', shipmentTableData.id]">Edit</button>
               <button mat-flat-button class="edit-btn" (click)="deleteShipment(shipmentTableData.id)">Delete</button>
             </div>
           </div>

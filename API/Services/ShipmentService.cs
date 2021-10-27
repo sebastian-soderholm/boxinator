@@ -1,7 +1,5 @@
 ﻿using boxinator.Models;
 using boxinator.Models.Domain;
-using boxinator.Models.DTO.Shipment;
-using boxinator.Models.DTO.Status;
 using boxinator.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,6 +27,7 @@ namespace boxinator.Services
             var newestStatusLog = await _context.ShipmentStatusLogs.AsNoTracking()
                 .Where(x => x.ShipmentId == shipmentId).OrderByDescending(x => x.Date)
                 .Include(s => s.Shipment)
+                .Include(s => s.Status)
                 .FirstOrDefaultAsync();
 
             if (newestStatusLog == null)
@@ -36,6 +35,9 @@ namespace boxinator.Services
 
             // get next status
             Status nextStatus = _context.Statuses.AsNoTracking().Where(x => x.Id == (newestStatusLog.StatusId + 1)).FirstOrDefaultAsync().Result;
+
+            if (nextStatus == null)
+                return null;
 
             if(nextStatus.Id != (int)StatusCodes.CANCELLED)
             {
@@ -269,7 +271,16 @@ namespace boxinator.Services
         public async Task<List<Shipment>> GetAllComplete(DateTime? from, DateTime? to, int? currentUserId)
         {
             // set up query
-            var query = _context.ShipmentStatusLogs.Where(x => x.Status.Id == (int)StatusCodes.COMPELED);
+            //var query = _context.ShipmentStatusLogs.Where(x => x.Status.Id == (int)StatusCodes.COMPELED);
+
+            // group statuslogs by shipmentId, get newest from each group
+            var newestShipmentIds = _context.ShipmentStatusLogs.AsEnumerable()
+                    .GroupBy(x => x.ShipmentId)
+                    .Select(x => x.OrderByDescending(y => y.Date).Distinct().FirstOrDefault())
+                    .Where(s => s.StatusId == (int)StatusCodes.COMPELED).Select(x => x.ShipmentId).ToList();
+
+            // retrieve matching logs
+            var query = _context.ShipmentStatusLogs.Where(x => newestShipmentIds.Contains(x.ShipmentId));
 
             // filter by dates
             if (from != null && to != null)
@@ -301,7 +312,16 @@ namespace boxinator.Services
         public async Task<List<Shipment>> GetAllCancelled(DateTime? from, DateTime? to, int? currentUserId)
         {
             // set up query
-            var query = _context.ShipmentStatusLogs.Where(x => x.Status.Id == (int)StatusCodes.CANCELLED);
+            //var query = _context.ShipmentStatusLogs.Where(x => x.Status.Id == (int)StatusCodes.CANCELLED);
+
+            // group statuslogs by shipmentId, get newest from each group
+            var newestShipmentIds = _context.ShipmentStatusLogs.AsEnumerable()
+                    .GroupBy(x => x.ShipmentId)
+                    .Select(x => x.OrderByDescending(y => y.Date).Distinct().FirstOrDefault())
+                    .Where(s => s.StatusId == (int)StatusCodes.CANCELLED).Select(x => x.ShipmentId).ToList();
+
+            // retrieve matching logs
+            var query = _context.ShipmentStatusLogs.Where(x => newestShipmentIds.Contains(x.ShipmentId));
 
             // filter by dates
             if (from != null && to != null)

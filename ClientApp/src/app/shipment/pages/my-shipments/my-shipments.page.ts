@@ -65,6 +65,7 @@ export class MyShipmentsPage implements OnInit {
       name: "COMPLETED"
     }
 
+
     this.sessionService.removeShipmentsTableData();
 
     this.shipmentService.getAllCurrent(async () => {

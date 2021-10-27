@@ -11,7 +11,6 @@ namespace boxinator.Profiles
             CreateMap<User, UserReadDTO>().ReverseMap();
 
             CreateMap<User, UserCreateDTO>()
-                //.ForPath(dto => dto.Country.Id, opt => opt.MapFrom(u => u.Country.Id))
                 .ReverseMap();
 
             CreateMap<User, UserEditDTO>().ReverseMap();
