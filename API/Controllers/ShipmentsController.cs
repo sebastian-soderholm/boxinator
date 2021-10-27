@@ -3,19 +3,14 @@ using boxinator.Models;
 using boxinator.Models.Domain;
 using boxinator.Models.DTO.Shipment;
 using boxinator.Models.DTO.ShipmentStatusLog;
-using boxinator.Models.DTO.User;
 using boxinator.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace boxinator.Controllers
 {

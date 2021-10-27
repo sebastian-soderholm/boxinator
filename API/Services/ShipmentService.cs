@@ -1,7 +1,5 @@
 ﻿using boxinator.Models;
 using boxinator.Models.Domain;
-using boxinator.Models.DTO.Shipment;
-using boxinator.Models.DTO.Status;
 using boxinator.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,6 +27,7 @@ namespace boxinator.Services
             var newestStatusLog = await _context.ShipmentStatusLogs.AsNoTracking()
                 .Where(x => x.ShipmentId == shipmentId).OrderByDescending(x => x.Date)
                 .Include(s => s.Shipment)
+                .Include(s => s.Status)
                 .FirstOrDefaultAsync();
 
             if (newestStatusLog == null)
@@ -36,6 +35,9 @@ namespace boxinator.Services
 
             // get next status
             Status nextStatus = _context.Statuses.AsNoTracking().Where(x => x.Id == (newestStatusLog.StatusId + 1)).FirstOrDefaultAsync().Result;
+
+            if (nextStatus == null)
+                return null;
 
             if(nextStatus.Id != (int)StatusCodes.CANCELLED)
             {

@@ -65,6 +65,7 @@ export class MyShipmentsPage implements OnInit {
       name: "COMPLETED"
     }
 
+
     this.sessionService.removeShipmentsTableData();
 
     this.shipmentService.getAllCurrent(async () => {
@@ -102,7 +103,6 @@ export class MyShipmentsPage implements OnInit {
 
   addNewStatus(shipmentId: number) {
     this.shipmentService.addNewStatusLog(shipmentId, async() =>{
-      console.log("status added ");
       const mappedData = this.mapShipments(this.sessionService.shipmentTableData!);
       this.sortedData = mappedData;
     })
