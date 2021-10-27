@@ -36,6 +36,13 @@ export class AppComponent {
     return this.loginService.loggedIn
   }
 
+  get isRegistered(): boolean {
+    if(this.loginService.user?.firstName) {
+      return true;
+    }
+    return false;
+  }
+
   public toggleSidenav(): void {
     this.opened = !this.opened;
   }
