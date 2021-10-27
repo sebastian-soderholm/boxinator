@@ -1,6 +1,6 @@
 <br />
 <div align="center">
-  <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <img src="https://github.com/sebastian-soderholm/boxinator/blob/master/ClientApp/src/assets/images/boxinator-cat-logo.jpg" alt="Logo" width="80" height="80">
 
   <h3 align="center">Boxinator</h3>
 
