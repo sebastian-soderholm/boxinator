@@ -44,7 +44,6 @@
 * Peppi Mäkelä
 * Jani Vihervuori
 
-
 ## Overview
 This project consists of front end Angular application with Firebase authentication, .NET API and Entity Framework with database migrations. The application allows users to order mystery boxes to be shipped around the world.
 
@@ -60,16 +59,16 @@ This project consists of front end Angular application with Firebase authenticat
   - View current shipments  
 #### New shipment  
   - Select multiple boxes for shipping from multiple tiers with user defined colours  
-  - Shipment status management (admin)  
 #### My shipments  
-  - View all shipments, order and filter by status and date range  
+  - View all shipments, order and filter by status and date range    
+  - Shipment management (admin)  
 #### Account  
   - Edit own account data 
 #### Settings (admin)  
   - Edit users' accounts  
   - Edit countries and zones  
 
-### Login using Google account as one of the following
+### Login using Google account as one of the following:
 #### Guest
 - Able to create shipment without registering
 - Claim shipment by registering
@@ -77,7 +76,7 @@ This project consists of front end Angular application with Firebase authenticat
   - Dashboard: View current shipments
   - New shipment: Create new shipments
   - My shipments: View all shipments, order and filter by status and date range
-  - Account: Edit their own account information
+  - Account: Edit own account information
 #### Admin
   - Dashboard: View all users' current shipments
   - New shipment: Create new shipments
@@ -88,9 +87,6 @@ This project consists of front end Angular application with Firebase authenticat
   - Account: 
     - Edit all users' account information
     - Edit countries and zones  
-
-
-
 
 ## Getting started
 To start, clone repo using `git clone https://github.com/sebastian-soderholm/boxinator.git`
