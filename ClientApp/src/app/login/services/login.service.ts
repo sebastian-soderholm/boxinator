@@ -76,6 +76,7 @@ export class LoginService {
     this.http
       .get<User>(this._apiUrl + '/login/verify', httpOptions)
       .subscribe((user: User) => {
+        console.log(user)
         this.sessionService.setUser(user);
         this._user = user;
         // Check if the user is new or already registered.
