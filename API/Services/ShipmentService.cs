@@ -19,6 +19,11 @@ namespace boxinator.Services
             _context = context;
         }
 
+        /// <summary>
+        /// Add next status with log
+        /// </summary>
+        /// <param name="shipmentId"></param>
+        /// <returns>Newest status or null</returns>
         public async Task<ShipmentStatusLog> AddStatusLog(int shipmentId)
         {
             var newestStatusLog = await _context.ShipmentStatusLogs.AsNoTracking()
@@ -26,11 +31,15 @@ namespace boxinator.Services
                 .Include(s => s.Shipment)
                 .FirstOrDefaultAsync();
 
+            if (newestStatusLog == null)
+                return null;
+
             // get next status
             Status nextStatus = _context.Statuses.AsNoTracking().Where(x => x.Id == (newestStatusLog.StatusId + 1)).FirstOrDefaultAsync().Result;
 
-            if (newestStatusLog != null)
+            if(nextStatus.Id != (int)StatusCodes.CANCELLED)
             {
+                // create new log with updated data
                 ShipmentStatusLog newLog = new ShipmentStatusLog();
                 newLog.ShipmentId = newestStatusLog.ShipmentId;
                 newLog.StatusId = nextStatus.Id;
@@ -38,17 +47,55 @@ namespace boxinator.Services
 
                 var resultShipmentStatusLog = await _context.ShipmentStatusLogs.AddAsync(newLog);
 
-                if (resultShipmentStatusLog.Entity != null)
-                {
-                    await _context.SaveChangesAsync();
-                    resultShipmentStatusLog.Entity.Shipment = newestStatusLog.Shipment;
-                    resultShipmentStatusLog.Entity.Status = nextStatus;
-                }
+                if (resultShipmentStatusLog == null)
+                    return null;
+
+                await _context.SaveChangesAsync();
+
+                // add additional data
+                resultShipmentStatusLog.Entity.Shipment = newestStatusLog.Shipment;
+                resultShipmentStatusLog.Entity.Status = nextStatus;
 
                 return resultShipmentStatusLog.Entity;
             }
 
             return null;
+
+        }
+
+        /// <summary>
+        /// Add cancelled status
+        /// </summary>
+        /// <param name="shipmentId"></param>
+        /// <returns>Cancelled statuslog or null</returns>
+        public async Task<ShipmentStatusLog> AddCancelledStatus(int shipmentId)
+        {
+            var newestStatusLog = await _context.ShipmentStatusLogs.AsNoTracking()
+                .Where(x => x.ShipmentId == shipmentId).OrderByDescending(x => x.Date)
+                .Include(s => s.Shipment)
+                .FirstOrDefaultAsync();
+
+            if (newestStatusLog == null)
+                return null;
+
+            // create new log with updated data
+            ShipmentStatusLog newLog = new ShipmentStatusLog();
+            newLog.ShipmentId = newestStatusLog.ShipmentId;
+            newLog.StatusId = (int)StatusCodes.CANCELLED;
+            newLog.Date = DateTime.Now;
+
+            var resultShipmentStatusLog = await _context.ShipmentStatusLogs.AddAsync(newLog);
+
+            if (resultShipmentStatusLog == null)
+                return null;
+
+            await _context.SaveChangesAsync();
+
+            // add additional data
+            resultShipmentStatusLog.Entity.Shipment = newestStatusLog.Shipment;
+            //resultShipmentStatusLog.Entity.Status = nextStatus;
+
+            return resultShipmentStatusLog.Entity;
         }
 
         /// <summary>

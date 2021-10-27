@@ -250,9 +250,20 @@ namespace boxinator.Controllers
         {
             ShipmentStatusLog updatedLog = await _shipmentService.AddStatusLog(shipmentId);
             return _mapper.Map<ShipmentStatusLogReadDTO>(updatedLog);
-
         }
 
+        /// <summary>
+        /// Change shipments status to cancelled
+        /// </summary>
+        /// <param name="shipmentId"></param>
+        /// <returns>Cancelled statusLog</returns>
+        /// // GET: /shipments/log/:shipment_id
+        [HttpGet("/shipments/log/{shipmentId}")]
+        public async Task<ActionResult<ShipmentStatusLogReadDTO>> CancelStatus(int shipmentId)
+        {
+            ShipmentStatusLog cancelledLog = await _shipmentService.AddCancelledStatus(shipmentId);
+            return _mapper.Map<ShipmentStatusLogReadDTO>(cancelledLog);
+        }
 
     }
 }
