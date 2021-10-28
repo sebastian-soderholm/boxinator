@@ -14,6 +14,8 @@
     <a href="https://github.com/sebastian-soderholm/boxinator/blob/master/Documentation/Boxinator-Prototype.pdf">Prototype</a>
     ·
     <a href="https://github.com/sebastian-soderholm/boxinator/blob/master/Documentation/boxinator-database-diagram.PNG">Database diagram</a>
+    ·
+    <a href="https://github.com/sebastian-soderholm/boxinator/blob/master/Documentation/Boxinator%20user%20manual.pdf">User manual</a>
   </p>
 </div>
 
