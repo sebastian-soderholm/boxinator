@@ -65,6 +65,14 @@ export class LoginService {
     this.router.navigate(['']);
   }
 
+  // this.afAuth.onAuthStateChanged(user => {
+  //   if (user) {
+  //     // User is signed in.
+  //   } else {
+  //     // User is signed out.
+  //   }
+  // });
+
   // get req, call another method (post) if necessary
   public verifyUser(token: string): void {
     const httpOptions = {

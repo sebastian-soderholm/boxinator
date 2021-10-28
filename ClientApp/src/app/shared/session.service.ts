@@ -124,8 +124,9 @@ export class SessionService {
   }
 
   logout(): void {
-    window.sessionStorage.clear(); 
-  } 
+    window.sessionStorage.clear();
+    window.localStorage.clear();
+  }
 
   setRole(role : string) {
     sessionStorage.setItem('role', role);

@@ -110,10 +110,12 @@ export class RegisterPage implements OnInit {
       await this.sessionService.setUser(responseUser);
       await this.loginService.setLoggedIn(true)
 
-      this._snackBar.open('Thank you for registering, welcome to Boxinator!', "Ok")
+      this._snackBar.open('Thank you for registering, please log in again!', "Ok")
       .afterDismissed()
       .subscribe(() => {
-        this.router.navigate(['/dashboard']);
+        this.loginService.logout();
+        this.sessionService.logout();
+        this.router.navigate(['/']);
       });
     },
     (error)=> {

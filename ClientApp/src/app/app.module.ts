@@ -12,7 +12,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireAuthModule, PERSISTENCE } from '@angular/fire/compat/auth';
 
 // Angular Material
 import { MatTableModule } from '@angular/material/table';
@@ -136,6 +136,7 @@ const DATE_FORMAT = {
   providers: [
     DatePipe,
     MatSnackBar,
+    { provide: PERSISTENCE, useValue: 'session' },
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,
@@ -143,6 +144,7 @@ const DATE_FORMAT = {
     },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+
   ],
   bootstrap: [AppComponent]
 })
