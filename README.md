@@ -124,5 +124,20 @@ To start, clone repo using `git clone https://github.com/sebastian-soderholm/box
     - Update your firebase settings
     - Update baseURL with your API's address
 
+```
+export const environment = {
+  production: false,
+  firebaseConfig : {
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    measurementId: ""
+  },
+  baseURL: "",
+};
+```
 
 
