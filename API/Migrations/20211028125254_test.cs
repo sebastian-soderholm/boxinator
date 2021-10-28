@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace boxinator.Migrations
 {
-    public partial class initial : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -300,23 +300,23 @@ namespace boxinator.Migrations
                 columns: new[] { "Id", "Date", "ShipmentId", "StatusId" },
                 values: new object[,]
                 {
-                    { 29, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8961), 13, 4 },
-                    { 16, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8923), 7, 1 },
-                    { 14, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8917), 6, 1 },
-                    { 15, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8920), 6, 2 },
-                    { 4, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8887), 2, 2 },
-                    { 17, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8926), 8, 1 },
-                    { 13, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8914), 5, 4 },
-                    { 18, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8929), 8, 2 },
-                    { 2, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8842), 1, 2 },
-                    { 1, new DateTime(2021, 10, 25, 11, 51, 14, 241, DateTimeKind.Local).AddTicks(1543), 1, 1 },
-                    { 19, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8932), 9, 1 },
-                    { 3, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8883), 2, 1 },
-                    { 12, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8911), 5, 3 },
-                    { 10, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8905), 5, 1 },
-                    { 28, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8958), 13, 3 },
-                    { 27, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8955), 13, 2 },
-                    { 26, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8952), 13, 1 }
+                    { 29, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5109), 13, 4 },
+                    { 16, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5064), 7, 1 },
+                    { 14, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5058), 6, 1 },
+                    { 15, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5061), 6, 2 },
+                    { 4, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5022), 2, 2 },
+                    { 17, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5068), 8, 1 },
+                    { 13, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5053), 5, 4 },
+                    { 18, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5071), 8, 2 },
+                    { 2, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(4969), 1, 2 },
+                    { 1, new DateTime(2021, 10, 28, 15, 52, 53, 795, DateTimeKind.Local).AddTicks(8846), 1, 1 },
+                    { 19, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5074), 9, 1 },
+                    { 3, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5017), 2, 1 },
+                    { 12, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5049), 5, 3 },
+                    { 10, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5043), 5, 1 },
+                    { 28, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5104), 13, 3 },
+                    { 27, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5100), 13, 2 },
+                    { 26, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5097), 13, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -324,21 +324,21 @@ namespace boxinator.Migrations
                 columns: new[] { "Id", "Date", "ShipmentId", "StatusId" },
                 values: new object[,]
                 {
-                    { 30, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8964), 14, 1 },
-                    { 31, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8967), 14, 2 },
-                    { 32, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8970), 14, 5 },
-                    { 25, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8949), 12, 1 },
-                    { 23, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8944), 11, 1 },
-                    { 5, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8890), 3, 1 },
-                    { 6, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8893), 3, 2 },
-                    { 7, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8896), 3, 3 },
-                    { 22, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8941), 10, 3 },
-                    { 21, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8938), 10, 2 },
-                    { 8, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8899), 4, 1 },
-                    { 9, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8902), 4, 2 },
-                    { 20, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8935), 10, 1 },
-                    { 11, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8908), 5, 2 },
-                    { 24, new DateTime(2021, 10, 25, 11, 51, 14, 244, DateTimeKind.Local).AddTicks(8947), 11, 5 }
+                    { 30, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5112), 14, 1 },
+                    { 31, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5116), 14, 2 },
+                    { 32, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5124), 14, 5 },
+                    { 25, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5094), 12, 1 },
+                    { 23, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5087), 11, 1 },
+                    { 5, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5025), 3, 1 },
+                    { 6, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5030), 3, 2 },
+                    { 7, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5033), 3, 3 },
+                    { 22, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5084), 10, 3 },
+                    { 21, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5081), 10, 2 },
+                    { 8, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5036), 4, 1 },
+                    { 9, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5040), 4, 2 },
+                    { 20, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5077), 10, 1 },
+                    { 11, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5046), 5, 2 },
+                    { 24, new DateTime(2021, 10, 28, 15, 52, 53, 799, DateTimeKind.Local).AddTicks(5091), 11, 5 }
                 });
 
             migrationBuilder.CreateIndex(

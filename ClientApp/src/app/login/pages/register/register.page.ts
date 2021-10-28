@@ -109,9 +109,11 @@ export class RegisterPage implements OnInit {
     await this.accountService.registerUser(this._registerUser!).subscribe(async (responseUser: User) => {
       await this.sessionService.setUser(responseUser);
       await this.loginService.setLoggedIn(true)
-      this.router.navigate(['/dashboard']);
-      this._snackBar.open('Thank you for registering, welcome to Boxinator!', '', {
-        duration: 3000
+
+      this._snackBar.open('Thank you for registering, welcome to Boxinator!', "Ok")
+      .afterDismissed()
+      .subscribe(() => {
+        this.router.navigate(['/dashboard']);
       });
     },
     (error)=> {
