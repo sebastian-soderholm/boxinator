@@ -136,7 +136,7 @@ const DATE_FORMAT = {
   providers: [
     DatePipe,
     MatSnackBar,
-    { provide: PERSISTENCE, useValue: 'session' },
+    { provide: PERSISTENCE, useValue: 'local' },
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,
