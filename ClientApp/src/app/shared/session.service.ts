@@ -28,7 +28,7 @@ export class SessionService {
   private _editableShipment: CreateShipment | undefined;
 
   constructor() {
-		const storedUser = localStorage.getItem('user');
+		const storedUser = sessionStorage.getItem('user');
 		if (storedUser) {
 		  this._user = JSON.parse(storedUser) as User;
 		}
@@ -36,35 +36,35 @@ export class SessionService {
 
   setEditableShipment(shipment : CreateShipment) : void {
     this._editableShipment = shipment;
-    localStorage.setItem('editableShipment', JSON.stringify(shipment));
+    sessionStorage.setItem('editableShipment', JSON.stringify(shipment));
   }
 
   setToken(token: string) :void {
     this._token = token;
-    localStorage.setItem('token', token)
+    sessionStorage.setItem('token', token)
   }
 
   getToken() : any{
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
   setShipments(shipments: Shipment[]): void {
     this._shipments = shipments;
-    localStorage.setItem('shipments', JSON.stringify(shipments))
+    sessionStorage.setItem('shipments', JSON.stringify(shipments))
   }
 
   setShipmentsTableData(shipments: ShipmentTableData[]): void {
     this._shipmentTableData = shipments;
-    localStorage.setItem('shipmentTableData', JSON.stringify(shipments))
+    sessionStorage.setItem('shipmentTableData', JSON.stringify(shipments))
   }
 
   removeShipmentsTableData() {
-    localStorage.removeItem('shipmentTableData');
+    sessionStorage.removeItem('shipmentTableData');
   }
 
   setCountries(countries: Country[]): void {
     this._countries = countries
-    localStorage.setItem('countries', JSON.stringify(countries))
+    sessionStorage.setItem('countries', JSON.stringify(countries))
   }
   addCountry(country: Country) {
     this._countries.push(country)
@@ -77,11 +77,11 @@ export class SessionService {
   //Zones
   setZones(zones: Zone[]) {
     this._zones = zones;
-    localStorage.setItem('zones', JSON.stringify(zones))
+    sessionStorage.setItem('zones', JSON.stringify(zones))
   }
   setUser(user: User): void {
 		this._user = user;
-		localStorage.setItem('user', JSON.stringify(user))
+		sessionStorage.setItem('user', JSON.stringify(user))
 	}
   editUser(user: EditUser): void {
     this._user!.id = user.id
@@ -93,7 +93,7 @@ export class SessionService {
     this._user!.dateOfBirth = user.dateOfBirth;
     this._user!.phoneNumber = user.phoneNumber;
     this._user!.zipCode = user.zipCode;
-		localStorage.setItem('user', JSON.stringify(user))
+		sessionStorage.setItem('user', JSON.stringify(user))
 	}
   updateZone(zone: Zone) {
     const indexToReplace = this._countries.findIndex(c => zone.id === c.id)
@@ -104,32 +104,32 @@ export class SessionService {
   // for admin only, set when admin is editing user's information
   setFetchedUserInfo(fetchedUser: User): void {
 		this._userForAdmin = fetchedUser;
-		localStorage.setItem('userForAdmin', JSON.stringify(fetchedUser))
+		sessionStorage.setItem('userForAdmin', JSON.stringify(fetchedUser))
 	}
 
   removeFetchedUserInfo() {
     this._userForAdmin = undefined;
-		localStorage.removeItem('userForAdmin')
+		sessionStorage.removeItem('userForAdmin')
   }
 
   removeFetchedUsersInfo() {
     this._usersForAdmin = undefined;
-		localStorage.removeItem('usersForAdmin')
+		sessionStorage.removeItem('usersForAdmin')
   }
 
   // for admin only, set when admin is editing user's information
   setFetchedUsersInfo(fetchedUsers: User[]): void {
     this._usersForAdmin = fetchedUsers;
-    localStorage.setItem('usersForAdmin', JSON.stringify(fetchedUsers))
+    sessionStorage.setItem('usersForAdmin', JSON.stringify(fetchedUsers))
   }
 
   logout(): void {
-    window.localStorage.clear();
+    window.sessionStorage.clear();
     window.localStorage.clear();
   }
 
   setRole(role : string) {
-    localStorage.setItem('role', role);
+    sessionStorage.setItem('role', role);
   }
 
   get isAdmin(): boolean {

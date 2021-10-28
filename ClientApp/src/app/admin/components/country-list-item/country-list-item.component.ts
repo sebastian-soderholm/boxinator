@@ -72,7 +72,7 @@ export class CountryListItemComponent implements OnInit {
 
     this.countryService.updateCountry(this.country);
 
-    //Update countries in localStorage
+    //Update countries in sessionStorage
     this.countryService.updateCountry(this.country).subscribe(response => {
       this.sessionService.updateCountry(this.country)
       this.countrySavedEvent.emit(this.country)
