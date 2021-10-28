@@ -41,6 +41,10 @@ namespace boxinator.Services
             if (user == null)
                 return false;
 
+            var relatedShipments = await _context.Shipments.Where(x => x.UserId == id).ToListAsync();
+            relatedShipments.ForEach(c => c.UserId = null);
+            _context.Shipments.UpdateRange(relatedShipments);
+
             _context.Users.Remove(user);
             //_context.Entry(user).State = EntityState.Modified;
             var rows = await _context.SaveChangesAsync();
@@ -59,7 +63,7 @@ namespace boxinator.Services
         public async Task<User> Get(int id)
         {
             return await _context.Users
-                .Where(x => x.Id == id /*&& x.UserId == currentUser*/)
+                .Where(x => x.Id == id)
                 .Include(x => x.Country)
                 .FirstOrDefaultAsync();
         }
