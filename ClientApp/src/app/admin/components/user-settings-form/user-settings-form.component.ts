@@ -26,7 +26,7 @@ export class UserSettingsFormComponent implements OnInit, OnChanges  {
   private _confirmPassword: string = '';
   private _selectedDoB? : string | null;
   @Input() showAdminSelection: boolean = false;
-  @Input() incomingUser: User | undefined;
+  //@Input() incomingUser: User | undefined;
   date1 = new FormControl(new Date());
   @Output()
   formSubmit: EventEmitter<EditUser> = new EventEmitter();

@@ -70,19 +70,35 @@ export class UserSettingsComponent implements OnInit {
   }
 
   public onSearch(): void {
+    this.selectedUser = undefined;
+    this.users = [];
     const searchInput = this.searchForm.get('searchvalue').value;
     this.loadComponent = false;
+    this._sessionService.removeFetchedUserInfo();
+    this._sessionService.removeFetchedUsersInfo();
 
     if(Number(searchInput)) {
       this._accountService.getUserById(Number(searchInput), async () => {
-        await console.log("success"), this.loadComponent = true;
+        if(this._sessionService.userForAdmin){
+          this.users?.push(this._sessionService.userForAdmin)
+          this.loadComponent = true;
+        }
+        else{
+          this._snackBar.open('User not found', 'OK');
+        }
       });
     }
     else {
       this._accountService.getBySearchTerm(String(searchInput), async () => {
-        await console.log("success"),
-        this.users = this._sessionService.usersForAdmin;
-        this.loadList = true//, this.loadComponent = true;
+        if(this._sessionService.usersForAdmin){
+          this.users = this._sessionService.usersForAdmin;
+          this.loadList = true
+        }
+        else{
+          console.log("wtf")
+          this._snackBar.open('User not found', 'OK');
+
+        }
       });
     }
 
