@@ -42,7 +42,7 @@ namespace boxinator.Services
                 return false;
 
             _context.Users.Remove(user);
-            //_context.Entry(user).State = EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
             var rows = await _context.SaveChangesAsync();
 
             if (rows > 0)
