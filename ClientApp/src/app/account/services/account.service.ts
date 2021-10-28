@@ -32,7 +32,9 @@ export class AccountService {
   public getUserById(userId: number, onSuccess: () => void): void {
     this.http.get<User>(this._apiUrl + '/account/'+userId, this.extensionService.authenticationHeadersFull)
     .subscribe((user: User) => {
-      this.sessionService.setFetchedUserInfo(user);
+      if(user != null) {
+        this.sessionService.setFetchedUserInfo(user);
+      }
       onSuccess();
     });
   }
@@ -53,10 +55,11 @@ export class AccountService {
 
     this.http.get<User[]>(this._apiUrl + '/account', { headers: httpOptions.headers, params: params})
     .subscribe((users: User[]) => {
+      console.log(users)
       if(users.length > 0){
         this.sessionService.setFetchedUsersInfo(users);
-        onSuccess();
       }
+      onSuccess();
     });
   }
 

@@ -107,6 +107,16 @@ export class SessionService {
 		sessionStorage.setItem('userForAdmin', JSON.stringify(fetchedUser))
 	}
 
+  removeFetchedUserInfo() {
+    this._userForAdmin = undefined;
+		sessionStorage.removeItem('userForAdmin')
+  }
+
+  removeFetchedUsersInfo() {
+    this._usersForAdmin = undefined;
+		sessionStorage.removeItem('usersForAdmin')
+  }
+
   // for admin only, set when admin is editing user's information
   setFetchedUsersInfo(fetchedUsers: User[]): void {
     this._usersForAdmin = fetchedUsers;

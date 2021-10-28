@@ -22,10 +22,10 @@
 	</mat-list-item>
 </mat-nav-list>
 
-<app-user-settings-form *ngIf="loadComponent == true" (formSubmit)="updateUser($event)" [showAdminSelection]=true [incomingUser]=selectedUser></app-user-settings-form>
+<app-user-settings-form *ngIf="loadComponent == true" (formSubmit)="updateUser($event)" [showAdminSelection]=true></app-user-settings-form>
 
 <!-- <button mat-raised-button color="primary" *ngIf="loadComponent == true && selectedUser"
 	(click)="updateUser(selectedUser)">Update user</button> -->
 <br>
-<button mat-raised-button color="primary" *ngIf="loadComponent == true && selectedUser"
-	(click)="deleteUser(selectedUser)">Delete user</button>
+<button mat-raised-button color="primary" *ngIf="loadComponent == true"
+	(click)="deleteUser(selectedUser!)">Delete user</button>
