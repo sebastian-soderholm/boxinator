@@ -111,6 +111,23 @@ To start, clone repo using `git clone https://github.com/sebastian-soderholm/box
 `add-migration Initial` and then 
 `update-database`
 
+3. Update following section in Startup.cs to use your firebase settings
+```
+services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = "";
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = "",
+            ValidateAudience = true,
+            ValidAudience = "",
+            ValidateLifetime = true
+        };
+    });
+```
 
 ### Installation instructions for [ClientApp](https://github.com/sebastian-soderholm/boxinator/tree/master/ClientApp)
 
